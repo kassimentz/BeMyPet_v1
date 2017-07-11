@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bgMain">#FFEFCC</color>
+    <color name="orangeBorder">#F15922</color>
+
+
+    <!--Cores!! Marrom (6E3632). Laranja (F15922). Bege-creme (). Amarelo (FFCC32). Amarelo - somente status bar (FFB432)!-->
+</resources>
