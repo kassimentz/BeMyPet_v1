@@ -11,7 +11,6 @@ public class EscolhaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolha);
-//        getSupportActionBar().hide();
     }
 
     public void introAdotante(View v) {
