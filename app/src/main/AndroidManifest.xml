@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".EscolhaActivity" />
-        <activity android:name=".IntroAdotanteActivity"></activity>
+        <activity android:name=".IntroAdotanteActivity" />
+        <activity android:name=".IntroAdocaoActivity"></activity>
     </application>
 
 </manifest>

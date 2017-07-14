@@ -17,4 +17,9 @@ public class EscolhaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, IntroAdotanteActivity.class);
         startActivity(intent);
     }
+
+    public void introAdocao(View v) {
+        Intent intent = new Intent(this, IntroAdocaoActivity.class);
+        startActivity(intent);
+    }
 }
