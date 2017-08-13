@@ -11,12 +11,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class MapaPetsDisponiveisActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private MarkerOptions options = new MarkerOptions();
-    private ArrayList<LatLng> latlngs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +46,19 @@ public class MapaPetsDisponiveisActivity extends FragmentActivity implements OnM
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        latlngs.add(new LatLng(-29.9834165, -51.1244774)); //some latitude and logitude value
-        latlngs.add(new LatLng(-30.0934487,-51.2395593));
-        latlngs.add(new LatLng(-30.0186029,-51.0206237));
-        latlngs.add(new LatLng(-30.0170309,-51.1660766));
+        List<Pet> pets = Utils.getPetsFromJson(Utils.readJsonFromFile(this, "pets.json"));
 
-
-
-        for (LatLng point : latlngs) {
-            options.position(point);
-            options.title("someTitle");
-            options.snippet("someDesc");
-            mMap.addMarker(options);
+        if(!pets.isEmpty()) {
+            for (Pet pet : pets) {
+                options.position(new LatLng((pet.getLocalizacao().getLat()), pet.getLocalizacao().getLon()));
+                options.title(pet.getNome());
+                mMap.addMarker(options);
+            }
+            PontoGeo ponto = pets.get(pets.size() - 1).getLocalizacao();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ponto.getLat(), ponto.getLon())));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ponto.getLat(), ponto.getLon())));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ponto.getLat(), ponto.getLon()), 12));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latlngs.get(latlngs.size()-1)));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlngs.get(latlngs.size()-1)));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlngs.get(latlngs.size()-1), 12));
-
 
     }
 }

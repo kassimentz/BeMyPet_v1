@@ -1,0 +1,57 @@
+[
+
+    { 
+      "id":1, 
+      "nome": "Kira",
+      "especie": "gato",
+      "sexo": "F",
+      "raca": "SRD",
+      "dataNascimento": "28/11/2016",
+      "idadeAproximada": "9 meses",
+      "pesoAproximado": 2.5,
+      "parteDeNinhada": "N",
+      "nomeNinhada": "",
+      "castrado": "S",
+      "vermifugado": "S",
+      "dose": "2", 
+      "sociavel": ["pessoas", "gatos"],
+      "temperamento": "docil",
+      "fotos": [],
+      "informacoesAdicionais": "",
+      "status": "adotado",
+      "cadastroAtivo": false,
+      "localizacao": {
+        "lat": -30.0170309,
+        "lon": -51.1660766
+      }
+
+    },
+    { 
+      "id":2, 
+      "nome": "Véia",
+      "especie": "gato",
+      "sexo": "F",
+      "raca": "SRD",
+      "dataNascimento": "20/01/2006",
+      "idadeAproximada": "11 anos",
+      "pesoAproximado": 2.5,
+      "parteDeNinhada": "N",
+      "nomeNinhada": "",
+      "castrado": "S",
+      "vermifugado": "S",
+      "dose": "2", 
+      "sociavel": ["pessoas", "gatos"],
+      "temperamento": "docil",
+      "fotos": [],
+      "informacoesAdicionais": "",
+      "status": "adotado",
+      "cadastroAtivo": false,
+      "localizacao": {
+        "lat": -29.9834165,
+        "lon": -51.1244774
+      }
+    }
+      
+
+ 
+]
