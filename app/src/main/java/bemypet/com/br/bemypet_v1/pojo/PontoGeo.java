@@ -1,30 +1,17 @@
 package bemypet.com.br.bemypet_v1.pojo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by kassianesmentz on 12/08/17.
  */
 
 public class PontoGeo {
-    private Double lat;
-    private Double lon;
+    public Double lat;
+    public Double lon;
 
     public PontoGeo() {
-    }
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLon() {
-        return lon;
-    }
-
-    public void setLon(Double lon) {
-        this.lon = lon;
     }
 
     @Override
@@ -33,5 +20,13 @@ public class PontoGeo {
                 "lat=" + lat +
                 ", lon=" + lon +
                 '}';
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("lat", lat);
+        result.put("lon", lon);
+
+        return result;
     }
 }

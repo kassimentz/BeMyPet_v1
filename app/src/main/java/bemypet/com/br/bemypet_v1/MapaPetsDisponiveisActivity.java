@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.models.PetModel;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.utils.Utils;
@@ -50,14 +51,16 @@ public class MapaPetsDisponiveisActivity extends FragmentActivity implements OnM
 
         if(!pets.isEmpty()) {
             for (Pet pet : pets) {
-                options.position(new LatLng((pet.getLocalizacao().getLat()), pet.getLocalizacao().getLon()));
-                options.title(pet.getNome());
+                options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
+                options.title(pet.nome);
                 mMap.addMarker(options);
+                PetModel petModel = new PetModel();
+                petModel.salvar(pet);
             }
-            PontoGeo ponto = pets.get(pets.size() - 1).getLocalizacao();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ponto.getLat(), ponto.getLon())));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ponto.getLat(), ponto.getLon())));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ponto.getLat(), ponto.getLon()), 12));
+            PontoGeo ponto = pets.get(pets.size() - 1).localizacao;
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ponto.lat, ponto.lon)));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ponto.lat, ponto.lon)));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ponto.lat, ponto.lon), 12));
         }
 
     }
