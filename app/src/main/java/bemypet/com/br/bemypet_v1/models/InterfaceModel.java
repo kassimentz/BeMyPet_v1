@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface InterfaceModel<T> {
     public void salvar(T entidade);
-    public List<T> listar();
+    public void listar(OnGetDataListener listener);
     public T procurarPorId(Integer id);
 }
