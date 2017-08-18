@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
+import bemypet.com.br.bemypet_v1.services.GPSTracker;
 
 /**
  * Created by kassianesmentz on 12/08/17.
@@ -54,5 +56,23 @@ public class Utils {
         }
 
         return petList;
+    }
+
+    public static PontoGeo getLatLongDispositivo(Context context) {
+        // GPSTracker class
+        GPSTracker gps;
+        Double latitude = null;
+        Double longitude = null;
+        PontoGeo ponto = new PontoGeo();
+
+        gps = new GPSTracker(context);
+        if (gps.canGetLocation()) {
+            ponto.lat = gps.getLatitude();
+            ponto.lon = gps.getLongitude();
+        } else {
+            gps.showSettingsAlert();
+        }
+
+        return ponto;
     }
 }

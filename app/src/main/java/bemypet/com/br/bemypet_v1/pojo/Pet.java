@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by kassianesmentz on 12/08/17.
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class Pet {
 
-    public Integer id;
+    public String id;
     public String nome;
     public String especie;
     public String sexo;
@@ -38,16 +39,16 @@ public class Pet {
     public PontoGeo localizacao;
 
     public Pet() {
+        id = UUID.randomUUID().toString();
     }
 
-    public Pet(Integer id, String nome, String especie, String sexo, String raca,
+    public Pet(String nome, String especie, String sexo, String raca,
                String dataNascimento, String idadeAproximada, Double pesoAproximado,
                String parteDeNinhada, String nomeNinhada, String castrado, String vermifugado,
                String dose, List<String> sociavel, String temperamento, List<String> imagens,
                String informacoesAdicionais, String status, Boolean cadastroAtivo,
                PontoGeo localizacao) {
 
-        this.id = id;
         this.nome = nome;
         this.especie = especie;
         this.sexo = sexo;
