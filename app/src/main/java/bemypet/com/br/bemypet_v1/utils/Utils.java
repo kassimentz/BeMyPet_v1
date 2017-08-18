@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 
@@ -58,14 +59,14 @@ public class Utils {
         return petList;
     }
 
-    public static PontoGeo getLatLongDispositivo(Context context) {
+    public static PontoGeo getLatLongDispositivo(Context context, Activity activity) {
         // GPSTracker class
         GPSTracker gps;
         Double latitude = null;
         Double longitude = null;
         PontoGeo ponto = new PontoGeo();
 
-        gps = new GPSTracker(context);
+        gps = new GPSTracker(context, activity);
         if (gps.canGetLocation()) {
             ponto.lat = gps.getLatitude();
             ponto.lon = gps.getLongitude();

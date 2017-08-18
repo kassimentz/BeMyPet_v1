@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciar(View v) {
-        Intent intent = new Intent(this, EscolhaActivity.class);
-        //Intent intent = new Intent(this, MapaPetsDisponiveisActivity.class);
+        //Intent intent = new Intent(this, EscolhaActivity.class);
+        Intent intent = new Intent(this, MapaPetsDisponiveisActivity.class);
         startActivity(intent);
     }
 }

@@ -89,7 +89,7 @@ public class MapaPetsDisponiveisActivity extends FragmentActivity implements OnM
      */
     private void listarPets() {
 
-        PontoGeo ponto = Utils.getLatLongDispositivo(this);
+        PontoGeo ponto = Utils.getLatLongDispositivo(this, MapaPetsDisponiveisActivity.this);
         petModel.listar(new OnGetDataListener() {
             @Override
             public void onStart() {}
@@ -123,7 +123,7 @@ public class MapaPetsDisponiveisActivity extends FragmentActivity implements OnM
     public void listarPetsProximos() {
 
         //buscar a latitude e longitude do dispositivo
-        PontoGeo ponto = Utils.getLatLongDispositivo(this);
+        PontoGeo ponto = Utils.getLatLongDispositivo(this, MapaPetsDisponiveisActivity.this);
         GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(ponto.lat, ponto.lon), 20.0);
 
