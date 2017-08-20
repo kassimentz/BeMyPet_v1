@@ -20,4 +20,33 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
     <string name="title_activity_mapa_pets_disponiveis">Map</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_mensagens">Notificações / Mensagens</string>
+    <string name="nav_meus_pets">Meus Pets / Favoritos</string>
+    <string name="nav_configuracoes">Configurações</string>
+    <string name="nav_sobre">Sobre</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Notificações</item>
+        <item>Meus Pets</item>
+        <item>Settings</item>
+        <item>Sobre</item>
+    </string-array>
+
+    <string name="activity_title_sobre">Sobre</string>
+    <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
+    <string name="action_clear_all">Limpar</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_mark_all_read">Marcar todos como lido</string>
+    <string name="privacy_policy">Políticas de Privacidade</string>
 </resources>

@@ -19,6 +19,13 @@
     <color name="dot_light_screen3">#93c6fd</color>
     <color name="dot_light_screen4">#e4b5fc</color>
 
+    <!--navigation drawer-->
+
+    <color name="colorPrimaryN">#d32f2f</color>
+    <color name="colorPrimaryDarkN">#c72c2c</color>
+    <color name="colorAccentN">#FFFFFF</color>
+
+
     <array name="array_dot_active">
         <item>@color/orangeBorder</item>
         <item>@color/orangeBorder</item>
