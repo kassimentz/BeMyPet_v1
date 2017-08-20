@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,8 +28,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.koushikdutta.ion.Ion;
 
-import bemypet.com.br.bemypet_v1.InicialActivity;
+import java.util.concurrent.ExecutionException;
+
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
@@ -192,7 +195,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                     pet = postSnapshot.getValue(Pet.class);
                     options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
                     options.title(pet.nome);
-                    options.icon(BitmapDescriptorFactory.fromResource(R.drawable.cat_profile));
+                    try {
+                        Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
+                        options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 80)));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
                     map.addMarker(options);
 
                 }
