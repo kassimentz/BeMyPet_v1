@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bgMain">#FFEFCC</color>
     <color name="orangeBorder">#F15922</color>
-
+    <color name="white">#ffffff</color>
+    <color name="OrangeApp">#F15922</color>
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#d1395c</color>
@@ -24,6 +25,7 @@
     <color name="colorPrimaryN">#d32f2f</color>
     <color name="colorPrimaryDarkN">#c72c2c</color>
     <color name="colorAccentN">#FFFFFF</color>
+
 
 
     <array name="array_dot_active">

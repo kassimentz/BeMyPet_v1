@@ -45,7 +45,9 @@
         <activity
             android:name=".MapaPetsDisponiveisActivity"
             android:label="@string/title_activity_mapa_pets_disponiveis" />
-        <activity android:name=".InicialActivity"></activity>
+        <activity android:name=".InicialActivity" />
+        <activity android:name=".SobreNosActivity" />
+        <activity android:name=".PoliticaDePrivacidadeActivity"></activity>
     </application>
 
 </manifest>

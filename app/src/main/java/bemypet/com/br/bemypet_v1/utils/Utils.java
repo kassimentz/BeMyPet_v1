@@ -3,6 +3,7 @@ package bemypet.com.br.bemypet_v1.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -75,5 +76,10 @@ public class Utils {
         }
 
         return ponto;
+    }
+
+    public static void showToastMessage(Context context, String msg) {
+        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

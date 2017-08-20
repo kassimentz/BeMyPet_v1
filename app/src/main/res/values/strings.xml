@@ -39,14 +39,17 @@
         <item>Home</item>
         <item>Notificações</item>
         <item>Meus Pets</item>
-        <item>Settings</item>
+        <item>Configurações</item>
         <item>Sobre</item>
     </string-array>
 
     <string name="activity_title_sobre">Sobre</string>
     <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
     <string name="action_clear_all">Limpar</string>
-    <string name="action_logout">Logout</string>
+    <string name="action_filtro">Filtros</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="privacy_policy">Políticas de Privacidade</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
