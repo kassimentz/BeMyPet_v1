@@ -191,21 +191,18 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
                     map = getMap();
-
-                    pet = postSnapshot.getValue(Pet.class);
-                    options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
-                    options.title(pet.nome);
                     try {
+                        pet = postSnapshot.getValue(Pet.class);
+                        options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
+                        options.title(pet.nome);
                         Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
-                        options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 80)));
+                        options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
+                        map.addMarker(options);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-
-                    map.addMarker(options);
-
                 }
             }
 
