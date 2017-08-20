@@ -67,7 +67,15 @@ public class Utils {
         Double longitude = null;
         PontoGeo ponto = new PontoGeo();
 
-        gps = new GPSTracker(context, activity);
+        if(activity == null) {
+            System.out.println("activity null");
+            gps = new GPSTracker(context);
+        } else {
+            gps = new GPSTracker(context, activity);
+            System.out.println("activity not null");
+        }
+
+
         if (gps.canGetLocation()) {
             ponto.lat = gps.getLatitude();
             ponto.lon = gps.getLongitude();
