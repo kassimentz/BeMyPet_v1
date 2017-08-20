@@ -28,7 +28,7 @@
     <string name="closeDrawer">close_drawer</string>
 
     <!-- Navigation Drawer menu labels -->
-    <string name="nav_home">Home</string>
+    <string name="nav_home">BeMyPet</string>
     <string name="nav_mensagens">Notificações / Mensagens</string>
     <string name="nav_meus_pets">Meus Pets / Favoritos</string>
     <string name="nav_configuracoes">Configurações</string>
@@ -36,7 +36,7 @@
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
-        <item>Home</item>
+        <item>BeMyPet</item>
         <item>Notificações</item>
         <item>Meus Pets</item>
         <item>Configurações</item>
