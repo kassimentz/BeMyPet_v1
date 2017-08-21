@@ -44,7 +44,18 @@
 
         <activity android:name=".InicialActivity" />
         <activity android:name=".SobreNosActivity" />
-        <activity android:name=".PoliticaDePrivacidadeActivity"></activity>
+        <activity android:name=".PoliticaDePrivacidadeActivity" />
+
+
+        <activity
+            android:name=".FiltrosActivity"
+            android:label="Filtros"
+            android:parentActivityName=".InicialActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
     </application>
 
 </manifest>
