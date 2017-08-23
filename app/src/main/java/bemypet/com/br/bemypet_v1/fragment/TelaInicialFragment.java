@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,17 +23,21 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.koushikdutta.ion.Ion;
 
 import java.util.concurrent.ExecutionException;
 
+import bemypet.com.br.bemypet_v1.InicialActivity;
 import bemypet.com.br.bemypet_v1.R;
+import bemypet.com.br.bemypet_v1.SobreNosActivity;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
@@ -174,6 +179,22 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         setMap(googleMap);
         listarPets();
+
+        getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                Pet p = (Pet) marker.getTag();
+                Utils.showToastMessage(getContext(), p.nome);
+                Intent intent = new Intent(getContext(), SobreNosActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("pet", new Gson().toJson(p));
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                return false;
+            }
+        });
     }
 
     /**
@@ -195,9 +216,11 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                         pet = postSnapshot.getValue(Pet.class);
                         options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
                         options.title(pet.nome);
+
                         Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
                         options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
-                        map.addMarker(options);
+                        Marker m = map.addMarker(options);
+                        m.setTag(pet);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -225,7 +248,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
 
-                System.out.println(key);
                 final String idFound = key;
                 FirebaseDatabase.getInstance().getReference().child("pets").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -235,7 +257,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
                             if(pet.id.equals(idFound)) {
-                                System.out.println(pet.nome);
                                 map = getMap();
                                 options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
                                 options.title(pet.nome);
