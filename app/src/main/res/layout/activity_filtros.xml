@@ -50,29 +50,50 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="2" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ESPÉCIE"/>
 
-                        <Button
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="3" />
+                        </LinearLayout>
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="4" />
+                            android:orientation="horizontal"
+
+                            android:weightSum="3">
+
+                            <CheckBox android:id="@+id/chk_cao"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Cão"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_gato"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Gato"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_outros"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Outros"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -83,23 +104,45 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="2" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SEXO"/>
 
-                        <Button
-                            android:layout_width="80dp"
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="3" />
+                            android:orientation="horizontal"
+
+                            android:weightSum="3">
+
+                            <CheckBox android:id="@+id/chk_macho"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Macho"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_femea"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fêmea"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="2"/>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -110,17 +153,35 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="RAÇA"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="2" />
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <Spinner
+                                android:id="@+id/drp_racas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/raca_array"
+                                android:prompt="@string/raca_prompt" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -131,17 +192,35 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="IDADE"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="2" />
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <SeekBar
+                                android:id="@+id/seekBarIdade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:progress="20"
+                                android:secondaryProgress="20"
+                                android:layout_weight="3" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -152,17 +231,35 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="PESO"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="2" />
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <SeekBar
+                                android:id="@+id/seekBarPeso"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:progress="20"
+                                android:secondaryProgress="20"
+                                android:layout_weight="3" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -173,23 +270,43 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="2" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="CASTRADO"/>
 
-                        <Button
-                            android:layout_width="80dp"
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="2" />
+                            android:orientation="horizontal"
+
+                            android:weightSum="3">
+
+                            <CheckBox android:id="@+id/chk_castrado"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Sim"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_nao_castrado"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Não"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="2"/>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -200,23 +317,43 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="1" />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:weightSum="1">
 
-                        <Button
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="2" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="VERMIFUGADO"/>
 
-                        <Button
-                            android:layout_width="80dp"
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="2" />
+                            android:orientation="horizontal"
+
+                            android:weightSum="3">
+
+                            <CheckBox android:id="@+id/chk_vermifugado"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Sim"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_nao_vermifugado"
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Não"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="2"/>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -227,17 +364,87 @@
                         android:orientation="horizontal"
                         android:weightSum="4">
 
-                        <Button
-                            android:layout_width="80dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="1" />
+                            android:orientation="vertical"
+                            android:layout_weight="2">
 
-                        <Button
-                            android:layout_width="80dp"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SOCIÁVEL"/>
+
+                            <CheckBox android:id="@+id/chk_sociavel_pessoas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Pessoas"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_sociavel_caes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Cães"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_sociavel_gatos"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Gatos"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_sociavel_outros"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Outros"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:text="2" />
+                            android:orientation="vertical"
+                            android:layout_weight="2">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TEMPERAMENTO"/>
+
+                            <CheckBox android:id="@+id/chk_temperamento_bravo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Bravo"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_temperamento_cuidado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Com cuidado"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_temperamento_convive"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Convive Bem"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                            <CheckBox android:id="@+id/chk_temperamento_docil"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Muito dócil"
+                                android:onClick="onCheckboxClicked"
+                                android:layout_weight="1"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
