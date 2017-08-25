@@ -28,6 +28,10 @@
     <color name="YellowToolbar">#ffb432</color>
     <color name="YellowText">#ffcc32</color>
 
+    <color name="textoCheckbox">#6E3632</color>
+    <color name="textoFormulario">#FFCC32</color>
+
+
 
     <array name="array_dot_active">
         <item>@color/orangeBorder</item>
@@ -42,6 +46,8 @@
         <item>#fff</item>
         <item>#fff</item>
     </array>
+
+
 
     <!--Cores!! Marrom (6E3632). Laranja (F15922). Bege-creme (). Amarelo (FFCC32). Amarelo - somente status bar (FFB432)!-->
 </resources>
