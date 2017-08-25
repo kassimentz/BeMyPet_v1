@@ -52,4 +52,19 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="raca_prompt">Escolha uma raça</string>
+
+    <string-array name="raca_array">
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Chow Chow</item>
+        <item>Shitsu</item>
+        <item>Golden Retrivier</item>
+        <item>Persa</item>
+        <item>Egipcio</item>
+        <item>Siamês</item>
+
+    </string-array>
+
 </resources>

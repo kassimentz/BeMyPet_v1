@@ -154,6 +154,8 @@ public class InicialActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filtro) {
             Utils.showToastMessage(getApplicationContext(), "Realizar filtros");
+            Intent intent = new Intent(this, FiltrosActivity.class);
+            startActivity(intent);
             return true;
         }
 
