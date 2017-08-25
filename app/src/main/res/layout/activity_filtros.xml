@@ -44,9 +44,7 @@
                     android:paddingRight="10dp">
 
                     <!--campos para especie-->
-                    <LinearLayout
-                        style="@style/layoutLinha">
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunasTituloFormulario">
 
@@ -114,8 +112,7 @@
                     </LinearLayout>
 
                     <!--campos para raça-->
-                    <LinearLayout
-                        style="@style/layoutLinha">>
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunasTituloFormulario">
 
@@ -139,8 +136,7 @@
                     </LinearLayout>
 
                     <!--campos para idade-->
-                    <LinearLayout
-                        style="@style/layoutLinha">>
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunasTituloFormulario">
 
@@ -156,7 +152,8 @@
                                 android:id="@+id/seekBarIdade"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:progress="1"
+                                android:progressDrawable="@drawable/progress_drawable"
+                                android:progress="20"
                                 android:secondaryProgress="20" />
 
                         </LinearLayout>
@@ -164,8 +161,7 @@
                     </LinearLayout>
 
                     <!--campos para peso-->
-                    <LinearLayout
-                        style="@style/layoutLinha">>
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunasTituloFormulario">
 
@@ -175,12 +171,13 @@
 
                         </LinearLayout>
 
-                        <LinearLayout style="@style/colunasFormulario">
+                        <LinearLayout style="@style/colunasFormularioSpinner">
 
                             <SeekBar
                                 android:id="@+id/seekBarPeso"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:progressDrawable="@drawable/progress_drawable"
                                 android:progress="20"
                                 android:secondaryProgress="20" />
 
@@ -189,8 +186,7 @@
                     </LinearLayout>
 
                     <!--campos para castrado-->
-                    <LinearLayout
-                        style="@style/layoutLinha">>
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunasTituloFormulario">
 
@@ -220,8 +216,7 @@
                     </LinearLayout>
 
                     <!--campos para vermifugado-->
-                    <LinearLayout
-                        style="@style/layoutLinha">>
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunasTituloFormulario">
 
@@ -251,8 +246,7 @@
                     </LinearLayout>
 
                     <!--campos para sociavel e temperamento-->
-                    <LinearLayout
-                        style="@style/layoutLinha">
+                    <LinearLayout style="@style/layoutLinha">
 
                         <LinearLayout style="@style/colunaComCheckbox">
 
@@ -319,10 +313,45 @@
 
                         </LinearLayout>
 
+
+
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/OrangeApp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <LinearLayout style="@style/layoutLinha">
+
+                        <LinearLayout style="@style/colunasTituloFormulario">
+
+                            <TextView
+                                style="@style/textoFormulario"
+                                android:textAlignment="center"
+                                android:text="RAIO DE BUSCA (KM)"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/colunasFormularioSpinner"
+                            android:layout_gravity="center">
+
+                            <SeekBar
+                                android:id="@+id/seekBarRaioBusca"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:progressDrawable="@drawable/progress_drawable"
+                                android:progress="20"
+                                android:secondaryProgress="20" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+
             </ScrollView>
 
         </LinearLayout>
