@@ -125,12 +125,11 @@
 
                         </LinearLayout>
 
-                        <LinearLayout style="@style/colunasFormulario">>
+                        <LinearLayout style="@style/colunasFormularioSpinner">
 
                             <Spinner
+                                style="@style/spinnerFormulario"
                                 android:id="@+id/drp_racas"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:entries="@array/raca_array"
                                 android:prompt="@string/raca_prompt" />
 
@@ -151,13 +150,13 @@
 
                         </LinearLayout>
 
-                        <LinearLayout style="@style/colunasFormulario">
+                        <LinearLayout style="@style/colunasFormularioSpinner">
 
                             <SeekBar
                                 android:id="@+id/seekBarIdade"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:progress="20"
+                                android:progress="1"
                                 android:secondaryProgress="20" />
 
                         </LinearLayout>

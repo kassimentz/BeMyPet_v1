@@ -27,8 +27,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.drp_racas);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.raca_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                R.array.raca_array, R.layout.spinner_style);
         spinner.setAdapter(adapter);
     }
 

@@ -117,6 +117,13 @@
         <item name="android:weightSum">3</item>
     </style>
 
+    <style name="colunasFormularioSpinner" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">3</item>
+    </style>
+
     <style name="colunasTituloFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -124,4 +131,16 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:weightSum">1</item>
     </style>
+
+    <style name="spinnerFormulario" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/textoCheckbox</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColorHint">@color/textoCheckbox</item>
+        <item name="android:background">@drawable/gradient_spinner</item>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+    </style>
+
 </resources>
