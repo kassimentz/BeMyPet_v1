@@ -156,5 +156,14 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
+    <style name="seekBar" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:progressDrawable">@drawable/progress_drawable</item>
+        <item name="android:progress">0</item>
+        <item name="android:secondaryProgress">0</item>
+    </style>
+
+
 
 </resources>

@@ -173,12 +173,8 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarIdade"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:progressDrawable="@drawable/progress_drawable"
-                                android:progress="0"
-                                android:secondaryProgress="0"
-                                android:max="30"/>
+                                android:max="30"
+                                style="@style/seekBar"/>
 
                             <TextView
                                 android:id="@+id/txtSeekBarIdadeValue"
@@ -210,12 +206,8 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarPeso"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:progressDrawable="@drawable/progress_drawable"
-                                android:progress="0"
-                                android:secondaryProgress="0"
-                                android:max="100" />
+                                android:max="100"
+                                style="@style/seekBar"/>
 
                             <TextView
                                 android:id="@+id/txtSeekBarPesoValue"
@@ -403,12 +395,8 @@
 
                             <SeekBar
                                 android:id="@+id/seekBarRaioBusca"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:progressDrawable="@drawable/progress_drawable"
-                                android:progress="0"
-                                android:secondaryProgress="0"
-                                android:max="100" />
+                                android:max="100"
+                                style="@style/seekBar"/>
 
                             <TextView
                                 android:id="@+id/txtSeekBarRaioBuscaValue"
