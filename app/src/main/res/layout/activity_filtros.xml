@@ -309,25 +309,21 @@
                             <CheckBox android:id="@+id/chk_sociavel_pessoas"
                                 android:text="@string/sociavelPessoas"
                                 style="@style/checkBoxFormulario"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_caes"
                                 android:text="@string/sociavelCaes"
                                 style="@style/checkBoxFormulario"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_gatos"
                                 android:text="@string/sociavelGatos"
                                 style="@style/checkBoxFormulario"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_outros"
                                 android:text="@string/outros"
                                 style="@style/checkBoxFormulario"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                         </LinearLayout>
@@ -342,25 +338,21 @@
                             <CheckBox android:id="@+id/chk_temperamento_bravo"
                                 style="@style/checkBoxFormulario"
                                 android:text="@string/temperamentoBravo"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_cuidado"
                                 style="@style/checkBoxFormulario"
                                 android:text="@string/temperamentoComCuidado"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_convive"
                                 android:text="@string/temperamentoConviveBem"
                                 style="@style/checkBoxFormulario"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_docil"
                                 android:text="@string/temperamentoMuitoDocil"
                                 style="@style/checkBoxFormulario"
-                                android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                         </LinearLayout>
