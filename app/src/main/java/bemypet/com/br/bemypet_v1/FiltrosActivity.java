@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,13 +19,25 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.bumptech.glide.util.Util;
+import com.appyvet.rangebar.RangeBar;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
+import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class FiltrosActivity extends AppCompatActivity {
@@ -32,13 +45,13 @@ public class FiltrosActivity extends AppCompatActivity {
     private RadioGroup radioGroupEspecie, radioGroupSexo, radioGroupCastrado, radioGroupVermifugado;
     private RadioButton radioEspecieButton, radioSexoButton, radioCastradoButton, radioVermifugadoButton;
     private Spinner spinnerRaca;
-    private SeekBar seekBarIdade, seekBarPeso, seekBarRaioBusca;
+    private SeekBar seekBarRaioBusca;
+    private RangeBar rangeIdade, rangePeso;
     private TextView txtSeekBarIdadeValue, txtSeekBarPesoValue, txtSeekBarRaioBuscaValue;
     private CheckBox chkSociavelPessoas, chkSociavelCaes, chkSociavelGatos, chkSociavelOutros,
             chkTemperamentoBravo, chkTemperamentoComCuidado, chkTemperamentoConviveBem, chkTemperamentoMuitoDocil;
-    int idade = 0, peso = 0, raioDeBusca = 0;
-
-
+    Integer raioDeBusca = 0;
+    String idadeInicial = "", idadeFinal = "", pesoInicial = "", pesoFinal = "";
     Filtros filtros;
 
     @Override
@@ -57,11 +70,10 @@ public class FiltrosActivity extends AppCompatActivity {
                 R.array.raca_array, R.layout.spinner_style);
         spinner.setAdapter(adapter);
 
+
         initializeVariables();
         filtros = new Filtros();
-
-
-
+        lerFiltros();
     }
 
     private void initializeVariables() {
@@ -69,38 +81,27 @@ public class FiltrosActivity extends AppCompatActivity {
         radioGroupSexo = (RadioGroup) findViewById(R.id.radioGroupSexo);
         spinnerRaca = (Spinner) findViewById(R.id.spinnerRacas);
 
-        seekBarIdade = (SeekBar) findViewById(R.id.seekBarIdade);
+        rangeIdade = (RangeBar) findViewById(R.id.seekBarIdade);
         txtSeekBarIdadeValue = (TextView) findViewById(R.id.txtSeekBarIdadeValue);
-        seekBarIdade.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                idade = progresValue;
-            }
 
+        rangeIdade.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                txtSeekBarIdadeValue.setText("Idade Aproximada: "+String.valueOf(idade)+ " anos.");
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                idadeInicial =  leftPinValue;
+                idadeFinal = rightPinValue;
+                txtSeekBarIdadeValue.setText("Idade Aproximada: de "+ leftPinValue + " até "+ rightPinValue+" anos.");
             }
         });
 
-        seekBarPeso = (SeekBar) findViewById(R.id.seekBarPeso);
+        rangePeso = (RangeBar) findViewById(R.id.seekBarPeso);
         txtSeekBarPesoValue = (TextView) findViewById(R.id.txtSeekBarPesoValue);
 
-        seekBarPeso.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        rangePeso.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                peso = progresValue;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                txtSeekBarPesoValue.setText("Peso Aproximado: "+String.valueOf(peso)+ " kg.");
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,int rightPinIndex, String leftPinValue, String rightPinValue) {
+                pesoInicial = leftPinValue;
+                pesoFinal = leftPinValue;
+                txtSeekBarPesoValue.setText("Peso de "+ leftPinValue + " até "+ leftPinValue+" anos.");
             }
         });
 
@@ -160,6 +161,13 @@ public class FiltrosActivity extends AppCompatActivity {
         }
     }
 
+    private void lerFiltros() {
+        //TODO para realizar a leitura dos valores do arquivo de filtros... e setar esses valores como valores iniciais
+//        String data = Utils.readStringFromFile(this, "filtros.json");
+//        Filtros f = new Gson().fromJson(data, Filtros.class);
+//        System.out.println(f.toString());
+    }
+
     private void cancelarFiltro() {
         Utils.showToastMessage(this, "cancelar filtro");
     }
@@ -168,11 +176,12 @@ public class FiltrosActivity extends AppCompatActivity {
         preencherFiltro();
         salvarFiltroJson(filtros);
 
-        //para realizar a leitura dos valores do arquivo de filtros...
-//        String data = Utils.readStringFromFile(this, "filtros.json");
-//        Filtros f = new Gson().fromJson(data, Filtros.class);
-//
-//        System.out.println(f.toString());
+        Intent intent = new Intent(this, InicialActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("filtro", new Gson().toJson(filtros));
+        intent.putExtras(bundle);
+        startActivity(intent);
+        this.finish();
 
     }
 
@@ -201,10 +210,12 @@ public class FiltrosActivity extends AppCompatActivity {
         filtros.raca = spinnerRaca.getSelectedItem().toString();
 
         //pegar o valor de idade selecionado
-        filtros.idade = String.valueOf(idade);
+        filtros.idadeInicial = idadeInicial;
+        filtros.idadeFinal = idadeFinal;
 
         //pegar o valor de peso selecionado
-        filtros.peso = String.valueOf(peso);
+        filtros.pesoInicial = pesoInicial;
+        filtros.pesoFinal = pesoFinal;
 
         //pegar o valor de castrado selecionado
         int selectedCastrado = radioGroupCastrado.getCheckedRadioButtonId();

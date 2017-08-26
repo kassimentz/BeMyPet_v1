@@ -21,11 +21,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 
 import bemypet.com.br.bemypet_v1.fragment.ConfiguracoesFragment;
 import bemypet.com.br.bemypet_v1.fragment.MeusPetsFavoritosFragment;
 import bemypet.com.br.bemypet_v1.fragment.NotificacoesMensagensFragment;
 import bemypet.com.br.bemypet_v1.fragment.TelaInicialFragment;
+import bemypet.com.br.bemypet_v1.pojo.Filtros;
+import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.utils.CircleTransform;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -103,6 +106,25 @@ public class InicialActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.showToastMessage(this, "voltou!");
+
+        String jsonObj = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            jsonObj = extras.getString("filtro");
+        }
+        Filtros filtro = new Gson().fromJson(jsonObj, Filtros.class);
+        if(filtro!=null) {
+            System.out.println(filtro.toString());
+            //TODO salvar o filtro em uma variavel da classe se retornar diferente de vazio
+        }
+
+
     }
 
     @Override

@@ -19,8 +19,10 @@ public class Filtros {
     public String especie;
     public String sexo;
     public String raca;
-    public String idade;
-    public String peso;
+    public String idadeInicial;
+    public String idadeFinal;
+    public String pesoInicial;
+    public String pesoFinal;
     public Boolean castrado;
     public Boolean vermifugado;
     public List<String> sociavel = new ArrayList<>();
@@ -37,8 +39,10 @@ public class Filtros {
                 "especie='" + especie + '\'' +
                 ", sexo='" + sexo + '\'' +
                 ", raca='" + raca + '\'' +
-                ", idade='" + idade + '\'' +
-                ", peso='" + peso + '\'' +
+                ", idadeInicial='" + idadeInicial + '\'' +
+                ", idadeFinal='" + idadeFinal + '\'' +
+                ", pesoInicial='" + pesoInicial + '\'' +
+                ", pesoFinal='" + pesoFinal + '\'' +
                 ", castrado=" + castrado +
                 ", vermifugado=" + vermifugado +
                 ", sociavel=" + sociavel +
@@ -52,8 +56,10 @@ public class Filtros {
         result.put("especie", especie);
         result.put("sexo", sexo);
         result.put("raca", raca);
-        result.put("idade", idade);
-        result.put("peso", peso);
+        result.put("idadeInicial", idadeInicial);
+        result.put("idadeFinal", idadeFinal);
+        result.put("pesoInicial", pesoInicial);
+        result.put("pesoFinal", pesoFinal);
         result.put("castrado", castrado);
         result.put("vermifugado", vermifugado);
         result.put("sociavel", sociavel);
