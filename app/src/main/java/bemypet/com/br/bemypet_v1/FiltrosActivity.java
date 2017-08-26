@@ -167,6 +167,13 @@ public class FiltrosActivity extends AppCompatActivity {
     private void aplicarFiltro() {
         preencherFiltro();
         salvarFiltroJson(filtros);
+
+        //para realizar a leitura dos valores do arquivo de filtros...
+//        String data = Utils.readStringFromFile(this, "filtros.json");
+//        Filtros f = new Gson().fromJson(data, Filtros.class);
+//
+//        System.out.println(f.toString());
+
     }
 
     private void salvarFiltroJson(Filtros filtros) {

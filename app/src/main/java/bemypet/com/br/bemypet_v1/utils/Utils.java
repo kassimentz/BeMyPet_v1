@@ -19,7 +19,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -62,17 +64,39 @@ public class Utils {
     public static Boolean saveJsonFile(Context context, String jsonName, String json) {
 
         try {
-            FileWriter file = new FileWriter("/data/data/" + context.getPackageName() + "/" + jsonName);
-            file.write(json);
-            file.flush();
-            file.close();
+            FileOutputStream fileOutputStream = context.openFileOutput(jsonName ,Context.MODE_PRIVATE);
+            fileOutputStream.write(json.getBytes("UTF-8"));
+            fileOutputStream.close();
             return Boolean.TRUE;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return Boolean.FALSE;
         } catch (IOException e) {
             e.printStackTrace();
             return Boolean.FALSE;
         }
 
+    }
 
+    public static String readStringFromFile(Context context, String fileName) {
+
+        try {
+            FileInputStream fileInputStream = context.openFileInput(fileName);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer = new StringBuffer();
+            String lines;
+            while ((lines=bufferedReader.readLine())!=null) {
+                stringBuffer.append(lines+"\n");
+            }
+            return stringBuffer.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static List<Pet> getPetsFromJson(String jsonString) {
