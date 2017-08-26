@@ -19,6 +19,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.util.Util;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.utils.Utils;
@@ -30,6 +34,8 @@ public class FiltrosActivity extends AppCompatActivity {
     private Spinner spinnerRaca;
     private SeekBar seekBarIdade, seekBarPeso, seekBarRaioBusca;
     private TextView txtSeekBarIdadeValue, txtSeekBarPesoValue, txtSeekBarRaioBuscaValue;
+    private CheckBox chkSociavelPessoas, chkSociavelCaes, chkSociavelGatos, chkSociavelOutros,
+            chkTemperamentoBravo, chkTemperamentoComCuidado, chkTemperamentoConviveBem, chkTemperamentoMuitoDocil;
     int idade = 0, peso = 0, raioDeBusca = 0;
 
 
@@ -116,10 +122,18 @@ public class FiltrosActivity extends AppCompatActivity {
             }
         });
 
-
-
         radioGroupCastrado = (RadioGroup) findViewById(R.id.radioGroupCastrado);
         radioGroupVermifugado = (RadioGroup) findViewById(R.id.radioGroupVermifugado);
+
+        chkSociavelPessoas = (CheckBox) findViewById(R.id.chk_sociavel_pessoas);
+        chkSociavelCaes = (CheckBox) findViewById(R.id.chk_sociavel_caes);
+        chkSociavelGatos = (CheckBox) findViewById(R.id.chk_sociavel_gatos);
+        chkSociavelOutros = (CheckBox) findViewById(R.id.chk_sociavel_outros);
+
+        chkTemperamentoBravo = (CheckBox) findViewById(R.id.chk_temperamento_bravo);
+        chkTemperamentoComCuidado = (CheckBox) findViewById(R.id.chk_temperamento_cuidado);
+        chkTemperamentoConviveBem = (CheckBox) findViewById(R.id.chk_temperamento_convive);
+        chkTemperamentoMuitoDocil = (CheckBox) findViewById(R.id.chk_temperamento_docil);
     }
 
     @Override
@@ -151,8 +165,21 @@ public class FiltrosActivity extends AppCompatActivity {
     }
 
     private void aplicarFiltro() {
+        preencherFiltro();
+        salvarFiltroJson(filtros);
+    }
 
+    private void salvarFiltroJson(Filtros filtros) {
+        Gson gson = new Gson();
+        String json = gson.toJson(filtros);
+        if(Utils.saveJsonFile(this, "filtros.json", json)) {
+            Utils.showToastMessage(this, "Json salvo com sucesso");
+        } else {
+            Utils.showToastMessage(this, "Erro ao salvar filtros");
+        }
+    }
 
+    private void preencherFiltro() {
         //pegar o valor da especie selecionado
         int selectedEspecie = radioGroupEspecie.getCheckedRadioButtonId();
         radioEspecieButton = (RadioButton) findViewById(selectedEspecie);
@@ -191,10 +218,47 @@ public class FiltrosActivity extends AppCompatActivity {
         }
 
         //pegar os valores de sociavel selecionados
+        List<String> sociavel = new ArrayList<>();
+        if(chkSociavelPessoas.isChecked()){
+            sociavel.add(chkSociavelPessoas.getText().toString());
+        }
 
+        if(chkSociavelCaes.isChecked()){
+            sociavel.add(chkSociavelCaes.getText().toString());
+        }
+
+        if(chkSociavelGatos.isChecked()){
+            sociavel.add(chkSociavelGatos.getText().toString());
+        }
+
+        if(chkSociavelOutros.isChecked()){
+            sociavel.add(chkSociavelOutros.getText().toString());
+        }
+
+        filtros.sociavel = sociavel;
 
         //pegar os valores de temperamento selecionados
+        List<String> temperamento = new ArrayList<>();
+        if(chkTemperamentoBravo.isChecked()) {
+            temperamento.add(chkTemperamentoBravo.getText().toString());
+        }
 
+        if(chkTemperamentoComCuidado.isChecked()) {
+            temperamento.add(chkTemperamentoComCuidado.getText().toString());
+        }
+
+        if(chkTemperamentoConviveBem.isChecked()) {
+            temperamento.add(chkTemperamentoConviveBem.getText().toString());
+        }
+
+        if(chkTemperamentoMuitoDocil.isChecked()) {
+            temperamento.add(chkTemperamentoMuitoDocil.getText().toString());
+        }
+
+        filtros.temperamento = temperamento;
+
+        System.out.println(sociavel.toString());
+        System.out.println(temperamento.toString());
 
         //pegar o valor de raio de busca selecionado
         filtros.raioDeBusca = raioDeBusca;
