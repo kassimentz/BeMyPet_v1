@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.util.Util;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,8 +165,21 @@ public class FiltrosActivity extends AppCompatActivity {
     }
 
     private void aplicarFiltro() {
+        preencherFiltro();
+        salvarFiltroJson(filtros);
+    }
 
+    private void salvarFiltroJson(Filtros filtros) {
+        Gson gson = new Gson();
+        String json = gson.toJson(filtros);
+        if(Utils.saveJsonFile(this, "filtros.json", json)) {
+            Utils.showToastMessage(this, "Json salvo com sucesso");
+        } else {
+            Utils.showToastMessage(this, "Erro ao salvar filtros");
+        }
+    }
 
+    private void preencherFiltro() {
         //pegar o valor da especie selecionado
         int selectedEspecie = radioGroupEspecie.getCheckedRadioButtonId();
         radioEspecieButton = (RadioButton) findViewById(selectedEspecie);
