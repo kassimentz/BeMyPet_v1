@@ -79,7 +79,10 @@
     <string name="vermifugadoTitulo">Vermifugado</string>
     <string name="sociavelTitulo">Sociável</string>
     <string name="temperamentoTitulo">Temperamento</string>
-    <string name="raioDeBuscaTitulo">Raio de Busca</string>
+    <string name="raioDeBuscaTitulo">Raio de Busca (KM)</string>
+    <string name="raioDeBusca">Raio de Busca:</string>
+    <string name="pesoAproximado">Peso Aproximado:</string>
+    <string name="idadeAproximada">Idade Aproximada:</string>
 
 
     <string-array name="raca_array">
