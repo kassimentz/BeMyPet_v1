@@ -8,11 +8,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class FiltrosActivity extends AppCompatActivity {
+
+    private CheckBox chkCao, chkGato, chkOutros;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.drp_racas);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.raca_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                R.array.raca_array, R.layout.spinner_style);
         spinner.setAdapter(adapter);
     }
 
@@ -43,17 +45,28 @@ public class FiltrosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_cancel:
-                Utils.showToastMessage(this, "cancelar filtro");
+                cancelarFiltro();
                 return true;
 
             case R.id.action_do_filter:
-                Utils.showToastMessage(this, "realizar filtro");
+                aplicarFiltro();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private void cancelarFiltro() {
+        Utils.showToastMessage(this, "cancelar filtro");
+    }
+
+    private void aplicarFiltro() {
+        chkCao = (CheckBox) findViewById(R.id.chk_cao);
+        chkGato = (CheckBox) findViewById(R.id.chk_gato);
+        chkOutros = (CheckBox) findViewById(R.id.chk_outros);
+        Utils.showToastMessage(this, "realizar filtro");
     }
 
 

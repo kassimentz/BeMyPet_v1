@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="bgMain">#FFEFCC</color>
     <color name="orangeBorder">#F15922</color>
     <color name="white">#ffffff</color>
@@ -28,6 +28,10 @@
     <color name="YellowToolbar">#ffb432</color>
     <color name="YellowText">#ffcc32</color>
 
+    <color name="textoCheckbox">#6E3632</color>
+    <color name="textoFormulario">#FFCC32</color>
+
+
 
     <array name="array_dot_active">
         <item>@color/orangeBorder</item>
@@ -42,6 +46,8 @@
         <item>#fff</item>
         <item>#fff</item>
     </array>
+
+
 
     <!--Cores!! Marrom (6E3632). Laranja (F15922). Bege-creme (). Amarelo (FFCC32). Amarelo - somente status bar (FFB432)!-->
 </resources>

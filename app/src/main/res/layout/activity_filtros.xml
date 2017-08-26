@@ -44,53 +44,44 @@
                     android:paddingRight="10dp">
 
                     <!--campos para especie-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="ESPÉCIE"/>
+                                style="@style/textoFormulario"
+                                android:text="@string/especieTitulo"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                        <LinearLayout style="@style/colunasFormulario">
 
-                            android:weightSum="3">
+                            <RadioGroup
+                                android:id="@+id/radioEspecie"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="3">
 
-                            <CheckBox android:id="@+id/chk_cao"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Cão"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioCao"
+                                    android:text="@string/cao"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
 
-                            <CheckBox android:id="@+id/chk_gato"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Gato"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioGato"
+                                    android:text="@string/gato"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
 
-                            <CheckBox android:id="@+id/chk_outros"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Outros"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioOutros"
+                                    android:text="@string/outros"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
+
+                            </RadioGroup>
 
 
                         </LinearLayout>
@@ -99,47 +90,39 @@
 
                     <!--campos para sexo-->
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                        style="@style/layoutLinha">>
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="SEXO"/>
-
-
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                        <LinearLayout style="@style/colunasFormulario">
 
-                            android:weightSum="3">
+                            <RadioGroup
+                                android:id="@+id/radioSexo"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="7" >
 
-                            <CheckBox android:id="@+id/chk_macho"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Macho"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioMacho"
+                                    android:text="@string/macho"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
 
-                            <CheckBox android:id="@+id/chk_femea"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Fêmea"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="2"/>
+                                <RadioButton
+                                    android:id="@+id/radioFemea"
+                                    android:text="@string/femea"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="6"/>
+
+                            </RadioGroup>
+
 
 
                         </LinearLayout>
@@ -147,36 +130,21 @@
                     </LinearLayout>
 
                     <!--campos para raça-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="RAÇA"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
+                        <LinearLayout style="@style/colunasFormularioSpinner">
 
                             <Spinner
+                                style="@style/spinnerFormulario"
                                 android:id="@+id/drp_racas"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:entries="@array/raca_array"
                                 android:prompt="@string/raca_prompt" />
 
@@ -186,124 +154,88 @@
                     </LinearLayout>
 
                     <!--campos para idade-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="IDADE"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
+                        <LinearLayout style="@style/colunasFormularioSpinner">
 
                             <SeekBar
                                 android:id="@+id/seekBarIdade"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:progressDrawable="@drawable/progress_drawable"
                                 android:progress="20"
-                                android:secondaryProgress="20"
-                                android:layout_weight="3" />
+                                android:secondaryProgress="20" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
                     <!--campos para peso-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="PESO"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
+                        <LinearLayout style="@style/colunasFormularioSpinner">
 
                             <SeekBar
                                 android:id="@+id/seekBarPeso"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:progressDrawable="@drawable/progress_drawable"
                                 android:progress="20"
-                                android:secondaryProgress="20"
-                                android:layout_weight="3" />
+                                android:secondaryProgress="20" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
                     <!--campos para castrado-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="CASTRADO"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                        <LinearLayout style="@style/colunasFormulario">
 
-                            android:weightSum="3">
+                            <RadioGroup
+                                android:id="@+id/radioCastrado"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="7" >
 
-                            <CheckBox android:id="@+id/chk_castrado"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Sim"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioCastradoSim"
+                                    android:text="@string/sim"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
 
-                            <CheckBox android:id="@+id/chk_nao_castrado"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Não"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="2"/>
+                                <RadioButton
+                                    android:id="@+id/radioCastradoNao"
+                                    android:text="@string/nao"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="6"/>
+
+                            </RadioGroup>
 
 
                         </LinearLayout>
@@ -311,46 +243,38 @@
                     </LinearLayout>
 
                     <!--campos para vermifugado-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:weightSum="1">
+                        <LinearLayout style="@style/colunasTituloFormulario">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="VERMIFUGADO"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                        <LinearLayout style="@style/colunasFormulario">
 
-                            android:weightSum="3">
+                            <RadioGroup
+                                android:id="@+id/radioVermifugado"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="7" >
 
-                            <CheckBox android:id="@+id/chk_vermifugado"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Sim"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioVermifugadoSim"
+                                    android:text="@string/sim"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
 
-                            <CheckBox android:id="@+id/chk_nao_vermifugado"
-                                android:layout_width="80dp"
-                                android:layout_height="wrap_content"
-                                android:text="Não"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="2"/>
+                                <RadioButton
+                                    android:id="@+id/radioVermifugadoNao"
+                                    android:text="@string/nao"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="6"/>
+
+                            </RadioGroup>
 
 
                         </LinearLayout>
@@ -358,98 +282,112 @@
                     </LinearLayout>
 
                     <!--campos para sociavel e temperamento-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
+                    <LinearLayout style="@style/layoutLinha">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="2">
+                        <LinearLayout style="@style/colunaComCheckbox">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="SOCIÁVEL"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_pessoas"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Pessoas"
+                                android:text="@string/sociavelPessoas"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_caes"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Cães"
+                                android:text="@string/sociavelCaes"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_gatos"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Gatos"
+                                android:text="@string/sociavelGatos"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_outros"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Outros"
+                                android:text="@string/outros"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="2">
+                            style="@style/colunaComCheckbox">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/textoFormulario"
                                 android:text="TEMPERAMENTO"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_bravo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Bravo"
+                                style="@style/checkBoxFormulario"
+                                android:text="@string/temperamentoBravo"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_cuidado"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Com cuidado"
+                                style="@style/checkBoxFormulario"
+                                android:text="@string/temperamentoComCuidado"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_convive"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Convive Bem"
+                                android:text="@string/temperamentoConviveBem"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_docil"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Muito dócil"
+                                android:text="@string/temperamentoMuitoDocil"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/OrangeApp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <LinearLayout style="@style/layoutLinha">
+
+                        <LinearLayout style="@style/colunasTituloFormulario">
+
+                            <TextView
+                                style="@style/textoFormulario"
+                                android:textAlignment="center"
+                                android:text="RAIO DE BUSCA (KM)"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/colunasFormularioSpinner"
+                            android:layout_gravity="center">
+
+                            <SeekBar
+                                android:id="@+id/seekBarRaioBusca"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:progressDrawable="@drawable/progress_drawable"
+                                android:progress="20"
+                                android:secondaryProgress="20" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-
                 </LinearLayout>
+
+
             </ScrollView>
 
         </LinearLayout>
