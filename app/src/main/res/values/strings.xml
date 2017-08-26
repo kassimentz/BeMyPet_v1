@@ -45,6 +45,7 @@
 
     <string name="activity_title_sobre">Sobre</string>
     <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
+    <string name="activity_title_peril_pet">Perfil Pet</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>

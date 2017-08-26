@@ -36,6 +36,7 @@ import com.koushikdutta.ion.Ion;
 import java.util.concurrent.ExecutionException;
 
 import bemypet.com.br.bemypet_v1.InicialActivity;
+import bemypet.com.br.bemypet_v1.PerfilPetActivity;
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.SobreNosActivity;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
@@ -186,7 +187,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
                 Pet p = (Pet) marker.getTag();
                 Utils.showToastMessage(getContext(), p.nome);
-                Intent intent = new Intent(getContext(), SobreNosActivity.class);
+                Intent intent = new Intent(getContext(), PerfilPetActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("pet", new Gson().toJson(p));
                 intent.putExtras(bundle);
