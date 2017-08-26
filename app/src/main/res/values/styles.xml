@@ -62,23 +62,12 @@
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="checkBoxOff" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+    <style name="checkBoxFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:button">@drawable/check_off</item>
-        <item name="android:checked">false</item>
+        <item name="android:tint">@color/OrangeApp</item>
+        <item name="android:buttonTint">@color/OrangeApp</item>
         <item name="android:textSize">12dp</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:textColor">@color/textoCheckbox</item>
-    </style>
-
-    <style name="checkBoxOn" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:button">@drawable/check_on</item>
-        <item name="android:checked">false</item>
-        <item name="android:textSize">12dp</item>
-        <item name="android:layout_margin">5dp</item>
         <item name="android:textColor">@color/textoCheckbox</item>
     </style>
 
@@ -141,6 +130,21 @@
         <item name="android:textColorHint">@color/textoCheckbox</item>
         <item name="android:background">@drawable/gradient_spinner</item>
         <item name="android:popupBackground">#DFFFFFFF</item>
+    </style>
+
+    <style name="radioButtonFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textoCheckbox</item>
+        <item name="android:buttonTint">@color/OrangeApp</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="radioGroupFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+
     </style>
 
 </resources>

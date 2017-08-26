@@ -50,29 +50,38 @@
 
                             <TextView
                                 style="@style/textoFormulario"
-                                android:text="ESPÉCIE"/>
+                                android:text="@string/especieTitulo"/>
 
                         </LinearLayout>
 
                         <LinearLayout style="@style/colunasFormulario">
 
-                            <CheckBox android:id="@+id/chk_cao"
-                                android:text="Cão"
-                                style="@style/checkBoxOn"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                            <RadioGroup
+                                android:id="@+id/radioEspecie"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="3">
 
-                            <CheckBox android:id="@+id/chk_gato"
-                                android:text="Gato"
-                                style="@style/checkBoxOff"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioCao"
+                                    android:text="@string/cao"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
 
-                            <CheckBox android:id="@+id/chk_outros"
-                                android:text="Outros"
-                                style="@style/checkBoxOff"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioGato"
+                                    android:text="@string/gato"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
+
+                                <RadioButton
+                                    android:id="@+id/radioOutros"
+                                    android:text="@string/outros"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
+
+                            </RadioGroup>
 
 
                         </LinearLayout>
@@ -93,17 +102,26 @@
 
                         <LinearLayout style="@style/colunasFormulario">
 
-                            <CheckBox android:id="@+id/chk_macho"
-                                android:text="Macho"
-                                style="@style/checkBoxOn"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="2"/>
+                            <RadioGroup
+                                android:id="@+id/radioSexo"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="7" >
 
-                            <CheckBox android:id="@+id/chk_femea"
-                                android:text="Fêmea"
-                                style="@style/checkBoxOff"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioMacho"
+                                    android:text="@string/macho"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
+
+                                <RadioButton
+                                    android:id="@+id/radioFemea"
+                                    android:text="@string/femea"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="6"/>
+
+                            </RadioGroup>
 
 
 
@@ -198,17 +216,26 @@
 
                         <LinearLayout style="@style/colunasFormulario">
 
-                            <CheckBox android:id="@+id/chk_castrado"
-                                android:text="Sim"
-                                style="@style/checkBoxOn"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="2"/>
+                            <RadioGroup
+                                android:id="@+id/radioCastrado"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="7" >
 
-                            <CheckBox android:id="@+id/chk_nao_castrado"
-                                android:text="Não"
-                                style="@style/checkBoxOff"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioCastradoSim"
+                                    android:text="@string/sim"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
+
+                                <RadioButton
+                                    android:id="@+id/radioCastradoNao"
+                                    android:text="@string/nao"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="6"/>
+
+                            </RadioGroup>
 
 
                         </LinearLayout>
@@ -228,17 +255,26 @@
 
                         <LinearLayout style="@style/colunasFormulario">
 
-                            <CheckBox android:id="@+id/chk_vermifugado"
-                                android:text="Sim"
-                                style="@style/checkBoxOn"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="2"/>
+                            <RadioGroup
+                                android:id="@+id/radioVermifugado"
+                                style="@style/radioGroupFormulario"
+                                android:layout_weight="3"
+                                android:weightSum="7" >
 
-                            <CheckBox android:id="@+id/chk_nao_vermifugado"
-                                android:text="Não"
-                                style="@style/checkBoxOff"
-                                android:onClick="onCheckboxClicked"
-                                android:layout_weight="1"/>
+                                <RadioButton
+                                    android:id="@+id/radioVermifugadoSim"
+                                    android:text="@string/sim"
+                                    android:checked="true"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="1"/>
+
+                                <RadioButton
+                                    android:id="@+id/radioVermifugadoNao"
+                                    android:text="@string/nao"
+                                    style="@style/radioButtonFormulario"
+                                    android:layout_weight="6"/>
+
+                            </RadioGroup>
 
 
                         </LinearLayout>
@@ -255,26 +291,26 @@
                                 android:text="SOCIÁVEL"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_pessoas"
-                                android:text="Pessoas"
-                                style="@style/checkBoxOn"
+                                android:text="@string/sociavelPessoas"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_caes"
-                                android:text="Cães"
-                                style="@style/checkBoxOff"
+                                android:text="@string/sociavelCaes"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_gatos"
-                                android:text="Gatos"
-                                style="@style/checkBoxOn"
+                                android:text="@string/sociavelGatos"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_sociavel_outros"
-                                android:text="Outros"
-                                style="@style/checkBoxOff"
+                                android:text="@string/outros"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
@@ -288,26 +324,26 @@
                                 android:text="TEMPERAMENTO"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_bravo"
-                                style="@style/checkBoxOff"
-                                android:text="Bravo"
+                                style="@style/checkBoxFormulario"
+                                android:text="@string/temperamentoBravo"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_cuidado"
-                                style="@style/checkBoxOff"
-                                android:text="Com cuidado"
+                                style="@style/checkBoxFormulario"
+                                android:text="@string/temperamentoComCuidado"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_convive"
-                                android:text="Convive Bem"
-                                style="@style/checkBoxOn"
+                                android:text="@string/temperamentoConviveBem"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 
                             <CheckBox android:id="@+id/chk_temperamento_docil"
-                                android:text="Muito dócil"
-                                style="@style/checkBoxOn"
+                                android:text="@string/temperamentoMuitoDocil"
+                                style="@style/checkBoxFormulario"
                                 android:onClick="onCheckboxClicked"
                                 android:layout_weight="1"/>
 

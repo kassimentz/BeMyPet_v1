@@ -55,6 +55,32 @@
 
 
     <string name="raca_prompt">Escolha uma raça</string>
+    <string name="cao">Cão</string>
+    <string name="gato">Gato</string>
+    <string name="outros">Outros</string>
+    <string name="macho">Macho</string>
+    <string name="femea">Fêmea</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="sociavelPessoas">Pessoas</string>
+    <string name="sociavelCaes">Cães</string>
+    <string name="sociavelGatos">Gatos</string>
+    <string name="temperamentoBravo">Bravo</string>
+    <string name="temperamentoComCuidado">Com Cuidado</string>
+    <string name="temperamentoConviveBem">Convive Bem</string>
+    <string name="temperamentoMuitoDocil">Muito Dócil</string>
+
+    <string name="especieTitulo">Espécie</string>
+    <string name="sexoTitulo">Sexo</string>
+    <string name="racaTitulo">Raça</string>
+    <string name="idadeTitulo">Idade</string>
+    <string name="pesoTitulo">Peso</string>
+    <string name="castradoTitulo">Castrado</string>
+    <string name="vermifugadoTitulo">Vermifugado</string>
+    <string name="sociavelTitulo">Sociável</string>
+    <string name="temperamentoTitulo">Temperamento</string>
+    <string name="raioDeBuscaTitulo">Raio de Busca</string>
+
 
     <string-array name="raca_array">
         <item>SRD (Sem Raça Definida)</item>
