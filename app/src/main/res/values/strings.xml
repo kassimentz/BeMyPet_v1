@@ -187,5 +187,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="btn_adotar_agora">ADOTAR AGORA</string>
+    <string name="mesma_ninhada">MESMA NINHADA</string>
 
 </resources>
