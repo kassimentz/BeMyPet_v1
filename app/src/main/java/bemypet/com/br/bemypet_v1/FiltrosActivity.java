@@ -100,8 +100,8 @@ public class FiltrosActivity extends AppCompatActivity {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,int rightPinIndex, String leftPinValue, String rightPinValue) {
                 pesoInicial = leftPinValue;
-                pesoFinal = leftPinValue;
-                txtSeekBarPesoValue.setText("Peso de "+ leftPinValue + " até "+ leftPinValue+" anos.");
+                pesoFinal = rightPinValue;
+                txtSeekBarPesoValue.setText("Peso de "+ leftPinValue + " até "+ rightPinValue+" kg.");
             }
         });
 
@@ -162,10 +162,89 @@ public class FiltrosActivity extends AppCompatActivity {
     }
 
     private void lerFiltros() {
-        //TODO para realizar a leitura dos valores do arquivo de filtros... e setar esses valores como valores iniciais
-//        String data = Utils.readStringFromFile(this, "filtros.json");
-//        Filtros f = new Gson().fromJson(data, Filtros.class);
-//        System.out.println(f.toString());
+        String data = Utils.readStringFromFile(this, "filtros.json");
+        Filtros filtrosSalvos = new Gson().fromJson(data, Filtros.class);
+        if(filtrosSalvos != null) {
+            //se existem filtros salvos, preencher os campos conforme o que estava salvo
+            System.out.println(filtrosSalvos.toString());
+
+            //setando a especie
+            for (int i = 0; i < radioGroupEspecie.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupEspecie.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(filtrosSalvos.especie)) {
+                    child.setChecked(true);
+                }
+            }
+
+            //setando o sexo
+            for (int i = 0; i < radioGroupSexo.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupSexo.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(filtrosSalvos.sexo)) {
+                    child.setChecked(Boolean.TRUE);
+                }
+            }
+
+            //setando a raça
+            spinnerRaca.setSelection(Utils.getSpinnerIndex(spinnerRaca, filtrosSalvos.raca));
+
+            //setando a idade
+            rangeIdade.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.idadeInicial), Integer.valueOf(filtrosSalvos.idadeFinal));
+
+            //setando o peso
+            rangePeso.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.pesoInicial), Integer.valueOf(filtrosSalvos.pesoFinal));
+
+            //setando castrado
+            for (int i = 0; i < radioGroupCastrado.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupCastrado.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(filtrosSalvos.castrado)) {
+                    child.setChecked(true);
+                }
+            }
+
+            //setando vermifugado
+            for (int i = 0; i < radioGroupVermifugado.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupVermifugado.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(filtrosSalvos.vermifugado)) {
+                    child.setChecked(true);
+                }
+            }
+
+            //setando valores de sociavel
+            for (String sociavel : filtrosSalvos.sociavel) {
+                if(sociavel.equalsIgnoreCase(chkSociavelPessoas.getText().toString()))
+                    chkSociavelPessoas.setChecked(Boolean.TRUE);
+
+                if(sociavel.equalsIgnoreCase(chkSociavelCaes.getText().toString()))
+                    chkSociavelCaes.setChecked(Boolean.TRUE);
+
+                if(sociavel.equalsIgnoreCase(chkSociavelGatos.getText().toString()))
+                    chkSociavelGatos.setChecked(Boolean.TRUE);
+
+                if(sociavel.equalsIgnoreCase(chkSociavelOutros.getText().toString()))
+                    chkSociavelOutros.setChecked(Boolean.TRUE);
+            }
+
+            //setando valores de temperamento
+            for (String temperamento : filtrosSalvos.temperamento) {
+                if(temperamento.equalsIgnoreCase(chkTemperamentoBravo.getText().toString()))
+                    chkTemperamentoBravo.setChecked(Boolean.TRUE);
+
+                if(temperamento.equalsIgnoreCase(chkTemperamentoComCuidado.getText().toString()))
+                    chkTemperamentoComCuidado.setChecked(Boolean.TRUE);
+
+                if(temperamento.equalsIgnoreCase(chkTemperamentoConviveBem.getText().toString()))
+                    chkTemperamentoConviveBem.setChecked(Boolean.TRUE);
+
+                if(temperamento.equalsIgnoreCase(chkTemperamentoMuitoDocil.getText().toString()))
+                    chkTemperamentoMuitoDocil.setChecked(Boolean.TRUE);
+            }
+        }
+
+        //setando o raio de busca
+        seekBarRaioBusca.setProgress(Integer.valueOf(filtrosSalvos.raioDeBusca));
+        txtSeekBarRaioBuscaValue.setText("Raio de Busca: "+String.valueOf(filtrosSalvos.raioDeBusca)+ " km.");
+
+
     }
 
     private void cancelarFiltro() {
@@ -220,20 +299,13 @@ public class FiltrosActivity extends AppCompatActivity {
         //pegar o valor de castrado selecionado
         int selectedCastrado = radioGroupCastrado.getCheckedRadioButtonId();
         radioCastradoButton = (RadioButton) findViewById(selectedCastrado);
-        if(radioCastradoButton.getText().toString().equalsIgnoreCase("Sim")) {
-            filtros.castrado = Boolean.TRUE;
-        } else {
-            filtros.castrado = Boolean.FALSE;
-        }
+        filtros.castrado = radioCastradoButton.getText().toString();
+
 
         //pegar o valor de vermifugado selecionado
         int selectedVermifugado = radioGroupVermifugado.getCheckedRadioButtonId();
         radioVermifugadoButton = (RadioButton) findViewById(selectedVermifugado);
-        if(radioVermifugadoButton.getText().toString().equalsIgnoreCase("Sim")) {
-            filtros.vermifugado = Boolean.TRUE;
-        } else {
-            filtros.vermifugado = Boolean.FALSE;
-        }
+        filtros.vermifugado = radioVermifugadoButton.getText().toString();
 
         //pegar os valores de sociavel selecionados
         List<String> sociavel = new ArrayList<>();
@@ -281,6 +353,7 @@ public class FiltrosActivity extends AppCompatActivity {
         //pegar o valor de raio de busca selecionado
         filtros.raioDeBusca = raioDeBusca;
     }
+
 
 
 }

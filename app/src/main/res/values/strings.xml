@@ -86,6 +86,7 @@
 
 
     <string-array name="raca_array">
+        <item>Qualquer</item>
         <item>SRD (Sem Raça Definida)</item>
         <item>Chow Chow</item>
         <item>Shitsu</item>

@@ -52,12 +52,10 @@ import bemypet.com.br.bemypet_v1.utils.Utils;
  * create an instance of this fragment.
  */
 public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -83,7 +81,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
      * @param param2 Parameter 2.
      * @return A new instance of fragment TelaInicialFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static TelaInicialFragment newInstance(String param1, String param2) {
         TelaInicialFragment fragment = new TelaInicialFragment();
         Bundle args = new Bundle();
@@ -120,7 +117,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -214,13 +210,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                     map = getMap();
                     try {
                         pet = postSnapshot.getValue(Pet.class);
-                        options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
-                        options.title(pet.nome);
+                        if(pet.cadastroAtivo) {
+                            options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
+                            options.title(pet.nome);
 
-                        Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
-                        options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
-                        Marker m = map.addMarker(options);
-                        m.setTag(pet);
+                            Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
+                            options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
+                            Marker m = map.addMarker(options);
+                            m.setTag(pet);
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {

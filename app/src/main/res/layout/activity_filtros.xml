@@ -183,9 +183,10 @@
                             custom:connectingLineWeight="2dp"
                             custom:pinColor="@color/OrangeApp"
                             custom:selectorColor="@color/OrangeApp"
-                            custom:selectorSize="8dp"
+                            custom:selectorSize="10dp"
                             custom:rangeBarColor="@color/OrangeApp"
-                            custom:tickColor="@color/YellowText"/>
+                            custom:barWeight="2dp"
+                            custom:tickHeight="0dp"/>
 
                         <TextView
                             android:id="@+id/txtSeekBarIdadeValue"
@@ -227,9 +228,10 @@
                             custom:connectingLineWeight="2dp"
                             custom:pinColor="@color/OrangeApp"
                             custom:selectorColor="@color/OrangeApp"
-                            custom:selectorSize="8dp"
+                            custom:selectorSize="10dp"
                             custom:rangeBarColor="@color/OrangeApp"
-                            custom:tickColor="@color/YellowText"/>
+                            custom:barWeight="2dp"
+                            custom:tickHeight="0dp"/>
 
                         <TextView
                             android:id="@+id/txtSeekBarPesoValue"

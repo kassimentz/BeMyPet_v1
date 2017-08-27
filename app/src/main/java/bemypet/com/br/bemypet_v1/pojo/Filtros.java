@@ -23,8 +23,8 @@ public class Filtros {
     public String idadeFinal;
     public String pesoInicial;
     public String pesoFinal;
-    public Boolean castrado;
-    public Boolean vermifugado;
+    public String castrado;
+    public String vermifugado;
     public List<String> sociavel = new ArrayList<>();
     public List<String> temperamento = new ArrayList<>();
     public Integer raioDeBusca;
