@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.koushikdutta.ion.Ion;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -107,12 +108,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         try {
-
-//            List<Pet> pets = Utils.getPetsFromJson(Utils.readJsonFromFile(getContext(), "pets.json"));
-//            for (Pet p:pets) {
-//                salvarPet(p);
-//                System.out.println(p.nome);
-//            }
             rootView = inflater.inflate(R.layout.fragment_tela_inicial, container, false);
             MapsInitializer.initialize(this.getActivity());
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -192,10 +187,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         InicialActivity activity = (InicialActivity) getActivity();
         Filtros filtro  = activity.getFiltroActivity();
         if(filtro != null) {
-            System.out.println("buscando pets com filtro");
             buscarPetsPorFiltro(filtro);
         } else {
-            System.out.println("buscando pets sem filtro");
             listarPets();
         }
 
@@ -452,17 +445,23 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.FALSE;
         }
 
-        if(filtro.sociavel.containsAll(pet.sociavel)) {
+        //verifica se ao menos um elemento da lista sociavel do pet existe no filtro
+        if(!Collections.disjoint(pet.sociavel, filtro.sociavel)) {
             petValido = Boolean.TRUE;
+
+        } else {
+            petValido = Boolean.FALSE;
+
+        }
+
+        //verifica se ao menos um elemento da lista temperamento do pet existe no filtro
+        if(!Collections.disjoint(pet.temperamento, filtro.temperamento)) {
+            petValido = Boolean.TRUE;
+
         } else {
             petValido = Boolean.FALSE;
         }
 
-        if(filtro.temperamento.containsAll(pet.temperamento)) {
-            petValido = Boolean.TRUE;
-        } else {
-            petValido = Boolean.FALSE;
-        }
 
         if(petValido) {
             return pet;

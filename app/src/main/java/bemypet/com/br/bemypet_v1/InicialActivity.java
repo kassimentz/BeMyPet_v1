@@ -28,7 +28,6 @@ import bemypet.com.br.bemypet_v1.fragment.MeusPetsFavoritosFragment;
 import bemypet.com.br.bemypet_v1.fragment.NotificacoesMensagensFragment;
 import bemypet.com.br.bemypet_v1.fragment.TelaInicialFragment;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
-import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.utils.CircleTransform;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -121,7 +120,6 @@ public class InicialActivity extends AppCompatActivity {
         }
         Filtros filtro = new Gson().fromJson(jsonObj, Filtros.class);
         if(filtro!=null) {
-            //TODO salvar o filtro em uma variavel da classe se retornar diferente de vazio
             setFiltroActivity(filtro);
         }
 
@@ -176,7 +174,6 @@ public class InicialActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filtro) {
-            Utils.showToastMessage(getApplicationContext(), "Realizar filtros");
             Intent intent = new Intent(this, FiltrosActivity.class);
             startActivity(intent);
             return true;

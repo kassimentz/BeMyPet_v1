@@ -256,7 +256,7 @@ public class FiltrosActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(filtros);
         if(Utils.saveJsonFile(this, "filtros.json", json)) {
-            Utils.showToastMessage(this, "Filtro com sucesso");
+            Utils.showToastMessage(this, "Filtro salvo com sucesso");
         } else {
             Utils.showToastMessage(this, "Erro ao salvar filtros");
         }
