@@ -94,7 +94,50 @@
         <item>Persa</item>
         <item>Egipcio</item>
         <item>Siamês</item>
+    </string-array>
 
+    <string-array name="raca_cao">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Shih Tzu</item>
+        <item>Yorkshire Terrier</item>
+        <item>Poodle</item>
+        <item>Lhasa Apso</item>
+        <item>Buldogue Francês</item>
+        <item>Maltês</item>
+        <item>Golden Retriever</item>
+        <item>Labrador</item>
+        <item>Pug</item>
+        <item>Dachshund</item>
+        <item>Spitz Alemão</item>
+        <item>Pinscher</item>
+        <item>Schnauzer</item>
+        <item>Beagle</item>
+        <item>Cocker Spaniel</item>
+        <item>Border Collie</item>
+        <item>Buldogue Inglês</item>
+        <item>American Pitbull</item>
+        <item>Chow Chow</item>
+    </string-array>
+
+    <string-array name="raca_gato">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Persa</item>
+        <item>Himalaia</item>
+        <item>Siamês</item>
+        <item>Maine Coon</item>
+        <item>Angorá</item>
+        <item>Sphynx</item>
+        <item>Ragdoll</item>
+        <item>Ashera</item>
+        <item>American Shorthair</item>
+        <item>Siberiano</item>
+        <item>Egípcio</item>
+    </string-array>
+
+    <string-array name="raca_outro">
+        <item>Outro</item>
     </string-array>
 
 </resources>

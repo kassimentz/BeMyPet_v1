@@ -120,11 +120,9 @@ public class Utils {
         PontoGeo ponto = new PontoGeo();
 
         if(activity == null) {
-            System.out.println("activity null");
             gps = new GPSTracker(context);
         } else {
             gps = new GPSTracker(context, activity);
-            System.out.println("activity not null");
         }
 
 

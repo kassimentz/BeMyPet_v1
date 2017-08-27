@@ -401,7 +401,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private Pet filtrarPet(Pet pet, Filtros filtro) {
         Boolean petValido = Boolean.FALSE;
 
-        if(pet.especie.equalsIgnoreCase(filtro.especie)) {
+
+        if(pet.especie.equalsIgnoreCase(filtro.especie) || pet.especie.equalsIgnoreCase("Outros")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
@@ -413,7 +414,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.FALSE;
         }
 
-        if(pet.raca.equalsIgnoreCase(filtro.raca)) {
+        if(pet.raca.equalsIgnoreCase(filtro.raca) || pet.raca.equalsIgnoreCase("Qualquer")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;

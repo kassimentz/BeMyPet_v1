@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.content.Intent;
+import android.support.annotation.IdRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,9 +66,37 @@ public class FiltrosActivity extends AppCompatActivity {
     //inicializando os elementos do layout
     private void initializeVariables() {
 
-        radioGroupEspecie = (RadioGroup) findViewById(R.id.radioGroupEspecie);
-        radioGroupSexo = (RadioGroup) findViewById(R.id.radioGroupSexo);
         spinnerRaca = (Spinner) findViewById(R.id.spinnerRacas);
+
+        radioGroupEspecie = (RadioGroup) findViewById(R.id.radioGroupEspecie);
+
+        radioGroupEspecie.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+
+                int selectedEspecie = radioGroupEspecie.getCheckedRadioButtonId();
+                radioEspecieButton = (RadioButton) findViewById(selectedEspecie);
+                if(radioEspecieButton.getText().toString().equalsIgnoreCase("Cão")) {
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                            R.array.raca_cao, R.layout.spinner_style);
+                    spinnerRaca.setAdapter(adapter);
+                }
+
+                if(radioEspecieButton.getText().toString().equalsIgnoreCase("Gato")) {
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                            R.array.raca_gato, R.layout.spinner_style);
+                    spinnerRaca.setAdapter(adapter);
+                }
+
+                if(radioEspecieButton.getText().toString().equalsIgnoreCase("Outros")) {
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                            R.array.raca_outro, R.layout.spinner_style);
+                    spinnerRaca.setAdapter(adapter);
+                }
+            }
+        });
+        radioGroupSexo = (RadioGroup) findViewById(R.id.radioGroupSexo);
+
 
         rangeIdade = (RangeBar) findViewById(R.id.seekBarIdade);
         txtSeekBarIdadeValue = (TextView) findViewById(R.id.txtSeekBarIdadeValue);
@@ -161,6 +190,25 @@ public class FiltrosActivity extends AppCompatActivity {
                 RadioButton child = (RadioButton) radioGroupEspecie.getChildAt(i);
                 if(child.getText().toString().equalsIgnoreCase(filtrosSalvos.especie)) {
                     child.setChecked(true);
+
+                    if(child.getText().toString().equalsIgnoreCase("Cão")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.raca_cao, R.layout.spinner_style);
+                        spinnerRaca.setAdapter(adapter);
+                    }
+
+                    if(child.getText().toString().equalsIgnoreCase("Gato")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.raca_gato, R.layout.spinner_style);
+                        spinnerRaca.setAdapter(adapter);
+                    }
+
+                    if(child.getText().toString().equalsIgnoreCase("Outros")) {
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                                R.array.raca_outro, R.layout.spinner_style);
+                        spinnerRaca.setAdapter(adapter);
+                    }
+
                 }
             }
 
@@ -334,9 +382,6 @@ public class FiltrosActivity extends AppCompatActivity {
         }
 
         filtros.temperamento = temperamento;
-
-        System.out.println(sociavel.toString());
-        System.out.println(temperamento.toString());
 
         //pegar o valor de raio de busca selecionado
         filtros.raioDeBusca = raioDeBusca;
