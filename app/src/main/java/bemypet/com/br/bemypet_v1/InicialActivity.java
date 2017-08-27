@@ -63,6 +63,8 @@ public class InicialActivity extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+    private Filtros filtroActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +113,6 @@ public class InicialActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Utils.showToastMessage(this, "voltou!");
 
         String jsonObj = null;
         Bundle extras = getIntent().getExtras();
@@ -120,8 +121,8 @@ public class InicialActivity extends AppCompatActivity {
         }
         Filtros filtro = new Gson().fromJson(jsonObj, Filtros.class);
         if(filtro!=null) {
-            System.out.println(filtro.toString());
             //TODO salvar o filtro em uma variavel da classe se retornar diferente de vazio
+            setFiltroActivity(filtro);
         }
 
 
@@ -390,5 +391,13 @@ public class InicialActivity extends AppCompatActivity {
             fab.show();
         else
             fab.hide();
+    }
+
+    public Filtros getFiltroActivity() {
+        return filtroActivity;
+    }
+
+    public void setFiltroActivity(Filtros filtroActivity) {
+        this.filtroActivity = filtroActivity;
     }
 }

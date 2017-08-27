@@ -24,14 +24,14 @@ public class Pet {
     public String raca;
     public String dataNascimento;
     public String idadeAproximada;
-    public Double pesoAproximado;
+    public Integer pesoAproximado;
     public String parteDeNinhada;
     public String nomeNinhada;
     public String castrado;
     public String vermifugado;
     public String dose;
     public List<String> sociavel;
-    public String temperamento;
+    public List<String> temperamento;
     public List<String> imagens;
     public String informacoesAdicionais;
     public String status;
@@ -43,9 +43,9 @@ public class Pet {
     }
 
     public Pet(String nome, String especie, String sexo, String raca,
-               String dataNascimento, String idadeAproximada, Double pesoAproximado,
+               String dataNascimento, String idadeAproximada, Integer pesoAproximado,
                String parteDeNinhada, String nomeNinhada, String castrado, String vermifugado,
-               String dose, List<String> sociavel, String temperamento, List<String> imagens,
+               String dose, List<String> sociavel, List<String> temperamento, List<String> imagens,
                String informacoesAdicionais, String status, Boolean cadastroAtivo,
                PontoGeo localizacao) {
 

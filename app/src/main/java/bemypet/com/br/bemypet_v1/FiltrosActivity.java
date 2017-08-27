@@ -12,32 +12,18 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.appyvet.rangebar.RangeBar;
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryEventListener;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
-import bemypet.com.br.bemypet_v1.pojo.Pet;
-import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class FiltrosActivity extends AppCompatActivity {
@@ -76,7 +62,9 @@ public class FiltrosActivity extends AppCompatActivity {
         lerFiltros();
     }
 
+    //inicializando os elementos do layout
     private void initializeVariables() {
+
         radioGroupEspecie = (RadioGroup) findViewById(R.id.radioGroupEspecie);
         radioGroupSexo = (RadioGroup) findViewById(R.id.radioGroupSexo);
         spinnerRaca = (Spinner) findViewById(R.id.spinnerRacas);
@@ -164,9 +152,9 @@ public class FiltrosActivity extends AppCompatActivity {
     private void lerFiltros() {
         String data = Utils.readStringFromFile(this, "filtros.json");
         Filtros filtrosSalvos = new Gson().fromJson(data, Filtros.class);
+
+        //se existem filtros salvos, preencher os campos conforme o que estava salvo
         if(filtrosSalvos != null) {
-            //se existem filtros salvos, preencher os campos conforme o que estava salvo
-            System.out.println(filtrosSalvos.toString());
 
             //setando a especie
             for (int i = 0; i < radioGroupEspecie.getChildCount(); i++) {
@@ -248,7 +236,7 @@ public class FiltrosActivity extends AppCompatActivity {
     }
 
     private void cancelarFiltro() {
-        Utils.showToastMessage(this, "cancelar filtro");
+        this.finish();
     }
 
     private void aplicarFiltro() {
@@ -268,7 +256,7 @@ public class FiltrosActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(filtros);
         if(Utils.saveJsonFile(this, "filtros.json", json)) {
-            Utils.showToastMessage(this, "Json salvo com sucesso");
+            Utils.showToastMessage(this, "Filtro com sucesso");
         } else {
             Utils.showToastMessage(this, "Erro ao salvar filtros");
         }

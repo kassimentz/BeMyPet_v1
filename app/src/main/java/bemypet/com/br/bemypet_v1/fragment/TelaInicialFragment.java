@@ -39,6 +39,7 @@ import bemypet.com.br.bemypet_v1.InicialActivity;
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.SobreNosActivity;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
+import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.utils.Utils;
@@ -110,12 +111,19 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             mMapView.onCreate(savedInstanceState);
             mMapView.getMapAsync(this);
             getPontoLocalizacao();
+
+            InicialActivity activity = (InicialActivity) getActivity();
+            Filtros filtro  = activity.getFiltroActivity();
+            if(filtro != null) {
+                buscarPetsPorFiltro(filtro);
+            }
         }
         catch (InflateException e){
             Log.e("MAPA", "Inflate exception");
         }
         return rootView;
     }
+
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -295,7 +303,143 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
         setZoomIn();
 
+    }
 
+    private void buscarPetsPorFiltro(final Filtros filtro) {
+
+        GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(getPonto().lat, getPonto().lon), filtro.raioDeBusca);
+
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+
+                final String idFound = key;
+                FirebaseDatabase.getInstance().getReference().child("pets").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Pet pet = null;
+
+                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            pet = postSnapshot.getValue(Pet.class);
+                            if(pet.id.equals(idFound)) {
+                                //realizar os filtros no pet
+                                Pet petFiltrado = filtrarPet(pet, filtro);
+
+                                if(petFiltrado != null) {
+                                    map = getMap();
+                                    options.position(new LatLng((petFiltrado.localizacao.lat), petFiltrado.localizacao.lon));
+                                    options.title(pet.nome);
+                                    map.addMarker(options);
+                                }
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                System.out.println(String.format("Key %s is no longer in the search area", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                System.out.println("All initial data has been loaded and events have been fired!");
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+                System.err.println("There was an error with this query: " + error);
+            }
+        });
+
+        setZoomIn();
+
+    }
+
+    /**
+     * Metodo que verifica se o pet esta conforme os filtros
+     * @param pet
+     * @param filtro
+     * @return pet
+     */
+    private Pet filtrarPet(Pet pet, Filtros filtro) {
+        Boolean petValido = Boolean.FALSE;
+
+        if(pet.especie.equalsIgnoreCase(filtro.especie)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.sexo.equalsIgnoreCase(filtro.sexo)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.raca.equalsIgnoreCase(filtro.raca)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(Integer.valueOf(pet.idadeAproximada) >= Integer.valueOf(filtro.idadeInicial) &&
+                Integer.valueOf(pet.idadeAproximada) <= Integer.valueOf(filtro.idadeFinal))   {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.pesoAproximado >= Integer.valueOf(filtro.pesoInicial) &&
+               pet.pesoAproximado <= Integer.valueOf(filtro.pesoFinal))   {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.castrado.equalsIgnoreCase(filtro.castrado)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(filtro.sociavel.containsAll(pet.sociavel)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(filtro.temperamento.containsAll(pet.temperamento)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(petValido) {
+            return pet;
+        } else {
+            return null;
+        }
     }
 
     /**
