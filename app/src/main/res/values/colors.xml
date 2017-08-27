@@ -30,7 +30,8 @@
 
     <color name="textoCheckbox">#6E3632</color>
     <color name="textoFormulario">#FFCC32</color>
-
+    <color name="labelPerfil">#f15922</color>
+    <color name="textoPerfil">#6E3632</color>
 
 
     <array name="array_dot_active">

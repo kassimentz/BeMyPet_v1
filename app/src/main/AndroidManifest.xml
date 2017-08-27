@@ -63,15 +63,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InicialActivity" />
         </activity>
-        <activity
-            android:name=".PerfilPetScrollingActivity"
-            android:label="@string/title_activity_perfil_pet_scrolling"
-            android:parentActivityName=".PerfilPetActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bemypet.com.br.bemypet_v1.PerfilPetActivity" />
-        </activity>
     </application>
 
 </manifest>

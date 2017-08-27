@@ -23,6 +23,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
+
         ab.setTitle(R.string.activity_title_peril_pet);
 
 //        getBundle();
