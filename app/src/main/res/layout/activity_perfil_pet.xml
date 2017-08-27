@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".PerfilPetActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/visualizarPetToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/header_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_adocao" />
+
+            <ImageButton
+                android:id="@+id/user_profile_photo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/header_cover_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-60dp"
+                android:background="@drawable/cat_profile"
+                android:elevation="5dp"
+                android:padding="20dp"
+                android:scaleType="centerCrop" />
+
+            <RelativeLayout
+                android:id="@+id/profile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header_cover_image"
+                android:background="#fff"
+                android:elevation="4dp"
+                android:paddingBottom="10dp">
+
+
+                <ImageView
+                    android:id="@+id/add_friend"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/fav2_v" />
+
+
+                <TextView
+                    android:id="@+id/user_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="70dp"
+                    android:text="BASKARA"
+                    android:textColor="@color/OrangeApp"
+                    android:textSize="24sp"
+                    android:textStyle="normal" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:orientation="vertical">
+
+                <!--campos para especie e sexo-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/especieTitulo" />
+
+                        <TextView
+                            android:id="@+id/especiePerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/especieTitulo" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/sexoTitulo" />
+
+                        <TextView
+                            android:id="@+id/sexoPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/sexoTitulo" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para raça e idade-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/racaTitulo" />
+
+                        <TextView
+                            android:id="@+id/racaPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/racaTitulo" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/idadeTitulo" />
+
+                        <TextView
+                            android:id="@+id/idadePerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/idadeTitulo" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para peso-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/pesoTitulo" />
+
+                        <TextView
+                            android:id="@+id/pesoPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/pesoTitulo" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--campos para castrado e vermifugado-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/castradoTitulo" />
+
+                        <TextView
+                            android:id="@+id/castradoPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/castradoTitulo" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/vermifugadoTitulo" />
+
+                        <TextView
+                            android:id="@+id/vermifugadoPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/vermifugadoTitulo" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para socialvel e temperamento-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/sociavelTitulo" />
+
+                        <TextView
+                            android:id="@+id/socialvelPessoalPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/sociavelPessoas" />
+
+                        <TextView
+                            android:id="@+id/socialvelCaesPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/sociavelCaes" />
+
+                        <TextView
+                            android:id="@+id/socialvelGatosPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/sociavelGatos" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/temperamentoTitulo" />
+
+                        <TextView
+                            android:id="@+id/temperamentoPerfilPet"
+                            style="@style/textoPerfil"
+                            android:text="@string/temperamentoMuitoDocil" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras, ao contrário de Conteúdo aqui, conteúdo aqui, fazendo com que ele tenha uma aparência similar a de um texto legível. Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por 'lorem ipsum' mostra vários websites ainda em sua fase de construção. Várias versões novas surgiram ao longo dos anos, eventualmente por acidente, e às vezes de propósito (injetando humor, e coisas do gênero).
+" />
+                </LinearLayout>
+
+            <LinearLayout style="@style/layoutLinha"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/ButtonPerfil"
+                    style="@style/btnPertilAdota"
+                    android:text="@string/btn_adotar_agora"
+                    />
+
+            </LinearLayout>
+
+
+
+                <LinearLayout
+                    style="@style/layoutLinha">
+\                        <View
+                            android:layout_height="1px"
+                            android:layout_width="120dp"
+                            android:layout_gravity="center"
+                            android:background="@color/OrangeApp"
+                            android:weightSum="1"/>
+                        <TextView
+                            style="@style/labelPerfil"
+
+                            android:text="@string/mesma_ninhada"
+                            android:layout_width="wrap_content"
+                            android:weightSum="1"/>
+                    <View
+                        android:layout_height="1px"
+                        android:layout_width="120dp"
+                        android:weightSum="1"
+                        android:layout_gravity="center"
+                        android:background="@color/OrangeApp"/>
+
+                </LinearLayout>
+
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/gridMesmaNinhada"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:orientation="vertical">-->
+
+                    <GridView
+                        android:numColumns="auto_fit"
+                        android:gravity="center"
+                        android:columnWidth="80dp"
+                        android:stretchMode="columnWidth"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/grid"
+                        />
+
+                <!--</LinearLayout>-->
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+</LinearLayout>
