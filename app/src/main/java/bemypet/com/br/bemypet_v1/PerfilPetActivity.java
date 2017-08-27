@@ -25,7 +25,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(R.string.activity_title_peril_pet);
 
-        getBundle();
+//        getBundle();
 
     }
 
