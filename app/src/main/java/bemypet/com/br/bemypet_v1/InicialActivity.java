@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
 import bemypet.com.br.bemypet_v1.fragment.ConfiguracoesFragment;
@@ -28,7 +29,6 @@ import bemypet.com.br.bemypet_v1.fragment.MeusPetsFavoritosFragment;
 import bemypet.com.br.bemypet_v1.fragment.NotificacoesMensagensFragment;
 import bemypet.com.br.bemypet_v1.fragment.TelaInicialFragment;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
-import bemypet.com.br.bemypet_v1.utils.CircleTransform;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class InicialActivity extends AppCompatActivity {
@@ -284,12 +284,7 @@ public class InicialActivity extends AppCompatActivity {
         txtTipoUsuario.setText("Adotante");
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
+        Glide.with(this).load(urlProfileImg).apply(RequestOptions.circleCropTransform()).into(imgProfile);
 
         // showing dot next to notifications label
         navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
