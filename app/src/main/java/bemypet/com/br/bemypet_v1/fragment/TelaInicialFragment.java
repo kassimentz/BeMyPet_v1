@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.koushikdutta.ion.Ion;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import bemypet.com.br.bemypet_v1.InicialActivity;
@@ -63,9 +64,10 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private View rootView;
     GoogleMap map;
     MapView mMapView;
-
     private MarkerOptions options = new MarkerOptions();
     private PontoGeo ponto = new PontoGeo();
+
+    PontoGeo pontoTemp = new PontoGeo();
 
 
     private OnFragmentInteractionListener mListener;
@@ -105,6 +107,12 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         try {
+
+//            List<Pet> pets = Utils.getPetsFromJson(Utils.readJsonFromFile(getContext(), "pets.json"));
+//            for (Pet p:pets) {
+//                salvarPet(p);
+//                System.out.println(p.nome);
+//            }
             rootView = inflater.inflate(R.layout.fragment_tela_inicial, container, false);
             MapsInitializer.initialize(this.getActivity());
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -112,11 +120,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             mMapView.getMapAsync(this);
             getPontoLocalizacao();
 
-            InicialActivity activity = (InicialActivity) getActivity();
-            Filtros filtro  = activity.getFiltroActivity();
-            if(filtro != null) {
-                buscarPetsPorFiltro(filtro);
-            }
         }
         catch (InflateException e){
             Log.e("MAPA", "Inflate exception");
@@ -181,8 +184,20 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        pontoTemp.lat = -30.0170309;
+        pontoTemp.lon = -51.1660766;
         setMap(googleMap);
-        listarPets();
+
+        InicialActivity activity = (InicialActivity) getActivity();
+        Filtros filtro  = activity.getFiltroActivity();
+        if(filtro != null) {
+            System.out.println("buscando pets com filtro");
+            buscarPetsPorFiltro(filtro);
+        } else {
+            System.out.println("buscando pets sem filtro");
+            listarPets();
+        }
 
         getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -215,17 +230,16 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                 Pet pet = null;
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
-                    map = getMap();
                     try {
                         pet = postSnapshot.getValue(Pet.class);
                         if(pet.cadastroAtivo) {
                             options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
                             options.title(pet.nome);
-
                             Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
                             options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
-                            Marker m = map.addMarker(options);
+                            Marker m = getMap().addMarker(options);
                             m.setTag(pet);
+
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -248,7 +262,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private void listarPetsProximos() {
 
         GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(getPonto().lat, getPonto().lon), 20.0);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pontoTemp.lat, pontoTemp.lon), 20.0);
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -263,10 +277,9 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
                             if(pet.id.equals(idFound)) {
-                                map = getMap();
                                 options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
                                 options.title(pet.nome);
-                                map.addMarker(options);
+                                getMap().addMarker(options);
 
                             }
                         }
@@ -308,31 +321,44 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private void buscarPetsPorFiltro(final Filtros filtro) {
 
         GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(getPonto().lat, getPonto().lon), filtro.raioDeBusca);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pontoTemp.lat, pontoTemp.lon), filtro.raioDeBusca);
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
 
                 final String idFound = key;
                 FirebaseDatabase.getInstance().getReference().child("pets").addListenerForSingleValueEvent(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Pet pet = null;
-
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
-                            if(pet.id.equals(idFound)) {
-                                //realizar os filtros no pet
-                                Pet petFiltrado = filtrarPet(pet, filtro);
+                            //somente testar os filtros se o pet estiver disponivel para adocao = cadastro ativo
+                            if(pet.cadastroAtivo) {
+                                if (pet.id.equals(idFound)) {
 
-                                if(petFiltrado != null) {
-                                    map = getMap();
-                                    options.position(new LatLng((petFiltrado.localizacao.lat), petFiltrado.localizacao.lon));
-                                    options.title(pet.nome);
-                                    map.addMarker(options);
+                                    //realizar os filtros no pet
+                                    Pet petFiltrado = filtrarPet(pet, filtro);
+                                    if (petFiltrado != null) {
+
+                                        try {
+                                            options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
+                                            options.title(pet.nome);
+                                            Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
+                                            options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
+                                            Marker m = getMap().addMarker(options);
+                                            m.setTag(pet);
+
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
                                 }
-
                             }
                         }
                     }
@@ -376,6 +402,9 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
      * @param filtro
      * @return pet
      */
+
+    //TODO nos checkbox, nao trazer somente os que estiverem marcados,
+    // TODO mas aqueles que tambem possuirem essa caracteristica
     private Pet filtrarPet(Pet pet, Filtros filtro) {
         Boolean petValido = Boolean.FALSE;
 
@@ -455,9 +484,10 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
      * Método que utiliza a localizacao encontrada no GPS do dispositivo para dar zoom no mapa
      */
     private void setZoomIn() {
-        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(getPonto().lat, getPonto().lon)));
-        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(getPonto().lat, getPonto().lon)));
-        getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getPonto().lat, getPonto().lon), 12));
+
+        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(pontoTemp.lat, pontoTemp.lon)));
+        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(pontoTemp.lat, pontoTemp.lon)));
+        getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pontoTemp.lat, pontoTemp.lon), 12));
     }
 
     /**
