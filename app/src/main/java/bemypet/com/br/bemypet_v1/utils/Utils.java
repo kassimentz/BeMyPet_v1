@@ -13,14 +13,18 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -58,6 +62,44 @@ public class Utils {
        return buf.toString();
     }
 
+    public static Boolean saveJsonFile(Context context, String jsonName, String json) {
+
+        try {
+            FileOutputStream fileOutputStream = context.openFileOutput(jsonName ,Context.MODE_PRIVATE);
+            fileOutputStream.write(json.getBytes("UTF-8"));
+            fileOutputStream.close();
+            return Boolean.TRUE;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return Boolean.FALSE;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Boolean.FALSE;
+        }
+
+    }
+
+    public static String readStringFromFile(Context context, String fileName) {
+
+        try {
+            FileInputStream fileInputStream = context.openFileInput(fileName);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer = new StringBuffer();
+            String lines;
+            while ((lines=bufferedReader.readLine())!=null) {
+                stringBuffer.append(lines+"\n");
+            }
+            return stringBuffer.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static List<Pet> getPetsFromJson(String jsonString) {
         List<Pet> petList = new ArrayList<>();
 
@@ -78,11 +120,9 @@ public class Utils {
         PontoGeo ponto = new PontoGeo();
 
         if(activity == null) {
-            System.out.println("activity null");
             gps = new GPSTracker(context);
         } else {
             gps = new GPSTracker(context, activity);
-            System.out.println("activity not null");
         }
 
 
@@ -124,5 +164,17 @@ public class Utils {
     public static void showToastMessage(Context context, String msg) {
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public static int getSpinnerIndex(Spinner spinner, String myString) {
+        int index = 0;
+
+        for (int i=0; i < spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }

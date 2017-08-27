@@ -52,4 +52,92 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="raca_prompt">Escolha uma raça</string>
+    <string name="cao">Cão</string>
+    <string name="gato">Gato</string>
+    <string name="outros">Outros</string>
+    <string name="macho">Macho</string>
+    <string name="femea">Fêmea</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="sociavelPessoas">Pessoas</string>
+    <string name="sociavelCaes">Cães</string>
+    <string name="sociavelGatos">Gatos</string>
+    <string name="temperamentoBravo">Bravo</string>
+    <string name="temperamentoComCuidado">Com Cuidado</string>
+    <string name="temperamentoConviveBem">Convive Bem</string>
+    <string name="temperamentoMuitoDocil">Muito Dócil</string>
+
+    <string name="especieTitulo">Espécie</string>
+    <string name="sexoTitulo">Sexo</string>
+    <string name="racaTitulo">Raça</string>
+    <string name="idadeTitulo">Idade</string>
+    <string name="pesoTitulo">Peso</string>
+    <string name="castradoTitulo">Castrado</string>
+    <string name="vermifugadoTitulo">Vermifugado</string>
+    <string name="sociavelTitulo">Sociável</string>
+    <string name="temperamentoTitulo">Temperamento</string>
+    <string name="raioDeBuscaTitulo">Raio de Busca (KM)</string>
+    <string name="raioDeBusca">Raio de Busca:</string>
+    <string name="pesoAproximado">Peso Aproximado:</string>
+    <string name="idadeAproximada">Idade Aproximada:</string>
+
+
+    <string-array name="raca_array">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Chow Chow</item>
+        <item>Shitsu</item>
+        <item>Golden Retrivier</item>
+        <item>Persa</item>
+        <item>Egipcio</item>
+        <item>Siamês</item>
+    </string-array>
+
+    <string-array name="raca_cao">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Shih Tzu</item>
+        <item>Yorkshire Terrier</item>
+        <item>Poodle</item>
+        <item>Lhasa Apso</item>
+        <item>Buldogue Francês</item>
+        <item>Maltês</item>
+        <item>Golden Retriever</item>
+        <item>Labrador</item>
+        <item>Pug</item>
+        <item>Dachshund</item>
+        <item>Spitz Alemão</item>
+        <item>Pinscher</item>
+        <item>Schnauzer</item>
+        <item>Beagle</item>
+        <item>Cocker Spaniel</item>
+        <item>Border Collie</item>
+        <item>Buldogue Inglês</item>
+        <item>American Pitbull</item>
+        <item>Chow Chow</item>
+    </string-array>
+
+    <string-array name="raca_gato">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Persa</item>
+        <item>Himalaia</item>
+        <item>Siamês</item>
+        <item>Maine Coon</item>
+        <item>Angorá</item>
+        <item>Sphynx</item>
+        <item>Ragdoll</item>
+        <item>Ashera</item>
+        <item>American Shorthair</item>
+        <item>Siberiano</item>
+        <item>Egípcio</item>
+    </string-array>
+
+    <string-array name="raca_outro">
+        <item>Outro</item>
+    </string-array>
+
 </resources>

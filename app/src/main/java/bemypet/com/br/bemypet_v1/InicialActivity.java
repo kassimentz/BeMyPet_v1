@@ -21,11 +21,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 
 import bemypet.com.br.bemypet_v1.fragment.ConfiguracoesFragment;
 import bemypet.com.br.bemypet_v1.fragment.MeusPetsFavoritosFragment;
 import bemypet.com.br.bemypet_v1.fragment.NotificacoesMensagensFragment;
 import bemypet.com.br.bemypet_v1.fragment.TelaInicialFragment;
+import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.utils.CircleTransform;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -59,6 +61,8 @@ public class InicialActivity extends AppCompatActivity {
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
+
+    private Filtros filtroActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,23 @@ public class InicialActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String jsonObj = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            jsonObj = extras.getString("filtro");
+        }
+        Filtros filtro = new Gson().fromJson(jsonObj, Filtros.class);
+        if(filtro!=null) {
+            setFiltroActivity(filtro);
+        }
+
+
     }
 
     @Override
@@ -153,7 +174,8 @@ public class InicialActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filtro) {
-            Utils.showToastMessage(getApplicationContext(), "Realizar filtros");
+            Intent intent = new Intent(this, FiltrosActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -366,5 +388,13 @@ public class InicialActivity extends AppCompatActivity {
             fab.show();
         else
             fab.hide();
+    }
+
+    public Filtros getFiltroActivity() {
+        return filtroActivity;
+    }
+
+    public void setFiltroActivity(Filtros filtroActivity) {
+        this.filtroActivity = filtroActivity;
     }
 }
