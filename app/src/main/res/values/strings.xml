@@ -46,6 +46,7 @@
     <string name="activity_title_sobre">Sobre</string>
     <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_peril_pet">Perfil Pet</string>
+    <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
@@ -84,7 +85,6 @@
     <string name="raioDeBusca">Raio de Busca:</string>
     <string name="pesoAproximado">Peso Aproximado:</string>
     <string name="idadeAproximada">Idade Aproximada:</string>
-
 
     <string-array name="raca_array">
         <item>Qualquer</item>
@@ -233,5 +233,21 @@
     <string name="action_settings">Settings</string>
     <string name="btn_adotar_agora">ADOTAR AGORA</string>
     <string name="mesma_ninhada">MESMA NINHADA</string>
+    <string name="meus_pets">MEUS PETS</string>
+
+    <string name="dataNascimento">Data de Nascimento</string>
+    <string name="cpf">CPF</string>
+    <string name="cep">CEP</string>
+    <string name="endereco">Endereço</string>
+    <string name="numero">Número</string>
+    <string name="complemento">Complento</string>
+    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
+    <string name="telefone">Telefone</string>
+    <string name="email">E-mail</string>
+
+
+
+
 
 </resources>
