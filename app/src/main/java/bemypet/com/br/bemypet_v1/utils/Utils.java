@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -79,10 +80,16 @@ public class Utils {
 
     }
 
+    public static boolean fileExists(Context context, String fileName){
+        File file = context.getFileStreamPath(fileName);
+        return file.exists();
+    }
+
     public static String readStringFromFile(Context context, String fileName) {
 
         try {
             FileInputStream fileInputStream = context.openFileInput(fileName);
+
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuffer stringBuffer = new StringBuffer();

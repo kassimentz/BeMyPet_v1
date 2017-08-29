@@ -16,9 +16,8 @@ public class MainActivity extends AppCompatActivity {
     public void iniciar(View v) {
 
 //        Intent intent = new Intent(this, EscolhaActivity.class);
-//        Intent intent = new Intent(this, FiltrosActivity.class);
-        Intent intent = new Intent(this, PerfilPetActivity.class);
-//        Intent intent = new Intent(this, InicialActivity.class);
+//        Intent intent = new Intent(this, PerfilPetActivity.class);
+        Intent intent = new Intent(this, InicialActivity.class);
         startActivity(intent);
     }
 }

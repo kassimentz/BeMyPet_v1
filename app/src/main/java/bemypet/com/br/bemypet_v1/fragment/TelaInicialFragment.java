@@ -198,7 +198,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             public boolean onMarkerClick(Marker marker) {
 
                 Pet p = (Pet) marker.getTag();
-                Utils.showToastMessage(getContext(), p.nome);
                 Intent intent = new Intent(getContext(), PerfilPetActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("pet", new Gson().toJson(p));

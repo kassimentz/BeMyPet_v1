@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@color/white"
     tools:context=".PerfilPetActivity">
 
@@ -35,19 +36,16 @@
                 android:id="@+id/header_cover_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_adocao" />
+                android:scaleType="centerCrop" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/user_profile_photo"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_below="@+id/header_cover_image"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-60dp"
-                android:background="@drawable/cat_profile"
                 android:elevation="5dp"
-                android:padding="20dp"
                 android:scaleType="centerCrop" />
 
             <RelativeLayout
@@ -77,8 +75,8 @@
                     android:layout_marginTop="70dp"
                     android:text="BASKARA"
                     android:textColor="@color/OrangeApp"
-                    android:textSize="24sp"
-                    android:textStyle="normal" />
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -95,10 +93,12 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:paddingLeft="10dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:paddingLeft="20dp"
                 android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:orientation="vertical">
+                android:paddingTop="5dp">
 
                 <!--campos para especie e sexo-->
                 <LinearLayout style="@style/layoutLinha">
@@ -218,19 +218,10 @@
                             android:text="@string/sociavelTitulo" />
 
                         <TextView
-                            android:id="@+id/socialvelPessoalPerfilPet"
+                            android:id="@+id/sociavelPerfilPet"
                             style="@style/textoPerfil"
                             android:text="@string/sociavelPessoas" />
 
-                        <TextView
-                            android:id="@+id/socialvelCaesPerfilPet"
-                            style="@style/textoPerfil"
-                            android:text="@string/sociavelCaes" />
-
-                        <TextView
-                            android:id="@+id/socialvelGatosPerfilPet"
-                            style="@style/textoPerfil"
-                            android:text="@string/sociavelGatos" />
 
                     </LinearLayout>
 
@@ -253,64 +244,85 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:text="É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras, ao contrário de Conteúdo aqui, conteúdo aqui, fazendo com que ele tenha uma aparência similar a de um texto legível. Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por 'lorem ipsum' mostra vários websites ainda em sua fase de construção. Várias versões novas surgiram ao longo dos anos, eventualmente por acidente, e às vezes de propósito (injetando humor, e coisas do gênero).
 " />
                 </LinearLayout>
 
-            <LinearLayout style="@style/layoutLinha"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/ButtonPerfil"
-                    style="@style/btnPertilAdota"
-                    android:text="@string/btn_adotar_agora"
-                    />
-
-            </LinearLayout>
-
-
-
                 <LinearLayout
-                    style="@style/layoutLinha">
-\                        <View
-                            android:layout_height="1px"
-                            android:layout_width="120dp"
-                            android:layout_gravity="center"
-                            android:background="@color/OrangeApp"
-                            android:weightSum="1"/>
-                        <TextView
-                            style="@style/labelPerfil"
+                    style="@style/layoutLinha"
+                    android:orientation="vertical">
 
-                            android:text="@string/mesma_ninhada"
+                    <Button
+                        android:id="@+id/ButtonPerfil"
+                        style="@style/btnPertilAdota"
+                        android:text="@string/btn_adotar_agora" />
+
+                </LinearLayout>
+
+
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/OrangeApp" />
+
+                        <TextView
+                            android:textSize="14dp"
+                            android:textAllCaps="true"
+                            android:textStyle="bold"
+                            android:textColor="@color/OrangeApp"
+                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
-                            android:weightSum="1"/>
-                    <View
-                        android:layout_height="1px"
-                        android:layout_width="120dp"
-                        android:weightSum="1"
-                        android:layout_gravity="center"
-                        android:background="@color/OrangeApp"/>
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="Mesma Ninhada" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@color/OrangeApp" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
 
                 <!--<LinearLayout-->
-                    <!--android:id="@+id/gridMesmaNinhada"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:gravity="center_horizontal"-->
-                    <!--android:orientation="vertical">-->
+                <!--android:id="@+id/gridMesmaNinhada"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:orientation="vertical">-->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <GridView
-                        android:numColumns="auto_fit"
-                        android:gravity="center"
-                        android:columnWidth="80dp"
-                        android:stretchMode="columnWidth"
+                        android:id="@+id/grid"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/grid"
-                        />
-
+                        android:columnWidth="80dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:numColumns="auto_fit"
+                        android:stretchMode="columnWidth" />
+                </LinearLayout>
                 <!--</LinearLayout>-->
 
 
