@@ -60,7 +60,9 @@ public class FiltrosActivity extends AppCompatActivity {
 
         initializeVariables();
         filtros = new Filtros();
-        lerFiltros();
+        if(Utils.fileExists(this, "filtros.json")) {
+            lerFiltros();
+        }
     }
 
     //inicializando os elementos do layout
@@ -180,7 +182,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
     private void lerFiltros() {
         String data = Utils.readStringFromFile(this, "filtros.json");
-        if(data != null) {
+
             Filtros filtrosSalvos = new Gson().fromJson(data, Filtros.class);
 
             //se existem filtros salvos, preencher os campos conforme o que estava salvo
@@ -282,7 +284,7 @@ public class FiltrosActivity extends AppCompatActivity {
                 seekBarRaioBusca.setProgress(Integer.valueOf(filtrosSalvos.raioDeBusca));
                 txtSeekBarRaioBuscaValue.setText("Raio de Busca: " + String.valueOf(filtrosSalvos.raioDeBusca) + " km.");
             }
-        }
+
 
     }
 
