@@ -65,6 +65,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InicialActivity" />
         </activity>
+        <activity
+            android:name=".PerfilUsuarioActivity"
+            android:parentActivityName=".InicialActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
     </application>
 
 </manifest>
