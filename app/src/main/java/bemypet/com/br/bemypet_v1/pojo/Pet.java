@@ -49,6 +49,7 @@ public class Pet {
                String informacoesAdicionais, String status, Boolean cadastroAtivo,
                PontoGeo localizacao) {
 
+        this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.especie = especie;
         this.sexo = sexo;
