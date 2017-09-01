@@ -6,19 +6,6 @@ import java.util.Map;
 
 /**
  * Created by kassianesmentz on 30/08/17.
- *
- * Ja teve outros pet? Boolean
- Quantos pets teve? Integer
- Tipo de pets teve? List<String>
- O que aconteceu com eles? List<String>
- Tem pet atualmente? Boolean
- Quantos pets tem? Integer
- Tipos de pet tem? List<String>
- Moradia String
- Patio (casa) Boolean
- Cuidado Contra Pestes Boolean
- Telas Boolean
- Informações adicionais String
  */
 
 public class Adotante extends Usuario {
@@ -40,32 +27,20 @@ public class Adotante extends Usuario {
 
     }
 
-    public Adotante(String nome,
-                    String imagens,
-                    String dataNascimento,
-                    String cpf,
-                    PontoGeo localizacao,
-                    Integer cep,
-                    String endereco,
-                    Integer numero,
-                    String complemento,
-                    String cidade,
-                    String estado,
-                    String telefone,
-                    String email,
-                    Boolean jaTeveOutrosPets,
-                    Integer quantosPetsTeve,
-                    List<String> tiposPetsTeve,
-                    List<String> oQueAconteceuComEles,
-                    Boolean temPetAtualmente,
-                    Integer quantosPetsTem,
-                    List<String> tiposPetsTem,
-                    String tipoMoradia,
-                    Boolean possuiPatio,
-                    Boolean temCuidadoContraPestes,
-                    Boolean possuiTelasProtecao,
-                    String informacoesAdicionais) {
-        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco, numero, complemento, cidade, estado, telefone, email);
+    public Adotante(String nome, String imagens, String dataNascimento, String cpf,
+                    PontoGeo localizacao, Integer cep, String endereco, Integer numero,
+                    String complemento, String cidade, String estado, String telefone,
+                    String email, List<Pet> meusPets, List<Pet> petsFavoritos,
+                    List<Denuncias> denuncias, List<Notificacoes> notificacoes,
+                    Boolean jaTeveOutrosPets, Integer quantosPetsTeve,
+                    List<String> tiposPetsTeve, List<String> oQueAconteceuComEles,
+                    Boolean temPetAtualmente, Integer quantosPetsTem,
+                    List<String> tiposPetsTem, String tipoMoradia,
+                    Boolean possuiPatio, Boolean temCuidadoContraPestes,
+                    Boolean possuiTelasProtecao, String informacoesAdicionais) {
+        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco,
+                numero, complemento, cidade, estado, telefone, email, meusPets,
+                petsFavoritos, denuncias, notificacoes);
         this.jaTeveOutrosPets = jaTeveOutrosPets;
         this.quantosPetsTeve = quantosPetsTeve;
         this.tiposPetsTeve = tiposPetsTeve;

@@ -176,6 +176,7 @@ public class InicialActivity extends AppCompatActivity {
         if (id == R.id.action_filtro) {
             Intent intent = new Intent(this, FiltrosActivity.class);
             startActivity(intent);
+            this.finish();
             return true;
         }
 

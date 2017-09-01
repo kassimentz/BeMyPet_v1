@@ -10,7 +10,7 @@ import java.util.UUID;
  *
  */
 
-public class Usuario {
+public abstract class Usuario {
 
     public String id;
     public String nome;
@@ -26,12 +26,16 @@ public class Usuario {
     public String estado;
     public String telefone;
     public String email;
+    public List<Pet> meusPets;
+    public List<Pet> petsFavoritos;
+    public List<Denuncias> denuncias;
+    public List<Notificacoes> notificacoes;
 
-    public Usuario() {
+    protected Usuario() {
         id = UUID.randomUUID().toString();
     }
 
-    public Usuario(String nome,
+    protected Usuario(String nome,
                    String imagens,
                    String dataNascimento,
                    String cpf,
@@ -43,7 +47,11 @@ public class Usuario {
                    String cidade,
                    String estado,
                    String telefone,
-                   String email) {
+                   String email,
+                   List<Pet> meusPets,
+                   List<Pet> petsFavoritos,
+                   List<Denuncias> denuncias,
+                   List<Notificacoes> notificacoes) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.imagens = imagens;
@@ -58,6 +66,10 @@ public class Usuario {
         this.estado = estado;
         this.telefone = telefone;
         this.email = email;
+        this.meusPets = meusPets;
+        this.petsFavoritos = petsFavoritos;
+        this.denuncias = denuncias;
+        this.notificacoes = notificacoes;
 
     }
 
@@ -76,6 +88,10 @@ public class Usuario {
         result.put("estado", estado);
         result.put("telefone", telefone);
         result.put("email", email);
+        result.put("meusPets", meusPets);
+        result.put("petsFavoritos", petsFavoritos);
+        result.put("denuncias", denuncias);
+        result.put("notificacoes", notificacoes);
 
         return result;
     }
@@ -83,7 +99,8 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "nome='" + nome + '\'' +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
                 ", imagens='" + imagens + '\'' +
                 ", dataNascimento='" + dataNascimento + '\'' +
                 ", cpf='" + cpf + '\'' +
@@ -96,6 +113,10 @@ public class Usuario {
                 ", estado='" + estado + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
+                ", meusPets=" + meusPets +
+                ", petsFavoritos=" + petsFavoritos +
+                ", denuncias=" + denuncias +
+                ", notificacoes=" + notificacoes +
                 '}';
     }
 }
