@@ -10,16 +10,13 @@ import java.util.Map;
 
 public class Doador extends Usuario {
 
-    public Doador() {}
-
-    public Doador(String nome, String imagens, String dataNascimento, String cpf,
-                  PontoGeo localizacao, Integer cep, String endereco, Integer numero,
-                  String complemento, String cidade, String estado, String telefone,
-                  String email, List<Pet> meusPets, List<Pet> petsFavoritos,
-                  List<Denuncias> denuncias, List<Notificacoes> notificacoes) {
-        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco,
-                numero, complemento, cidade, estado, telefone, email,
-                meusPets, petsFavoritos, denuncias, notificacoes);
+    public Doador() {
     }
 
+    public Doador(String nome, List<String> imagens, String dataNascimento, String cpf, PontoGeo localizacao, Integer cep,
+                  String endereco, Integer numero, String complemento, String bairro, String cidade, String estado,
+                  String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos, List<Denuncias> denuncias,
+                  List<Notificacoes> notificacoes, String tipoUsuario) {
+        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco, numero, complemento, bairro, cidade, estado, telefone, email, meusPets, petsFavoritos, denuncias, notificacoes, tipoUsuario);
+    }
 }

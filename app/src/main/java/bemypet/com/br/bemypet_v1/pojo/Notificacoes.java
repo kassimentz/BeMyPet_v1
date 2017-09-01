@@ -8,7 +8,7 @@ import java.util.UUID;
  * Created by kassianesmentz on 30/08/17.
  */
 
-class Notificacoes {
+public class Notificacoes {
 
     public String id;
     public String mensagem;

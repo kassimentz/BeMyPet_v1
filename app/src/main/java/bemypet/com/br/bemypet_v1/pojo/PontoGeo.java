@@ -14,6 +14,11 @@ public class PontoGeo {
     public PontoGeo() {
     }
 
+    public PontoGeo(Double lat, Double lon) {
+        this.lat = lat;
+        this.lon = lon;
+    }
+
     @Override
     public String toString() {
         return "PontoGeo{" +

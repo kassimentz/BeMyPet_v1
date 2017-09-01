@@ -13,7 +13,7 @@ public class Adotante extends Usuario {
     public Boolean jaTeveOutrosPets;
     public Integer quantosPetsTeve;
     public List<String> tiposPetsTeve;
-    public List<String> oQueAconteceuComEles;
+    public String oQueAconteceuComEles;
     public Boolean temPetAtualmente;
     public Integer quantosPetsTem;
     public List<String> tiposPetsTem;
@@ -23,24 +23,18 @@ public class Adotante extends Usuario {
     public Boolean possuiTelasProtecao;
     public String informacoesAdicionais;
 
+
     public Adotante() {
 
     }
 
-    public Adotante(String nome, String imagens, String dataNascimento, String cpf,
-                    PontoGeo localizacao, Integer cep, String endereco, Integer numero,
-                    String complemento, String cidade, String estado, String telefone,
-                    String email, List<Pet> meusPets, List<Pet> petsFavoritos,
-                    List<Denuncias> denuncias, List<Notificacoes> notificacoes,
-                    Boolean jaTeveOutrosPets, Integer quantosPetsTeve,
-                    List<String> tiposPetsTeve, List<String> oQueAconteceuComEles,
-                    Boolean temPetAtualmente, Integer quantosPetsTem,
-                    List<String> tiposPetsTem, String tipoMoradia,
-                    Boolean possuiPatio, Boolean temCuidadoContraPestes,
-                    Boolean possuiTelasProtecao, String informacoesAdicionais) {
-        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco,
-                numero, complemento, cidade, estado, telefone, email, meusPets,
-                petsFavoritos, denuncias, notificacoes);
+    public Adotante(String nome, List<String> imagens, String dataNascimento, String cpf, PontoGeo localizacao, Integer cep, String endereco, Integer numero,
+                    String complemento, String bairro, String cidade, String estado, String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
+                    List<Denuncias> denuncias, List<Notificacoes> notificacoes, String tipoUsuario, Boolean jaTeveOutrosPets, Integer quantosPetsTeve, List<String>
+                            tiposPetsTeve, String oQueAconteceuComEles, Boolean temPetAtualmente, Integer quantosPetsTem, List<String> tiposPetsTem, String tipoMoradia,
+                    Boolean possuiPatio, Boolean temCuidadoContraPestes, Boolean possuiTelasProtecao, String informacoesAdicionais) {
+        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco, numero, complemento, bairro, cidade, estado, telefone, email, meusPets, petsFavoritos,
+                denuncias, notificacoes, tipoUsuario);
         this.jaTeveOutrosPets = jaTeveOutrosPets;
         this.quantosPetsTeve = quantosPetsTeve;
         this.tiposPetsTeve = tiposPetsTeve;

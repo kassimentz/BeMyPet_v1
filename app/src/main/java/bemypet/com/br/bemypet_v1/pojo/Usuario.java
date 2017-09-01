@@ -14,7 +14,7 @@ public abstract class Usuario {
 
     public String id;
     public String nome;
-    public String imagens;
+    public List<String> imagens;
     public String dataNascimento;
     public String cpf;
     public PontoGeo localizacao;
@@ -22,6 +22,7 @@ public abstract class Usuario {
     public String endereco;
     public Integer numero;
     public String complemento;
+    public String bairro;
     public String cidade;
     public String estado;
     public String telefone;
@@ -30,13 +31,14 @@ public abstract class Usuario {
     public List<Pet> petsFavoritos;
     public List<Denuncias> denuncias;
     public List<Notificacoes> notificacoes;
+    public String tipoUsuario;
 
     protected Usuario() {
         id = UUID.randomUUID().toString();
     }
 
     protected Usuario(String nome,
-                   String imagens,
+                      List<String> imagens,
                    String dataNascimento,
                    String cpf,
                    PontoGeo localizacao,
@@ -44,6 +46,7 @@ public abstract class Usuario {
                    String endereco,
                    Integer numero,
                    String complemento,
+                   String bairro,
                    String cidade,
                    String estado,
                    String telefone,
@@ -51,7 +54,8 @@ public abstract class Usuario {
                    List<Pet> meusPets,
                    List<Pet> petsFavoritos,
                    List<Denuncias> denuncias,
-                   List<Notificacoes> notificacoes) {
+                   List<Notificacoes> notificacoes,
+                      String tipoUsuario) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.imagens = imagens;
@@ -62,6 +66,7 @@ public abstract class Usuario {
         this.endereco = endereco;
         this.numero = numero;
         this.complemento = complemento;
+        this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
         this.telefone = telefone;
@@ -70,8 +75,11 @@ public abstract class Usuario {
         this.petsFavoritos = petsFavoritos;
         this.denuncias = denuncias;
         this.notificacoes = notificacoes;
+        this.tipoUsuario = tipoUsuario;
 
     }
+
+
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -84,6 +92,7 @@ public abstract class Usuario {
         result.put("endereco", endereco);
         result.put("numero", numero);
         result.put("complemento", complemento);
+        result.put("bairro", bairro);
         result.put("cidade", cidade);
         result.put("estado", estado);
         result.put("telefone", telefone);
@@ -92,7 +101,7 @@ public abstract class Usuario {
         result.put("petsFavoritos", petsFavoritos);
         result.put("denuncias", denuncias);
         result.put("notificacoes", notificacoes);
-
+        result.put("tipoUsuario", tipoUsuario);
         return result;
     }
 
@@ -109,6 +118,7 @@ public abstract class Usuario {
                 ", endereco='" + endereco + '\'' +
                 ", numero=" + numero +
                 ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
                 ", cidade='" + cidade + '\'' +
                 ", estado='" + estado + '\'' +
                 ", telefone='" + telefone + '\'' +
@@ -117,6 +127,7 @@ public abstract class Usuario {
                 ", petsFavoritos=" + petsFavoritos +
                 ", denuncias=" + denuncias +
                 ", notificacoes=" + notificacoes +
+                ", tipoUsuario=" + tipoUsuario +
                 '}';
     }
 }

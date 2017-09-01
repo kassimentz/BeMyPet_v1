@@ -8,7 +8,7 @@ import java.util.UUID;
  * Created by kassianesmentz on 30/08/17.
  */
 
-class Denuncias {
+public class Denuncias {
 
     public String id;
     public String motivo;
