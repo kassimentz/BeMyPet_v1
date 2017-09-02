@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         doador.petsFavoritos = new ArrayList<Pet>();
         doador.denuncias = new ArrayList<Denuncias>();
         doador.notificacoes = new ArrayList<Notificacoes>();
-        doador.tipoUsuario = "doador";
 
         salvar(doador);
     }
@@ -113,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         adotante.temCuidadoContraPestes = Boolean.TRUE;
         adotante.possuiTelasProtecao = Boolean.TRUE;
         adotante.informacoesAdicionais = "bla bla bla";
-        adotante.tipoUsuario = "adotante";
 
         salvar(adotante);
     }

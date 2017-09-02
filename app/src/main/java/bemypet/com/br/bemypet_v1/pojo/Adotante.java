@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class Adotante extends Usuario {
 
+    private static String TIPO_USUARIO = "ADOTANTE";
+
     public Boolean jaTeveOutrosPets;
     public Integer quantosPetsTeve;
     public List<String> tiposPetsTeve;
@@ -25,6 +27,7 @@ public class Adotante extends Usuario {
 
 
     public Adotante() {
+        this.tipoUsuario = TIPO_USUARIO;
 
     }
 
@@ -47,6 +50,7 @@ public class Adotante extends Usuario {
         this.temCuidadoContraPestes = temCuidadoContraPestes;
         this.possuiTelasProtecao = possuiTelasProtecao;
         this.informacoesAdicionais = informacoesAdicionais;
+        this.tipoUsuario = TIPO_USUARIO;
     }
 
     public Map<String, Object> toMap() {
