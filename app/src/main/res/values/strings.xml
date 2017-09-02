@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">BeMyPet</string>
 
+    <!--keys-->
+    <!--debug-->
+    <string name="google_maps_key_debug" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCcSxPW1Brl5rCzq3R4XlA3i-_16xEa_Bo
+    </string>
+
+
+    <!--release-->
+    <string name="google_maps_key_release" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCEgpbvu-QAxeTCJt6tIP5J2gYVi0Dvv_g
+    </string>
+
+
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
