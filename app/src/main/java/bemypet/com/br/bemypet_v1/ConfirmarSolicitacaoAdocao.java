@@ -1,9 +1,11 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +40,31 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
         initializeVariables();
         getBundle();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        String dataPet = new Gson().toJson(getPet());
+        Intent intent = new Intent();
+        intent.putExtra("dataPet", dataPet);
+        setResult(RESULT_OK, intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                String dataPet = new Gson().toJson(getPet());
+                Intent intent = new Intent();
+                intent.putExtra("dataPet", dataPet);
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializeVariables() {

@@ -69,6 +69,9 @@ public class PerfilPetActivity extends AppCompatActivity {
 
         initializeVariables();
         getBundle();
+        if(getPet() != null) {
+            preencherDados();
+        }
 
         CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilPetActivity.this, nomes, imageId);
         grid=(GridView)findViewById(R.id.grid);
@@ -82,8 +85,20 @@ public class PerfilPetActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                String jsonObj = data.getStringExtra("dataPet");
+                Pet pet = new Gson().fromJson(jsonObj, Pet.class);
+                setPet(pet);
+                System.out.println(pet.nome);
+                preencherDados();
+            }
+        }
     }
 
     private void initializeVariables() {
@@ -112,60 +127,63 @@ public class PerfilPetActivity extends AppCompatActivity {
 
         if(pet != null) {
             setPet(pet);
-            if(pet.imagens.size() > 0) {
-                // Loading profile image
+        }
+    }
 
-                Glide.with(this).load(pet.imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
-                Glide.with(this).load(pet.imagens.get(pet.imagens.size()-1)).into(header_cover_image);
-            }
+    private void preencherDados() {
+
+        if(getPet().imagens.size() > 0) {
+            // Loading profile image
+
+            Glide.with(this).load(getPet().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+            Glide.with(this).load(getPet().imagens.get(getPet().imagens.size()-1)).into(header_cover_image);
+        }
 
 
-            if(!pet.nome.isEmpty()) {
-                user_profile_name.setText(pet.nome);
+        if(!getPet().nome.isEmpty()) {
+            user_profile_name.setText(getPet().nome);
+        }
+        if(!getPet().especie.isEmpty()) {
+            especiePerfilPet.setText(getPet().especie);
+        }
+        if(!getPet().sexo.isEmpty()) {
+            sexoPerfilPet.setText(getPet().sexo);
+        }
+        if(!getPet().raca.isEmpty()) {
+            racaPerfilPet.setText(getPet().raca);
+        }
+        if(!getPet().idadeAproximada.isEmpty()) {
+            idadePerfilPet.setText(getPet().idadeAproximada);
+        }
+        if(!String.valueOf(getPet().pesoAproximado).isEmpty()) {
+            pesoPerfilPet.setText(String.valueOf(getPet().pesoAproximado));
+        }
+        if(!getPet().castrado.isEmpty()) {
+            castradoPerfilPet.setText(getPet().castrado);
+        }
+        if(!getPet().vermifugado.isEmpty()) {
+            vermifugadoPerfilPet.setText(getPet().vermifugado);
+        }
+        if(!getPet().sociavel.isEmpty()) {
+            StringBuilder stringSociavel = new StringBuilder();
+            for (String sociavel : getPet().sociavel) {
+                stringSociavel.append(sociavel);
+                stringSociavel.append(", ");
             }
-            if(!pet.especie.isEmpty()) {
-                especiePerfilPet.setText(pet.especie);
-            }
-            if(!pet.sexo.isEmpty()) {
-                sexoPerfilPet.setText(pet.sexo);
-            }
-            if(!pet.raca.isEmpty()) {
-                racaPerfilPet.setText(pet.raca);
-            }
-            if(!pet.idadeAproximada.isEmpty()) {
-                idadePerfilPet.setText(pet.idadeAproximada);
-            }
-            if(!String.valueOf(pet.pesoAproximado).isEmpty()) {
-                pesoPerfilPet.setText(String.valueOf(pet.pesoAproximado));
-            }
-            if(!pet.castrado.isEmpty()) {
-                castradoPerfilPet.setText(pet.castrado);
-            }
-            if(!pet.vermifugado.isEmpty()) {
-                vermifugadoPerfilPet.setText(pet.vermifugado);
-            }
-            if(!pet.sociavel.isEmpty()) {
-                StringBuilder stringSociavel = new StringBuilder();
-                for (String sociavel : pet.sociavel) {
-                    stringSociavel.append(sociavel);
-                    stringSociavel.append(", ");
-                }
 
-                stringSociavel.deleteCharAt(stringSociavel.length()-2);
-                sociavelPerfilPet.setText(stringSociavel.toString());
+            stringSociavel.deleteCharAt(stringSociavel.length()-2);
+            sociavelPerfilPet.setText(stringSociavel.toString());
 
+        }
+        if(!getPet().temperamento.isEmpty()) {
+            StringBuilder stringTemperamento = new StringBuilder();
+            for (String temperamento : getPet().temperamento) {
+                stringTemperamento.append(temperamento);
+                stringTemperamento.append(", ");
             }
-            if(!pet.temperamento.isEmpty()) {
-                StringBuilder stringTemperamento = new StringBuilder();
-                for (String temperamento : pet.temperamento) {
-                    stringTemperamento.append(temperamento);
-                    stringTemperamento.append(", ");
-                }
 
-                stringTemperamento.deleteCharAt(stringTemperamento.length()-2);
-                temperamentoPerfilPet.setText(stringTemperamento.toString());
-
-            }
+            stringTemperamento.deleteCharAt(stringTemperamento.length()-2);
+            temperamentoPerfilPet.setText(stringTemperamento.toString());
 
         }
     }
@@ -176,7 +194,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable("pet", new Gson().toJson(getPet()));
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public Pet getPet() {
