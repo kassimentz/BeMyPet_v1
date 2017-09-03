@@ -396,8 +396,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
      * @return pet
      */
 
-    //TODO nos checkbox, nao trazer somente os que estiverem marcados,
-    // TODO mas aqueles que tambem possuirem essa caracteristica
     private Pet filtrarPet(Pet pet, Filtros filtro) {
         Boolean petValido = Boolean.FALSE;
 
