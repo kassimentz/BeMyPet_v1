@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import bemypet.com.br.bemypet_v1.pojo.Pet;
 
 
 public class PerfilPetActivity extends AppCompatActivity {
+
+    private Pet pet;
 
     //temporário até puxar do banco
     GridView grid;
@@ -108,7 +111,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         Pet pet = new Gson().fromJson(jsonObj, Pet.class);
 
         if(pet != null) {
-
+            setPet(pet);
             if(pet.imagens.size() > 0) {
                 // Loading profile image
 
@@ -165,5 +168,22 @@ public class PerfilPetActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void confirmarSolicitacaoAdocao(View v) {
+
+        Intent intent = new Intent(this, ConfirmarSolicitacaoAdocao.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pet", new Gson().toJson(getPet()));
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 }

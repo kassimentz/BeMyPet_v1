@@ -7,6 +7,8 @@
     <color name="orangeBorder">#F15922</color>
     <color name="white">#ffffff</color>
     <color name="OrangeApp">#f15922</color>
+    <color name="GreenButton">#88cc00</color>
+
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#d1395c</color>

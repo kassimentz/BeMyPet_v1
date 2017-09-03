@@ -20,4 +20,7 @@
     <dimen name="profile_height">100dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="corner_radius">4dp</dimen>
+    <dimen name="layer_padding">3dp</dimen>
 </resources>

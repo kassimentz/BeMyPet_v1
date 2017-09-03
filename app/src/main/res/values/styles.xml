@@ -89,6 +89,19 @@
         <item name="android:layout_marginBottom">5dp</item>
     </style>
 
+    <style name="layoutLinhaParagrafo" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="textoParagrafo" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/OrangeApp</item>
+    </style>
+
     <style name="colunaComCheckbox" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -172,6 +185,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
     <style name="textoPerfil" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
         <item name="android:textSize">14dp</item>
         <item name="android:layout_margin">5dp</item>

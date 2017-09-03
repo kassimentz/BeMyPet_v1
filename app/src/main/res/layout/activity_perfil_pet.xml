@@ -257,6 +257,7 @@
                     <Button
                         android:id="@+id/ButtonPerfil"
                         style="@style/btnPertilAdota"
+                        android:onClick="confirmarSolicitacaoAdocao"
                         android:text="@string/btn_adotar_agora" />
 
                 </LinearLayout>

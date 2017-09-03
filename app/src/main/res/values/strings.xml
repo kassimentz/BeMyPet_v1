@@ -59,6 +59,7 @@
     <string name="activity_title_sobre">Sobre</string>
     <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_peril_pet">Perfil Pet</string>
+    <string name="activity_title_confirmar_solicitacao_adocao">Confirmar adoção!</string>
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
@@ -259,8 +260,13 @@
     <string name="telefone">Telefone</string>
     <string name="email">E-mail</string>
 
+    <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
+        Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
+        para que ele seja muito feliz ao seu lado.</string>
 
+    <string name="txt_confirmar_solicitacao_adocao_p2">Após a confirmação da solicitação, aguarde a resposta do dono do pet!</string>
 
+    <string name="txt_confirmar_solicitacao_adocao_p3">Nesse momento, Báskara já te ama muito!</string>
 
 
 </resources>
