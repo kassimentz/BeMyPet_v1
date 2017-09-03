@@ -334,8 +334,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                                 if (pet.id.equals(idFound)) {
 
                                     //realizar os filtros no pet
-//                                    Pet petFiltrado = filtrarPet(pet, filtro);
-//                                    if (petFiltrado != null) {
+                                    Pet petFiltrado = filtrarPet(pet, filtro);
+                                    if (petFiltrado != null) {
 
                                         try {
                                             options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
@@ -350,7 +350,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                                         } catch (ExecutionException e) {
                                             e.printStackTrace();
                                         }
-                                   // }
+                                    }
                                 }
                             }
                         }
@@ -398,78 +398,78 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
     //TODO nos checkbox, nao trazer somente os que estiverem marcados,
     // TODO mas aqueles que tambem possuirem essa caracteristica
-//    private Pet filtrarPet(Pet pet, Filtros filtro) {
-//        Boolean petValido = Boolean.FALSE;
-//
-//
-//        if(pet.especie.equalsIgnoreCase(filtro.especie) || pet.especie.equalsIgnoreCase("Outros")) {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        if(pet.sexo.equalsIgnoreCase(filtro.sexo)) {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        if(pet.raca.equalsIgnoreCase(filtro.raca) || pet.raca.equalsIgnoreCase("Qualquer")) {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        if(Integer.valueOf(pet.idadeAproximada) >= Integer.valueOf(filtro.idadeInicial) &&
-//                Integer.valueOf(pet.idadeAproximada) <= Integer.valueOf(filtro.idadeFinal))   {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        if(pet.pesoAproximado >= Integer.valueOf(filtro.pesoInicial) &&
-//               pet.pesoAproximado <= Integer.valueOf(filtro.pesoFinal))   {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        if(pet.castrado.equalsIgnoreCase(filtro.castrado)) {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado)) {
-//            petValido = Boolean.TRUE;
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//        //verifica se ao menos um elemento da lista sociavel do pet existe no filtro
-//        if(!Collections.disjoint(pet.sociavel, filtro.sociavel)) {
-//            petValido = Boolean.TRUE;
-//
-//        } else {
-//            petValido = Boolean.FALSE;
-//
-//        }
-//
-//        //verifica se ao menos um elemento da lista temperamento do pet existe no filtro
-//        if(!Collections.disjoint(pet.temperamento, filtro.temperamento)) {
-//            petValido = Boolean.TRUE;
-//
-//        } else {
-//            petValido = Boolean.FALSE;
-//        }
-//
-//
-//        if(petValido) {
-//            return pet;
-//        } else {
-//            return null;
-//        }
-//    }
+    private Pet filtrarPet(Pet pet, Filtros filtro) {
+        Boolean petValido = Boolean.FALSE;
+
+
+        if(filtro.especies.contains(pet.especie)) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.sexo.equalsIgnoreCase(filtro.sexo) || filtro.sexo.equalsIgnoreCase("TODOS")) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(filtro.raca.contains(pet.raca) || filtro.raca.contains("Qualquer") || filtro.raca.isEmpty()) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(Integer.valueOf(pet.idadeAproximada) >= Integer.valueOf(filtro.idadeInicial) &&
+                Integer.valueOf(pet.idadeAproximada) <= Integer.valueOf(filtro.idadeFinal))   {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.pesoAproximado >= Integer.valueOf(filtro.pesoInicial) &&
+               pet.pesoAproximado <= Integer.valueOf(filtro.pesoFinal))   {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.castrado.equalsIgnoreCase(filtro.castrado) || filtro.castrado.equalsIgnoreCase("TODOS")) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado) || filtro.vermifugado.equalsIgnoreCase("TODOS")) {
+            petValido = Boolean.TRUE;
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+        //verifica se ao menos um elemento da lista sociavel do pet existe no filtro
+        if(!Collections.disjoint(pet.sociavel, filtro.sociavel)) {
+            petValido = Boolean.TRUE;
+
+        } else {
+            petValido = Boolean.FALSE;
+
+        }
+
+        //verifica se ao menos um elemento da lista temperamento do pet existe no filtro
+        if(!Collections.disjoint(pet.temperamento, filtro.temperamento)) {
+            petValido = Boolean.TRUE;
+
+        } else {
+            petValido = Boolean.FALSE;
+        }
+
+
+        if(petValido) {
+            return pet;
+        } else {
+            return null;
+        }
+    }
 
     /**
      * Método que busca a localiazacao pelo gps do dispositivo
