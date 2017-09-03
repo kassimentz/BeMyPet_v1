@@ -402,19 +402,19 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         Boolean petValido = Boolean.FALSE;
 
 
-        if(pet.especie.equalsIgnoreCase(filtro.especie) || pet.especie.equalsIgnoreCase("Outros")) {
+        if(filtro.especies.contains(pet.especie)) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
         }
 
-        if(pet.sexo.equalsIgnoreCase(filtro.sexo)) {
+        if(pet.sexo.equalsIgnoreCase(filtro.sexo) || filtro.sexo.equalsIgnoreCase("TODOS")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
         }
 
-        if(pet.raca.equalsIgnoreCase(filtro.raca) || pet.raca.equalsIgnoreCase("Qualquer")) {
+        if(filtro.raca.contains(pet.raca) || filtro.raca.contains("Qualquer") || filtro.raca.isEmpty()) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
@@ -434,13 +434,13 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.FALSE;
         }
 
-        if(pet.castrado.equalsIgnoreCase(filtro.castrado)) {
+        if(pet.castrado.equalsIgnoreCase(filtro.castrado) || filtro.castrado.equalsIgnoreCase("TODOS")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
         }
 
-        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado)) {
+        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado) || filtro.vermifugado.equalsIgnoreCase("TODOS")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;

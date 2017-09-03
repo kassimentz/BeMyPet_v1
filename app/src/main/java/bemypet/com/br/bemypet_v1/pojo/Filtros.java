@@ -16,9 +16,9 @@ import java.util.Map;
 
 public class Filtros {
 
-    public String especie;
+    public List<String> especies;
     public String sexo;
-    public String raca;
+    public List<String> raca;
     public String idadeInicial;
     public String idadeFinal;
     public String pesoInicial;
@@ -36,7 +36,7 @@ public class Filtros {
     @Override
     public String toString() {
         return "Filtros{" +
-                "especie='" + especie + '\'' +
+                "especies='" + especies + '\'' +
                 ", sexo='" + sexo + '\'' +
                 ", raca='" + raca + '\'' +
                 ", idadeInicial='" + idadeInicial + '\'' +
@@ -53,7 +53,7 @@ public class Filtros {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("especie", especie);
+        result.put("especies", especies);
         result.put("sexo", sexo);
         result.put("raca", raca);
         result.put("idadeInicial", idadeInicial);
