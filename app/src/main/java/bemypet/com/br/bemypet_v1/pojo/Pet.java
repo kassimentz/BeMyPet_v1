@@ -37,6 +37,8 @@ public class Pet {
     public String status;
     public Boolean cadastroAtivo;
     public PontoGeo localizacao;
+    public Doador doador;
+    public Adotante adotante;
 
     public Pet() {
         id = UUID.randomUUID().toString();
@@ -47,7 +49,7 @@ public class Pet {
                String parteDeNinhada, String nomeNinhada, String castrado, String vermifugado,
                String dose, List<String> sociavel, List<String> temperamento, List<String> imagens,
                String informacoesAdicionais, String status, Boolean cadastroAtivo,
-               PontoGeo localizacao) {
+               PontoGeo localizacao, Doador doador, Adotante adotante) {
 
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
@@ -69,6 +71,8 @@ public class Pet {
         this.status = status;
         this.cadastroAtivo = cadastroAtivo;
         this.localizacao = localizacao;
+        this.doador = doador;
+        this.adotante = adotante;
     }
 
     public Map <String, Object> toMap() {
@@ -93,6 +97,8 @@ public class Pet {
         result.put("status", status);
         result.put("cadastroAtivo", cadastroAtivo);
         result.put("localizacao", localizacao);
+        result.put("doador", doador);
+        result.put("adotante", adotante);
 
         return result;
     }
@@ -120,6 +126,8 @@ public class Pet {
                 ", status='" + status + '\'' +
                 ", cadastroAtivo=" + cadastroAtivo +
                 ", localizacao=" + localizacao +
+                ", doador=" + doador +
+                ", adotante=" + adotante +
                 '}';
     }
 }

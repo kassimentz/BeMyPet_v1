@@ -1,7 +1,9 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +42,9 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
         initializeVariables();
         getBundle();
+        if(getPet() != null) {
+            preencherDados();
+        }
     }
 
     @Override
@@ -85,20 +90,26 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
         if(pet != null) {
             setPet(pet);
-
-            if(getPet().imagens.size() > 0) {
-                // Loading profile image
-
-                Glide.with(this).load(getPet().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
-                Glide.with(this).load(getPet().imagens.get(getPet().imagens.size()-1)).into(header_cover_image);
-            }
-
-
-            if(!getPet().nome.isEmpty()) {
-                user_profile_name.setText(getPet().nome);
-                txtParagrafo3.setText("Nesse momento, "+getPet().nome+" já te ama muito!");
-            }
+            System.out.println(pet.toString());
         }
+    }
+
+    private void preencherDados() {
+
+        if(getPet().imagens.size() > 0) {
+            // Loading profile image
+
+            Glide.with(this).load(getPet().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+            Glide.with(this).load(getPet().imagens.get(getPet().imagens.size()-1)).into(header_cover_image);
+        }
+
+
+        if(!getPet().nome.isEmpty()) {
+            user_profile_name.setText(getPet().nome);
+            txtParagrafo3.setText("Nesse momento, "+getPet().nome+" já te ama muito!");
+        }
+
+        System.out.println(getPet().doador.nome);
     }
 
     public void cancelarConfirmacaoSolicitacaoAdocao(View v) {
@@ -107,7 +118,30 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
     public void aplicarConfirmacaoSolicitacaoAdocao(View v) {
 
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+            alertDialogBuilder.setTitle("Solicitação enviada!");
+
+            alertDialogBuilder
+                    .setMessage("Uma mensagem foi enviada para o dono do pet. Aguarde um retorno para saber se tudo deu certo na adoção de "+getPet().nome+"!")
+                    .setCancelable(false)
+                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //TODO ENVIAR NOTIFICACAO
+                            //TODO setar status do pet para "em adocao" para que ele nao apareça mais nas buscas
+
+                            Intent intent = new Intent(getApplication(), InicialActivity.class);
+                            startActivity(intent);
+                            ConfirmarSolicitacaoAdocao.this.finish();
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            alertDialog.show();
     }
+
+
 
 
     public Pet getPet() {
