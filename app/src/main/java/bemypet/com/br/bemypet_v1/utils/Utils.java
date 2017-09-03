@@ -30,7 +30,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.pojo.Pet;
@@ -183,5 +186,12 @@ public class Utils {
             }
         }
         return index;
+    }
+
+    public static String getCurrentDateTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
+        String strDate = dateFormat.format(date);
+        return strDate;
     }
 }

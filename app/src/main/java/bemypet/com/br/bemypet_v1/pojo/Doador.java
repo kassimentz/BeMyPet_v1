@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bemypet.com.br.bemypet_v1.utils.Constants;
+
 /**
  * Created by kassianesmentz on 30/08/17.
  */
 
 public class Doador extends Usuario {
 
-    private static String TIPO_USUARIO = "DOADOR";
+    private static String TIPO_USUARIO = Constants.DOADOR;
 
     public Doador() {
         this.tipoUsuario = TIPO_USUARIO;

@@ -45,6 +45,7 @@ import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
+import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 /**
@@ -225,7 +226,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
                     try {
                         pet = postSnapshot.getValue(Pet.class);
-                        if(pet.cadastroAtivo) {
+                        if(pet.cadastroAtivo && !pet.status.equalsIgnoreCase(Constants.EM_PROCESSO_DE_ADOCAO)) {
                             options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
                             options.title(pet.nome);
                             Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
@@ -330,7 +331,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
                             //somente testar os filtros se o pet estiver disponivel para adocao = cadastro ativo
-                            if(pet.cadastroAtivo) {
+                            if(pet.cadastroAtivo && !pet.status.equalsIgnoreCase(Constants.EM_PROCESSO_DE_ADOCAO)) {
                                 if (pet.id.equals(idFound)) {
 
                                     //realizar os filtros no pet

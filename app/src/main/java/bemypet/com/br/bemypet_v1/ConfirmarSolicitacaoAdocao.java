@@ -2,6 +2,7 @@ package bemypet.com.br.bemypet_v1;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,24 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Adotante;
+import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.utils.Constants;
+import bemypet.com.br.bemypet_v1.utils.ManagerPreferences;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
@@ -45,6 +60,8 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         if(getPet() != null) {
             preencherDados();
         }
+
+        getUsuarioSharedPreferences();
     }
 
     @Override
@@ -118,6 +135,23 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
     public void aplicarConfirmacaoSolicitacaoAdocao(View v) {
 
+        Notificacoes notificacao = new Notificacoes();
+        notificacao.mensagem = "Boas notícias! "+getAdotante().nome+" gostaria de adotar "+getPet().nome+"!";
+        notificacao.remetente = getAdotante().nome;
+        notificacao.destinatario = getPet().doador.nome;
+        notificacao.dataHora = Utils.getCurrentDateTime();
+        notificacao.adotante = getAdotante();
+        notificacao.doador = getPet().doador;
+        notificacao.pet = getPet();
+        notificacao.statusNotificacao = Constants.ENVIADA;
+        notificacao.lida = Boolean.FALSE;
+        //salvar notificacao no firebase
+        salvarNotificacao(notificacao);
+        getPet().status = Constants.EM_PROCESSO_DE_ADOCAO;
+        //atualizar o status do pet no banco para "em adocao", para que nao apareca nas buscas
+        updateStatusPet();
+
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
             alertDialogBuilder.setTitle("Solicitação enviada!");
@@ -126,10 +160,8 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
                     .setMessage("Uma mensagem foi enviada para o dono do pet. Aguarde um retorno para saber se tudo deu certo na adoção de "+getPet().nome+"!")
                     .setCancelable(false)
                     .setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //TODO ENVIAR NOTIFICACAO
-                            //TODO setar status do pet para "em adocao" para que ele nao apareça mais nas buscas
 
+                        public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(getApplication(), InicialActivity.class);
                             startActivity(intent);
                             ConfirmarSolicitacaoAdocao.this.finish();
@@ -141,7 +173,49 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
             alertDialog.show();
     }
 
+    private void updateStatusPet() {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
+        myRef.child(getPet().id).child("status").setValue(getPet().status);
+    }
 
+    private void salvarNotificacao(Notificacoes data) {
+        final Notificacoes notificacao = data;
+        FirebaseConnection.getConnection();
+        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    FirebaseConnection.getDatabase().child("notificacoes").child(String.valueOf(notificacao.id)).setValue(notificacao);
+                } else {
+                    //logar erro
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Log.i("Cancel", "Listener was cancelled");
+            }
+        });
+    }
+
+    /***
+     * CRIEI ESTE METODO PARA SIMULAR O USUARIO ADOTANTE LOGADO NO APP PARA FAZER UMA ADOCAO
+     */
+    private void getUsuarioSharedPreferences() {
+
+        String json = ManagerPreferences.getString(this, Constants.ADOTANTE);
+        Gson gson = new Gson();
+        System.out.println("shared ");
+        System.out.println(json+ " ta vazio");
+        Adotante adotante = new Gson().fromJson(json, Adotante.class);
+        if(adotante != null) {
+            System.out.println("setando adotante");
+            System.out.println(adotante.toString());
+            setAdotante(adotante);
+        }
+    }
 
 
     public Pet getPet() {

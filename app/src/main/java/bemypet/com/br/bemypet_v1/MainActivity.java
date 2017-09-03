@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.utils.Constants;
+import bemypet.com.br.bemypet_v1.utils.ManagerPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        Intent intent = new Intent(this, EscolhaActivity.class);
 //        Intent intent = new Intent(this, PerfilUsuarioActivity.class);
+        salvarUsuarioSharedPreferences();
         Intent intent = new Intent(this, InicialActivity.class);
         startActivity(intent);
 
@@ -47,9 +52,24 @@ public class MainActivity extends AppCompatActivity {
 //
 //        System.out.println("inserindos adotante e doador no firebase");
 
+
+    }
+
+    /**
+     * CRIEI ESSES METODOS ABAIXO PARA SIMULAR UM ADOTANTE LOGADO NO SISTEMA FAZENDO O PROCESSO DE ADOCAO
+     */
+    private void salvarUsuarioSharedPreferences() {
+        Gson gson = new Gson();
+        String json = gson.toJson(instanciarAdotante());
+        ManagerPreferences.saveString(this, Constants.ADOTANTE, json);
+        System.out.println("adotante salvo");
     }
 
     private void inserirDoadorTeste() {
+        salvar(instanciarDoador());
+    }
+
+    private Usuario instanciarDoador() {
         Doador doador = new Doador();
 
         doador.nome = "nome doador";
@@ -72,11 +92,14 @@ public class MainActivity extends AppCompatActivity {
         doador.petsFavoritos = new ArrayList<Pet>();
         doador.denuncias = new ArrayList<Denuncias>();
         doador.notificacoes = new ArrayList<Notificacoes>();
-
-        salvar(doador);
+        return doador;
     }
 
     private void inserirAdotanteTeste() {
+        salvar(instanciarAdotante());
+    }
+
+    private Adotante instanciarAdotante() {
         Adotante adotante = new Adotante();
         adotante.nome = "nome adotante";
         List<String> imagens = new ArrayList<>();
@@ -113,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         adotante.possuiTelasProtecao = Boolean.TRUE;
         adotante.informacoesAdicionais = "bla bla bla";
 
-        salvar(adotante);
+        return adotante;
     }
 
     private void salvar(Usuario entidade) {
