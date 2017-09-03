@@ -190,7 +190,7 @@ public class Utils {
 
     public static String getCurrentDateTime() {
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String strDate = dateFormat.format(date);
         return strDate;
     }
