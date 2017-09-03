@@ -116,12 +116,11 @@
 
                     <LinearLayout style="@style/colunasFormularioSpinner">
 
-                        <Spinner
+                        <bemypet.com.br.bemypet_v1.utils.MultiSpinner
                             style="@style/spinnerFormulario"
                             android:id="@+id/spinnerRacas"
-                            android:entries="@array/raca_array"
-                            android:prompt="@string/raca_prompt" />
-
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 

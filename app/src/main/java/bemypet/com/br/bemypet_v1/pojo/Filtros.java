@@ -18,7 +18,7 @@ public class Filtros {
 
     public List<String> especies;
     public String sexo;
-    public String raca;
+    public List<String> raca;
     public String idadeInicial;
     public String idadeFinal;
     public String pesoInicial;

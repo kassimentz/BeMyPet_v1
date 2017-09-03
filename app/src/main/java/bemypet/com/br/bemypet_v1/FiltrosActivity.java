@@ -24,13 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
+import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class FiltrosActivity extends AppCompatActivity {
 
-    private RadioGroup radioGroupEspecie, radioGroupSexo, radioGroupCastrado, radioGroupVermifugado;
-    //private RadioButton radioEspecieButton, radioSexoButton, radioCastradoButton, radioVermifugadoButton;
-    private Spinner spinnerRaca;
+    private MultiSpinner spinnerRaca;
     private SeekBar seekBarRaioBusca;
     private RangeBar rangeIdade, rangePeso;
     private TextView txtSeekBarIdadeValue, txtSeekBarPesoValue, txtSeekBarRaioBuscaValue;
@@ -46,6 +45,7 @@ public class FiltrosActivity extends AppCompatActivity {
     List<String> racasFiltro = new ArrayList<>();
     List<String> racasCao = new ArrayList<>();
     List<String> racasGato = new ArrayList<>();
+    List<String> racasOutros = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +58,10 @@ public class FiltrosActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-
-        ArrayAdapter<String> racas_adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, racasFiltro);
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerRacas);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.raca_array, R.layout.spinner_style);
-        spinner.setAdapter(racas_adapter);
-
-
         initializeVariables();
         filtros = new Filtros();
         if(Utils.fileExists(this, "filtros.json")) {
-            //lerFiltros();
+            lerFiltros();
         }
     }
 
@@ -112,8 +103,10 @@ public class FiltrosActivity extends AppCompatActivity {
         racasGato.add("Siberiano");
         racasGato.add("Egípcio");
 
+        racasOutros.add("Outros");
 
-        spinnerRaca = (Spinner) findViewById(R.id.spinnerRacas);
+        spinnerRaca = (MultiSpinner) findViewById(R.id.spinnerRacas);
+        spinnerRaca.setItems(racasFiltro);
 
         chkEspecieCao = (CheckBox) findViewById(R.id.chk_especie_cao);
         chkEspecieCao.setOnClickListener(new View.OnClickListener() {
@@ -121,13 +114,45 @@ public class FiltrosActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(chkEspecieCao.isChecked()) {
                     racasFiltro.addAll(racasCao);
+                    spinnerRaca.setItems(racasFiltro);
                 } else {
                     racasFiltro.removeAll(racasCao);
+                    spinnerRaca.setItems(racasFiltro);
+
                 }
             }
         });
+
         chkEspecieGato = (CheckBox) findViewById(R.id.chk_especie_gato);
+        chkEspecieGato.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(chkEspecieGato.isChecked()) {
+                    racasFiltro.addAll(racasGato);
+                    spinnerRaca.setItems(racasFiltro);
+                } else {
+                    racasFiltro.removeAll(racasGato);
+                    spinnerRaca.setItems(racasFiltro);
+
+                }
+            }
+        });
+
         chkEspecieOutros = (CheckBox) findViewById(R.id.chk_especie_outros);
+        chkEspecieOutros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(chkEspecieOutros.isChecked()) {
+                    racasFiltro.addAll(racasOutros);
+                    spinnerRaca.setItems(racasFiltro);
+                } else {
+                    racasFiltro.removeAll(racasOutros);
+                    spinnerRaca.setItems(racasFiltro);
+
+                }
+            }
+        });
+
         chkSexoMacho = (CheckBox) findViewById(R.id.chk_sexo_macho);
         chkSexoFemea = (CheckBox) findViewById(R.id.chk_sexo_femea);
         chkCastradoSim = (CheckBox) findViewById(R.id.chk_castrado_sim);
@@ -213,113 +238,125 @@ public class FiltrosActivity extends AppCompatActivity {
     }
 
     //TODO LEITURA DE FILTROS NOVAMENTE
-//    private void lerFiltros() {
-//        String data = Utils.readStringFromFile(this, "filtros.json");
-//
-//            Filtros filtrosSalvos = new Gson().fromJson(data, Filtros.class);
-//
-//            //se existem filtros salvos, preencher os campos conforme o que estava salvo
-//            if (filtrosSalvos != null) {
-//
-//                //setando a especie
-//                for (int i = 0; i < radioGroupEspecie.getChildCount(); i++) {
-//                    RadioButton child = (RadioButton) radioGroupEspecie.getChildAt(i);
-//                    if (child.getText().toString().equalsIgnoreCase(filtrosSalvos.especie)) {
-//                        child.setChecked(true);
-//
-//                        if (child.getText().toString().equalsIgnoreCase("Cão")) {
-//                            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-//                                    R.array.raca_cao, R.layout.spinner_style);
-//                            spinnerRaca.setAdapter(adapter);
-//                        }
-//
-//                        if (child.getText().toString().equalsIgnoreCase("Gato")) {
-//                            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-//                                    R.array.raca_gato, R.layout.spinner_style);
-//                            spinnerRaca.setAdapter(adapter);
-//                        }
-//
-//                        if (child.getText().toString().equalsIgnoreCase("Outros")) {
-//                            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-//                                    R.array.raca_outro, R.layout.spinner_style);
-//                            spinnerRaca.setAdapter(adapter);
-//                        }
-//
-//                    }
-//                }
-//
-//                //setando o sexo
-//                for (int i = 0; i < radioGroupSexo.getChildCount(); i++) {
-//                    RadioButton child = (RadioButton) radioGroupSexo.getChildAt(i);
-//                    if (child.getText().toString().equalsIgnoreCase(filtrosSalvos.sexo)) {
-//                        child.setChecked(Boolean.TRUE);
-//                    }
-//                }
-//
-//                //setando a raça
-//                spinnerRaca.setSelection(Utils.getSpinnerIndex(spinnerRaca, filtrosSalvos.raca));
-//
-//                //setando a idade
-//                rangeIdade.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.idadeInicial), Integer.valueOf(filtrosSalvos.idadeFinal));
-//
-//                //setando o peso
-//                rangePeso.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.pesoInicial), Integer.valueOf(filtrosSalvos.pesoFinal));
-//
-//                //setando castrado
-//                for (int i = 0; i < radioGroupCastrado.getChildCount(); i++) {
-//                    RadioButton child = (RadioButton) radioGroupCastrado.getChildAt(i);
-//                    if (child.getText().toString().equalsIgnoreCase(filtrosSalvos.castrado)) {
-//                        child.setChecked(true);
-//                    }
-//                }
-//
-//                //setando vermifugado
-//                for (int i = 0; i < radioGroupVermifugado.getChildCount(); i++) {
-//                    RadioButton child = (RadioButton) radioGroupVermifugado.getChildAt(i);
-//                    if (child.getText().toString().equalsIgnoreCase(filtrosSalvos.vermifugado)) {
-//                        child.setChecked(true);
-//                    }
-//                }
-//
-//                //setando valores de sociavel
-//                for (String sociavel : filtrosSalvos.sociavel) {
-//                    if (sociavel.equalsIgnoreCase(chkSociavelPessoas.getText().toString()))
-//                        chkSociavelPessoas.setChecked(Boolean.TRUE);
-//
-//                    if (sociavel.equalsIgnoreCase(chkSociavelCaes.getText().toString()))
-//                        chkSociavelCaes.setChecked(Boolean.TRUE);
-//
-//                    if (sociavel.equalsIgnoreCase(chkSociavelGatos.getText().toString()))
-//                        chkSociavelGatos.setChecked(Boolean.TRUE);
-//
-//                    if (sociavel.equalsIgnoreCase(chkSociavelOutros.getText().toString()))
-//                        chkSociavelOutros.setChecked(Boolean.TRUE);
-//                }
-//
-//                //setando valores de temperamento
-//                for (String temperamento : filtrosSalvos.temperamento) {
-//                    if (temperamento.equalsIgnoreCase(chkTemperamentoBravo.getText().toString()))
-//                        chkTemperamentoBravo.setChecked(Boolean.TRUE);
-//
-//                    if (temperamento.equalsIgnoreCase(chkTemperamentoComCuidado.getText().toString()))
-//                        chkTemperamentoComCuidado.setChecked(Boolean.TRUE);
-//
-//                    if (temperamento.equalsIgnoreCase(chkTemperamentoConviveBem.getText().toString()))
-//                        chkTemperamentoConviveBem.setChecked(Boolean.TRUE);
-//
-//                    if (temperamento.equalsIgnoreCase(chkTemperamentoMuitoDocil.getText().toString()))
-//                        chkTemperamentoMuitoDocil.setChecked(Boolean.TRUE);
-//                }
-//            }
-//
-//            //setando o raio de busca
-//            if (filtrosSalvos.raioDeBusca != null) {
-//                seekBarRaioBusca.setProgress(Integer.valueOf(filtrosSalvos.raioDeBusca));
-//                txtSeekBarRaioBuscaValue.setText("Raio de Busca: " + String.valueOf(filtrosSalvos.raioDeBusca) + " km.");
-//            }
-//
-//
-//    }
+    private void lerFiltros() {
+        String data = Utils.readStringFromFile(this, "filtros.json");
+
+            Filtros filtrosSalvos = new Gson().fromJson(data, Filtros.class);
+
+            //se existem filtros salvos, preencher os campos conforme o que estava salvo
+            if (filtrosSalvos != null) {
+
+                //setando a especie
+                for (String especie : filtrosSalvos.especies) {
+                    if(especie.equalsIgnoreCase(chkEspecieCao.getText().toString())) {
+                        chkEspecieCao.setChecked(Boolean.TRUE);
+                        racasFiltro.addAll(racasCao);
+                        spinnerRaca.setItems(racasFiltro);
+                    }
+
+                    if(especie.equalsIgnoreCase(chkEspecieGato.getText().toString())) {
+                        chkEspecieGato.setChecked(Boolean.TRUE);
+                        racasFiltro.addAll(racasGato);
+                        spinnerRaca.setItems(racasFiltro);
+                    }
+
+                    if(especie.equalsIgnoreCase(chkEspecieOutros.getText().toString())) {
+                        chkEspecieOutros.setChecked(Boolean.TRUE);
+                        racasFiltro.addAll(racasOutros);
+                        spinnerRaca.setItems(racasFiltro);
+                    }
+                }
+
+                if(filtrosSalvos.sexo.equalsIgnoreCase("TODOS")) {
+                    chkSexoFemea.setChecked(Boolean.TRUE);
+                    chkSexoMacho.setChecked(Boolean.TRUE);
+                } else if(filtrosSalvos.sexo.equalsIgnoreCase(chkSexoFemea.getText().toString())) {
+                    chkSexoMacho.setChecked(Boolean.FALSE);
+                    chkSexoFemea.setChecked(Boolean.TRUE);
+                } else {
+                    chkSexoMacho.setChecked(Boolean.TRUE);
+                    chkSexoFemea.setChecked(Boolean.FALSE);
+                }
+
+
+                //setando a raça
+                spinnerRaca.setSelection(filtrosSalvos.especies);
+
+                //setando a idade
+                rangeIdade.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.idadeInicial), Integer.valueOf(filtrosSalvos.idadeFinal));
+
+                //setando o peso
+                rangePeso.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.pesoInicial), Integer.valueOf(filtrosSalvos.pesoFinal));
+
+                //setando castrado
+                if(filtrosSalvos.castrado.equalsIgnoreCase("Sim")) {
+                    chkCastradoSim.setChecked(Boolean.TRUE);
+                    chkCastradoNao.setChecked(Boolean.FALSE);
+                } else {
+                    chkCastradoSim.setChecked(Boolean.FALSE);
+                    chkCastradoNao.setChecked(Boolean.TRUE);
+                }
+
+                if(filtrosSalvos.castrado.equalsIgnoreCase("TODOS")) {
+                    chkCastradoSim.setChecked(Boolean.TRUE);
+                    chkCastradoNao.setChecked(Boolean.TRUE);
+                }
+
+                //setando vermifugado
+
+                if(filtrosSalvos.vermifugado.equalsIgnoreCase("Sim")) {
+                    chkVermifugadoSim.setChecked(Boolean.TRUE);
+                    chkVermifugadoNao.setChecked(Boolean.FALSE);
+                } else {
+                    chkVermifugadoSim.setChecked(Boolean.FALSE);
+                    chkVermifugadoNao.setChecked(Boolean.TRUE);
+                }
+
+                if(filtrosSalvos.vermifugado.equalsIgnoreCase("TODOS")) {
+                    chkVermifugadoNao.setChecked(Boolean.TRUE);
+                    chkVermifugadoSim.setChecked(Boolean.TRUE);
+                }
+
+
+                //setando valores de sociavel
+                for (String sociavel : filtrosSalvos.sociavel) {
+                    if (sociavel.equalsIgnoreCase(chkSociavelPessoas.getText().toString()))
+                        chkSociavelPessoas.setChecked(Boolean.TRUE);
+
+                    if (sociavel.equalsIgnoreCase(chkSociavelCaes.getText().toString()))
+                        chkSociavelCaes.setChecked(Boolean.TRUE);
+
+                    if (sociavel.equalsIgnoreCase(chkSociavelGatos.getText().toString()))
+                        chkSociavelGatos.setChecked(Boolean.TRUE);
+
+                    if (sociavel.equalsIgnoreCase(chkSociavelOutros.getText().toString()))
+                        chkSociavelOutros.setChecked(Boolean.TRUE);
+                }
+
+                //setando valores de temperamento
+                for (String temperamento : filtrosSalvos.temperamento) {
+                    if (temperamento.equalsIgnoreCase(chkTemperamentoBravo.getText().toString()))
+                        chkTemperamentoBravo.setChecked(Boolean.TRUE);
+
+                    if (temperamento.equalsIgnoreCase(chkTemperamentoComCuidado.getText().toString()))
+                        chkTemperamentoComCuidado.setChecked(Boolean.TRUE);
+
+                    if (temperamento.equalsIgnoreCase(chkTemperamentoConviveBem.getText().toString()))
+                        chkTemperamentoConviveBem.setChecked(Boolean.TRUE);
+
+                    if (temperamento.equalsIgnoreCase(chkTemperamentoMuitoDocil.getText().toString()))
+                        chkTemperamentoMuitoDocil.setChecked(Boolean.TRUE);
+                }
+            }
+
+            //setando o raio de busca
+            if (filtrosSalvos.raioDeBusca != null) {
+                seekBarRaioBusca.setProgress(Integer.valueOf(filtrosSalvos.raioDeBusca));
+                txtSeekBarRaioBuscaValue.setText("Raio de Busca: " + String.valueOf(filtrosSalvos.raioDeBusca) + " km.");
+            }
+
+
+    }
 
     private void cancelarFiltro() {
         this.finish();
@@ -342,6 +379,7 @@ public class FiltrosActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(filtros);
         if(Utils.saveJsonFile(this, "filtros.json", json)) {
+            System.out.println(json);
             Utils.showToastMessage(this, "Filtro salvo com sucesso");
         } else {
             Utils.showToastMessage(this, "Erro ao salvar filtros");
@@ -366,16 +404,16 @@ public class FiltrosActivity extends AppCompatActivity {
 
         //pegar o valor do sexo selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
-        if(chkSexoMacho.isChecked()){
+        if((chkSexoFemea.isChecked() && chkSexoMacho.isChecked()) || (!chkSexoFemea.isChecked() && !chkSexoMacho.isChecked()) ){
+            filtros.sexo = "TODOS";
+        } else if(chkSexoMacho.isChecked()){
             filtros.sexo = chkSexoMacho.getText().toString();
         } else if(chkSexoFemea.isChecked()) {
             filtros.sexo = chkSexoFemea.getText().toString();
-        } else {
-            filtros.sexo = "TODOS";
         }
 
         //pegar o valor de raca selecionado
-        filtros.raca = spinnerRaca.getSelectedItem().toString();
+        filtros.raca = spinnerRaca.getSelectedStrings();
 
         //pegar o valor de idade selecionado
         filtros.idadeInicial = idadeInicial;
@@ -387,23 +425,23 @@ public class FiltrosActivity extends AppCompatActivity {
 
         //pegar o valor de castrado selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
-        if(chkCastradoNao.isChecked()){
+        if((chkCastradoSim.isChecked() && chkCastradoNao.isChecked()) || (!chkCastradoSim.isChecked() && !chkCastradoNao.isChecked()) ){
+            filtros.castrado = "TODOS";
+        } else if(chkCastradoNao.isChecked()){
             filtros.castrado = chkCastradoNao.getText().toString();
         } else if(chkCastradoSim.isChecked()) {
             filtros.castrado = chkCastradoSim.getText().toString();
-        } else {
-            filtros.castrado = "TODOS";
         }
 
 
         //pegar o valor de vermifugado selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
-        if(chkVermifugadoNao.isChecked()){
+        if((chkVermifugadoSim.isChecked() && chkVermifugadoNao.isChecked()) || (!chkVermifugadoSim.isChecked() && !chkVermifugadoNao.isChecked()) ){
+            filtros.vermifugado = "TODOS";
+        } else if(chkVermifugadoNao.isChecked()){
             filtros.vermifugado = chkVermifugadoNao.getText().toString();
         } else if(chkVermifugadoSim.isChecked()) {
             filtros.vermifugado = chkVermifugadoSim.getText().toString();
-        } else {
-            filtros.vermifugado = "TODOS";
         }
 
         //pegar os valores de sociavel selecionados
