@@ -37,8 +37,8 @@ public class Pet {
     public String status;
     public Boolean cadastroAtivo;
     public PontoGeo localizacao;
-    public Doador doador;
-    public Adotante adotante;
+    public Usuario doador;
+    public Usuario adotante;
 
     public Pet() {
         id = UUID.randomUUID().toString();
@@ -49,7 +49,7 @@ public class Pet {
                String parteDeNinhada, String nomeNinhada, String castrado, String vermifugado,
                String dose, List<String> sociavel, List<String> temperamento, List<String> imagens,
                String informacoesAdicionais, String status, Boolean cadastroAtivo,
-               PontoGeo localizacao, Doador doador, Adotante adotante) {
+               PontoGeo localizacao, Usuario doador, Usuario adotante) {
 
         this.id = UUID.randomUUID().toString();
         this.nome = nome;

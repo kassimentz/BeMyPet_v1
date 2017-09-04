@@ -3,6 +3,7 @@ package bemypet.com.br.bemypet_v1.pojo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import bemypet.com.br.bemypet_v1.utils.Constants;
 
@@ -10,10 +11,9 @@ import bemypet.com.br.bemypet_v1.utils.Constants;
  * Created by kassianesmentz on 30/08/17.
  */
 
-public class Adotante extends Usuario {
+public class Adocao {
 
-    private static String TIPO_USUARIO = Constants.ADOTANTE;
-
+    public String id;
     public Boolean jaTeveOutrosPets;
     public Integer quantosPetsTeve;
     public List<String> tiposPetsTeve;
@@ -26,20 +26,25 @@ public class Adotante extends Usuario {
     public Boolean temCuidadoContraPestes;
     public Boolean possuiTelasProtecao;
     public String informacoesAdicionais;
+    public String statusAdocao;
+    public Pet pet;
+    public Usuario adotante;
+    public Usuario doador;
 
-
-    public Adotante() {
-        this.tipoUsuario = TIPO_USUARIO;
-
+    public Adocao() {
+        id = UUID.randomUUID().toString();
     }
 
-    public Adotante(String nome, List<String> imagens, String dataNascimento, String cpf, PontoGeo localizacao, Integer cep, String endereco, Integer numero,
-                    String complemento, String bairro, String cidade, String estado, String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
-                    List<Denuncias> denuncias, List<Notificacoes> notificacoes, String tipoUsuario, Boolean jaTeveOutrosPets, Integer quantosPetsTeve, List<String>
-                            tiposPetsTeve, String oQueAconteceuComEles, Boolean temPetAtualmente, Integer quantosPetsTem, List<String> tiposPetsTem, String tipoMoradia,
-                    Boolean possuiPatio, Boolean temCuidadoContraPestes, Boolean possuiTelasProtecao, String informacoesAdicionais) {
-        super(nome, imagens, dataNascimento, cpf, localizacao, cep, endereco, numero, complemento, bairro, cidade, estado, telefone, email, meusPets, petsFavoritos,
-                denuncias, notificacoes, tipoUsuario);
+    public Adocao(Boolean jaTeveOutrosPets,
+                  Integer quantosPetsTeve, List<String> tiposPetsTeve,
+                  String oQueAconteceuComEles, Boolean temPetAtualmente,
+                  Integer quantosPetsTem, List<String> tiposPetsTem,
+                  String tipoMoradia, Boolean possuiPatio,
+                  Boolean temCuidadoContraPestes, Boolean possuiTelasProtecao,
+                  String informacoesAdicionais, String statusAdocao,
+                  Pet pet, Usuario adotante, Usuario doador) {
+
+        this.id = UUID.randomUUID().toString();
         this.jaTeveOutrosPets = jaTeveOutrosPets;
         this.quantosPetsTeve = quantosPetsTeve;
         this.tiposPetsTeve = tiposPetsTeve;
@@ -52,7 +57,10 @@ public class Adotante extends Usuario {
         this.temCuidadoContraPestes = temCuidadoContraPestes;
         this.possuiTelasProtecao = possuiTelasProtecao;
         this.informacoesAdicionais = informacoesAdicionais;
-        this.tipoUsuario = TIPO_USUARIO;
+        this.statusAdocao = statusAdocao;
+        this.pet = pet;
+        this.adotante = adotante;
+        this.doador = doador;
     }
 
     public Map<String, Object> toMap() {
@@ -69,13 +77,17 @@ public class Adotante extends Usuario {
         result.put("temCuidadoContraPestes", temCuidadoContraPestes);
         result.put("possuiTelasProtecao", possuiTelasProtecao);
         result.put("informacoesAdicionais", informacoesAdicionais);
-
+        result.put("statusAdocao", statusAdocao);
+        result.put("pet", pet);
+        result.put("adotante", adotante);
+        result.put("doador", doador);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Adotante{" +
+        return "Adocao{" +
+                "id=" + id +
                 "jaTeveOutrosPets=" + jaTeveOutrosPets +
                 ", quantosPetsTeve=" + quantosPetsTeve +
                 ", tiposPetsTeve=" + tiposPetsTeve +
@@ -88,6 +100,10 @@ public class Adotante extends Usuario {
                 ", temCuidadoContraPestes=" + temCuidadoContraPestes +
                 ", possuiTelasProtecao=" + possuiTelasProtecao +
                 ", informacoesAdicionais='" + informacoesAdicionais + '\'' +
+                ", statusAdocao='" + statusAdocao + '\'' +
+                ", pet=" + pet +
+                ", adotante='" + adotante + '\'' +
+                ", doador='" + doador + '\'' +
                 '}';
     }
 }
