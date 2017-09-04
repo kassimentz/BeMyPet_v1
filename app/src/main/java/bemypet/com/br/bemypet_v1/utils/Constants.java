@@ -10,6 +10,9 @@ public class Constants {
 
     public static String USUARIO_LOGADO = "usuario_logado";
 
+    //status adocao
+
+    public static String SOLICITADA_ADOCAO = "solicitada_adocao";
 
     //status notificacao
     public static String ENVIADA = "enviada";

@@ -21,7 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
+import bemypet.com.br.bemypet_v1.pojo.Adocao;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
@@ -133,20 +137,18 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
     }
 
     public void aplicarConfirmacaoSolicitacaoAdocao(View v) {
-        //TODO criar processo com a classe de ADOCAO
-//        Notificacoes notificacao = new Notificacoes();
-//        notificacao.mensagem = "Boas notícias! "+getUsuario().nome+" gostaria de adotar "+getPet().nome+"!";
-//        notificacao.remetente = getUsuario().nome;
-//        notificacao.destinatario = getPet().doador.nome;
-//        notificacao.dataHora = Utils.getCurrentDateTime();
-//        notificacao.usuario = getUsuario();
-//        notificacao.doador = getPet().doador;
-//        notificacao.pet = getPet();
-//        notificacao.statusNotificacao = Constants.ENVIADA;
-//        notificacao.lida = Boolean.FALSE;
-//        //salvar notificacao no firebase
-//        salvarNotificacao(notificacao);
-//        getPet().status = Constants.EM_PROCESSO_DE_ADOCAO;
+
+        Notificacoes notificacao = new Notificacoes();
+        notificacao.mensagem = "Boas notícias! "+getUsuario().nome+" gostaria de adotar "+getPet().nome+"!";
+        notificacao.dataHora = Utils.getCurrentDateTime();
+        notificacao.statusNotificacao = Constants.ENVIADA;
+        notificacao.lida = Boolean.FALSE;
+        notificacao.adocao = criarAdocaoMockada();
+
+
+        //salvar notificacao no firebase
+        salvarNotificacao(notificacao);
+        getPet().status = Constants.EM_PROCESSO_DE_ADOCAO;
         //atualizar o status do pet no banco para "em adocao", para que nao apareca nas buscas
         updateStatusPet();
 
@@ -172,6 +174,34 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
             alertDialog.show();
     }
 
+    //TODO APAGAR QUANDO O FORMULARIO ESTIVER OK. USUARIO SÓ PRA MOCK
+    private Adocao criarAdocaoMockada() {
+        //TODO receber essa adocao do formulario preenchido via bundle
+        Adocao adocao = new Adocao();
+        adocao.jaTeveOutrosPets = Boolean.TRUE;
+        adocao.quantosPetsTeve = 2;
+        List<String> tiposPetsTeve = new ArrayList<>();
+        tiposPetsTeve.add("gato");
+        adocao.tiposPetsTeve = tiposPetsTeve;
+        adocao.oQueAconteceuComEles = "continuam comigo";
+        adocao.temPetAtualmente = Boolean.TRUE;
+        adocao.quantosPetsTem = 2;
+        adocao.tiposPetsTem = tiposPetsTeve;
+        adocao.tipoMoradia = "apto";
+        adocao.possuiPatio = Boolean.FALSE;
+        adocao.temCuidadoContraPestes = Boolean.TRUE;
+        adocao.possuiTelasProtecao = Boolean.TRUE;
+        adocao.informacoesAdicionais = "bla bla bla";
+        adocao.statusAdocao = Constants.SOLICITADA_ADOCAO;
+        adocao.pet = getPet();
+        adocao.adotante = getUsuario();
+        adocao.doador = getPet().doador;
+
+        salvarAdocao(adocao);
+        return adocao;
+
+    }
+
     private void updateStatusPet() {
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
         myRef.child(getPet().id).child("status").setValue(getPet().status);
@@ -187,6 +217,29 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
                     FirebaseConnection.getDatabase().child("notificacoes").child(String.valueOf(notificacao.id)).setValue(notificacao);
+                } else {
+                    //logar erro
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Log.i("Cancel", "Listener was cancelled");
+            }
+        });
+    }
+
+    //TODO USUAR AQUI ENQUANTO NAO TEM A ACTIVITY DE ADOCAO
+    private void salvarAdocao(Adocao data) {
+        final Adocao adocao = data;
+        FirebaseConnection.getConnection();
+        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    FirebaseConnection.getDatabase().child("adocoes").child(String.valueOf(adocao.id)).setValue(adocao);
                 } else {
                     //logar erro
                 }

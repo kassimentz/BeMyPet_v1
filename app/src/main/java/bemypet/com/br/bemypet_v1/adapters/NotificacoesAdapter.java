@@ -48,9 +48,10 @@ public class NotificacoesAdapter extends BaseAdapter implements Filterable {
                 if (notificacoes == null)
                     notificacoes = notificacoesList;
                 if (constraint != null) {
+                    //TODO DEPOIS FILTRAR SOMENTE PELAS NOTIFICACOES DO USUARIO LOGADO NO APARELHO
                     if (notificacoes != null && notificacoes.size() > 0) {
                         for (final Notificacoes not : NotificacoesAdapter.this.notificacoes) {
-                            if (not.remetente.toLowerCase().contains(constraint.toString()))
+                            if (not.adocao.adotante.nome.toLowerCase().contains(constraint.toString()))
                                 results.add(not);
                         }
                     }
@@ -105,8 +106,8 @@ public class NotificacoesAdapter extends BaseAdapter implements Filterable {
             holder = (NotificacoesHolder) convertView.getTag();
         }
 
-        holder.remetente.setText(notificacoesList.get(position).remetente);
-        holder.destinatario.setText(notificacoesList.get(position).destinatario);
+        holder.remetente.setText(notificacoesList.get(position).adocao.adotante.nome);
+        holder.destinatario.setText(notificacoesList.get(position).adocao.pet.doador.nome);
 
         return convertView;
 
