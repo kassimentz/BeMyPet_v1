@@ -10,6 +10,11 @@ public class Constants {
 
     public static String USUARIO_LOGADO = "usuario_logado";
 
+    //topicos adocao
+    public static String TOPICO_ADOCAO = "adocao";
+    public static String TOPICO_DENUNCIA = "denuncia";
+
+
     //status adocao
 
     public static String SOLICITADA_ADOCAO = "solicitada_adocao";
@@ -25,7 +30,7 @@ public class Constants {
     public static String ADOCAO_APROVADA = "adocaoAprovada";
 
     //status pet
-    public static String DISPONIVEL = "iisponivel";
+    public static String DISPONIVEL = "disponivel";
     public static String EM_PROCESSO_DE_ADOCAO = "processandoAdocao";
     public static String INATIVO = "inativo";
     public static String ADOTADO = "adotado";

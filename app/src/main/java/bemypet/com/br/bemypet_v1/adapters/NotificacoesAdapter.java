@@ -34,8 +34,7 @@ public class NotificacoesAdapter extends BaseAdapter implements Filterable {
 
     public class NotificacoesHolder
     {
-        TextView remetente;
-        TextView destinatario;
+        TextView txtTopicoMensagem, txtTituloMensagem, txtMensagem, txtDataMensagem;
     }
 
     public Filter getFilter() {
@@ -97,8 +96,10 @@ public class NotificacoesAdapter extends BaseAdapter implements Filterable {
         {
             convertView = LayoutInflater.from(context).inflate(R.layout.row_list_notificacoes, parent, false);
             holder = new NotificacoesHolder();
-            holder.remetente = (TextView) convertView.findViewById(R.id.txtRemetente);
-            holder.destinatario = (TextView) convertView.findViewById(R.id.txtDestinatario);
+            holder.txtTopicoMensagem = (TextView) convertView.findViewById(R.id.txtTopicoMensagem);
+            holder.txtTituloMensagem = (TextView) convertView.findViewById(R.id.txtTituloMensagem);
+            holder.txtMensagem = (TextView) convertView.findViewById(R.id.txtMensagem);
+            holder.txtDataMensagem = (TextView) convertView.findViewById(R.id.txtDataMensagem);
             convertView.setTag(holder);
         }
         else
@@ -106,8 +107,10 @@ public class NotificacoesAdapter extends BaseAdapter implements Filterable {
             holder = (NotificacoesHolder) convertView.getTag();
         }
 
-        holder.remetente.setText(notificacoesList.get(position).adocao.adotante.nome);
-        holder.destinatario.setText(notificacoesList.get(position).adocao.pet.doador.nome);
+        holder.txtTopicoMensagem.setText(notificacoesList.get(position).topico);
+        holder.txtTituloMensagem.setText(notificacoesList.get(position).titulo);
+        holder.txtMensagem.setText(notificacoesList.get(position).mensagem);
+        holder.txtDataMensagem.setText(notificacoesList.get(position).data);
 
         return convertView;
 

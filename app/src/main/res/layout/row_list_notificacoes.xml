@@ -2,19 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:weightSum="4"
     android:padding="5dp" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="3">
 
-    <TextView
-        android:id="@+id/txtRemetente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        <TextView
+            android:textColor="@color/OrangeApp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:id="@+id/txtTopicoMensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_title_confirmar_solicitacao_adocao">
+        </TextView>
 
-    <TextView
-        android:id="@+id/txtDestinatario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        <TextView
+            android:textColor="@color/OrangeApp"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:id="@+id/txtTituloMensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_title_confirmar_solicitacao_adocao">
+        </TextView>
+
+        <TextView
+            android:textColor="@color/OrangeApp"
+            android:textSize="12dp"
+            android:id="@+id/txtMensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_confirmar_solicitacao_adocao_p1">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <TextView
+            android:textColor="@color/OrangeApp"
+            android:textSize="12dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/txtDataMensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_title_confirmar_solicitacao_adocao">
+        </TextView>
+
+    </LinearLayout>
+
 
 </LinearLayout>

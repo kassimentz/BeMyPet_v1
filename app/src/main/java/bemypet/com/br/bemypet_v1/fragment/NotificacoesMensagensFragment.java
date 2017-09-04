@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,6 +78,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         FirebaseDatabase.getInstance().getReference().child("notificacoes").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //TODO mostrar soment notificacoes do usuario logado
                 Notificacoes notificacao = null;
                 notificacoesList = new ArrayList<Notificacoes>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
@@ -101,8 +103,8 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
     private void setupSearchView()  {
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setOnQueryTextListener(this);
-        mSearchView.setSubmitButtonEnabled(true);
-        mSearchView.setQueryHint("Search Here");
+        //mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("Buscar");
     }
 
     @Override
@@ -112,7 +114,6 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         rootView = inflater.inflate(R.layout.fragment_notificacoes_mensagens, container, false);
         mSearchView = (SearchView) rootView.findViewById(R.id.searchViewNotificacoes);
         mListView = (ListView) rootView.findViewById(R.id.listViewNotificacoes);
-
         return  rootView;
     }
 

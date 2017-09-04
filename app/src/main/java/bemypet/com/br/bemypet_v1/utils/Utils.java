@@ -198,6 +198,20 @@ public class Utils {
         return strDate;
     }
 
+    public static String getCurrentDate() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        String strDate = dateFormat.format(date);
+        return strDate;
+    }
+
+    public static String getCurrentTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        String strDate = dateFormat.format(date);
+        return strDate;
+    }
+
     /**
      * Metodo utilizado para salvar um usuario em formato string (convertido usando o GSON)
      * dentro das shared preferences

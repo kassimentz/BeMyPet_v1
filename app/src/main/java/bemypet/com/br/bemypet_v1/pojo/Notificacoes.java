@@ -12,35 +12,44 @@ public class Notificacoes {
 
     public String id;
     public String mensagem;
-    public String dataHora;
+    public String data;
+    public String hora;
     public String statusNotificacao;
     public Boolean lida;
     public String tipoNotificacao;
     public Adocao adocao;
+    public String topico;
+    public String titulo;
 
     public Notificacoes() {
         id = UUID.randomUUID().toString();
     }
 
-    public Notificacoes(String id, String mensagem, String dataHora, String statusNotificacao, Boolean lida, String tipoNotificacao, Adocao adocao) {
+    public Notificacoes(String id, String mensagem, String data, String hora, String statusNotificacao, Boolean lida, String tipoNotificacao, Adocao adocao, String topico, String titulo) {
         this.id = UUID.randomUUID().toString();
         this.mensagem = mensagem;
-        this.dataHora = dataHora;
+        this.data = data;
+        this.hora = hora;
         this.statusNotificacao = statusNotificacao;
         this.lida = lida;
         this.tipoNotificacao = tipoNotificacao;
         this.adocao = adocao;
+        this.topico = topico;
+        this.titulo = titulo;
     }
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
         result.put("mensagem", mensagem);
-        result.put("dataHora", dataHora);
+        result.put("data", data);
+        result.put("hora", hora);
         result.put("statusNotificacao", statusNotificacao);
         result.put("lida", lida);
         result.put("tipoNotificacao", tipoNotificacao);
         result.put("adocao", adocao);
+        result.put("topico", topico);
+        result.put("titulo", titulo);
         return result;
     }
 
@@ -49,11 +58,14 @@ public class Notificacoes {
         return "Notificacoes{" +
                 "id='" + id + '\'' +
                 ", mensagem='" + mensagem + '\'' +
-                ", dataHora='" + dataHora + '\'' +
+                ", data='" + data + '\'' +
+                ", hora='" + hora + '\'' +
                 ", statusNotificacao='" + statusNotificacao + '\'' +
                 ", lida=" + lida +
                 ", tipoNotificacao='" + tipoNotificacao + '\'' +
                 ", adocao=" + adocao +
+                ", topico='" + topico + '\'' +
+                ", titulo='" + titulo + '\'' +
                 '}';
     }
 }
