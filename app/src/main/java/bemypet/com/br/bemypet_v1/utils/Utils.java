@@ -36,8 +36,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.pojo.Denuncias;
+import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
+import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.services.GPSTracker;
 
 /**
@@ -193,5 +196,59 @@ public class Utils {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String strDate = dateFormat.format(date);
         return strDate;
+    }
+
+    /**
+     * Metodo utilizado para salvar um usuario em formato string (convertido usando o GSON)
+     * dentro das shared preferences
+     * @param context
+     */
+    public static void salvarUsuarioSharedPreferences(Context context) {
+        Gson gson = new Gson();
+        String json = gson.toJson(instanciarUsuario());
+        ManagerPreferences.saveString(context, Constants.USUARIO_LOGADO, json);
+        System.out.println("Usuario salvo");
+    }
+
+    /**
+     * gera um usuario mockado enquanto os cadastros nao estao prontos
+     * @return
+     */
+    private static Usuario instanciarUsuario() {
+        Usuario usuario = new Usuario();
+
+        usuario.nome = "nome doador";
+        List<String> imagens = new ArrayList<>();
+        imagens.add("https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2Fimages%20(2).jpg?alt=media&token=8b0bb91b-f11c-4d59-a9a6-9a972732e284");
+        usuario.imagens = imagens;
+        usuario.dataNascimento = "28/11/1986";
+        usuario.cpf = "001.239.752.23";
+        usuario.localizacao = new PontoGeo(-29.856, -51.234);
+        usuario.cep = 91120415;
+        usuario.endereco = "gabriel franco da luz";
+        usuario.numero = 560;
+        usuario.complemento = "apto 206F";
+        usuario.bairro = "sarandi";
+        usuario.cidade = "porto alegre";
+        usuario.estado = "RS";
+        usuario.telefone = "434343434";
+        usuario.email = "cassio@teste.com";
+        usuario.meusPets = new ArrayList<Pet>();
+        usuario.petsFavoritos = new ArrayList<Pet>();
+        usuario.denuncias = new ArrayList<Denuncias>();
+        usuario.notificacoes = new ArrayList<Notificacoes>();
+        return usuario;
+    }
+
+    public static Usuario getUsuarioSharedPreferences(Context context) {
+
+        String json = ManagerPreferences.getString(context, Constants.USUARIO_LOGADO);
+        Gson gson = new Gson();
+        Usuario usuario = new Gson().fromJson(json, Usuario.class);
+        if(usuario != null) {
+            return usuario;
+        } else {
+            return null;
+        }
     }
 }

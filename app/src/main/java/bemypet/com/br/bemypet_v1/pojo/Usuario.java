@@ -10,7 +10,7 @@ import java.util.UUID;
  *
  */
 
-public abstract class Usuario {
+public class Usuario {
 
     public String id;
     public String nome;
@@ -31,31 +31,16 @@ public abstract class Usuario {
     public List<Pet> petsFavoritos;
     public List<Denuncias> denuncias;
     public List<Notificacoes> notificacoes;
-    public String tipoUsuario;
 
-    protected Usuario() {
+    public Usuario() {
         id = UUID.randomUUID().toString();
     }
 
-    protected Usuario(String nome,
-                      List<String> imagens,
-                   String dataNascimento,
-                   String cpf,
-                   PontoGeo localizacao,
-                   Integer cep,
-                   String endereco,
-                   Integer numero,
-                   String complemento,
-                   String bairro,
-                   String cidade,
-                   String estado,
-                   String telefone,
-                   String email,
-                   List<Pet> meusPets,
-                   List<Pet> petsFavoritos,
-                   List<Denuncias> denuncias,
-                   List<Notificacoes> notificacoes,
-                      String tipoUsuario) {
+    public Usuario(String nome, List<String> imagens, String dataNascimento, String cpf,
+                      PontoGeo localizacao, Integer cep, String endereco, Integer numero,
+                      String complemento, String bairro, String cidade, String estado,
+                      String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
+                      List<Denuncias> denuncias, List<Notificacoes> notificacoes) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.imagens = imagens;
@@ -75,11 +60,8 @@ public abstract class Usuario {
         this.petsFavoritos = petsFavoritos;
         this.denuncias = denuncias;
         this.notificacoes = notificacoes;
-        this.tipoUsuario = tipoUsuario;
 
     }
-
-
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -101,7 +83,6 @@ public abstract class Usuario {
         result.put("petsFavoritos", petsFavoritos);
         result.put("denuncias", denuncias);
         result.put("notificacoes", notificacoes);
-        result.put("tipoUsuario", tipoUsuario);
         return result;
     }
 
@@ -127,7 +108,6 @@ public abstract class Usuario {
                 ", petsFavoritos=" + petsFavoritos +
                 ", denuncias=" + denuncias +
                 ", notificacoes=" + notificacoes +
-                ", tipoUsuario=" + tipoUsuario +
                 '}';
     }
 }

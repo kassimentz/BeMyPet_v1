@@ -15,8 +15,8 @@ public class Notificacoes {
     public String remetente;
     public String destinatario;
     public String dataHora;
-    public Adotante adotante;
-    public Doador doador;
+    public Usuario adotante;
+    public Usuario doador;
     public String statusNotificacao;
     public Boolean lida;
     public Pet pet;
@@ -27,7 +27,7 @@ public class Notificacoes {
     }
 
     public Notificacoes(String mensagem, String remetente, String destinatario, String dataHora,
-                        Adotante adotante, Doador doador, String statusNotificacao, Boolean lida,
+                        Usuario adotante, Usuario doador, String statusNotificacao, Boolean lida,
                         Pet pet, String tipoNotificacao) {
         this.id = UUID.randomUUID().toString();
         this.mensagem = mensagem;

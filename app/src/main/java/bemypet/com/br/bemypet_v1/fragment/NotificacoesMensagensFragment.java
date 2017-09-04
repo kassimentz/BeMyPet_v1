@@ -4,11 +4,25 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.SearchView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import bemypet.com.br.bemypet_v1.R;
+import bemypet.com.br.bemypet_v1.adapters.NotificacoesAdapter;
+import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,32 +32,27 @@ import bemypet.com.br.bemypet_v1.R;
  * Use the {@link NotificacoesMensagensFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NotificacoesMensagensFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class NotificacoesMensagensFragment extends Fragment implements SearchView.OnQueryTextListener {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View rootView;
+
+    private SearchView mSearchView;
+    private ListView mListView;
+    private List<Notificacoes> notificacoesList;
+    private NotificacoesAdapter notificacoesAdapter;
 
     private OnFragmentInteractionListener mListener;
 
     public NotificacoesMensagensFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NotificacoesMensagensFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static NotificacoesMensagensFragment newInstance(String param1, String param2) {
+
         NotificacoesMensagensFragment fragment = new NotificacoesMensagensFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -59,16 +68,54 @@ public class NotificacoesMensagensFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        buscarNotificacoes();
+    }
+
+    private void buscarNotificacoes() {
+
+        FirebaseDatabase.getInstance().getReference().child("notificacoes").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Notificacoes notificacao = null;
+                notificacoesList = new ArrayList<Notificacoes>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    notificacao = postSnapshot.getValue(Notificacoes.class);
+                    notificacoesList.add(notificacao);
+                }
+
+
+                notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
+                mListView.setAdapter(notificacoesAdapter);
+
+                mListView.setTextFilterEnabled(true);
+                setupSearchView();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
+    }
+
+    private void setupSearchView()  {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("Search Here");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notificacoes_mensagens, container, false);
+
+        rootView = inflater.inflate(R.layout.fragment_notificacoes_mensagens, container, false);
+        mSearchView = (SearchView) rootView.findViewById(R.id.searchViewNotificacoes);
+        mListView = (ListView) rootView.findViewById(R.id.listViewNotificacoes);
+
+        return  rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -89,18 +136,23 @@ public class NotificacoesMensagensFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        if (TextUtils.isEmpty(newText)) {
+            mListView.clearTextFilter();
+        } else {
+            mListView.setFilterText(newText);
+        }
+        return true;
+    }
+
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

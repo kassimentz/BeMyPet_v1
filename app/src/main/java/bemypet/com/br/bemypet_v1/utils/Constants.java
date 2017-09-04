@@ -6,10 +6,10 @@ package bemypet.com.br.bemypet_v1.utils;
 
 public class Constants {
 
-    //tipos usuario
+    //usuario
 
-    public static String DOADOR = "doador";
-    public static String ADOTANTE = "adotante";
+    public static String USUARIO_LOGADO = "usuario_logado";
+
 
     //status notificacao
     public static String ENVIADA = "enviada";
