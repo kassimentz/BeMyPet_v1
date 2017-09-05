@@ -6,6 +6,8 @@ package bemypet.com.br.bemypet_v1.utils;
 
 public class Constants {
 
+    public static String SIM = "sim";
+    public static String NAO = "nao";
     //usuario
 
     public static String USUARIO_LOGADO = "usuario_logado";
@@ -34,6 +36,9 @@ public class Constants {
     public static String EM_PROCESSO_DE_ADOCAO = "processandoAdocao";
     public static String INATIVO = "inativo";
     public static String ADOTADO = "adotado";
+
+
+
 
 
 }

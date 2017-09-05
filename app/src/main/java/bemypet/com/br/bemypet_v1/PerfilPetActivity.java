@@ -140,31 +140,31 @@ public class PerfilPetActivity extends AppCompatActivity {
         }
 
 
-        if(!getPet().nome.isEmpty()) {
+        if(getPet().nome != null) {
             user_profile_name.setText(getPet().nome);
         }
-        if(!getPet().especie.isEmpty()) {
+        if(getPet().especie != null) {
             especiePerfilPet.setText(getPet().especie);
         }
-        if(!getPet().sexo.isEmpty()) {
+        if(getPet().sexo != null) {
             sexoPerfilPet.setText(getPet().sexo);
         }
-        if(!getPet().raca.isEmpty()) {
+        if(getPet().raca != null) {
             racaPerfilPet.setText(getPet().raca);
         }
-        if(!getPet().idadeAproximada.isEmpty()) {
+        if(getPet().idadeAproximada != null) {
             idadePerfilPet.setText(getPet().idadeAproximada);
         }
-        if(!String.valueOf(getPet().pesoAproximado).isEmpty()) {
+        if(getPet().pesoAproximado != null) {
             pesoPerfilPet.setText(String.valueOf(getPet().pesoAproximado));
         }
-        if(!getPet().castrado.isEmpty()) {
+        if(getPet().castrado != null) {
             castradoPerfilPet.setText(getPet().castrado);
         }
-        if(!getPet().vermifugado.isEmpty()) {
+        if(getPet().vermifugado != null) {
             vermifugadoPerfilPet.setText(getPet().vermifugado);
         }
-        if(!getPet().sociavel.isEmpty()) {
+        if(getPet().sociavel != null) {
             StringBuilder stringSociavel = new StringBuilder();
             for (String sociavel : getPet().sociavel) {
                 stringSociavel.append(sociavel);
@@ -175,7 +175,7 @@ public class PerfilPetActivity extends AppCompatActivity {
             sociavelPerfilPet.setText(stringSociavel.toString());
 
         }
-        if(!getPet().temperamento.isEmpty()) {
+        if(getPet().temperamento != null) {
             StringBuilder stringTemperamento = new StringBuilder();
             for (String temperamento : getPet().temperamento) {
                 stringTemperamento.append(temperamento);

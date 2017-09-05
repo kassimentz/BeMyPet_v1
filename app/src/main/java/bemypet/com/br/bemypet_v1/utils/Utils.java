@@ -217,9 +217,9 @@ public class Utils {
      * dentro das shared preferences
      * @param context
      */
-    public static void salvarUsuarioSharedPreferences(Context context) {
+    public static void salvarUsuarioSharedPreferences(Context context, String nome) {
         Gson gson = new Gson();
-        String json = gson.toJson(instanciarUsuario());
+        String json = gson.toJson(instanciarUsuario(nome));
         ManagerPreferences.saveString(context, Constants.USUARIO_LOGADO, json);
         System.out.println("Usuario salvo");
     }
@@ -228,10 +228,10 @@ public class Utils {
      * gera um usuario mockado enquanto os cadastros nao estao prontos
      * @return
      */
-    private static Usuario instanciarUsuario() {
+    private static Usuario instanciarUsuario(String nome) {
         Usuario usuario = new Usuario();
 
-        usuario.nome = "nome doador";
+        usuario.nome = nome;
         List<String> imagens = new ArrayList<>();
         imagens.add("https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2Fimages%20(2).jpg?alt=media&token=8b0bb91b-f11c-4d59-a9a6-9a972732e284");
         usuario.imagens = imagens;

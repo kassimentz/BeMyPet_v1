@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, PerfilUsuarioActivity.class);
         Intent intent = new Intent(this, InicialActivity.class);
         startActivity(intent);
-        Utils.salvarUsuarioSharedPreferences(this);
+        Utils.salvarUsuarioSharedPreferences(this, "usuarioTeste1");
 //        System.out.println("inserindo doador no firebase");
 //        inserirDoadorTeste();
 //        System.out.println("inserindo adotante no firebase");

@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.koushikdutta.ion.Ion;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -41,6 +42,8 @@ import bemypet.com.br.bemypet_v1.InicialActivity;
 import bemypet.com.br.bemypet_v1.PerfilPetActivity;
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.SobreNosActivity;
+import bemypet.com.br.bemypet_v1.enums.Especie;
+import bemypet.com.br.bemypet_v1.enums.Sexo;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
@@ -69,9 +72,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     MapView mMapView;
     private MarkerOptions options = new MarkerOptions();
     private PontoGeo ponto = new PontoGeo();
-
-    PontoGeo pontoTemp = new PontoGeo();
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,7 +103,9 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -182,8 +184,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        pontoTemp.lat = -30.0170309;
-        pontoTemp.lon = -51.1660766;
         setMap(googleMap);
 
         InicialActivity activity = (InicialActivity) getActivity();
@@ -256,7 +256,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private void listarPetsProximos() {
 
         GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pontoTemp.lat, pontoTemp.lon), 20.0);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(getPonto().lat, getPonto().lon), 20.0);
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
@@ -315,7 +315,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private void buscarPetsPorFiltro(final Filtros filtro) {
 
         GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(pontoTemp.lat, pontoTemp.lon), filtro.raioDeBusca);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(getPonto().lat, getPonto().lon), filtro.raioDeBusca);
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
 
@@ -484,13 +484,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
      */
     private void setZoomIn() {
 
-        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(pontoTemp.lat, pontoTemp.lon)));
-        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(pontoTemp.lat, pontoTemp.lon)));
-        getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pontoTemp.lat, pontoTemp.lon), 12));
+        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(getPonto().lat, getPonto().lon)));
+        getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(getPonto().lat, getPonto().lon)));
+        getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getPonto().lat, getPonto().lon), 12));
     }
+
 
     /**
      * Método para salva pets
+     * //TODO MOVER PARA ACTIVITY DE CADASTRO DE PET
      * @param entidade
      */
     private void salvarPet(Pet entidade) {
@@ -528,9 +530,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                 //Log.i("Cancel", "Listener was cancelled");
             }
         });
-
-
-
     }
 
     /**
