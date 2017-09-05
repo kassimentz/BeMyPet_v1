@@ -393,4 +393,11 @@ public class InicialActivity extends AppCompatActivity {
     public void setFiltroActivity(Filtros filtroActivity) {
         this.filtroActivity = filtroActivity;
     }
+
+    public void visualizarPerfilUsuario(View v){
+        Intent intent = new Intent(InicialActivity.this, PerfilUsuarioActivity.class);
+
+        drawer.closeDrawers();
+        startActivity(intent);
+    }
 }
