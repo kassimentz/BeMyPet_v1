@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -103,8 +104,9 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
     private void setupSearchView()  {
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setOnQueryTextListener(this);
-        //mSearchView.setSubmitButtonEnabled(true);
         mSearchView.setQueryHint("Buscar");
+        mSearchView.setIconified(false);
+
     }
 
     @Override
