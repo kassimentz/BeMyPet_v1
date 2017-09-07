@@ -102,8 +102,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
                         Intent intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
                         Notificacoes n = notificacoesList.get(position);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("pet", new Gson().toJson(n.adocao.pet));
-                        bundle.putSerializable("adotante", new Gson().toJson(n.adocao.adotante));
+                        bundle.putSerializable("adocao", new Gson().toJson(n.adocao));
                         intent.putExtras(bundle);
                         startActivity(intent);
 
