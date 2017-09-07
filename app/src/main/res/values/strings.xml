@@ -46,6 +46,7 @@
     <string name="nav_meus_pets">Meus Pets / Favoritos</string>
     <string name="nav_configuracoes">Configurações</string>
     <string name="nav_sobre">Sobre</string>
+    <string name="nav_ajuda">Ajuda</string>
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
