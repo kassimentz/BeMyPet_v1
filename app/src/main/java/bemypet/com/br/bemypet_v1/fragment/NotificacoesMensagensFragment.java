@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -17,12 +19,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import bemypet.com.br.bemypet_v1.PerfilPetActivity;
 import bemypet.com.br.bemypet_v1.R;
+import bemypet.com.br.bemypet_v1.VisualizarSolicitacaoAdocaoActivity;
 import bemypet.com.br.bemypet_v1.adapters.NotificacoesAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 
@@ -90,6 +95,20 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
                 notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
                 mListView.setAdapter(notificacoesAdapter);
+
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                        Intent intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
+                        Notificacoes n = notificacoesList.get(position);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("pet", new Gson().toJson(n.adocao.pet));
+                        bundle.putSerializable("adotante", new Gson().toJson(n.adocao.adotante));
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+                });
 
                 mListView.setTextFilterEnabled(true);
                 setupSearchView();

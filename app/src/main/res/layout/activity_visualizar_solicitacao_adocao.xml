@@ -20,7 +20,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/visualizarPetToolbar"
+                android:id="@+id/visualizarSolicitacaoAdocaoToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:onClick="reprovarAdocao"
                 android:orientation="vertical"
                 android:background="@drawable/backgroun_button_orange">
 
@@ -67,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:onClick="aprovarAdocao"
                 android:orientation="vertical"
                 android:background="@drawable/backgroun_button_green">
 
@@ -137,6 +139,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/imgPet"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:padding="2dp"
@@ -153,6 +156,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtNomePet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/textoParagrafo"
@@ -161,6 +165,7 @@
                             android:text="Pet" />
 
                         <TextView
+                            android:id="@+id/txtIdadePet"
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
                             style="@style/textoParagrafo"
@@ -195,6 +200,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/imgAdotante"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:background="@drawable/bg_circle"
@@ -211,6 +217,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtNomeAdotante"
                             style="@style/textoParagrafo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -219,6 +226,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtCidadeAdotante"
                             style="@style/textoParagrafo"
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
