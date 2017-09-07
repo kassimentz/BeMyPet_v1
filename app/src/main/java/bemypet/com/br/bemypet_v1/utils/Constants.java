@@ -25,6 +25,7 @@ public class Constants {
     public static String ENVIADA = "enviada";
     public static String RESPONDIDA = "respondida";
     public static String ERRO = "erroNoEnvio";
+    public static String LIDA = "lida";
 
     //tipos de notificacao
     public static String QUERO_ADOTAR = "queroAdotar";

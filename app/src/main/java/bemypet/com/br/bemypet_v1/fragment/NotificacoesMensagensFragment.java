@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
@@ -30,6 +31,7 @@ import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.VisualizarSolicitacaoAdocaoActivity;
 import bemypet.com.br.bemypet_v1.adapters.NotificacoesAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
+import bemypet.com.br.bemypet_v1.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +103,9 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
                         Intent intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
                         Notificacoes n = notificacoesList.get(position);
+                        n.statusNotificacao = Constants.LIDA;
+                        n.lida = Boolean.TRUE;
+                        updateNotificacao(n);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("adocao", new Gson().toJson(n.adocao));
                         intent.putExtras(bundle);
@@ -117,6 +122,12 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
             public void onCancelled(DatabaseError databaseError) { }
         });
 
+    }
+
+    private void updateNotificacao(Notificacoes n) {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
+        myRef.child(n.id).child("statusNotificacao").setValue(n.statusNotificacao);
+        myRef.child(n.id).child("lida").setValue(n.lida);
     }
 
     private void setupSearchView()  {

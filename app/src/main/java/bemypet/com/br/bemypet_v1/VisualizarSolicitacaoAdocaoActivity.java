@@ -20,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Adocao;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
@@ -162,6 +165,13 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         myRef.child(getAdocao().id).child("statusAdocao").setValue(getAdocao().statusAdocao);
     }
 
+    private void updateUsuario() {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
+        myRef.child(getAdotante().id).child("meusPets").setValue(getAdotante().meusPets);
+    }
+
+
+
     private void salvarNotificacao(Notificacoes data) {
         final Notificacoes notificacao = data;
         FirebaseConnection.getConnection();
@@ -185,6 +195,50 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     }
 
     public void aprovarAdocao(View v) {
+
+        Notificacoes notificacao = new Notificacoes();
+        notificacao.mensagem = "Adoção Aprovada! O usuário "+getPet().doador+" aprovou sua solicitação para a adoção do pet "+getPet().nome+ " Entre em contato com ele para combinar tudo direitinho!";
+        notificacao.data = Utils.getCurrentDate();
+        notificacao.hora = Utils.getCurrentTime();
+        notificacao.titulo = "Adoção de "+getPet().nome+" Aprovada!";
+        notificacao.statusNotificacao = Constants.ENVIADA;
+        notificacao.topico = Constants.TOPICO_ADOCAO;
+        notificacao.lida = Boolean.FALSE;
+        notificacao.adocao = getAdocao();
+
+        //salvar notificacao no firebase
+        salvarNotificacao(notificacao);
+        getPet().status = Constants.ADOTADO;
+        //atualizar o status do pet no banco para "DISPONIVEL", para que apareca NOVAMENTE nas buscas
+        updateStatusPet();
+
+        getAdocao().statusAdocao = Constants.ADOCAO_APROVADA;
+        updateStatusAdocao();
+        List<Pet> meusPets = new ArrayList<>();
+        meusPets.add(getPet());
+        getAdotante().meusPets = meusPets;
+
+        updateUsuario();
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle("Adoção Aprovada!");
+
+        alertDialogBuilder
+                .setMessage("Uma mensagem foi enviada informando a aprovação. O processo de adoção de "+getPet().nome+" está quase no fim! Entre em contato com "+getAdotante().nome+" para combinar a entrega do pet!")
+                .setCancelable(false)
+                .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getApplication(), InicialActivity.class);
+                        startActivity(intent);
+                        VisualizarSolicitacaoAdocaoActivity.this.finish();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
 
     }
 
