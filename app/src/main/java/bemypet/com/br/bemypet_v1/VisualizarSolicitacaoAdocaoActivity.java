@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,9 +79,20 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
     public void visualizarUsuarioPerfil(View v){
 
+        Intent intent = new Intent(this, PerfilUsuarioActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("usuario", new Gson().toJson(getAdotante()));
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public void visualizaPerfilPet(View v) {
+        Intent intent = new Intent(this, PerfilPetActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pet", new Gson().toJson(getPet()));
+        bundle.putString("key", "visualizarAdocao");
+        intent.putExtras(bundle);
+        startActivity(intent);
 
     }
 

@@ -255,7 +255,7 @@
     <string name="cep">CEP</string>
     <string name="endereco">Endereço</string>
     <string name="numero">Número</string>
-    <string name="complemento">Complento</string>
+    <string name="complemento">Complemento</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
     <string name="telefone">Telefone</string>
