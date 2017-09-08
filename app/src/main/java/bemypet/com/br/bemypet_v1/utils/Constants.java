@@ -22,10 +22,11 @@ public class Constants {
     public static String SOLICITADA_ADOCAO = "solicitada_adocao";
 
     //status notificacao
-    public static String ENVIADA = "enviada";
-    public static String RESPONDIDA = "respondida";
-    public static String ERRO = "erroNoEnvio";
-    public static String LIDA = "lida";
+    public static String ENVIADA = "Enviada";
+    public static String RESPONDIDA = "Respondida";
+    public static String ERRO = "Erro no envio";
+    public static String LIDA = "Lida";
+    public static String REQUER_RESPOSTA = "Requer Resposta / Enviada";
 
     //tipos de notificacao
     public static String QUERO_ADOTAR = "queroAdotar";

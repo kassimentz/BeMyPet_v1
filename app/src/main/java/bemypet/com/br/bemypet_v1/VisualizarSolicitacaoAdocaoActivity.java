@@ -34,6 +34,7 @@ import bemypet.com.br.bemypet_v1.utils.Utils;
 public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
     private Adocao adocao;
+    private Notificacoes notificacao;
     private Pet pet;
     private Usuario adotante;
     private TextView txtNomePet, txtIdadePet, txtNomeAdotante, txtCidadeAdotante;
@@ -126,6 +127,11 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
         //salvar notificacao no firebase
         salvarNotificacao(notificacao);
+
+        //atualizar notificacao inicial para respondida
+        getNotificacao().statusNotificacao = Constants.RESPONDIDA;
+        updateNotificacao();
+
         getPet().status = Constants.DISPONIVEL;
         //atualizar o status do pet no banco para "DISPONIVEL", para que apareca NOVAMENTE nas buscas
         updateStatusPet();
@@ -206,10 +212,15 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         notificacao.lida = Boolean.FALSE;
         notificacao.adocao = getAdocao();
 
-        //salvar notificacao no firebase
+        //salvar nova notificacao no firebase
         salvarNotificacao(notificacao);
+
+        //atualizar notificacao inicial para respondida
+        getNotificacao().statusNotificacao = Constants.RESPONDIDA;
+        updateNotificacao();
+
         getPet().status = Constants.ADOTADO;
-        //atualizar o status do pet no banco para "DISPONIVEL", para que apareca NOVAMENTE nas buscas
+        //atualizar o status do pet no banco para "ADOTADO", para que nao apareca nas buscas
         updateStatusPet();
 
         getAdocao().statusAdocao = Constants.ADOCAO_APROVADA;
@@ -255,20 +266,24 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
     private void getBundle() {
 
-        String jsonAdocao = null;
+        String jsonNotificacao = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            jsonAdocao = extras.getString("adocao");
+            jsonNotificacao = extras.getString("notificacao");
         }
-        Adocao adocao = new Gson().fromJson(jsonAdocao, Adocao.class);
-
-        if(adocao != null) {
-            setAdocao(adocao);
-            setAdotante(adocao.adotante);
-            setPet(adocao.pet);
+        Notificacoes notificacao = new Gson().fromJson(jsonNotificacao, Notificacoes.class);
+        if(notificacao != null) {
+            setNotificacao(notificacao);
+            setAdocao(notificacao.adocao);
+            setAdotante(notificacao.adocao.adotante);
+            setPet(notificacao.adocao.pet);
         }
+    }
 
-
+    private void updateNotificacao() {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
+        myRef.child(getNotificacao().id).child("statusNotificacao").setValue(getNotificacao().statusNotificacao);
+        myRef.child(getNotificacao().id).child("lida").setValue(getNotificacao().lida);
     }
 
     public Adocao getAdocao() {
@@ -293,5 +308,13 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
     public void setAdotante(Usuario adotante) {
         this.adotante = adotante;
+    }
+
+    public Notificacoes getNotificacao() {
+        return notificacao;
+    }
+
+    public void setNotificacao(Notificacoes notificacao) {
+        this.notificacao = notificacao;
     }
 }

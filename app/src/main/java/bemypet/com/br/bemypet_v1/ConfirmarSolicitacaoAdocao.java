@@ -143,7 +143,7 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
         notificacao.titulo = getPet().nome + "encontrou um novo amigo(a)!";
-        notificacao.statusNotificacao = Constants.ENVIADA;
+        notificacao.statusNotificacao = Constants.REQUER_RESPOSTA;
         notificacao.topico = Constants.TOPICO_ADOCAO;
         notificacao.lida = Boolean.FALSE;
         notificacao.adocao = criarAdocaoMockada();

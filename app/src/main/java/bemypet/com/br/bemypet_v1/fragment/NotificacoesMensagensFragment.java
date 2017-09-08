@@ -3,6 +3,7 @@ package bemypet.com.br.bemypet_v1.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -79,6 +80,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         }
 
         buscarNotificacoes();
+
     }
 
     private void buscarNotificacoes() {
@@ -94,7 +96,6 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
                     notificacoesList.add(notificacao);
                 }
 
-
                 notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
                 mListView.setAdapter(notificacoesAdapter);
 
@@ -103,11 +104,12 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
                         Intent intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
                         Notificacoes n = notificacoesList.get(position);
-                        n.statusNotificacao = Constants.LIDA;
-                        n.lida = Boolean.TRUE;
-                        updateNotificacao(n);
+                        if(!n.lida) {
+                            n.lida = Boolean.TRUE;
+                            updateNotificacao(n);
+                        }
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("adocao", new Gson().toJson(n.adocao));
+                        bundle.putSerializable("notificacao", new Gson().toJson(n));
                         intent.putExtras(bundle);
                         startActivity(intent);
 
@@ -126,7 +128,6 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
     private void updateNotificacao(Notificacoes n) {
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
-        myRef.child(n.id).child("statusNotificacao").setValue(n.statusNotificacao);
         myRef.child(n.id).child("lida").setValue(n.lida);
     }
 
