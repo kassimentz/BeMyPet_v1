@@ -141,7 +141,12 @@ public class PerfilPetActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             jsonObj = extras.getString("pet");
-            key = extras.getString("key");
+            if(extras.containsKey("key")) {
+                key = extras.getString("key");
+                if(!key.isEmpty()) {
+                    setEsconderBotaoAdotar(Boolean.TRUE);
+                }
+            }
         }
         Pet pet = new Gson().fromJson(jsonObj, Pet.class);
 
@@ -149,9 +154,7 @@ public class PerfilPetActivity extends AppCompatActivity {
             setPet(pet);
         }
 
-        if(!key.isEmpty()) {
-            setEsconderBotaoAdotar(Boolean.TRUE);
-        }
+
     }
 
     private void preencherDados() {
