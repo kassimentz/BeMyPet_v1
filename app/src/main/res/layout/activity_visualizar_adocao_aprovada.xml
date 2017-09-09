@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- Header aligned to top -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/OrangeApp"
+        android:gravity="center" >
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/visualizarAdocaoAprovadaToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+    </RelativeLayout>
+
+    <!-- Footer aligned to bottom -->
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:onClick="fecharVisualizacaoAprovacao"
+                android:orientation="vertical"
+                android:background="@drawable/backgroun_button_orange">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="21dp"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:text="Fechar" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Scrollable Item below header and above footer -->
+    <LinearLayout
+        android:id="@+id/scrollableContents"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/footer"
+        android:background="@color/white"
+        android:layout_below="@id/header" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textoFormulario"
+                    android:textColor="@color/OrangeApp"
+                    android:textAlignment="center"
+                    android:id="@+id/txtAdocaoAprovada"
+                    android:text="@string/txtAdocaoAprovada"/>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout style="@style/colunasTituloFormulario">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:text="@string/telefone"/>
+                    </LinearLayout>
+                    <LinearLayout style="@style/colunasFormularioSpinner">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:textColor="@color/OrangeApp"
+                            android:id="@+id/txtTelefoneDoador"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout style="@style/colunasTituloFormulario">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:text="@string/email"/>
+                    </LinearLayout>
+                    <LinearLayout style="@style/colunasFormularioSpinner">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:textColor="@color/OrangeApp"
+                            android:id="@+id/txtEmailDoador"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="bemypet.com.br.bemypet_v1.VisualizarAdocaoAprovadaActivity" />
+
+    </LinearLayout>
+
+</RelativeLayout>

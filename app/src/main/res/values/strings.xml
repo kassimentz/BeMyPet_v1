@@ -62,6 +62,9 @@
     <string name="activity_title_peril_pet">Perfil Pet</string>
     <string name="activity_title_visualizar_adocao">Solicitação de Adoção</string>
     <string name="activity_title_confirmar_solicitacao_adocao">Confirmar adoção!</string>
+    <string name="activity_title_adocao_reprovada">Adoção Reprovada</string>
+    <string name="activity_title_adocao_aprovada">Adoção Aprovada</string>
+    <string name="activity_title_denuncia">Visualizar Denúncia</string>
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
@@ -271,6 +274,14 @@
 
     <string name="txt_confirmar_solicitacao_adocao_p3">Nesse momento, Báskara já te ama muito!</string>
     <string name="txtVisualizarAdocao">Visualize aqui qual pet encontrou um novo amigo e quem gostaria de adotá-lo!</string>
+    <string name="txtReprovacaoAdocao1">Infelizmente, sua solicitação de adoção para o pet abaixo foi reprovada.</string>
+    <string name="txtReprovacaoAdocao2">Mas não desanime! existem muitos outros pets procurando por um lar!</string>
+    <string name="txtDenuncia1">Você recebeu uma denúcia. Verifique abaixo os motivos:</string>
+    <string name="tipoDenuncia">Tipo Denúncia:</string>
+    <string name="motivoDenuncia">Motivo Denúncia:</string>
+    <string name="txtDenuncia2">Por favor, verifique os motivos relacionados acima para que uma nova denúncia não aconteça.</string>
+    <string name="title_activity_visualizar_adocao_aprovada">Map</string>
+    <string name="txtAdocaoAprovada">A adoção de Teste foi aprovada! Converse com Doador Nome e combine para buscá-lo!</string>
 
     <string-array name="steps_cadastro_usuario_titles">
         <item>Dados Pessoais</item>

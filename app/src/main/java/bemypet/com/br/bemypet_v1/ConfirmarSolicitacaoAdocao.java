@@ -30,7 +30,6 @@ import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Constants;
-import bemypet.com.br.bemypet_v1.utils.ManagerPreferences;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
@@ -143,15 +142,16 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
         notificacao.titulo = getPet().nome + "encontrou um novo amigo(a)!";
-        notificacao.statusNotificacao = Constants.REQUER_RESPOSTA;
-        notificacao.topico = Constants.TOPICO_ADOCAO;
+        notificacao.statusNotificacao = Constants.STATUS_NOTIFICACAO_REQUER_RESPOSTA;
+        notificacao.topico = Constants.TOPICO_SOLICITACAO_ADOCAO;
         notificacao.lida = Boolean.FALSE;
         notificacao.adocao = criarAdocaoMockada();
+        notificacao.denuncia = null;
 
 
         //salvar notificacao no firebase
         salvarNotificacao(notificacao);
-        getPet().status = Constants.EM_PROCESSO_DE_ADOCAO;
+        getPet().status = Constants.STATUS_PET_EM_PROCESSO_DE_ADOCAO;
         //atualizar o status do pet no banco para "em adocao", para que nao apareca nas buscas
         updateStatusPet();
 
@@ -195,7 +195,7 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         adocao.temCuidadoContraPestes = Boolean.TRUE;
         adocao.possuiTelasProtecao = Boolean.TRUE;
         adocao.informacoesAdicionais = "bla bla bla";
-        adocao.statusAdocao = Constants.SOLICITADA_ADOCAO;
+        adocao.statusAdocao = Constants.TIPO_NOTIFICACAO_SOLICITADA_ADOCAO;
         adocao.pet = getPet();
         adocao.adotante = getUsuario();
         adocao.doador = getPet().doador;

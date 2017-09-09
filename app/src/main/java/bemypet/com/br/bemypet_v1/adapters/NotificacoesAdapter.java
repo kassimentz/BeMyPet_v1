@@ -116,12 +116,14 @@ public class NotificacoesAdapter extends BaseAdapter implements Filterable {
         holder.txtDataMensagem.setText(notificacoesList.get(position).data);
         holder.txtStatusNotificacao.setText(notificacoesList.get(position).statusNotificacao);
 
-        if(notificacoesList.get(position).statusNotificacao.equalsIgnoreCase(Constants.REQUER_RESPOSTA) ||
-                notificacoesList.get(position).statusNotificacao.equalsIgnoreCase(Constants.ENVIADA) ||
-                notificacoesList.get(position).statusNotificacao.equalsIgnoreCase(Constants.ERRO)) {
-            holder.imgStatusNotificacao.setImageResource(R.drawable.bg_circle);
-        } else {
-            holder.imgStatusNotificacao.setImageResource(R.drawable.round_green);
+        if(notificacoesList.get(position).statusNotificacao != null) {
+            if (notificacoesList.get(position).statusNotificacao.equalsIgnoreCase(Constants.STATUS_NOTIFICACAO_REQUER_RESPOSTA) ||
+                    notificacoesList.get(position).statusNotificacao.equalsIgnoreCase(Constants.STATUS_NOTIFICACAO_ENVIADA) ||
+                    notificacoesList.get(position).statusNotificacao.equalsIgnoreCase(Constants.STATUS_NOTIFICACAO_ERRO)) {
+                holder.imgStatusNotificacao.setImageResource(R.drawable.bg_circle);
+            } else {
+                holder.imgStatusNotificacao.setImageResource(R.drawable.round_green);
+            }
         }
 
         if(notificacoesList.get(position).lida) {

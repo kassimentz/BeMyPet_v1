@@ -2,8 +2,6 @@ package bemypet.com.br.bemypet_v1.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,10 +22,11 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import bemypet.com.br.bemypet_v1.PerfilPetActivity;
 import bemypet.com.br.bemypet_v1.R;
+import bemypet.com.br.bemypet_v1.VisualizarAdocaoAprovadaActivity;
+import bemypet.com.br.bemypet_v1.VisualizarAdocaoReprovadaActivity;
+import bemypet.com.br.bemypet_v1.VisualizarDenunciaActivity;
 import bemypet.com.br.bemypet_v1.VisualizarSolicitacaoAdocaoActivity;
 import bemypet.com.br.bemypet_v1.adapters.NotificacoesAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
@@ -102,7 +100,6 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 
-                        Intent intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
                         Notificacoes n = notificacoesList.get(position);
                         if(!n.lida) {
                             n.lida = Boolean.TRUE;
@@ -110,6 +107,24 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
                         }
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("notificacao", new Gson().toJson(n));
+                        Intent intent = null;
+
+                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
+                            intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
+                        }
+
+                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
+                            intent = new Intent(getContext(), VisualizarAdocaoAprovadaActivity.class);
+                        }
+
+                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
+                            intent = new Intent(getContext(), VisualizarAdocaoReprovadaActivity.class);
+                        }
+
+                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
+                            intent = new Intent(getContext(), VisualizarDenunciaActivity.class);
+                        }
+
                         intent.putExtras(bundle);
                         startActivity(intent);
 
@@ -136,7 +151,19 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setQueryHint("Buscar");
         mSearchView.setIconified(false);
+        if (mSearchView != null) {
+            mSearchView.setQuery("", false);
+            mSearchView.clearFocus();
+        }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mSearchView != null) {
+            mSearchView.setQuery("", false);
+            mSearchView.clearFocus();
+        }
     }
 
     @Override

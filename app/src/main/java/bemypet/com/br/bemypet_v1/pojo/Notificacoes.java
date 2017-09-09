@@ -20,12 +20,14 @@ public class Notificacoes {
     public Adocao adocao;
     public String topico;
     public String titulo;
+    public Denuncias denuncia;
 
     public Notificacoes() {
         id = UUID.randomUUID().toString();
     }
 
-    public Notificacoes(String id, String mensagem, String data, String hora, String statusNotificacao, Boolean lida, String tipoNotificacao, Adocao adocao, String topico, String titulo) {
+    public Notificacoes(String id, String mensagem, String data, String hora, String statusNotificacao,
+                        Boolean lida, String tipoNotificacao, Adocao adocao, String topico, String titulo, Denuncias denuncia) {
         this.id = UUID.randomUUID().toString();
         this.mensagem = mensagem;
         this.data = data;
@@ -36,6 +38,7 @@ public class Notificacoes {
         this.adocao = adocao;
         this.topico = topico;
         this.titulo = titulo;
+        this.denuncia = denuncia;
     }
 
     public Map<String, Object> toMap() {
@@ -50,6 +53,7 @@ public class Notificacoes {
         result.put("adocao", adocao);
         result.put("topico", topico);
         result.put("titulo", titulo);
+        result.put("denuncia", denuncia);
         return result;
     }
 
@@ -66,6 +70,7 @@ public class Notificacoes {
                 ", adocao=" + adocao +
                 ", topico='" + topico + '\'' +
                 ", titulo='" + titulo + '\'' +
+                ", denuncia='" + denuncia + '\'' +
                 '}';
     }
 }
