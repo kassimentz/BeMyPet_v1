@@ -46,7 +46,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:onClick="fecharVisualizacaoReprovacao"
                 android:orientation="vertical"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="21dp"
                     android:textAllCaps="true"
                     android:textStyle="bold"
                     android:text="Fechar" />
@@ -73,15 +73,83 @@
         android:id="@+id/scrollableContents"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:orientation="vertical"
         android:layout_above="@id/footer"
         android:background="@color/white"
         android:layout_below="@id/header" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textoFormulario"
+                    android:textColor="@color/OrangeApp"
+                    android:textAlignment="center"
+                    android:id="@+id/txtAdocaoAprovada"
+                    android:text="@string/txtAdocaoAprovada"/>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout style="@style/colunasTituloFormulario">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:text="@string/telefone"/>
+                    </LinearLayout>
+                    <LinearLayout style="@style/colunasFormularioSpinner">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:textColor="@color/OrangeApp"
+                            android:id="@+id/txtTelefoneDoador"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout style="@style/colunasTituloFormulario">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:text="@string/email"/>
+                    </LinearLayout>
+                    <LinearLayout style="@style/colunasFormularioSpinner">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:textColor="@color/OrangeApp"
+                            android:id="@+id/txtEmailDoador"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="bemypet.com.br.bemypet_v1.VisualizarAdocaoAprovadaActivity" />
