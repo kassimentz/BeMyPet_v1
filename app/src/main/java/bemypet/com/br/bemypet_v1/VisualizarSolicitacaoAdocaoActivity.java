@@ -76,7 +76,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         }
 
         if(getPet().idadeAproximada != null) {
-            txtIdadePet.setText(getPet().nome);
+            txtIdadePet.setText(getPet().idadeAproximada + " anos.");
         }
 
         if(getAdotante().imagens.size() > 0) {

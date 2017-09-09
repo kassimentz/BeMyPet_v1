@@ -156,7 +156,19 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setQueryHint("Buscar");
         mSearchView.setIconified(false);
+        if (mSearchView != null) {
+            mSearchView.setQuery("", false);
+            mSearchView.clearFocus();
+        }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mSearchView != null) {
+            mSearchView.setQuery("", false);
+            mSearchView.clearFocus();
+        }
     }
 
     @Override

@@ -93,9 +93,39 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InicialActivity" />
         </activity>
-        <activity android:name=".VisualizarAdocaoAprovadaActivity" />
-        <activity android:name=".VisualizarAdocaoReprovadaActivity" />
-        <activity android:name=".VisualizarDenunciaActivity"></activity>
+
+        <activity
+            android:name=".VisualizarAdocaoAprovadaActivity"
+            android:label="Adoção Aprovada"
+            android:parentActivityName=".VisualizarAdocaoAprovadaActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+
+        <activity
+            android:name=".VisualizarAdocaoReprovadaActivity"
+            android:label="Adoção Reprovada"
+            android:parentActivityName=".VisualizarAdocaoReprovadaActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+
+        <activity
+            android:name=".VisualizarDenunciaActivity"
+            android:label="Visualizar Denúncia"
+            android:parentActivityName=".VisualizarDenunciaActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
     </application>
 
 </manifest>
