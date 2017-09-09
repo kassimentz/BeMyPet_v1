@@ -83,7 +83,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PerfilPetActivity" />
         </activity>
-
         <activity
             android:name=".VisualizarSolicitacaoAdocaoActivity"
             android:label="Solicitação de Adoção"
@@ -94,6 +93,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InicialActivity" />
         </activity>
+        <activity android:name=".VisualizarAdocaoAprovadaActivity" />
+        <activity android:name=".VisualizarAdocaoReprovadaActivity" />
+        <activity android:name=".VisualizarDenunciaActivity"></activity>
     </application>
 
 </manifest>

@@ -14,7 +14,6 @@ public class Denuncias {
     public String motivo;
     public Usuario denunciante;
     public Usuario denunciado;
-    public String dataHora;
 
     public Denuncias() {
         id = UUID.randomUUID().toString();
@@ -25,7 +24,6 @@ public class Denuncias {
         this.motivo = motivo;
         this.denunciante = denunciante;
         this.denunciado = denunciado;
-        this.dataHora = dataHora;
     }
 
     @Override
@@ -35,7 +33,6 @@ public class Denuncias {
                 ", motivo='" + motivo + '\'' +
                 ", denunciante=" + denunciante +
                 ", denunciado=" + denunciado +
-                ", dataHora='" + dataHora + '\'' +
                 '}';
     }
 
@@ -45,7 +42,6 @@ public class Denuncias {
         result.put("motivo", motivo);
         result.put("denunciante", denunciante);
         result.put("denunciado", denunciado);
-        result.put("dataHora", dataHora);
         return result;
     }
 }

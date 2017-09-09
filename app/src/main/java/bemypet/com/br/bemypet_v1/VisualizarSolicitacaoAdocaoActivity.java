@@ -120,23 +120,24 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
         notificacao.titulo = "Adoção de "+getPet().nome+" Reprovada";
-        notificacao.statusNotificacao = Constants.ENVIADA;
-        notificacao.topico = Constants.TOPICO_ADOCAO;
+        notificacao.statusNotificacao = Constants.STATUS_NOTIFICACAO_ENVIADA;
+        notificacao.topico = Constants.TOPICO_ADOÇÃO_REPROVADA;
         notificacao.lida = Boolean.FALSE;
         notificacao.adocao = getAdocao();
+        notificacao.denuncia = null;
 
         //salvar notificacao no firebase
         salvarNotificacao(notificacao);
 
         //atualizar notificacao inicial para respondida
-        getNotificacao().statusNotificacao = Constants.RESPONDIDA;
+        getNotificacao().statusNotificacao = Constants.STATUS_NOTIFICACAO_RESPONDIDA;
         updateNotificacao();
 
-        getPet().status = Constants.DISPONIVEL;
-        //atualizar o status do pet no banco para "DISPONIVEL", para que apareca NOVAMENTE nas buscas
+        getPet().status = Constants.STATUS_PET_DISPONIVEL;
+        //atualizar o status do pet no banco para "STATUS_PET_DISPONIVEL", para que apareca NOVAMENTE nas buscas
         updateStatusPet();
 
-        getAdocao().statusAdocao = Constants.ADOCAO_REPROVADA;
+        getAdocao().statusAdocao = Constants.TIPO_NOTIFICACAO_ADOCAO_REPROVADA;
         updateStatusAdocao();
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -207,23 +208,24 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
         notificacao.titulo = "Adoção de "+getPet().nome+" Aprovada!";
-        notificacao.statusNotificacao = Constants.ENVIADA;
-        notificacao.topico = Constants.TOPICO_ADOCAO;
+        notificacao.statusNotificacao = Constants.STATUS_NOTIFICACAO_ENVIADA;
+        notificacao.topico = Constants.TOPICO_ADOÇÃO_APROVADA;
         notificacao.lida = Boolean.FALSE;
         notificacao.adocao = getAdocao();
+        notificacao.denuncia = null;
 
         //salvar nova notificacao no firebase
         salvarNotificacao(notificacao);
 
         //atualizar notificacao inicial para respondida
-        getNotificacao().statusNotificacao = Constants.RESPONDIDA;
+        getNotificacao().statusNotificacao = Constants.STATUS_NOTIFICACAO_RESPONDIDA;
         updateNotificacao();
 
-        getPet().status = Constants.ADOTADO;
-        //atualizar o status do pet no banco para "ADOTADO", para que nao apareca nas buscas
+        getPet().status = Constants.STATUS_PET_ADOTADO;
+        //atualizar o status do pet no banco para "STATUS_PET_ADOTADO", para que nao apareca nas buscas
         updateStatusPet();
 
-        getAdocao().statusAdocao = Constants.ADOCAO_APROVADA;
+        getAdocao().statusAdocao = Constants.TIPO_NOTIFICACAO_ADOCAO_APROVADA;
         updateStatusAdocao();
         List<Pet> meusPets = new ArrayList<>();
         meusPets.add(getPet());
