@@ -221,6 +221,11 @@ public class InicialActivity extends AppCompatActivity {
                         navItemIndex = 3;
                         CURRENT_TAG = TAG_CONFIGURACOES;
                         break;
+                    case R.id.nav_ajuda:
+                        // launch new intent instead of loading fragment
+                        startActivity(new Intent(InicialActivity.this, EscolhaActivity.class));
+                        drawer.closeDrawers();
+                        return true;
                     case R.id.nav_sobre:
                         // launch new intent instead of loading fragment
                         startActivity(new Intent(InicialActivity.this, SobreNosActivity.class));

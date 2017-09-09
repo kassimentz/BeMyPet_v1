@@ -11,21 +11,42 @@
         android:orientation="vertical"
         android:layout_weight="3">
 
-        <TextView
-            android:textColor="@color/OrangeApp"
-            android:textSize="12dp"
-            android:textStyle="bold"
-            android:textAllCaps="true"
-            android:id="@+id/txtTopicoMensagem"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/activity_title_confirmar_solicitacao_adocao">
-        </TextView>
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@color/OrangeApp"
+                android:textSize="12dp"
+
+                android:textAllCaps="true"
+                android:id="@+id/txtTopicoMensagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_title_confirmar_solicitacao_adocao">
+            </TextView>
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/imgStatusNotificacao"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/txtStatusNotificacao"
+                android:textColor="@color/OrangeApp"
+                android:textSize="12dp"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:textColor="@color/OrangeApp"
             android:textSize="14dp"
-            android:textStyle="bold"
+
             android:textAllCaps="true"
             android:id="@+id/txtTituloMensagem"
             android:layout_width="wrap_content"
@@ -54,6 +75,8 @@
         <TextView
             android:textColor="@color/OrangeApp"
             android:textSize="12dp"
+            android:minWidth="90dp"
+            android:textStyle="italic"
             android:gravity="center_horizontal"
             android:id="@+id/txtDataMensagem"
             android:layout_width="wrap_content"

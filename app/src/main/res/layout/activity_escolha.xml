@@ -8,13 +8,13 @@
     <LinearLayout
         android:id="@+id/bg_layout"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:background="@drawable/bg_blur">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="285dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:src="@drawable/logo_simb"/>
@@ -62,8 +62,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/img_adotante"/>
 
                 <LinearLayout
@@ -102,12 +102,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:onClick="introAdocao"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/img_adocao"/>
 
                 <LinearLayout

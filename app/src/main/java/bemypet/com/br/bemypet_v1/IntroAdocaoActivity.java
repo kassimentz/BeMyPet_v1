@@ -36,6 +36,9 @@ public class IntroAdocaoActivity extends AppCompatActivity {
             finish();
         }
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -62,8 +65,8 @@ public class IntroAdocaoActivity extends AppCompatActivity {
 
     }
 
-    public void fecharIntroAdotante(View v){
-
+    public void fecharIntroAdocao(View v){
+        this.finish();
     }
 
     private void addBottomDots(int currentPage) {

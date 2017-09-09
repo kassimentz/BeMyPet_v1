@@ -13,6 +13,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -212,14 +214,122 @@ public class Utils {
         return strDate;
     }
 
+    public static Boolean validaEditText(EditText valor) {
+        if(valor.getText().toString().length() < 1) {
+            return Boolean.FALSE;
+        } else  {
+            return Boolean.TRUE;
+        }
+    }
+
+    /**
+     * Date to string string.
+     *
+     * @param data the data
+     * @return the string
+     */
+    public static String dateToString (Date data, String format) {
+
+        DateFormat df = new SimpleDateFormat(format);
+
+        if(data != null){
+            return df.format(data.getTime());
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Time to string string.
+     *
+     * @param data the data
+     * @return the string
+     */
+    public static String timeToString (Date data, String padraoHora) {
+
+        DateFormat df = new SimpleDateFormat(padraoHora);
+
+        if(data != null){
+            return df.format(data.getTime());
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Date to string only date string.
+     *
+     * @param data the data
+     * @return the string
+     */
+    public static String dateToStringOnlyDate (Date data, String format) {
+
+        DateFormat df = new SimpleDateFormat(format);
+
+        if(data != null){
+            return df.format(data.getTime());
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * String to date date.
+     *
+     * @param data the data
+     * @return the date
+     */
+    public static Date stringToDate (String data, String format) {
+
+        if (data == null || "".equals(data)) {
+            return null;
+        }
+
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat(format);
+            date = formatter.parse(data);
+        } catch (ParseException e) {
+            e.getMessage();
+        }
+
+        return date;
+    }
+
+    /**
+     * String to time date.
+     *
+     * @param hora the hora
+     * @return the date
+     */
+    public static Date stringToTime (String hora, String format) {
+
+        if (hora == null || "".equals(hora)) {
+            return null;
+        }
+
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat(format);
+            date = formatter.parse(hora);
+        } catch (ParseException e) {
+            e.getMessage();
+        }
+
+        return date;
+    }
+
     /**
      * Metodo utilizado para salvar um usuario em formato string (convertido usando o GSON)
      * dentro das shared preferences
      * @param context
      */
-    public static void salvarUsuarioSharedPreferences(Context context) {
+    public static void salvarUsuarioSharedPreferences(Context context, String nome) {
         Gson gson = new Gson();
-        String json = gson.toJson(instanciarUsuario());
+        String json = gson.toJson(instanciarUsuario(nome));
         ManagerPreferences.saveString(context, Constants.USUARIO_LOGADO, json);
         System.out.println("Usuario salvo");
     }
@@ -228,10 +338,10 @@ public class Utils {
      * gera um usuario mockado enquanto os cadastros nao estao prontos
      * @return
      */
-    private static Usuario instanciarUsuario() {
+    private static Usuario instanciarUsuario(String nome) {
         Usuario usuario = new Usuario();
 
-        usuario.nome = "nome doador";
+        usuario.nome = nome;
         List<String> imagens = new ArrayList<>();
         imagens.add("https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2Fimages%20(2).jpg?alt=media&token=8b0bb91b-f11c-4d59-a9a6-9a972732e284");
         usuario.imagens = imagens;

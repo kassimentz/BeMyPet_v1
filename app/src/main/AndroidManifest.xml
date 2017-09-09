@@ -83,10 +83,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PerfilPetActivity" />
         </activity>
+
         <activity
             android:name=".CadastroUsuarioActivity"
             android:label="@string/activity_title_cadastro_usuario">
 
+        </activity>
+
+        <activity
+            android:name=".VisualizarSolicitacaoAdocaoActivity"
+            android:label="Solicitação de Adoção"
+            android:parentActivityName=".VisualizarSolicitacaoAdocaoActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
         </activity>
     </application>
 

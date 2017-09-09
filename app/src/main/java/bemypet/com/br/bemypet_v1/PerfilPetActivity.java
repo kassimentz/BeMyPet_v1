@@ -5,8 +5,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -50,7 +52,10 @@ public class PerfilPetActivity extends AppCompatActivity {
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
             pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet;
     private ImageView header_cover_image, user_profile_photo;
+    private Button buttonPerfil;
 
+
+    Boolean esconderBotaoAdotar = Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,18 @@ public class PerfilPetActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -114,23 +131,39 @@ public class PerfilPetActivity extends AppCompatActivity {
         vermifugadoPerfilPet = (TextView) findViewById(R.id.vermifugadoPerfilPet);
         sociavelPerfilPet = (TextView) findViewById(R.id.sociavelPerfilPet);
         temperamentoPerfilPet = (TextView) findViewById(R.id.temperamentoPerfilPet);
+        buttonPerfil = (Button) findViewById(R.id.ButtonPerfil);
     }
 
     private void getBundle() {
 
         String jsonObj = null;
+        String key = "";
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             jsonObj = extras.getString("pet");
+            if(extras.containsKey("key")) {
+                key = extras.getString("key");
+                if(!key.isEmpty()) {
+                    setEsconderBotaoAdotar(Boolean.TRUE);
+                }
+            }
         }
         Pet pet = new Gson().fromJson(jsonObj, Pet.class);
 
         if(pet != null) {
             setPet(pet);
         }
+
+
     }
 
     private void preencherDados() {
+
+        if(getEsconderBotaoAdotar()) {
+            buttonPerfil.setVisibility(View.INVISIBLE);
+        } else {
+            buttonPerfil.setVisibility(View.VISIBLE);
+        }
 
         if(getPet().imagens.size() > 0) {
             // Loading profile image
@@ -140,31 +173,31 @@ public class PerfilPetActivity extends AppCompatActivity {
         }
 
 
-        if(!getPet().nome.isEmpty()) {
+        if(getPet().nome != null) {
             user_profile_name.setText(getPet().nome);
         }
-        if(!getPet().especie.isEmpty()) {
+        if(getPet().especie != null) {
             especiePerfilPet.setText(getPet().especie);
         }
-        if(!getPet().sexo.isEmpty()) {
+        if(getPet().sexo != null) {
             sexoPerfilPet.setText(getPet().sexo);
         }
-        if(!getPet().raca.isEmpty()) {
+        if(getPet().raca != null) {
             racaPerfilPet.setText(getPet().raca);
         }
-        if(!getPet().idadeAproximada.isEmpty()) {
+        if(getPet().idadeAproximada != null) {
             idadePerfilPet.setText(getPet().idadeAproximada);
         }
-        if(!String.valueOf(getPet().pesoAproximado).isEmpty()) {
+        if(getPet().pesoAproximado != null) {
             pesoPerfilPet.setText(String.valueOf(getPet().pesoAproximado));
         }
-        if(!getPet().castrado.isEmpty()) {
+        if(getPet().castrado != null) {
             castradoPerfilPet.setText(getPet().castrado);
         }
-        if(!getPet().vermifugado.isEmpty()) {
+        if(getPet().vermifugado != null) {
             vermifugadoPerfilPet.setText(getPet().vermifugado);
         }
-        if(!getPet().sociavel.isEmpty()) {
+        if(getPet().sociavel != null) {
             StringBuilder stringSociavel = new StringBuilder();
             for (String sociavel : getPet().sociavel) {
                 stringSociavel.append(sociavel);
@@ -175,7 +208,7 @@ public class PerfilPetActivity extends AppCompatActivity {
             sociavelPerfilPet.setText(stringSociavel.toString());
 
         }
-        if(!getPet().temperamento.isEmpty()) {
+        if(getPet().temperamento != null) {
             StringBuilder stringTemperamento = new StringBuilder();
             for (String temperamento : getPet().temperamento) {
                 stringTemperamento.append(temperamento);
@@ -203,5 +236,13 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public Boolean getEsconderBotaoAdotar() {
+        return esconderBotaoAdotar;
+    }
+
+    public void setEsconderBotaoAdotar(Boolean esconderBotaoAdotar) {
+        this.esconderBotaoAdotar = esconderBotaoAdotar;
     }
 }

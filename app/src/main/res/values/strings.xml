@@ -46,6 +46,7 @@
     <string name="nav_meus_pets">Meus Pets / Favoritos</string>
     <string name="nav_configuracoes">Configurações</string>
     <string name="nav_sobre">Sobre</string>
+    <string name="nav_ajuda">Ajuda</string>
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
@@ -59,6 +60,7 @@
     <string name="activity_title_sobre">Sobre</string>
     <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_peril_pet">Perfil Pet</string>
+    <string name="activity_title_visualizar_adocao">Solicitação de Adoção</string>
     <string name="activity_title_confirmar_solicitacao_adocao">Confirmar adoção!</string>
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
@@ -255,7 +257,7 @@
     <string name="cep">CEP</string>
     <string name="endereco">Endereço</string>
     <string name="numero">Número</string>
-    <string name="complemento">Complento</string>
+    <string name="complemento">Complemento</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
     <string name="telefone">Telefone</string>
@@ -268,6 +270,7 @@
     <string name="txt_confirmar_solicitacao_adocao_p2">Após a confirmação da solicitação, aguarde a resposta do dono do pet!</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p3">Nesse momento, Báskara já te ama muito!</string>
+    <string name="txtVisualizarAdocao">Visualize aqui qual pet encontrou um novo amigo e quem gostaria de adotá-lo!</string>
 
 
 </resources>
