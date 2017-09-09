@@ -278,6 +278,7 @@
     <string name="tipoDenuncia">Tipo Denúncia:</string>
     <string name="motivoDenuncia">Motivo Denúncia:</string>
     <string name="txtDenuncia2">Por favor, verifique os motivos relacionados acima para que uma nova denúncia não aconteça.</string>
+    <string name="title_activity_visualizar_adocao_aprovada">Map</string>
 
 
 </resources>
