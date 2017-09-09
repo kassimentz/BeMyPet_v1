@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -28,6 +29,7 @@ import bemypet.com.br.bemypet_v1.pojo.Adocao;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.services.NotificacoesService;
 import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -116,7 +118,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     public void reprovarAdocao(View v) {
 
         Notificacoes notificacao = new Notificacoes();
-        notificacao.mensagem = "Adoção Reprovada. Infelizmente o usuário "+getPet().doador+" reprovou a adoção do pet "+getPet().nome;
+        notificacao.mensagem = "Adoção Reprovada. Infelizmente o usuário "+getPet().doador.nome+" reprovou a adoção do pet "+getPet().nome;
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
         notificacao.titulo = "Adoção de "+getPet().nome+" Reprovada";
@@ -139,6 +141,8 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
         getAdocao().statusAdocao = Constants.TIPO_NOTIFICACAO_ADOCAO_REPROVADA;
         updateStatusAdocao();
+
+        NotificacoesService.sendNotification(getAdotante().token, notificacao.titulo, notificacao, this);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -204,7 +208,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     public void aprovarAdocao(View v) {
 
         Notificacoes notificacao = new Notificacoes();
-        notificacao.mensagem = "Adoção Aprovada! O usuário "+getPet().doador+" aprovou sua solicitação para a adoção do pet "+getPet().nome+ " Entre em contato com ele para combinar tudo direitinho!";
+        notificacao.mensagem = "Adoção Aprovada! O usuário "+getPet().doador.nome+" aprovou sua solicitação para a adoção do pet "+getPet().nome+ " Entre em contato com ele para combinar tudo direitinho!";
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
         notificacao.titulo = "Adoção de "+getPet().nome+" Aprovada!";
@@ -232,6 +236,8 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         getAdotante().meusPets = meusPets;
 
         updateUsuario();
+
+        NotificacoesService.sendNotification(getAdotante().token, notificacao.titulo, notificacao, this);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 

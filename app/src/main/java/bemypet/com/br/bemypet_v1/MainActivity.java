@@ -3,6 +3,7 @@ package bemypet.com.br.bemypet_v1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.firebase.geofire.GeoFire;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
@@ -31,24 +33,21 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, PerfilUsuarioActivity.class);
         Intent intent = new Intent(this, InicialActivity.class);
         startActivity(intent);
-        Utils.salvarUsuarioSharedPreferences(this, "usuarioTeste1");
-//        System.out.println("inserindo doador no firebase");
-//        inserirDoadorTeste();
-//        System.out.println("inserindo adotante no firebase");
-//        inserirAdotanteTeste();
-//
-//        System.out.println("inserindos adotante e doador no firebase");
-
-
+        salvarUsuario(Utils.instanciarUsuario("kassi 2"));
     }
 
 
-    private void salvar(Usuario entidade) {
+    private void salvarUsuario(Usuario entidade) {
         final Usuario usuario = entidade;
+
+        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
+
+        usuario.token = refreshedToken;
 
         FirebaseConnection.getConnection();
         DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
-
 
         connectedReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -68,11 +67,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
                 } else {
                     //logar erro
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 //Log.i("Cancel", "Listener was cancelled");

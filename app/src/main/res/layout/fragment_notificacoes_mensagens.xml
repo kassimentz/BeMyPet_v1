@@ -9,9 +9,10 @@
         android:background="@color/OrangeApp"
         android:queryBackground="@drawable/search_background"
         android:id="@+id/searchViewNotificacoes"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:searchIcon="@null"
-        android:layout_height="wrap_content"/>
+        android:layout_height="60dp"/>
 
     <ListView
         android:id="@+id/listViewNotificacoes"
