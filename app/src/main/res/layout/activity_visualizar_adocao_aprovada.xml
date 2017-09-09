@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:onClick="fecharVisualizacaoReprovacao"
+                android:onClick="fecharVisualizacaoAprovacao"
                 android:orientation="vertical"
                 android:background="@drawable/backgroun_button_orange">
 

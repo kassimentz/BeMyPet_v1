@@ -1,10 +1,13 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,7 +18,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.maps.android.PolyUtil;
 import com.koushikdutta.ion.Ion;
 
 import java.util.concurrent.ExecutionException;
@@ -25,7 +32,12 @@ import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.pojo.map.Retorno;
+import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -35,7 +47,6 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
     private Adocao adocao;
     private Usuario doador;
     private Pet pet;
-    private PontoGeo pontoAtual = new PontoGeo();
 
 
     @Override
@@ -108,6 +119,17 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
         }
     }
 
+    private void updateNotificacao() {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
+        myRef.child(getNotificacao().id).child("lida").setValue(getNotificacao().lida);
+    }
+
+    public void fecharVisualizacaoAprovacao(View v) {
+        getNotificacao().lida = Boolean.TRUE;
+        updateNotificacao();
+        this.finish();
+    }
+
 
     /**
      * Manipulates the map once available.
@@ -138,6 +160,7 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
         options.title(getPet().nome);
         Marker m = mMap.addMarker(options);
         setZoomIn(petLocal);
+        showRota();
     }
 
     /**
@@ -148,6 +171,42 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
         mMap.moveCamera(CameraUpdateFactory.newLatLng(local));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(local));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(local, 12));
+    }
+
+    private void showRota(){
+
+
+        StringBuilder origem = new StringBuilder();
+        origem.append(getAdocao().adotante.endereco+", ");
+        origem.append(getAdocao().adotante.numero+", ");
+        origem.append(getAdocao().adotante.cidade);
+
+
+        StringBuilder destino = new StringBuilder();
+        destino.append(getDoador().endereco+", ");
+        destino.append(getDoador().numero+", ");
+        destino.append(getDoador().cidade);
+        Call<Retorno> call = ((BeMyPetApplication) getApplication()).service.searchPositions(origem.toString(), destino.toString(), Constants.GOOGLE_MAPS_API_RELEASE);
+
+        call.enqueue(new Callback<Retorno>() {
+            @Override
+            public void onResponse(Call<Retorno> call, Response<Retorno> response) {
+                String points = response.body().routes.get(0).overview_polyline.points;
+                if(points != null) {
+                    PolylineOptions polylineOptions = new PolylineOptions();
+                    polylineOptions.addAll(PolyUtil.decode(points));
+                    polylineOptions.color(getResources().getColor(R.color.GreenButton));
+                    mMap.addPolyline(polylineOptions);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Retorno> call, Throwable t) {
+            }
+        });
+
+
     }
 
     public Notificacoes getNotificacao() {
@@ -182,11 +241,4 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
         this.pet = pet;
     }
 
-    public PontoGeo getPontoAtual() {
-        return pontoAtual;
-    }
-
-    public void setPontoAtual(PontoGeo pontoAtual) {
-        this.pontoAtual = pontoAtual;
-    }
 }
