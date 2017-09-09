@@ -272,5 +272,10 @@
     <string name="txt_confirmar_solicitacao_adocao_p3">Nesse momento, Báskara já te ama muito!</string>
     <string name="txtVisualizarAdocao">Visualize aqui qual pet encontrou um novo amigo e quem gostaria de adotá-lo!</string>
 
+    <string-array name="steps_cadastro_usuario_titles">
+        <item>Dados Pessoais</item>
+        <item>Localização</item>
+        <item>Contato</item>
+    </string-array>
 
 </resources>
