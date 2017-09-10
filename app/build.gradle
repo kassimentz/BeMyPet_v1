@@ -46,10 +46,9 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.4.3+'
     compile 'com.google.android.gms:play-services-location:10.2.6'
 
-
-
-
     compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
+
+    compile 'com.google.firebase:firebase-messaging:10.2.6'
 
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'

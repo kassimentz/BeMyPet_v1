@@ -255,8 +255,12 @@
     <string name="mesma_ninhada">MESMA NINHADA</string>
     <string name="meus_pets">MEUS PETS</string>
 
+    <string name="nome">Nome</string>
+    <string name="nome_placeholder">Informe seu nome completo</string>
     <string name="dataNascimento">Data de Nascimento</string>
+    <string name="data_placeholder">00/00/0000</string>
     <string name="cpf">CPF</string>
+    <string name="cpf_placeholder">CPF (somente número)</string>
     <string name="cep">CEP</string>
     <string name="endereco">Endereço</string>
     <string name="numero">Número</string>
@@ -264,7 +268,11 @@
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
     <string name="telefone">Telefone</string>
+    <string name="telefone_placeholder">Telefone com DDD</string>
     <string name="email">E-mail</string>
+    <string name="email_placeholder">Informe seu E-mail</string>
+    <string name="localizacao">Localização</string>
+    <string name="foto">Foto</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
         Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias

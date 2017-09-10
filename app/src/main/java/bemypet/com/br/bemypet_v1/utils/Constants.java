@@ -7,6 +7,8 @@ package bemypet.com.br.bemypet_v1.utils;
 public class Constants {
 
     public static String GOOGLE_MAPS_API_RELEASE = "AIzaSyCEgpbvu-QAxeTCJt6tIP5J2gYVi0Dvv_g";
+    public static String NOTIFICATION_KEY = "AIzaSyDoffIxCmyhC0C1Ciesiy67fzETNPiLYk0";
+    public static final String NOTIFICATION_URL = "https://fcm.googleapis.com/fcm/send";
 
     public static String SIM = "Sim";
     public static String NAO = "Não";

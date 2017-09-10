@@ -29,6 +29,7 @@ import bemypet.com.br.bemypet_v1.pojo.Adocao;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.services.NotificacoesService;
 import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -155,6 +156,7 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         //atualizar o status do pet no banco para "em adocao", para que nao apareca nas buscas
         updateStatusPet();
 
+        NotificacoesService.sendNotification(getUsuario().token, notificacao.titulo, notificacao, this);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 

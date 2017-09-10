@@ -327,9 +327,9 @@ public class Utils {
      * dentro das shared preferences
      * @param context
      */
-    public static void salvarUsuarioSharedPreferences(Context context, String nome) {
+    public static void salvarUsuarioSharedPreferences(Context context, Usuario usuario) {
         Gson gson = new Gson();
-        String json = gson.toJson(instanciarUsuario(nome));
+        String json = gson.toJson(usuario);
         ManagerPreferences.saveString(context, Constants.USUARIO_LOGADO, json);
         System.out.println("Usuario salvo");
     }
@@ -338,7 +338,7 @@ public class Utils {
      * gera um usuario mockado enquanto os cadastros nao estao prontos
      * @return
      */
-    private static Usuario instanciarUsuario(String nome) {
+    public static Usuario instanciarUsuario(String nome) {
         Usuario usuario = new Usuario();
 
         usuario.nome = nome;
@@ -349,14 +349,14 @@ public class Utils {
         usuario.cpf = "001.239.752.23";
         usuario.localizacao = new PontoGeo(-29.856, -51.234);
         usuario.cep = 91120415;
-        usuario.endereco = "gabriel franco da luz";
-        usuario.numero = 560;
-        usuario.complemento = "apto 206F";
-        usuario.bairro = "sarandi";
+        usuario.endereco = "diomario moojen";
+        usuario.numero = 150;
+        usuario.complemento = "apto 101";
+        usuario.bairro = "cristal";
         usuario.cidade = "porto alegre";
         usuario.estado = "RS";
-        usuario.telefone = "434343434";
-        usuario.email = "cassio@teste.com";
+        usuario.telefone = "81111111";
+        usuario.email = "kassi@teste.com";
         usuario.meusPets = new ArrayList<Pet>();
         usuario.petsFavoritos = new ArrayList<Pet>();
         usuario.denuncias = new ArrayList<Denuncias>();

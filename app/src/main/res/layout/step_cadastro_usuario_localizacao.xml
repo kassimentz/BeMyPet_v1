@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/OrangeApp" />
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/localizacao" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <EditText
+            style="@style/inputFormulario"
+            android:text="@string/localizacao" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

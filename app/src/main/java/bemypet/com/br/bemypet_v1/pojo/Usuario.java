@@ -31,6 +31,7 @@ public class Usuario {
     public List<Pet> petsFavoritos;
     public List<Denuncias> denuncias;
     public List<Notificacoes> notificacoes;
+    public String token;
 
     public Usuario() {
         id = UUID.randomUUID().toString();
@@ -40,7 +41,7 @@ public class Usuario {
                       PontoGeo localizacao, Integer cep, String endereco, Integer numero,
                       String complemento, String bairro, String cidade, String estado,
                       String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
-                      List<Denuncias> denuncias, List<Notificacoes> notificacoes) {
+                      List<Denuncias> denuncias, List<Notificacoes> notificacoes, String token) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.imagens = imagens;
@@ -60,7 +61,16 @@ public class Usuario {
         this.petsFavoritos = petsFavoritos;
         this.denuncias = denuncias;
         this.notificacoes = notificacoes;
+        this.token = token;
+    }
 
+    public String getLogradouro() {
+        StringBuilder logradouro = new StringBuilder();
+        logradouro.append(this.endereco+", ");
+        logradouro.append(this.numero+", ");
+        logradouro.append(this.cidade);
+
+        return logradouro.toString();
     }
 
     public Map<String, Object> toMap() {
@@ -83,6 +93,7 @@ public class Usuario {
         result.put("petsFavoritos", petsFavoritos);
         result.put("denuncias", denuncias);
         result.put("notificacoes", notificacoes);
+        result.put("token", token);
         return result;
     }
 
@@ -108,6 +119,7 @@ public class Usuario {
                 ", petsFavoritos=" + petsFavoritos +
                 ", denuncias=" + denuncias +
                 ", notificacoes=" + notificacoes +
+                ", token=" + token +
                 '}';
     }
 }

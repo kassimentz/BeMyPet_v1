@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
@@ -50,10 +51,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     }
 
+
+
     private void initializeActivity() {
 
         // Time step vars
-
 
         // Vertical Stepper form vars
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimary);
@@ -65,8 +67,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         verticalStepperForm = (VerticalStepperFormLayout) findViewById(R.id.vertical_stepper_form);
         VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, stepsTitles, this, this)
                 //.stepsSubtitles(stepsSubtitles)
-                //.materialDesignInDisabledSteps(true) // false by default
-                //.showVerticalLineWhenStepsAreCollapsed(true) // false by default
+//                .materialDesignInDisabledSteps(true) // false by default
+                .showVerticalLineWhenStepsAreCollapsed(true) // false by default
                 .primaryColor(colorPrimary)
                 .primaryDarkColor(colorPrimaryDark)
                 .displayBottomNavigation(true)
@@ -75,6 +77,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     }
     @Override
     public View createStepContentView(int stepNumber) {
+
         View view = null;
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
@@ -143,7 +146,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     private View criaStepLocalizacao(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_usuario_dados_pessoais, null, false);
+                R.layout.step_cadastro_usuario_localizacao, null, false);
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
@@ -154,7 +157,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     private View criaStepContato(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_usuario_dados_pessoais, null, false);
+                R.layout.step_cadastro_usuario_contato, null, false);
 
 
         //valida os dados do formulário se passar vai para proximo
@@ -162,5 +165,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         return dadosPessoaisStep;
 
+    }
+
+    public View buscaFotoPerfil(View v){
+
+        Toast toast = Toast.makeText(this, "Add foto", Toast.LENGTH_LONG);
+        toast.show();
+
+        return v;
     }
 }
