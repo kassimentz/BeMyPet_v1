@@ -482,6 +482,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
         GPSTrackerService gpsTrackerService = new GPSTrackerService(getContext());
         PontoGeo pontoGps = new PontoGeo(gpsTrackerService.getLatitude(), gpsTrackerService.getLongitude());
+        gpsTrackerService.stopUsingGPS();
         if(pontoGps != null && pontoGps.lat != 0.0) {
             setPonto(pontoGps);
             return Boolean.TRUE;
