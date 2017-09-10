@@ -8,18 +8,29 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import bemypet.com.br.bemypet_v1.InicialActivity;
 import bemypet.com.br.bemypet_v1.R;
+import bemypet.com.br.bemypet_v1.VisualizarAdocaoAprovadaActivity;
+import bemypet.com.br.bemypet_v1.VisualizarAdocaoReprovadaActivity;
+import bemypet.com.br.bemypet_v1.VisualizarDenunciaActivity;
+import bemypet.com.br.bemypet_v1.VisualizarSolicitacaoAdocaoActivity;
+import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
+import bemypet.com.br.bemypet_v1.utils.Constants;
 
 /**
  * Created by kassianesmentz on 09/09/17.
@@ -34,6 +45,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
+        //Define sound URI
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.logo1)
+                        .setContentTitle("Notificação Be My Pet")
+                        .setSound(soundUri)
+                        .setAutoCancel(true)
+                        .setContentText(remoteMessage.getNotification().getBody());
+
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         if (remoteMessage.getData().size() > 0) {
@@ -45,65 +67,40 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
+        String strNotificacao = remoteMessage.getData().get("notificacao");
+        Notificacoes n = new Gson().fromJson(strNotificacao, Notificacoes.class);
+        System.out.println(n.toString());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("notificacao", new Gson().toJson(n));
+        Intent intent = null;
 
-        String message = remoteMessage.getData().get("message");
-        String imageUri = remoteMessage.getData().get("image");
-        String TrueOrFlase = remoteMessage.getData().get("AnotherActivity");
-
-        //To get a Bitmap image from the URL received
-        bitmap = getBitmapfromUrl(imageUri);
-
-        sendNotification(message, bitmap, TrueOrFlase);
-
-    }
-
-
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     */
-
-    private void sendNotification(String messageBody, Bitmap image, String TrueOrFalse) {
-        Intent intent = new Intent(this, InicialActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("AnotherActivity", TrueOrFalse);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setLargeIcon(image)/*Notification icon image*/
-                .setSmallIcon(R.drawable.logo_simb)
-                .setContentTitle(messageBody)
-                .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(image))/*Notification with Image*/
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
-
-    /*
-    *To get a Bitmap image from the URL received
-    * */
-    public Bitmap getBitmapfromUrl(String imageUrl) {
-        try {
-            URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(input);
-            return bitmap;
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
+            intent = new Intent(this, VisualizarSolicitacaoAdocaoActivity.class);
         }
+
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
+            intent = new Intent(this, VisualizarAdocaoAprovadaActivity.class);
+        }
+
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
+            intent = new Intent(this, VisualizarAdocaoReprovadaActivity.class);
+        }
+
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
+            intent = new Intent(this, VisualizarDenunciaActivity.class);
+        }
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(InicialActivity.class);
+
+        intent.putExtras(bundle);
+
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
+
     }
+
 }

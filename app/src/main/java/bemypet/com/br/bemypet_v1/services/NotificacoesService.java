@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,20 +31,18 @@ import okhttp3.Response;
 public class NotificacoesService {
 
     public static void sendNotification(String to, String body, Notificacoes notificacao, Context context) {
+        Gson gson = new Gson();
+
         String title = "Be My Pet";
         int icon = R.drawable.logo1;
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(to);
-        //to, title, body, icon, message, adotante, doador, pet, tipoNotificacao
-        sendMessage(jsonArray,title,body,icon,notificacao.mensagem, notificacao.adocao.adotante.nome,
-                notificacao.adocao.doador.nome, notificacao.adocao.pet.nome, notificacao.tipoNotificacao,
-                notificacao.adocao.adotante.getLogradouro() , notificacao.adocao.doador.getLogradouro(), context);
+        String strNotificacao = gson.toJson(notificacao);
+        sendMessage(jsonArray,title,body,icon, strNotificacao, context);
     }
 
     public static void sendMessage(final JSONArray recipients, final String title, final String body,
-                                   final int icon, final String message, final String cpfAdotante,
-                                   final String cpfDoador, final String idPet, final String tipoNotificacao,
-                                   final String origem, final String destino, final Context context) {
+                                   final int icon, final String notificacao, final Context context) {
 
         new AsyncTask<String, String, String>() {
             @Override
@@ -55,19 +55,12 @@ public class NotificacoesService {
                     notification.put("icon", icon);
 
                     JSONObject data = new JSONObject();
-                    data.put("message", message);
-                    data.put("cpfAdotante", cpfAdotante);
-                    data.put("cpfDoador", cpfDoador);
-                    data.put("idPet", idPet);
-                    data.put("tipoNotificacao", tipoNotificacao);
-                    data.put("origem", origem);
-                    data.put("destino", destino);
+                    data.put("notificacao", notificacao);
                     root.put("notification", notification);
                     root.put("data", data);
                     root.put("registration_ids", recipients);
 
                     String result = postToFCM(root.toString());
-                    Log.d("TermosAdocao", "Result: " + result);
                     return result;
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -83,8 +76,6 @@ public class NotificacoesService {
                     success = resultJson.getInt("success");
                     failure = resultJson.getInt("failure");
                     Toast.makeText(context, "Notificação enviada.", Toast.LENGTH_LONG).show();
-//                    Intent i = new Intent(context, InicialActivity.class);
-//                    context.startActivity(i);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(context, "Falha no envio da solicitação. Um erro ocorreu. Tente novamente.", Toast.LENGTH_LONG).show();
