@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -170,5 +171,10 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public void editaPerilUsuario(View v){
+        Intent intent = new Intent(PerfilUsuarioActivity.this, CadastroUsuarioActivity.class);
+        startActivity(intent);
     }
 }

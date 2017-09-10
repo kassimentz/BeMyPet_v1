@@ -262,9 +262,11 @@
     <string name="cpf">CPF</string>
     <string name="cpf_placeholder">CPF (somente número)</string>
     <string name="cep">CEP</string>
+    <string name="cep_placeholder">CEP (somente número) </string>
     <string name="endereco">Endereço</string>
     <string name="numero">Número</string>
     <string name="complemento">Complemento</string>
+    <string name="complemento_placeholder">Bloco / Apto</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
     <string name="telefone">Telefone</string>
@@ -272,6 +274,7 @@
     <string name="email">E-mail</string>
     <string name="email_placeholder">Informe seu E-mail</string>
     <string name="localizacao">Localização</string>
+    <string name="localizacao_placeholder">Mapa</string>
     <string name="foto">Foto</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.

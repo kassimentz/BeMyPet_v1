@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
@@ -12,7 +13,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
@@ -22,6 +27,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     private Usuario usuario;
     private VerticalStepperFormLayout verticalStepperForm;
+    private MultiSpinner spinnerUf;
 
     // Information about the steps/fields of the form
     private static final int DADOS_PESSOAIS_STEP_NUM = 0;
@@ -30,6 +36,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     //step DADOS PESSOAIS
     private LinearLayout dadosPessoaisStep;
+
+    List<String> ufListagem = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +54,22 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         ab.setTitle(R.string.activity_title_cadastro_usuario);
 
         initializeActivity();
+        initializeVariables();
+
         //usar getbudle pegar exemplo no doancao
 
 
     }
 
+    //inicializando os elementos do layout
+    private void initializeVariables() {
 
+        ufListagem.add("RS");
+        ufListagem.add("SP");
+
+        spinnerUf = (MultiSpinner) findViewById(R.id.spinnerUf);
+        spinnerUf.setItems(ufListagem);
+    }
 
     private void initializeActivity() {
 
@@ -174,4 +192,5 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         return v;
     }
+
 }

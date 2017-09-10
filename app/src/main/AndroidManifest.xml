@@ -92,7 +92,7 @@ package="bemypet.com.br.bemypet_v1">
         android:name=".CadastroUsuarioActivity"
         android:label="@string/activity_title_cadastro_usuario">
         <!-- Parent activity meta-data to support 4.0 and lower -->
-        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".InicialActivity" />
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".PerfilUsuarioActivity" />
 
     </activity>
 
