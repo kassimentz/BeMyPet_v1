@@ -43,6 +43,7 @@ import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
+import bemypet.com.br.bemypet_v1.services.GPSTrackerService;
 import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -67,6 +68,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     MapView mMapView;
     private MarkerOptions options = new MarkerOptions();
     private PontoGeo ponto = new PontoGeo();
+    GPSTrackerService gps;
 
     private OnFragmentInteractionListener mListener;
 
@@ -112,8 +114,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
             mMapView.getMapAsync(this);
-            getPontoLocalizacao();
-
         }
         catch (InflateException e){
             Log.e("MAPA", "Inflate exception");
@@ -168,7 +168,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onResume() {
         super.onResume();
+        System.out.println("caiu aqi");
+        if(getMap() != null) {
+            exibirMapa();
+        } else {
+            System.out.println("o mapa é nulo");
+        }
         mMapView.onResume();
+
+
     }
 
     @Override
@@ -178,33 +186,40 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         setMap(googleMap);
-
-        InicialActivity activity = (InicialActivity) getActivity();
-        Filtros filtro  = activity.getFiltroActivity();
-        if(filtro != null) {
-            buscarPetsPorFiltro(filtro);
-        } else {
-            listarPets();
+        gps = new GPSTrackerService(getContext());
+        if(!gps.canGetLocation()) {
+            gps.showSettingsAlert();
         }
-
-        getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                Pet p = (Pet) marker.getTag();
-                Intent intent = new Intent(getContext(), PerfilPetActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("pet", new Gson().toJson(p));
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-                return false;
-            }
-        });
+        exibirMapa();
     }
 
+    private void exibirMapa() {
+        if(getPontoLocalizacao()) {
+            InicialActivity activity = (InicialActivity) getActivity();
+            Filtros filtro  = activity.getFiltroActivity();
+            if(filtro != null) {
+                buscarPetsPorFiltro(filtro);
+            } else {
+                listarPets();
+            }
+
+            getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+
+                    Pet p = (Pet) marker.getTag();
+                    Intent intent = new Intent(getContext(), PerfilPetActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("pet", new Gson().toJson(p));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                    return false;
+                }
+            });
+        }
+    }
     /**
      * Metodo que recebe a lista de pets somente quando esta acaba de ser carregada no firebase
      * O mapa tem de estar dentro do onSuccess para poder carregar os dados, caso contrario, os dados
@@ -468,20 +483,27 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Método que busca a localiazacao pelo gps do dispositivo
      */
-    private void getPontoLocalizacao() {
-        PontoGeo ponto = Utils.getLatLongDispositivo(getContext(), null);
-        setPonto(ponto);
+    private boolean getPontoLocalizacao() {
 
+        GPSTrackerService gpsTrackerService = new GPSTrackerService(getContext());
+        PontoGeo pontoGps = new PontoGeo(gpsTrackerService.getLatitude(), gpsTrackerService.getLongitude());
+        gpsTrackerService.stopUsingGPS();
+        if(pontoGps != null && pontoGps.lat != 0.0) {
+            setPonto(pontoGps);
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
     /**
      * Método que utiliza a localizacao encontrada no GPS do dispositivo para dar zoom no mapa
      */
     private void setZoomIn() {
-
         getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(getPonto().lat, getPonto().lon)));
         getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(getPonto().lat, getPonto().lon)));
         getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getPonto().lat, getPonto().lon), 12));
+        gps.stopUsingGPS();
     }
 
 
