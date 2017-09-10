@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/OrangeApp"
+        />
+
+    <!--telefone-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/telefone"/>
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtTelefone"
+            style="@style/inputFormulario"
+            android:hint="@string/telefone_placeholder"
+            />
+    </LinearLayout>
+
+    <!--email-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/email"/>
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtEmail"
+            style="@style/inputFormulario"
+            android:hint="@string/email_placeholder"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

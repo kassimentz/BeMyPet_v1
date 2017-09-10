@@ -70,6 +70,7 @@
     <string name="action_filtro">Filtros</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="privacy_policy">Políticas de Privacidade</string>
+    <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -254,16 +255,27 @@
     <string name="mesma_ninhada">MESMA NINHADA</string>
     <string name="meus_pets">MEUS PETS</string>
 
+    <string name="nome">Nome</string>
+    <string name="nome_placeholder">Informe seu nome completo</string>
     <string name="dataNascimento">Data de Nascimento</string>
+    <string name="data_placeholder">00/00/0000</string>
     <string name="cpf">CPF</string>
+    <string name="cpf_placeholder">CPF (somente número)</string>
     <string name="cep">CEP</string>
+    <string name="cep_placeholder">CEP (somente número) </string>
     <string name="endereco">Endereço</string>
     <string name="numero">Número</string>
     <string name="complemento">Complemento</string>
+    <string name="complemento_placeholder">Bloco / Apto</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
     <string name="telefone">Telefone</string>
+    <string name="telefone_placeholder">Telefone com DDD</string>
     <string name="email">E-mail</string>
+    <string name="email_placeholder">Informe seu E-mail</string>
+    <string name="localizacao">Localização</string>
+    <string name="localizacao_placeholder">Mapa</string>
+    <string name="foto">Foto</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
         Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
@@ -282,5 +294,10 @@
     <string name="title_activity_visualizar_adocao_aprovada">Map</string>
     <string name="txtAdocaoAprovada">A adoção de Teste foi aprovada! Converse com Doador Nome e combine para buscá-lo!</string>
 
+    <string-array name="steps_cadastro_usuario_titles">
+        <item>Dados Pessoais</item>
+        <item>Localização</item>
+        <item>Contato</item>
+    </string-array>
 
 </resources>

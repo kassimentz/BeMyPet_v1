@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/OrangeApp" />
+
+    <!--localização-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/localizacao" />
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtLocalizacao"
+            style="@style/inputFormulario"
+            android:hint="@string/localizacao_placeholder" />
+    </LinearLayout>
+
+    <!--cep-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/cep" />
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtCep"
+            style="@style/inputFormulario"
+            android:hint="@string/cep_placeholder" />
+    </LinearLayout>
+
+    <!--endereco-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/endereco" />
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtEndereco"
+            style="@style/inputFormulario"
+            android:hint="@string/endereco" />
+    </LinearLayout>
+
+
+    <!--numero / complemento-->
+    <LinearLayout style="@style/layoutLinha">
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="3">
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/numero" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="1">
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/complemento" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="3"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp">
+            <EditText
+                android:id="@+id/edtNumero"
+                style="@style/inputFormulario"
+                android:hint="@string/numero" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="1">
+            <EditText
+                android:id="@+id/edtComplemento"
+                style="@style/inputFormulario"
+                android:hint="@string/complemento" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <!--cidade / estado -->
+    <LinearLayout style="@style/layoutLinha">
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="1">
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/cidade" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="3">
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/estado" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp">
+            <EditText
+                android:id="@+id/edtCidade"
+                style="@style/inputFormulario"
+                android:hint="@string/cidade" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/colunasFormulario"
+            android:layout_weight="3">
+
+            <bemypet.com.br.bemypet_v1.utils.MultiSpinner
+                style="@style/spinnerFormulario"
+                android:id="@+id/spinnerUf"
+                android:layout_width="match_parent"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
+
