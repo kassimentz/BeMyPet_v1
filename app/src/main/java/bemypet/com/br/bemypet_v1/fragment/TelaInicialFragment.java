@@ -168,10 +168,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onResume() {
         super.onResume();
+        System.out.println("caiu aqi");
         if(getMap() != null) {
             exibirMapa();
+        } else {
+            System.out.println("o mapa é nulo");
         }
         mMapView.onResume();
+
+
     }
 
     @Override
