@@ -52,46 +52,31 @@
 
     <!--numero / complemento-->
     <LinearLayout style="@style/layoutLinha">
-        <LinearLayout
-            style="@style/colunasFormulario"
-            android:layout_weight="3">
             <TextView
                 style="@style/textoFormulario"
                 android:text="@string/numero" />
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/colunasFormulario"
-            android:layout_weight="1">
-            <TextView
-                style="@style/textoFormulario"
-                android:text="@string/complemento" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout style="@style/layoutLinha">
-        <LinearLayout
-            style="@style/colunasFormulario"
-            android:layout_weight="3"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp">
             <EditText
                 android:id="@+id/edtNumero"
                 style="@style/inputFormulario"
                 android:hint="@string/numero" />
-        </LinearLayout>
 
-        <LinearLayout
-            style="@style/colunasFormulario"
-            android:layout_weight="1">
+    </LinearLayout>
+
+<!--numero / complemento-->
+    <LinearLayout style="@style/layoutLinha">
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/complemento" />
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
             <EditText
                 android:id="@+id/edtComplemento"
                 style="@style/inputFormulario"
                 android:hint="@string/complemento" />
-        </LinearLayout>
     </LinearLayout>
-
-
 
     <!--cidade / estado -->
     <LinearLayout style="@style/layoutLinha">
@@ -112,6 +97,7 @@
         </LinearLayout>
     </LinearLayout>
 
+
     <LinearLayout style="@style/layoutLinha">
         <LinearLayout
             style="@style/colunasFormulario"
@@ -128,10 +114,11 @@
             style="@style/colunasFormulario"
             android:layout_weight="3">
 
-            <bemypet.com.br.bemypet_v1.utils.MultiSpinner
+            <Spinner
                 style="@style/spinnerFormulario"
                 android:id="@+id/spinnerUf"
                 android:layout_width="match_parent"
+
                 />
 
         </LinearLayout>
