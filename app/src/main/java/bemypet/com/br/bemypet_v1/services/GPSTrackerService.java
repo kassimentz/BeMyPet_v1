@@ -2,6 +2,7 @@ package bemypet.com.br.bemypet_v1.services;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +17,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+
+import bemypet.com.br.bemypet_v1.R;
 
 /**
  * Created by kassianesmentz on 10/09/17.
@@ -172,34 +175,34 @@ public class GPSTrackerService extends Service implements LocationListener {
      * Function to show settings alert dialog
      * */
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         // Setting Dialog Title
-        alertDialog.setTitle("Configuração do GPS");
+        builder.setTitle("Configuração do GPS");
 
         // Setting Dialog Message
-        alertDialog.setMessage("O GPS não está ativo. Você gostaria de verificar as configurações?");
-
-        // Setting Icon to Dialog
-        //alertDialog.setIcon(R.drawable.delete);
-
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Configurações", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setMessage("O GPS não está ativo. Você gostaria de verificar as configurações?");
+        // Add the buttons
+        builder.setPositiveButton("Configurações", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                dialog.dismiss();
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
             }
         });
-
-        // on pressing cancel button
-        alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
                 dialog.cancel();
             }
         });
 
-        // Showing Alert Message
-        alertDialog.show();
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        if(!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     /**

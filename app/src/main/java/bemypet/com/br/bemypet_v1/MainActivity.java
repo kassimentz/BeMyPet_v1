@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, EscolhaActivity.class);
         Intent intent = new Intent(this, InicialActivity.class);
         startActivity(intent);
+        this.finish();
         //salvarUsuario(Utils.instanciarUsuario("kassi 2"));
     }
 
