@@ -43,6 +43,7 @@ import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
+import bemypet.com.br.bemypet_v1.services.GPSTrackerService;
 import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -112,7 +113,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
             mMapView.getMapAsync(this);
-            getPontoLocalizacao();
 
         }
         catch (InflateException e){
@@ -168,6 +168,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onResume() {
         super.onResume();
+        getPontoLocalizacao();
         mMapView.onResume();
     }
 
@@ -180,29 +181,30 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
 
         setMap(googleMap);
-
-        InicialActivity activity = (InicialActivity) getActivity();
-        Filtros filtro  = activity.getFiltroActivity();
-        if(filtro != null) {
-            buscarPetsPorFiltro(filtro);
-        } else {
-            listarPets();
-        }
-
-        getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                Pet p = (Pet) marker.getTag();
-                Intent intent = new Intent(getContext(), PerfilPetActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("pet", new Gson().toJson(p));
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-                return false;
+        if(getPontoLocalizacao()) {
+            InicialActivity activity = (InicialActivity) getActivity();
+            Filtros filtro  = activity.getFiltroActivity();
+            if(filtro != null) {
+                buscarPetsPorFiltro(filtro);
+            } else {
+                listarPets();
             }
-        });
+
+            getMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+
+                    Pet p = (Pet) marker.getTag();
+                    Intent intent = new Intent(getContext(), PerfilPetActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("pet", new Gson().toJson(p));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                    return false;
+                }
+            });
+        }
     }
 
     /**
@@ -468,9 +470,26 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Método que busca a localiazacao pelo gps do dispositivo
      */
-    private void getPontoLocalizacao() {
-        PontoGeo ponto = Utils.getLatLongDispositivo(getContext(), null);
-        setPonto(ponto);
+    private boolean getPontoLocalizacao() {
+
+        GPSTrackerService gps = new GPSTrackerService(getContext());
+        if(gps.canGetLocation()){
+            PontoGeo pontoGps = new PontoGeo(gps.getLatitude(), gps.getLongitude());
+            if(pontoGps != null) {
+                setPonto(pontoGps);
+                System.out.println(pontoGps.toString());
+                gps.stopUsingGPS();
+                return true;
+            }
+
+        } else {
+            gps.showSettingsAlert();
+            return false;
+        }
+        return false;
+
+//        PontoGeo ponto = Utils.getLatLongDispositivo(getContext(), null);
+//        setPonto(ponto);
 
     }
 
