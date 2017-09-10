@@ -2,6 +2,7 @@ package bemypet.com.br.bemypet_v1;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
@@ -10,10 +11,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
@@ -27,7 +31,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     private Usuario usuario;
     private VerticalStepperFormLayout verticalStepperForm;
-    private MultiSpinner spinnerUf;
+    private Spinner spinnerUf;
 
     // Information about the steps/fields of the form
     private static final int DADOS_PESSOAIS_STEP_NUM = 0;
@@ -37,7 +41,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     //step DADOS PESSOAIS
     private LinearLayout dadosPessoaisStep;
 
-    List<String> ufListagem = new ArrayList<>();
+    List<String> ufListagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +68,20 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     //inicializando os elementos do layout
     private void initializeVariables() {
 
-        ufListagem.add("RS");
-        ufListagem.add("SP");
+        //UF
+        spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
+        ArrayAdapter<String> adapter;
 
-        spinnerUf = (MultiSpinner) findViewById(R.id.spinnerUf);
-        spinnerUf.setItems(ufListagem);
+        String [] ufString = new String [] {"RS", "SP" };
+        ufListagem = new ArrayList<String>(Arrays.asList(ufString));
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, ufListagem);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUf.setAdapter(adapter);
+
+
+
     }
 
     private void initializeActivity() {
@@ -84,6 +97,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         // Here we find and initialize the form
         verticalStepperForm = (VerticalStepperFormLayout) findViewById(R.id.vertical_stepper_form);
         VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, stepsTitles, this, this)
+                .stepTitleTextColor(Color.rgb(241,89,34))
                 //.stepsSubtitles(stepsSubtitles)
 //                .materialDesignInDisabledSteps(true) // false by default
                 .showVerticalLineWhenStepsAreCollapsed(true) // false by default

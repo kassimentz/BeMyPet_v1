@@ -51,7 +51,7 @@
     </array>
 
     <!--color steps-->
-<color name="step_colorPrimary">@color/colorPrimaryN</color>
+<color name="step_colorPrimary">@color/OrangeApp</color>
 <color name="step_colorPrimaryDark">@color/colorPrimaryDarkN</color>
 
     <!--Cores!! Marrom (6E3632). Laranja (F15922). Bege-creme (). Amarelo (FFCC32). Amarelo - somente status bar (FFB432)!-->
