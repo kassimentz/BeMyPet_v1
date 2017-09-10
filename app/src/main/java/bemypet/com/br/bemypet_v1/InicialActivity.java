@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -84,6 +85,18 @@ public class InicialActivity extends AppCompatActivity {
         txtNomeUsuario = (TextView) navHeader.findViewById(R.id.nomeUsuario);
         txtTipoUsuario = (TextView) navHeader.findViewById(R.id.tipoUsuario);
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
+
+        LinearLayout header = (LinearLayout) navHeader.findViewById(R.id.headerProfile);
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("visualizar perfil usuario");
+                Intent intent = new Intent(InicialActivity.this, PerfilUsuarioActivity.class);
+                drawer.closeDrawers();
+                startActivity(intent);
+            }
+        });
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
@@ -398,10 +411,4 @@ public class InicialActivity extends AppCompatActivity {
         this.filtroActivity = filtroActivity;
     }
 
-    public void visualizarPerfilUsuario(View v){
-        Intent intent = new Intent(InicialActivity.this, PerfilUsuarioActivity.class);
-
-        drawer.closeDrawers();
-        startActivity(intent);
-    }
 }
