@@ -185,8 +185,10 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
         mListView.setTextFilterEnabled(true);
         setupSearchView();
-        setUsuarioLogado(Utils.getUsuarioSharedPreferences(getContext()));
-        buscarNotificacoes();
+        if(Utils.getUsuarioSharedPreferences(getContext()) != null) {
+            setUsuarioLogado(Utils.getUsuarioSharedPreferences(getContext()));
+            buscarNotificacoes();
+        }
         return  rootView;
     }
 
@@ -239,7 +241,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     notificacao = postSnapshot.getValue(Notificacoes.class);
-                    if(checkNotificacoesUsuario(notificacao)) {
+                    if(notificacao.destinatarioId.equalsIgnoreCase(getUsuarioLogado().id)) {
                         notificacoesList.add(notificacao);
                     }
                 }
@@ -279,58 +281,5 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
-    }
-
-    private String getIdDestinatario(Notificacoes n) {
-
-        String idDestinatario = "";
-        if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
-            idDestinatario = n.adocao.doador.id;
-        }
-
-        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
-            idDestinatario = n.adocao.adotante.id;
-        }
-
-        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
-            idDestinatario = n.adocao.adotante.id;
-        }
-
-        if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
-            idDestinatario = n.denuncia.denunciado.id;
-        }
-
-        return idDestinatario;
-    }
-
-    private boolean checkNotificacoesUsuario(Notificacoes n) {
-        if(getUsuarioLogado() != null) {
-            if (n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
-                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
-                    return Boolean.TRUE;
-                }
-            }
-
-            if (n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
-                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
-                    return Boolean.TRUE;
-                }
-            }
-
-            if (n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
-                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
-                    return Boolean.TRUE;
-                }
-            }
-
-            if (n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
-                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
-                    return Boolean.TRUE;
-                }
-            }
-        } else {
-            return Boolean.FALSE;
-        }
-        return Boolean.FALSE;
     }
 }

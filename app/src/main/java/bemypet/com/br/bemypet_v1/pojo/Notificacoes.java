@@ -11,6 +11,7 @@ import java.util.UUID;
 public class Notificacoes {
 
     public String id;
+    public String destinatarioId;
     public String mensagem;
     public String data;
     public String hora;
@@ -26,9 +27,10 @@ public class Notificacoes {
         id = UUID.randomUUID().toString();
     }
 
-    public Notificacoes(String id, String mensagem, String data, String hora, String statusNotificacao,
+    public Notificacoes(String id, String destinatarioId, String mensagem, String data, String hora, String statusNotificacao,
                         Boolean lida, String tipoNotificacao, Adocao adocao, String topico, String titulo, Denuncias denuncia) {
         this.id = UUID.randomUUID().toString();
+        this.destinatarioId = destinatarioId;
         this.mensagem = mensagem;
         this.data = data;
         this.hora = hora;
@@ -44,6 +46,7 @@ public class Notificacoes {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
+        result.put("destinatarioId", destinatarioId);
         result.put("mensagem", mensagem);
         result.put("data", data);
         result.put("hora", hora);
@@ -61,6 +64,7 @@ public class Notificacoes {
     public String toString() {
         return "Notificacoes{" +
                 "id='" + id + '\'' +
+                ", destinatarioId='" + destinatarioId + '\'' +
                 ", mensagem='" + mensagem + '\'' +
                 ", data='" + data + '\'' +
                 ", hora='" + hora + '\'' +

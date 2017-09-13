@@ -139,6 +139,7 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
     public void aplicarConfirmacaoSolicitacaoAdocao(View v) {
 
         Notificacoes notificacao = new Notificacoes();
+        notificacao.destinatarioId = getPet().doador.id;
         notificacao.mensagem = "Boas notícias! "+getUsuario().nome+" gostaria de adotar "+getPet().nome+"!";
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
