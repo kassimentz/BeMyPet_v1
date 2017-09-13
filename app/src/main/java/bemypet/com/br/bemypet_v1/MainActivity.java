@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Coloquei este metodo para buscar um usuario no banco e salvar ele no app, como se estivesse logado
+     * Fiz isso para poder testar as notificacoes somente do usuario logado
+     */
     private void buscarUsuarios() {
 
         FirebaseDatabase.getInstance().getReference().child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
