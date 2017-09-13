@@ -10,19 +10,6 @@
         android:layout_height="1dp"
         android:background="@color/OrangeApp" />
 
-    <!--localização-->
-    <LinearLayout style="@style/layoutLinha">
-        <TextView
-            style="@style/textoFormulario"
-            android:text="@string/localizacao" />
-    </LinearLayout>
-    <LinearLayout style="@style/layoutLinha">
-        <EditText
-            android:id="@+id/edtLocalizacao"
-            style="@style/inputFormulario"
-            android:hint="@string/localizacao_placeholder" />
-    </LinearLayout>
-
     <!--cep-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
