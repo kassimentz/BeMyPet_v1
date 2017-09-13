@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     usuario = postSnapshot.getValue(Usuario.class);
-                    if(usuario.id.equalsIgnoreCase("577e4948-ef79-4b4e-9146-08bb8a7a265e")) {
+                    if(usuario.id.equalsIgnoreCase("b96b7698-aede-48df-9ffe-89704646768a")) {
                         Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
                     }
                 }

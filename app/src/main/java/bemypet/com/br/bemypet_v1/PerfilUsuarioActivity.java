@@ -16,7 +16,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import bemypet.com.br.bemypet_v1.adapters.CustomGridMesmaNinhadaBaseAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
@@ -25,26 +32,9 @@ import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {
 
-    //temporário até puxar do banco
     GridView grid;
-    String[] nomes = {
-            "GATO1",
-            "GATO2",
-            "GATO3",
-            "GATO4",
-            "GATO5",
-            "GATO6"
-
-    } ;
-    int[] imageId = {
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada
-
-    };
+    List<String> nomes = new ArrayList<>();
+    List<String> images = new ArrayList<>();
 
     private TextView nomeUsuario, dataNascPerfilUse, cpfPerfilUse, cepPerfilUse, enderecoPerfilUse,
             numeroPerfilUse, complementoPerfilUse, cidadePessoalPerfilUse, estadoPerfilUse,
@@ -73,11 +63,6 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
             preencherDados();
         }
 
-        CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilUsuarioActivity.this, nomes, imageId);
-        grid=(GridView)findViewById(R.id.grid);
-        grid.setAdapter(adapter);
-
-
     }
 
 
@@ -102,6 +87,10 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         Usuario usuario = new Gson().fromJson(jsonObj, Usuario.class);
         if(usuario != null) {
             setUsuario(usuario);
+        } else {
+            if(Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
+                setUsuario(Utils.getUsuarioSharedPreferences(getApplicationContext()));
+            }
         }
     }
 
@@ -146,6 +135,38 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         }
         if(getUsuario().email != null) {
             emailPerfilUse.setText(getUsuario().email);
+        }
+
+        buscarPetsUsuario();
+    }
+
+    private void buscarPetsUsuario() {
+        if(getUsuario() != null) {
+            FirebaseDatabase.getInstance().getReference().child("pets").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Pet pet = null;
+                    List<Pet> petsUsuario = new ArrayList<Pet>();
+
+                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        pet = postSnapshot.getValue(Pet.class);
+                        if(pet.atualDonoID.equalsIgnoreCase(getUsuario().id)) {
+                            petsUsuario.add(pet);
+                            nomes.add(pet.nome);
+                            if(pet.imagens.size() > 0) {
+                                images.add(pet.imagens.get(0));
+                            }
+                        }
+                    }
+
+                    CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilUsuarioActivity.this, nomes, images);
+                    grid=(GridView)findViewById(R.id.grid);
+                    grid.setAdapter(adapter);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) { }
+            });
         }
     }
 

@@ -137,6 +137,8 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         updateNotificacao();
 
         getPet().status = Constants.STATUS_PET_DISPONIVEL;
+        getPet().atualDonoID = getAdocao().doador.id;
+        getPet().adotante = new Usuario();
         //atualizar o status do pet no banco para "STATUS_PET_DISPONIVEL", para que apareca NOVAMENTE nas buscas
         updateStatusPet();
 
@@ -170,6 +172,8 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     private void updateStatusPet() {
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
         myRef.child(getPet().id).child("status").setValue(getPet().status);
+        myRef.child(getPet().id).child("atualDonoID").setValue(getPet().atualDonoID);
+        myRef.child(getPet().id).child("adotante").setValue(getPet().adotante);
     }
 
     private void updateStatusAdocao() {
@@ -228,6 +232,8 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         updateNotificacao();
 
         getPet().status = Constants.STATUS_PET_ADOTADO;
+        getPet().atualDonoID = getAdotante().id;
+        getPet().adotante = getAdotante();
         //atualizar o status do pet no banco para "STATUS_PET_ADOTADO", para que nao apareca nas buscas
         updateStatusPet();
 

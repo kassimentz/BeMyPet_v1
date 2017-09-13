@@ -20,6 +20,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bemypet.com.br.bemypet_v1.adapters.CustomGridMesmaNinhadaBaseAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 
@@ -30,24 +33,8 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     //temporário até puxar do banco
     GridView grid;
-    String[] nomes = {
-            "GATO1",
-            "GATO2",
-            "GATO3",
-            "GATO4",
-            "GATO5",
-            "GATO6"
-
-    } ;
-    int[] imageId = {
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada,
-            R.drawable.perfil_ninhada
-
-    };
+    List<String> nomes = new ArrayList<>();
+    List<String> images = new ArrayList<>();
 
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
             pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet;
@@ -78,7 +65,7 @@ public class PerfilPetActivity extends AppCompatActivity {
             preencherDados();
         }
 
-        CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilPetActivity.this, nomes, imageId);
+        CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilPetActivity.this, nomes, images);
         grid=(GridView)findViewById(R.id.grid);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,7 +73,7 @@ public class PerfilPetActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(PerfilPetActivity.this, "You Clicked at " +nomes[+ position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(PerfilPetActivity.this, "You Clicked at " +nomes.get(position), Toast.LENGTH_SHORT).show();
 
             }
         });
