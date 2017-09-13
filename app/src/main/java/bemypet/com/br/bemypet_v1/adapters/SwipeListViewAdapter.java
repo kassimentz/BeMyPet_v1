@@ -2,6 +2,8 @@ package bemypet.com.br.bemypet_v1.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,14 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.List;
@@ -42,9 +52,14 @@ public class SwipeListViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.swipe_list_view_item, null);
-        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+
+        if(swipeLayout.isClickToClose()) {
+            notifyDataSetChanged();
+        }
+
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -54,14 +69,32 @@ public class SwipeListViewAdapter extends BaseSwipeAdapter {
         swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
+
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
+                System.out.println(notificacoes.get(position).toString());
+                notificacoes.remove(notificacoes.get(position));
+                final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
+
+
+                myRef.child(notificacoes.get(position).id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            if (swipeLayout.getOpenStatus() == SwipeLayout.Status.Open) {
+                                //DO WHAT YOU WANT
+
+                                notifyDataSetChanged();
+                                swipeLayout.close();
+                            }
+                        }
+                    }
+                });
+                notifyDataSetChanged();
             }
+
         });
         return v;
     }
@@ -104,6 +137,8 @@ public class SwipeListViewAdapter extends BaseSwipeAdapter {
 
     }
 
+
+
     @Override
     public int getCount() {
         return notificacoes.size();
@@ -118,4 +153,5 @@ public class SwipeListViewAdapter extends BaseSwipeAdapter {
     public long getItemId(int position) {
         return position;
     }
+
 }

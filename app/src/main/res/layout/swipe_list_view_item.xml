@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#FF5534"
+        android:background="@color/white"
         android:gravity="center"
         android:tag="Bottom3"
         android:weightSum="10">
@@ -36,9 +36,10 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="4"
-            android:background="@drawable/white"
-            android:text="Sim,Apagar"
-            android:textColor="#FF5534" />
+            android:background="@drawable/btn_cancelar_confirmar_solicitacao_adocao"
+            android:text="Sim, Apagar"
+            android:textColor="@color/white"
+            android:layout_marginRight="20dp"/>
     </LinearLayout>
 
     <LinearLayout
