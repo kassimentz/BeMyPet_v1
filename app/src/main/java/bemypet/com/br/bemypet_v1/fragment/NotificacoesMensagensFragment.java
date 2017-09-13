@@ -185,8 +185,13 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
         mListView.setTextFilterEnabled(true);
         setupSearchView();
-        setUsuarioLogado(Utils.getUsuarioSharedPreferences(getContext()));
-        buscarNotificacoes();
+        if(Utils.getUsuarioSharedPreferences(getContext()) != null) {
+            setUsuarioLogado(Utils.getUsuarioSharedPreferences(getContext()));
+            System.out.println("usuario logado");
+            System.out.println(getUsuarioLogado().toString());
+            buscarNotificacoes();
+        }
+
         return  rootView;
     }
 
@@ -239,7 +244,9 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     notificacao = postSnapshot.getValue(Notificacoes.class);
+                    System.out.println(notificacao.toString());
                     if(checkNotificacoesUsuario(notificacao)) {
+                        System.out.println(notificacao.toString());
                         notificacoesList.add(notificacao);
                     }
                 }

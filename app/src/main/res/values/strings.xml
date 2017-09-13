@@ -71,6 +71,7 @@
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
+    <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -277,6 +278,8 @@
     <string name="localizacao_placeholder">Mapa</string>
     <string name="foto">Foto</string>
 
+    <string name="temOutroPet">VOCÊ JÁ TEVE OUTRO(S) PET(S) ANTES?</string>
+
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
         Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
         para que ele seja muito feliz ao seu lado.</string>
@@ -293,11 +296,17 @@
     <string name="txtDenuncia2">Por favor, verifique os motivos relacionados acima para que uma nova denúncia não aconteça.</string>
     <string name="title_activity_visualizar_adocao_aprovada">Map</string>
     <string name="txtAdocaoAprovada">A adoção de Teste foi aprovada! Converse com Doador Nome e combine para buscá-lo!</string>
+    <string name="txtCadastroAdocao">Responda as perguntas seguintes com honestidade. Isso lhe ajudará a adotar um companhetiro mais rapidamento!</string>
 
     <string-array name="steps_cadastro_usuario_titles">
         <item>Dados Pessoais</item>
         <item>Localização</item>
         <item>Contato</item>
+    </string-array>
+
+    <string-array name="steps_cadastro_adocao_titles">
+        <item>OUTRO(S) PET(S)</item>
+        <item>LOCALIDADE / MORADIA</item>
     </string-array>
 
     <string name="vertical_form_stepper_form_confirm_button">SALVAR</string>

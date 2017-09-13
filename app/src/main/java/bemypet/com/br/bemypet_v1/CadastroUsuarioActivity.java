@@ -9,19 +9,32 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
@@ -40,6 +53,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     //step DADOS PESSOAIS
     private LinearLayout dadosPessoaisStep;
+    private EditText edtNomeUsuario;
 
     List<String> ufListagem;
 
@@ -61,7 +75,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         initializeVariables();
 
         //usar getbudle pegar exemplo no doancao
-
+        //adicionar a funcao getBundle para receber os dados do usuario.
+        // testar dentro da getBundle se existe um usuario (se veio algo ou nao)
+        // se o usuario estiver vazio, significa que é novo, nao é edicao.
+        // se o usuario nao estiver vazio, criar um metodo que preenche os dados
+        // do forumlario com as informacoes contidas no objeto usuario
+        // exemplo em PerfilPetActivity linha 76 ou em
+        // PerfilUsuarioActivity linha 71
 
     }
 
@@ -79,6 +99,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 android.R.layout.simple_spinner_item, ufListagem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerUf.setAdapter(adapter);
+
+        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
 
 
 
@@ -148,10 +170,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         }
     }
 
-    @Override
-    public void sendData() {
-        //salva os dados usar dialog
-    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -168,6 +186,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_dados_pessoais, null, false);
 
+        edtNomeUsuario = (EditText) dadosPessoaisStep.findViewById(R.id.edtNomeUsuario);
 
         //valida os dados do formulário se passar vai para proximo
 //        verticalStepperForm.goToNextStep();
@@ -205,6 +224,71 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         toast.show();
 
         return v;
+    }
+
+
+    @Override
+    public void sendData() {
+        //salva os dados usar dialog
+
+        Usuario usuario = new Usuario();
+
+        usuario.nome = edtNomeUsuario.getText().toString();
+
+        salvarUsuario(usuario);
+
+
+        //depois de salvar ver de onde vem o chamado para fazer o redionanento ou para perfil ou para a adocao
+
+        System.out.printf(edtNomeUsuario.getText().toString());
+//        Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
+//        startActivity(intent);
+//        finish();
+
+    }
+
+    private void salvarUsuario(Usuario entidade) {
+        final Usuario usuario = entidade;
+
+        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
+
+        usuario.token = refreshedToken;
+
+        FirebaseConnection.getConnection();
+        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(usuario.id)).setValue(usuario);
+
+                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
+                    geoFire.setLocation(usuario.id, new GeoLocation(usuario.localizacao.lat, usuario.localizacao.lon), new GeoFire.CompletionListener() {
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+                            if (error != null) {
+                                System.err.println("There was an error saving the location to GeoFire: " + error);
+                            } else {
+                                System.out.println("Location saved on server successfully!");
+                            }
+                        }
+                    });
+
+                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
+                } else {
+                    //logar erro
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Log.i("Cancel", "Listener was cancelled");
+            }
+        });
+
     }
 
 }
