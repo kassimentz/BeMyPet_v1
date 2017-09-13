@@ -6,17 +6,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.util.Attributes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
@@ -29,8 +36,11 @@ import bemypet.com.br.bemypet_v1.VisualizarAdocaoReprovadaActivity;
 import bemypet.com.br.bemypet_v1.VisualizarDenunciaActivity;
 import bemypet.com.br.bemypet_v1.VisualizarSolicitacaoAdocaoActivity;
 import bemypet.com.br.bemypet_v1.adapters.NotificacoesAdapter;
+import bemypet.com.br.bemypet_v1.adapters.SwipeListViewAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
+import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Constants;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +63,8 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
     private ListView mListView;
     private List<Notificacoes> notificacoesList;
     private NotificacoesAdapter notificacoesAdapter;
+    private SwipeListViewAdapter mAdapter;
+    private Usuario usuarioLogado = new Usuario();
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,86 +88,9 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        buscarNotificacoes();
-
     }
 
-    private void buscarNotificacoes() {
 
-        FirebaseDatabase.getInstance().getReference().child("notificacoes").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //TODO mostrar soment notificacoes do usuario logado
-                Notificacoes notificacao = null;
-                notificacoesList = new ArrayList<Notificacoes>();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    notificacao = postSnapshot.getValue(Notificacoes.class);
-                    notificacoesList.add(notificacao);
-                }
-
-                notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
-                mListView.setAdapter(notificacoesAdapter);
-
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-
-                        Notificacoes n = notificacoesList.get(position);
-                        if(!n.lida) {
-                            n.lida = Boolean.TRUE;
-                            updateNotificacao(n);
-                        }
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("notificacao", new Gson().toJson(n));
-                        Intent intent = null;
-
-                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
-                            intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
-                        }
-
-                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
-                            intent = new Intent(getContext(), VisualizarAdocaoAprovadaActivity.class);
-                        }
-
-                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
-                            intent = new Intent(getContext(), VisualizarAdocaoReprovadaActivity.class);
-                        }
-
-                        if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
-                            intent = new Intent(getContext(), VisualizarDenunciaActivity.class);
-                        }
-
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-
-                    }
-                });
-
-                mListView.setTextFilterEnabled(true);
-                setupSearchView();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-
-    }
-
-    private void updateNotificacao(Notificacoes n) {
-        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
-        myRef.child(n.id).child("lida").setValue(n.lida);
-    }
-
-    private void setupSearchView()  {
-        mSearchView.setIconifiedByDefault(false);
-        mSearchView.setOnQueryTextListener(this);
-        mSearchView.setQueryHint("Buscar");
-        mSearchView.setIconified(false);
-        if (mSearchView != null) {
-            mSearchView.setQuery("", false);
-            mSearchView.clearFocus();
-        }
-    }
 
     @Override
     public void onResume() {
@@ -173,6 +108,85 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         rootView = inflater.inflate(R.layout.fragment_notificacoes_mensagens, container, false);
         mSearchView = (SearchView) rootView.findViewById(R.id.searchViewNotificacoes);
         mListView = (ListView) rootView.findViewById(R.id.listViewNotificacoes);
+        notificacoesList = new ArrayList<Notificacoes>();
+        mAdapter = new SwipeListViewAdapter(getContext(), notificacoesList);
+
+        mAdapter.setMode(Attributes.Mode.Single);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Notificacoes n = notificacoesList.get(position);
+                if(!n.lida) {
+                    n.lida = Boolean.TRUE;
+                    updateNotificacao(n);
+                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("notificacao", new Gson().toJson(n));
+                Intent intent = null;
+
+                if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
+                    intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
+                }
+
+                if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
+                    intent = new Intent(getContext(), VisualizarAdocaoAprovadaActivity.class);
+                }
+
+                if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
+                    intent = new Intent(getContext(), VisualizarAdocaoReprovadaActivity.class);
+                }
+
+                if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
+                    intent = new Intent(getContext(), VisualizarDenunciaActivity.class);
+                }
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        mListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e("ListView", "OnTouch");
+                return false;
+            }
+        });
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                Log.e("ListView", "onScrollStateChanged");
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+
+        mListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("ListView", "onItemSelected:" + position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.e("ListView", "onNothingSelected:");
+            }
+        });
+
+        mListView.setTextFilterEnabled(true);
+        setupSearchView();
+        setUsuarioLogado(Utils.getUsuarioSharedPreferences(getContext()));
+        buscarNotificacoes();
         return  rootView;
     }
 
@@ -214,5 +228,109 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void buscarNotificacoes() {
+
+        FirebaseDatabase.getInstance().getReference().child("notificacoes").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Notificacoes notificacao = null;
+
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    notificacao = postSnapshot.getValue(Notificacoes.class);
+                    if(checkNotificacoesUsuario(notificacao)) {
+                        notificacoesList.add(notificacao);
+                    }
+                }
+                //notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
+                mAdapter = new SwipeListViewAdapter(getContext(), notificacoesList);
+                mListView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
+    }
+
+
+
+    private void updateNotificacao(Notificacoes n) {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
+        myRef.child(n.id).child("lida").setValue(n.lida);
+    }
+
+    private void setupSearchView()  {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setQueryHint("Buscar");
+        mSearchView.setIconified(false);
+        if (mSearchView != null) {
+            mSearchView.setQuery("", false);
+            mSearchView.clearFocus();
+        }
+    }
+
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+    }
+
+    private String getIdDestinatario(Notificacoes n) {
+
+        String idDestinatario = "";
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
+            idDestinatario = n.adocao.doador.id;
+        }
+
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
+            idDestinatario = n.adocao.adotante.id;
+        }
+
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
+            idDestinatario = n.adocao.adotante.id;
+        }
+
+        if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
+            idDestinatario = n.denuncia.denunciado.id;
+        }
+
+        return idDestinatario;
+    }
+
+    private boolean checkNotificacoesUsuario(Notificacoes n) {
+        if(getUsuarioLogado() != null) {
+            if (n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
+                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
+                    return Boolean.TRUE;
+                }
+            }
+
+            if (n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
+                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
+                    return Boolean.TRUE;
+                }
+            }
+
+            if (n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
+                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
+                    return Boolean.TRUE;
+                }
+            }
+
+            if (n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
+                if (getIdDestinatario(n).equalsIgnoreCase(getUsuarioLogado().id)) {
+                    return Boolean.TRUE;
+                }
+            }
+        } else {
+            return Boolean.FALSE;
+        }
+        return Boolean.FALSE;
     }
 }

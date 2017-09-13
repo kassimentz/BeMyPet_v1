@@ -13,10 +13,13 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.location.Address;
+import android.location.Geocoder;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -372,6 +375,32 @@ public class Utils {
         if(usuario != null) {
             return usuario;
         } else {
+            return null;
+        }
+    }
+
+    public static LatLng getLocationFromAddress(Context context, String strAddress)  {
+        //Create coder with Activity context - this
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng latLng = null;
+
+        try {
+            //Get latLng from String
+            address = coder.getFromLocationName(strAddress,5);
+
+            //check for null
+            if (address != null) {
+                //Lets take first possibility from the all possibilities.
+                Address location = address.get(0);
+                latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            }
+
+            return latLng;
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -9,6 +9,13 @@
     <color name="OrangeApp">#f15922</color>
     <color name="GreenButton">#88cc00</color>
 
+    <color name="dark_gray_press">#ff7e8a97</color>
+    <color name="red">#FF3B00</color>
+    <color name="red_press">#990000</color>
+    <color name="dark_gray">#4C535B</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="backgroundColorPress">#DBDBD3</color>
+
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#d1395c</color>
