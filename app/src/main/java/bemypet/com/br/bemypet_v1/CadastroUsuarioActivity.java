@@ -34,6 +34,7 @@ import java.util.List;
 
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
+import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
 import bemypet.com.br.bemypet_v1.utils.Utils;
@@ -41,7 +42,7 @@ import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
 
-public class CadastroUsuarioActivity extends AppCompatActivity implements VerticalStepperForm{
+public class CadastroUsuarioActivity extends AppCompatActivity implements VerticalStepperForm {
 
 
     private Usuario usuario;
@@ -56,6 +57,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     //step DADOS PESSOAIS
     private LinearLayout dadosPessoaisStep;
     private EditText edtNomeUsuario;
+
+    private Pet pet;
 
     List<String> ufListagem;
 
@@ -77,6 +80,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         initializeActivity();
         initializeVariables();
+        getBundle();
 
         //usar getbudle pegar exemplo no doancao
         //adicionar a funcao getBundle para receber os dados do usuario.
@@ -89,13 +93,26 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
+    private void getBundle() {
+
+        if (Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
+            setUsuario(Utils.getUsuarioSharedPreferences(getApplicationContext()));
+        }
+        String jsonObj = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            origem = extras.getString("origem");
+            jsonObj = extras.getString("pet");
+            if (extras != null) {
+                if (extras.containsKey("origem")) {
+                    origem = extras.getString("origem");
+                }
+            }
+        }
+        Pet pet = new Gson().fromJson(jsonObj, Pet.class);
+
+        if (pet != null) {
+            setPet(pet);
         }
 
 
@@ -108,7 +125,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
         ArrayAdapter<String> adapter;
 
-        String [] ufString = new String [] {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};;
+        String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
+        ;
         ufListagem = new ArrayList<String>(Arrays.asList(ufString));
 
         adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -117,7 +135,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         spinnerUf.setAdapter(adapter);
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
-
 
 
     }
@@ -135,7 +152,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         // Here we find and initialize the form
         verticalStepperForm = (VerticalStepperFormLayout) findViewById(R.id.vertical_stepper_form);
         VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, stepsTitles, this, this)
-                .stepTitleTextColor(Color.rgb(241,89,34))
+                .stepTitleTextColor(Color.rgb(241, 89, 34))
                 //.stepsSubtitles(stepsSubtitles)
 //                .materialDesignInDisabledSteps(true) // false by default
                 .showVerticalLineWhenStepsAreCollapsed(true) // false by default
@@ -145,6 +162,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 .init();
 
     }
+
     @Override
     public View createStepContentView(int stepNumber) {
 
@@ -197,7 +215,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
 
     //cria steps
-    private View criaStepDadosPessoais(){
+    private View criaStepDadosPessoais() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_dados_pessoais, null, false);
@@ -210,7 +228,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         return dadosPessoaisStep;
     }
 
-    private View criaStepLocalizacao(){
+    private View criaStepLocalizacao() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_localizacao, null, false);
@@ -221,7 +239,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         return dadosPessoaisStep;
     }
 
-    private View criaStepContato(){
+    private View criaStepContato() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_contato, null, false);
@@ -234,7 +252,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     }
 
-    public View buscaFotoPerfil(View v){
+    public View buscaFotoPerfil(View v) {
 
         Toast toast = Toast.makeText(this, "Add foto", Toast.LENGTH_LONG);
         toast.show();
@@ -247,75 +265,128 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void sendData() {
         //salva os dados usar dialog
 
-//        Usuario usuario = new Usuario();
-//        usuario.nome = edtNomeUsuario.getText().toString();
-//        salvarUsuario(usuario);
 
+        getUsuario().nome = edtNomeUsuario.getText().toString();
 
+        salvarUsuario();
 
 
     }
 
-    private void salvarUsuario(Usuario entidade) {
-        final Usuario usuario = entidade;
 
-        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
+    private void salvarUsuario() {
+        /**
+         *   this.nome = nome;
+         this.imagens = imagens;
+         this.dataNascimento = dataNascimento;
+         this.cpf = cpf;
+         this.localizacao = localizacao;
+         this.cep = cep;
+         this.endereco = endereco;
+         this.numero = numero;
+         this.complemento = complemento;
+         this.bairro = bairro;
+         this.cidade = cidade;
+         this.estado = estado;
+         this.telefone = telefone;
+         this.email = email;
+         this.meusPets = meusPets;
+         this.petsFavoritos = petsFavoritos;
+         this.denuncias = denuncias;
+         this.notificacoes = notificacoes;
+         this.token = token;
+         */
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
+        myRef.child(getUsuario().id).child("nome").setValue(getUsuario().nome);
+        myRef.child(getUsuario().id).child("imagens").setValue(getUsuario().imagens);
+        myRef.child(getUsuario().id).child("dataNascimento").setValue(getUsuario().dataNascimento);
 
-        usuario.token = refreshedToken;
+        if (origem == null) {
 
-        FirebaseConnection.getConnection();
-        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+            Intent intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("pet", new Gson().toJson(getPet()));
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
 
-        connectedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(usuario.id)).setValue(usuario);
+        } else {
 
-                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-                    geoFire.setLocation(usuario.id, new GeoLocation(usuario.localizacao.lat, usuario.localizacao.lon), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (error != null) {
-                                System.err.println("There was an error saving the location to GeoFire: " + error);
-                            } else {
-                                System.out.println("Location saved on server successfully!");
+            Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
+            startActivity(intent);
+            finish();
 
-                                Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
-
-
-                                if(origem == null){
-
-                                    Intent intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
-                                    startActivity(intent);
-                                    finish();
-
-                                }else{
-
-                                    Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
-                                    startActivity(intent);
-                                    finish();
-
-                                }
-
-                            }
-                        }
-                    });
-
-
-                } else {
-                    //logar erro
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("Cancel", "Listener was cancelled");
-            }
-        });
-
+        }
     }
 
+    //TODO ESTA FUNCAO DEVE SER USADA NO LOGIN, PARA SALVAR O USUARIO PELA PRIMEIRA VEZ, COM O TOKKEN E COM O LAT LONG NO GEOFIRE
+//    private void salvarUsuario(Usuario entidade) {
+//        final Usuario usuario = entidade;
+//
+//        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
+//        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
+//
+//        usuario.token = refreshedToken;
+//
+//        FirebaseConnection.getConnection();
+//        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+//
+//        connectedReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                boolean connected = snapshot.getValue(Boolean.class);
+//                if (connected) {
+//                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(usuario.id)).setValue(usuario);
+//
+//                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
+//                    geoFire.setLocation(usuario.id, new GeoLocation(usuario.localizacao.lat, usuario.localizacao.lon), new GeoFire.CompletionListener() {
+//                        @Override
+//                        public void onComplete(String key, DatabaseError error) {
+//                            if (error != null) {
+//                                System.err.println("There was an error saving the location to GeoFire: " + error);
+//                            } else {
+//                                System.out.println("Location saved on server successfully!");
+//
+//                                if(origem == null){
+//
+//                                    Intent intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putSerializable("pet", new Gson().toJson(getPet()));
+//                                    intent.putExtras(bundle);
+//                                    startActivity(intent);
+//                                    finish();
+//
+//                                }else{
+//
+//                                    Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//
+//                                }
+//
+//                            }
+//                        }
+//                    });
+//
+//
+//                } else {
+//                    //logar erro
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                //Log.i("Cancel", "Listener was cancelled");
+//            }
+//        });
+//
+//    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
 }
