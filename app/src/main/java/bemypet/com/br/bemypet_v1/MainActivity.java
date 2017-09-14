@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public void iniciar(View v) {
 
 //        Intent intent = new Intent(this, EscolhaActivity.class);
-        Intent intent = new Intent(this, InicialActivity.class);
+        Intent intent = new Intent(this, CadastroPetActivity.class);
         startActivity(intent);
 //        salvarUsuario(Utils.instanciarUsuario("kassi 2"));
         testarBuscarLatLongPorEndereco();

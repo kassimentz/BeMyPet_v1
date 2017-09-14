@@ -11,7 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
 import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
@@ -19,6 +23,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     private VerticalStepperFormLayout verticalStepperForm;
     private Pet pet;
+    private Usuario doador;
 
     private static final int DADOS_PET = 0;
     private static final int OUTRAS_INFORMACOES = 1;
@@ -41,8 +46,34 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
         initializeActivity();
         initializeVariables();
+        getBundle();
     }
-    private void initializeVariables() {}
+
+    private void getBundle() {
+
+        if (Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
+            setDoador(Utils.getUsuarioSharedPreferences(getApplicationContext()));
+        }
+        String jsonObj = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            jsonObj = extras.getString("pet");
+        }
+        Pet pet = new Gson().fromJson(jsonObj, Pet.class);
+        //se tem pet no bundle é porque trata-se de edição
+        if (pet != null) {
+            setPet(pet);
+        }
+
+
+    }
+
+    private void initializeVariables() {
+
+//        TextView tv=(TextView)findViewById(R.id.textView1);
+//        tv.setText(Html.fromHtml(getString(R.string.your_text)));
+
+    }
 
     private void initializeActivity() {
 
@@ -51,10 +82,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         // Vertical Stepper form vars
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimaryDark);
-        String[] stepsTitles = getResources().getStringArray(R.array.steps_cadastro_usuario_titles);
-        //String[] stepsSubtitles = getResources().getStringArray(R.array.steps_subtitles);
+        String[] stepsTitles = getResources().getStringArray(R.array.steps_cadastro_pet_titles);
 
-        // Here we find and initialize the form
         verticalStepperForm = (VerticalStepperFormLayout) findViewById(R.id.vertical_stepper_form_pet);
         VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, stepsTitles, this, this)
                 .stepTitleTextColor(Color.rgb(241,89,34))
@@ -132,5 +161,13 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public Usuario getDoador() {
+        return doador;
+    }
+
+    public void setDoador(Usuario doador) {
+        this.doador = doador;
     }
 }

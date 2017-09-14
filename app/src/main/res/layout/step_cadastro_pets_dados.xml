@@ -7,8 +7,17 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/OrangeApp"
-        />
+        android:background="@color/OrangeApp" />
+
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textColor="@color/OrangeApp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:text="@string/txtTituloNovoPet1"/>
+    </LinearLayout>
 
     <!--nome-->
     <LinearLayout style="@style/layoutLinha">
@@ -16,47 +25,114 @@
             style="@style/textoFormulario"
             android:text="@string/nome"/>
     </LinearLayout>
+
     <LinearLayout style="@style/layoutLinha">
         <EditText
-            android:id="@+id/edtNomeUsuario"
-            style="@style/inputFormulario"
-            android:hint="@string/nome"/>
+            android:id="@+id/edNomePet"
+            style="@style/inputFormularioPet"
+            android:hint="@string/nome_pet_placeholder"/>
     </LinearLayout>
 
 
-    <!--foto-->
+    <!--especie-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"
-            android:text="@string/foto"/>
+            android:text="@string/especieTitulo"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
 
-        <RelativeLayout
-            android:id="@+id/profile_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:paddingBottom="10dp">
+        <RadioGroup
+            android:id="@+id/radioGroupEspecie"
+            style="@style/radioGroupFormulario"
+            android:layout_weight="3"
+            android:weightSum="3">
 
-            <ImageView
-                android:id="@+id/user_profile_photo"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/bg_circle"
-                android:layout_centerHorizontal="true"
-                android:scaleType="centerCrop" />
+            <RadioButton
+                android:id="@+id/radioCao"
+                android:text="@string/cao"
+                android:checked="true"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:elevation="2dp"
-                android:src="@drawable/add_photo"
-                android:onClick="buscaFotoPerfil"
-                android:layout_toRightOf="@+id/user_profile_photo"
-                android:layout_marginLeft="-40dp"/>
+            <RadioButton
+                android:id="@+id/radioGato"
+                android:text="@string/gato"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
 
-        </RelativeLayout>
+            <RadioButton
+                android:id="@+id/radioOutros"
+                android:text="@string/outros"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <!--sexo-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/sexoTitulo"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:id="@+id/radioGroupSexo"
+            style="@style/radioGroupFormulario"
+            android:layout_weight="3"
+            android:weightSum="3" >
+
+            <RadioButton
+                android:id="@+id/radioMacho"
+                android:text="@string/macho"
+                android:checked="true"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioFemea"
+                android:text="@string/femea"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioNaoSei"
+                android:text="@string/naoSei"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textColor="@color/OrangeApp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:text="@string/txtNaoSei"/>
+    </LinearLayout>
+
+    <!--racas-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/racaTitulo"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/layoutLinha">
+        <Spinner
+            android:layout_height="50dp"
+            style="@style/spinnerFormulario"
+            android:id="@+id/spinnerRacas"
+            android:layout_width="match_parent" />
+
     </LinearLayout>
 
     <!--data nascimento-->
@@ -68,26 +144,52 @@
     <LinearLayout style="@style/layoutLinha">
         <EditText
             android:id="@+id/edtDataNascimento"
-            style="@style/inputFormulario"
+            style="@style/inputFormularioPet"
+            android:drawableRight="@drawable/calendar"
             android:hint="@string/data_placeholder"/>
     </LinearLayout>
 
-
-
-    <!--data nascimento-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"
-            android:text="@string/cpf"/>
+            android:textColor="@color/OrangeApp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:text="@string/txtNaoSeiDataNascimento"/>
     </LinearLayout>
+
+    <!--peso-->
     <LinearLayout style="@style/layoutLinha">
-        <EditText
-            android:id="@+id/edtCpf"
-            style="@style/inputFormulario"
-            android:hint="@string/cpf_placeholder"/>
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/pesoTitulo"/>
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/layoutLinha"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="3">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/remove_number"/>
+        <EditText
+            android:id="@+id/edtPesoPet"
+            android:layout_width="30dp"
+            android:background="@drawable/edit_rounded_corners"
+            style="@style/inputFormularioPet"
+            android:layout_gravity="fill"
+            android:layout_weight="1"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/add_photo"/>
+    </LinearLayout>
 
 
 </LinearLayout>

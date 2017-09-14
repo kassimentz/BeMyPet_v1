@@ -98,7 +98,7 @@
     <string name="sexoTitulo">Sexo</string>
     <string name="racaTitulo">Raça</string>
     <string name="idadeTitulo">Idade</string>
-    <string name="pesoTitulo">Peso</string>
+    <string name="pesoTitulo">Peso (KG)</string>
     <string name="castradoTitulo">Castrado</string>
     <string name="vermifugadoTitulo">Vermifugado</string>
     <string name="sociavelTitulo">Sociável</string>
@@ -258,9 +258,20 @@
     <string name="meus_pets">MEUS PETS</string>
 
     <string name="nome">Nome</string>
+    <string name="nome_pet_placeholder">Informe o nome do pet</string>
+
+    <string name="txtNaoSei">
+        <![CDATA[
+        <p>O campo </p>
+        <p><b>"NÃO SEI" </b><p>pode ser usado quando o pet ainda é muito novo, e você ainda não sabe identificar o sexo dele.</p></p>
+        <p>Sugerimos que visite o veterinário para verificar essa informação e, quando souber, volte para atualizá-la!</p>
+        ]]>
+    </string>
+
     <string name="nome_placeholder">Informe seu nome completo</string>
     <string name="dataNascimento">Data de Nascimento</string>
     <string name="data_placeholder">00/00/0000</string>
+    <string name="ninhada_placeholder">Informe o nome da ninhada</string>
     <string name="cpf">CPF</string>
     <string name="cpf_placeholder">CPF (somente número)</string>
     <string name="cep">CEP</string>
@@ -330,8 +341,23 @@
         <item>LOCALIDADE / MORADIA</item>
     </string-array>
 
+    <string-array name="steps_cadastro_pet_titles">
+        <item>Dados do Pet</item>
+        <item>Outras Informações</item>
+    </string-array>
+
     <string name="vertical_form_stepper_form_confirm_button">SALVAR</string>
     <string name="vertical_form_stepper_form_last_step">Salvar</string>
+    <string name="txtTituloNovoPet1">Preencha o formulário abaixo para realizar o cadastro do pet que você quer colocar para adoção!</string>
+    <string name="dadosPetTitulo">dados do pet</string>
+    <string name="naoSei">Não Sei</string>
+    <string name="txtNaoSeiDataNascimento">Se o pet faz parte de uma ninhada que está para nascer, coloque uma data aproximada para o nascimento. Sugerimos que, assim que a ninhada nascer e, se for necessário, volte para atualizá-la!</string>
+    <string name="fazParteNinhada">Faz parte de ninhada?</string>
+    <string name="nomeNinhada">Nome da Ninhada</string>
+    <string name="petCastradoTitulo">O pet foi castrado?</string>
+    <string name="petVermifugadoTitulo">o pet já foi vermifugado?</string>
+    <string name="primeiradose">1ª dose</string>
+    <string name="segundadose">2ª dose</string>
 
     <string-array name="spinnerUF">
         <item>item1</item>

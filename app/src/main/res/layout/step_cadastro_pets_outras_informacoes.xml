@@ -7,87 +7,205 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/OrangeApp"
-        />
+        android:background="@color/OrangeApp" />
 
-    <!--nome-->
+    <!--TODO descomentar ninhada na proxima versao-->
+    <!--&lt;!&ndash;ninhada&ndash;&gt;-->
+    <!--<LinearLayout style="@style/layoutLinha">-->
+        <!--<TextView-->
+            <!--style="@style/textoFormulario"-->
+            <!--android:text="@string/fazParteNinhada"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout style="@style/layoutLinha">-->
+
+        <!--<RadioGroup-->
+            <!--android:id="@+id/radioParteNinhada"-->
+            <!--style="@style/radioGroupFormulario"-->
+            <!--android:layout_weight="3"-->
+            <!--android:weightSum="3">-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/radioSim"-->
+                <!--android:text="@string/sim"-->
+                <!--android:checked="true"-->
+                <!--style="@style/radioButtonFormulario"-->
+                <!--android:layout_weight="1"/>-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/radioNao"-->
+                <!--android:text="@string/nao"-->
+                <!--style="@style/radioButtonFormulario"-->
+                <!--android:layout_weight="1"/>-->
+
+        <!--</RadioGroup>-->
+
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash;nome ninhada&ndash;&gt;-->
+    <!--<LinearLayout style="@style/layoutLinha">-->
+        <!--<TextView-->
+            <!--style="@style/textoFormulario"-->
+            <!--android:text="@string/nomeNinhada"/>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout style="@style/layoutLinha">-->
+        <!--<EditText-->
+            <!--android:id="@+id/edtNomeNinhada"-->
+            <!--style="@style/inputFormularioPet"-->
+            <!--android:hint="@string/ninhada_placeholder"/>-->
+    <!--</LinearLayout>-->
+
+
+    <!--castrado-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"
-            android:text="@string/nome"/>
-    </LinearLayout>
-    <LinearLayout style="@style/layoutLinha">
-        <EditText
-            android:id="@+id/edtNomeUsuario"
-            style="@style/inputFormulario"
-            android:hint="@string/nome"/>
-    </LinearLayout>
-
-
-    <!--foto-->
-    <LinearLayout style="@style/layoutLinha">
-        <TextView
-            style="@style/textoFormulario"
-            android:text="@string/foto"/>
+            android:text="@string/petCastradoTitulo"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
 
-        <RelativeLayout
-            android:id="@+id/profile_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:paddingBottom="10dp">
+        <RadioGroup
+            android:id="@+id/radioGroupCastrado"
+            style="@style/radioGroupFormulario"
+            android:layout_weight="2"
+            android:weightSum="2">
 
-            <ImageView
-                android:id="@+id/user_profile_photo"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/bg_circle"
-                android:layout_centerHorizontal="true"
-                android:scaleType="centerCrop" />
+            <RadioButton
+                android:id="@+id/radioCastradoSim"
+                android:text="@string/sim"
+                android:checked="true"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:elevation="2dp"
-                android:src="@drawable/add_photo"
-                android:onClick="buscaFotoPerfil"
-                android:layout_toRightOf="@+id/user_profile_photo"
-                android:layout_marginLeft="-40dp"/>
+            <RadioButton
+                android:id="@+id/radioCastradoNao"
+                android:text="@string/nao"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+        </RadioGroup>
 
-        </RelativeLayout>
     </LinearLayout>
 
-    <!--data nascimento-->
+
+    <!--vermifugado-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"
-            android:text="@string/dataNascimento"/>
+            android:text="@string/petVermifugadoTitulo"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
-        <EditText
-            android:id="@+id/edtDataNascimento"
-            style="@style/inputFormulario"
-            android:hint="@string/data_placeholder"/>
+        
+        <RadioGroup
+            android:id="@+id/radioGroupVermifugado"
+            style="@style/radioGroupFormulario"
+            android:layout_weight="2"
+            android:weightSum="2">
+
+            <RadioButton
+                android:id="@+id/radioVermifugadoSim"
+                android:text="@string/sim"
+                android:checked="true"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioVermifugadoNao"
+                android:text="@string/nao"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+        </RadioGroup>
+
     </LinearLayout>
 
-
-
-    <!--data nascimento-->
     <LinearLayout style="@style/layoutLinha">
-        <TextView
-            style="@style/textoFormulario"
-            android:text="@string/cpf"/>
+        <LinearLayout style="@style/colunasFormulario">
+            <CheckBox android:id="@+id/chk_primeira_dose"
+                android:text="@string/primeiradose"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"/>
+
+            <CheckBox android:id="@+id/chk_segunda_dose"
+                android:text="@string/segundadose"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"/>
+        </LinearLayout>
     </LinearLayout>
+
+    <!--campos para sociavel e temperamento-->
     <LinearLayout style="@style/layoutLinha">
-        <EditText
-            android:id="@+id/edtCpf"
-            style="@style/inputFormulario"
-            android:hint="@string/cpf_placeholder"/>
+
+        <LinearLayout style="@style/colunaComCheckbox">
+
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/sociavelTitulo"/>
+
+            <CheckBox android:id="@+id/chk_sociavel_pessoas"
+                android:text="@string/sociavelPessoas"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"/>
+
+            <CheckBox android:id="@+id/chk_sociavel_caes"
+                android:text="@string/sociavelCaes"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"/>
+
+            <CheckBox android:id="@+id/chk_sociavel_gatos"
+                android:text="@string/sociavelGatos"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"/>
+
+            <CheckBox android:id="@+id/chk_sociavel_outros"
+                android:text="@string/outros"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
+    <!--campos para sociavel e temperamento-->
+    <LinearLayout style="@style/layoutLinha">
 
+        <LinearLayout
+            style="@style/colunaComCheckbox">
+
+            <TextView
+                style="@style/textoFormulario"
+                android:text="@string/temperamentoTitulo"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupTemperamento"
+                style="@style/radioGroupFormulario"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radioTemperamentoBravo"
+                    android:text="@string/temperamentoBravo"
+                    android:checked="true"
+                    style="@style/radioButtonFormulario" />
+
+                <RadioButton
+                    android:id="@+id/radioTemperamentoComCuidado"
+                    android:text="@string/temperamentoComCuidado"
+                    style="@style/radioButtonFormulario" />
+
+                <RadioButton
+                    android:id="@+id/radioTemperamentoConviveBem"
+                    android:text="@string/temperamentoConviveBem"
+                    style="@style/radioButtonFormulario" />
+
+                <RadioButton
+                    android:id="@+id/radioTemperamentoMuitoDocil"
+                    android:text="@string/temperamentoMuitoDocil"
+                    style="@style/radioButtonFormulario" />
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>
