@@ -26,12 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
+import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
 import bemypet.com.br.bemypet_v1.utils.Utils;
@@ -56,6 +58,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     private EditText edtNomeUsuario;
 
     List<String> ufListagem;
+
+    String origem = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,18 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            origem = extras.getString("origem");
+        }
+
+
+    }
+
     //inicializando os elementos do layout
     private void initializeVariables() {
 
@@ -92,7 +108,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
         ArrayAdapter<String> adapter;
 
-        String [] ufString = new String [] {"RS", "SP" };
+        String [] ufString = new String [] {"AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};;
         ufListagem = new ArrayList<String>(Arrays.asList(ufString));
 
         adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -231,19 +247,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void sendData() {
         //salva os dados usar dialog
 
-        Usuario usuario = new Usuario();
-
-        usuario.nome = edtNomeUsuario.getText().toString();
-
-        salvarUsuario(usuario);
+//        Usuario usuario = new Usuario();
+//        usuario.nome = edtNomeUsuario.getText().toString();
+//        salvarUsuario(usuario);
 
 
-        //depois de salvar ver de onde vem o chamado para fazer o redionanento ou para perfil ou para a adocao
 
-        System.out.printf(edtNomeUsuario.getText().toString());
-//        Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
-//        startActivity(intent);
-//        finish();
 
     }
 
@@ -274,11 +283,29 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                                 System.err.println("There was an error saving the location to GeoFire: " + error);
                             } else {
                                 System.out.println("Location saved on server successfully!");
+
+                                Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
+
+
+                                if(origem == null){
+
+                                    Intent intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }else{
+
+                                    Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+
                             }
                         }
                     });
 
-                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
+
                 } else {
                     //logar erro
                 }

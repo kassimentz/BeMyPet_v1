@@ -8,18 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
@@ -120,29 +115,13 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
     @Override
     public void sendData() {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    EditText nome = (EditText)  outrosPestsStep.findViewById(R.id.edtNomeUsuario);
-
-                    Toast toast = Toast.makeText(CadastroAdocaoActivity.this, nome.toString(), Toast.LENGTH_LONG);
-                    toast.show();
-
-                    finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
     //cria steps
     private View criaStepOutrosPets(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         outrosPestsStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_doacao_outros_pets, null, false);
+                R.layout.step_cadastro_adocao_outros_pets, null, false);
 
 
         //valida os dados do formulário se passar vai para proximo
@@ -178,6 +157,19 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
                     // Ninjas rule
                     break;
         }
+    }
+
+    public void somaQuantidade(View v){
+
+        Toast toast = Toast.makeText(CadastroAdocaoActivity.this, "soma", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+
+    public void diminueQuantida(View v){
+
+        Toast toast = Toast.makeText(CadastroAdocaoActivity.this, "diminue", Toast.LENGTH_LONG);
+        toast.show();
     }
 
 

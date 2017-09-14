@@ -31,13 +31,22 @@
         <TextView
             style="@style/textoFormulario"
             android:textAlignment="center"
+            android:textColor="@color/OrangeApp"
             android:text="@string/txtCadastroAdocao"/>
 
         <ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout
             android:id="@+id/vertical_stepper_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:layout_alignParentTop="true"/>
+
+        <TextView
+            style="@style/textoFormulario"
+            android:textAlignment="center"
+            android:textColor="@color/OrangeApp"
+            android:text="@string/txtCadastroAdocaoConclusao"/>
+
     </LinearLayout>
 
 
