@@ -76,48 +76,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void salvarUsuario(Usuario entidade) {
-        final Usuario usuario = entidade;
 
-        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
-
-        usuario.token = refreshedToken;
-
-        FirebaseConnection.getConnection();
-        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
-
-        connectedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(usuario.id)).setValue(usuario);
-
-                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-                    geoFire.setLocation(usuario.id, new GeoLocation(usuario.localizacao.lat, usuario.localizacao.lon), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (error != null) {
-                                System.err.println("There was an error saving the location to GeoFire: " + error);
-                            } else {
-                                System.out.println("Location saved on server successfully!");
-                            }
-                        }
-                    });
-
-                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
-                } else {
-                    //logar erro
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("Cancel", "Listener was cancelled");
-            }
-        });
-
-    }
 
 }
