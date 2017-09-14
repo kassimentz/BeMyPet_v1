@@ -71,7 +71,7 @@
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
-    <string name="activity_title_cadastro_usuario">Cadastro Pet</string>
+    <string name="activity_title_cadastro_pet">Cadastro Pet</string>
     <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
 
     <!-- TODO: Remove or change this placeholder text -->

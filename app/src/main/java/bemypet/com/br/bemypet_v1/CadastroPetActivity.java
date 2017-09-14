@@ -37,7 +37,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
-        ab.setTitle(R.string.activity_title_cadastro_usuario);
+        ab.setTitle(R.string.activity_title_cadastro_pet);
 
         initializeActivity();
         initializeVariables();
