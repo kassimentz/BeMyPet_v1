@@ -203,7 +203,7 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         adocao.adotante = getUsuario();
         adocao.doador = getPet().doador;
 
-        salvarAdocao(adocao);
+//        salvarAdocao(adocao);
         return adocao;
 
     }
@@ -223,29 +223,6 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
                     FirebaseConnection.getDatabase().child("notificacoes").child(String.valueOf(notificacao.id)).setValue(notificacao);
-                } else {
-                    //logar erro
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("Cancel", "Listener was cancelled");
-            }
-        });
-    }
-
-    //TODO USUAR AQUI ENQUANTO NAO TEM A ACTIVITY DE ADOCAO
-    private void salvarAdocao(Adocao data) {
-        final Adocao adocao = data;
-        FirebaseConnection.getConnection();
-        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
-        connectedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    FirebaseConnection.getDatabase().child("adocoes").child(String.valueOf(adocao.id)).setValue(adocao);
                 } else {
                     //logar erro
                 }
