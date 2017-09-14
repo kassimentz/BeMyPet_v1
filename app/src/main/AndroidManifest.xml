@@ -145,6 +145,11 @@
         </service>
 
         <activity android:name=".CadastroPetActivity"></activity>
+
+        <activity android:name=".CadastroAdocaoActivity"
+            android:label="@string/activity_title_cadastro_adocao">
+
+        </activity>
     </application>
 
 </manifest>

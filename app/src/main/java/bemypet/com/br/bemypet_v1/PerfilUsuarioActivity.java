@@ -196,6 +196,10 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
     public void editaPerilUsuario(View v){
         Intent intent = new Intent(PerfilUsuarioActivity.this, CadastroUsuarioActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("origem", "perfil");
+        intent.putExtras(bundle);
         startActivity(intent);
+        this.finish();
     }
 }

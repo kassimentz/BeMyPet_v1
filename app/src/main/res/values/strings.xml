@@ -278,8 +278,24 @@
     <string name="localizacao">Localização</string>
     <string name="localizacao_placeholder">Mapa</string>
     <string name="foto">Foto</string>
+    <string name="casa">Casa</string>
+    <string name="apartamento">Apartamento</string>
 
-    <string name="temOutroPet">VOCÊ JÁ TEVE OUTRO(S) PET(S) ANTES?</string>
+    <string name="txtTeveOutroPet">VOCÊ JÁ TEVE OUTRO(S) PET(S) ANTES?</string>
+    <string name="txtQuantosPets">QUANTOS</string>
+    <string name="txtTipoPestsTeve">QUE TIPO(S) DE PET(S)?</string>
+    <string name="txtOQueAconteuPest">O QUE ACONTECEU COM ELES?</string>
+    <string name="morteIdadeAvancada">Morte por idade avançada</string>
+    <string name="morteAcidente">Morte em acidente</string>
+    <string name="roubo">Roubo</string>
+    <string name="fuga">Fuda do lar</string>
+    <string name="adocao">Adoção</string>
+    <string name="txtTemOutroPet">VOCÊ TEM ALGUM PET ATUALMENTE?</string>
+    <string name="txtMoraAptoCasa">VOCÊ MORA EM CASA OU APARTAMENTO</string>
+    <string name="txtCasaPatio">CASA - POSSUI PATIO?</string>
+    <string name="txtCuidadoPestes">TOMA CUIDADOS CONTRA PESTES?</string>
+    <string name="txtGradeProtecao">TEM TELAS/GRADES DE PROTEÇÃO?</string>
+    <string name="inforAdicional">INFORMAÇÕES ADICIONAIS</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
         Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
@@ -298,6 +314,10 @@
     <string name="title_activity_visualizar_adocao_aprovada">Map</string>
     <string name="txtAdocaoAprovada">A adoção de Teste foi aprovada! Converse com Doador Nome e combine para buscá-lo!</string>
     <string name="txtCadastroAdocao">Responda as perguntas seguintes com honestidade. Isso lhe ajudará a adotar um companhetiro mais rapidamento!</string>
+    <string name="txtCadastroAdocaoEspecificaoAcontecimento">Especifique o que, de maneira geral, aconteceu com eles. Use quantas opções forem necessárias.</string>
+    <string name="txtCadastroAdocaoCuidadoPestes">Os cuidados contra pestes incluem controle de pulgas, carrapatos, entrada de animais de rua, plantas venenosas e quaisquer elementos que podem oferecer perigo ao pet.</string>
+    <string name="txtCadastroAdocaoInfoPreenchimento">Preencha com qualquer informação que julgue necessária. Desde informações sobre condições da sua casa ou apartamento, presença de crianças pequenas ou idosos, qual seu propósito para adotar um novo companheiro, entre outras.</string>
+    <string name="txtCadastroAdocaoConclusao">Ao concluir meu cadastro, responsabilizo-me sobre as informações fornecidas, atestando a veracidade das mesmas.</string>
 
     <string-array name="steps_cadastro_usuario_titles">
         <item>Dados Pessoais</item>
