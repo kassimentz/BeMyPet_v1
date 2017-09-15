@@ -262,9 +262,8 @@
 
     <string name="txtNaoSei">
         <![CDATA[
-        <p>O campo </p>
-        <p><b>"NÃO SEI" </b><p>pode ser usado quando o pet ainda é muito novo, e você ainda não sabe identificar o sexo dele.</p></p>
-        <p>Sugerimos que visite o veterinário para verificar essa informação e, quando souber, volte para atualizá-la!</p>
+        O campo <b>"NÃO SEI" </b> pode ser usado quando o pet ainda é muito novo, e você ainda não sabe identificar o sexo dele.
+        Sugerimos que visite o veterinário para verificar essa informação e, quando souber, volte para atualizá-la!
         ]]>
     </string>
 

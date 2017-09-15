@@ -111,6 +111,7 @@
 
     <LinearLayout style="@style/layoutLinha">
         <TextView
+            android:id="@+id/txtNaoSei"
             style="@style/textoFormulario"
             android:textColor="@color/OrangeApp"
             android:textAlignment="center"
@@ -172,6 +173,7 @@
         android:gravity="center"
         android:weightSum="3">
         <ImageView
+            android:id="@+id/imgReduzirPeso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -185,6 +187,7 @@
             android:layout_weight="1"/>
 
         <ImageView
+            android:id="@+id/imgAumentarPeso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

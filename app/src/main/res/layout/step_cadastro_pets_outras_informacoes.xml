@@ -94,7 +94,7 @@
             android:text="@string/petVermifugadoTitulo"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
-        
+
         <RadioGroup
             android:id="@+id/radioGroupVermifugado"
             style="@style/radioGroupFormulario"
