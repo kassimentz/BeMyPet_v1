@@ -20,7 +20,8 @@
         <EditText
             android:id="@+id/edtNomeUsuario"
             style="@style/inputFormulario"
-            android:hint="@string/nome"/>
+            android:hint="@string/nome"
+            />
     </LinearLayout>
 
 
@@ -69,12 +70,13 @@
         <EditText
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormulario"
-            android:hint="@string/data_placeholder"/>
+            android:hint="@string/data_placeholder"
+            android:drawableRight="@drawable/calendar"/>
     </LinearLayout>
 
 
 
-    <!--data nascimento-->
+    <!--cpf-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"

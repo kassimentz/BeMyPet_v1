@@ -1,42 +1,33 @@
 package bemypet.com.br.bemypet_v1;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
-import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
-import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -46,8 +37,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
 
     private Usuario usuario;
+    private Pet pet;
+
     private VerticalStepperFormLayout verticalStepperForm;
-    private Spinner spinnerUf;
 
     // Information about the steps/fields of the form
     private static final int DADOS_PESSOAIS_STEP_NUM = 0;
@@ -55,11 +47,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     private static final int CONTATO_STEP_NUM = 2;
 
     //step DADOS PESSOAIS
-    private LinearLayout dadosPessoaisStep;
-    private EditText edtNomeUsuario;
-
-    private Pet pet;
-
+    ArrayAdapter<String> adapter;
+    private Spinner spinnerUf;
+    private LinearLayout dadosPessoaisStep, localizacaoStep, contatoStep;
+    private EditText edtNomeUsuario, edtDataNascimento, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
+    private ImageView user_profile_photo;
     List<String> ufListagem;
 
     String origem = null;
@@ -80,7 +72,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         initializeActivity();
         initializeVariables();
+
         getBundle();
+        if(getUsuario() != null) {
+            preencherDados();
+        }
+
 
         //usar getbudle pegar exemplo no doancao
         //adicionar a funcao getBundle para receber os dados do usuario.
@@ -93,6 +90,35 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     }
 
+    //inicializando os elementos do layout
+    private void initializeVariables() {
+
+        //UF
+        spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
+
+
+        String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
+        ;
+        ufListagem = new ArrayList<String>(Arrays.asList(ufString));
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, ufListagem);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUf.setAdapter(adapter);
+
+        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+        user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
+        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        edtCpf = (EditText) findViewById(R.id.edtCpf);
+        edtCep = (EditText) findViewById(R.id.edtCep);
+        edtEndereco = (EditText) findViewById(R.id.edtEndereco);
+        edtNumero = (EditText) findViewById(R.id.edtNumero);
+        edtComplemento = (EditText) findViewById(R.id.edtComplemento);
+        edtCidade = (EditText) findViewById(R.id.edtCidade);
+        edtTelefone = (EditText) findViewById(R.id.edtTelefone);
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+
+    }
 
     private void getBundle() {
 
@@ -115,28 +141,48 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
             setPet(pet);
         }
 
-
     }
 
-    //inicializando os elementos do layout
-    private void initializeVariables() {
+    private void preencherDados() {
 
-        //UF
-        spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
-        ArrayAdapter<String> adapter;
+        if (getUsuario().imagens.size() > 0) {
+            // Loading profile image
+            Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+        }
 
-        String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
-        ;
-        ufListagem = new ArrayList<String>(Arrays.asList(ufString));
-
-        adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, ufListagem);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerUf.setAdapter(adapter);
-
-        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
-
-
+        if (getUsuario().nome != null) {
+            edtNomeUsuario.setText(getUsuario().nome);
+        }
+        if (getUsuario().dataNascimento != null) {
+            edtDataNascimento.setText(getUsuario().dataNascimento);
+        }
+        if (getUsuario().cpf != null) {
+            edtCpf.setText(getUsuario().cpf);
+        }
+        if (String.valueOf(getUsuario().cep) != null) {
+            edtCep.setText(String.valueOf(getUsuario().cep));
+        }
+        if (getUsuario().endereco != null) {
+            edtEndereco.setText(getUsuario().endereco);
+        }
+        if (String.valueOf(getUsuario().numero) != null) {
+            edtNumero.setText(String.valueOf(getUsuario().numero));
+        }
+        if (getUsuario().complemento != null) {
+            edtComplemento.setText(getUsuario().complemento);
+        }
+        if (getUsuario().cidade != null) {
+            edtCidade.setText(getUsuario().cidade);
+        }
+        if (getUsuario().estado != null) {
+            spinnerUf.setSelection(adapter.getPosition(getUsuario().estado));
+        }
+        if (getUsuario().telefone != null) {
+            edtTelefone.setText(getUsuario().telefone);
+        }
+        if (getUsuario().email != null) {
+            edtEmail.setText(getUsuario().email);
+        }
     }
 
     private void initializeActivity() {
@@ -186,31 +232,17 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
-//                checkName();
-                verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
 
+                //TODO fazer validacao dos campos antes de passar para o passo seguinte
+                verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
                 break;
             case LOCALIZACAO_STEP_NUM:
-//                checkEmail();
                 verticalStepperForm.setStepAsCompleted(LOCALIZACAO_STEP_NUM);
                 break;
             case CONTATO_STEP_NUM:
-                // As soon as the phone number step is open, we mark it as completed in order to show the "Continue"
-                // button (We do it because this field is optional, so the user can skip it without giving any info)
                 verticalStepperForm.setStepAsCompleted(CONTATO_STEP_NUM);
-                // In this case, the instruction above is equivalent to:
-                // verticalStepperForm.setActiveStepAsCompleted();
                 break;
         }
-    }
-
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
 
@@ -230,46 +262,72 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     private View criaStepLocalizacao() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        dadosPessoaisStep = (LinearLayout) inflater.inflate(
+        localizacaoStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_localizacao, null, false);
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
 
-        return dadosPessoaisStep;
+        return localizacaoStep;
     }
 
     private View criaStepContato() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        dadosPessoaisStep = (LinearLayout) inflater.inflate(
+        contatoStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_contato, null, false);
 
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
 
-        return dadosPessoaisStep;
+        return contatoStep;
 
-    }
-
-    public View buscaFotoPerfil(View v) {
-
-        Toast toast = Toast.makeText(this, "Add foto", Toast.LENGTH_LONG);
-        toast.show();
-
-        return v;
     }
 
 
     @Override
     public void sendData() {
-        //salva os dados usar dialog
 
+//        if (user_profile_photo.) {
+//            // Loading profile image
+//            Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+//        }
 
-        getUsuario().nome = edtNomeUsuario.getText().toString();
+        if(Utils.validaEditText(edtNomeUsuario)){
+            getUsuario().nome = edtNomeUsuario.getText().toString();
+        }
+        if(Utils.validaEditText(edtDataNascimento)){
+            getUsuario().dataNascimento = edtDataNascimento.getText().toString();
+        }
+        if(Utils.validaEditText(edtCpf)){
+            getUsuario().cpf = edtCpf.getText().toString();
+        }
+        if(Utils.validaEditText(edtCep)){
+            getUsuario().cep = Integer.parseInt(edtCep.getText().toString());
+        }
+        if(Utils.validaEditText(edtEndereco)){
+            getUsuario().endereco = edtEndereco.getText().toString();
+        }
+        if(Utils.validaEditText(edtNumero)){
+            getUsuario().numero = Integer.parseInt(edtNumero.getText().toString());
+        }
+        if(Utils.validaEditText(edtComplemento)){
+            getUsuario().complemento = edtComplemento.getText().toString();
+        }
+        if(Utils.validaEditText(edtCidade)){
+            getUsuario().cidade = edtCidade.getText().toString();
+        }
+        if(!spinnerUf.getAdapter().isEmpty()){
+            getUsuario().estado = spinnerUf.getSelectedItem().toString();
+        }
+        if(Utils.validaEditText(edtTelefone)){
+            getUsuario().telefone = edtTelefone.getText().toString();
+        }
+        if(Utils.validaEditText(edtEmail)){
+            getUsuario().email = edtEmail.getText().toString();
+        }
 
         salvarUsuario();
-
 
     }
 
@@ -300,6 +358,16 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         myRef.child(getUsuario().id).child("nome").setValue(getUsuario().nome);
         myRef.child(getUsuario().id).child("imagens").setValue(getUsuario().imagens);
         myRef.child(getUsuario().id).child("dataNascimento").setValue(getUsuario().dataNascimento);
+        myRef.child(getUsuario().id).child("cpf").setValue(getUsuario().cpf);
+        myRef.child(getUsuario().id).child("cep").setValue(getUsuario().cep);
+        myRef.child(getUsuario().id).child("endereco").setValue(getUsuario().endereco);
+        myRef.child(getUsuario().id).child("numero").setValue(getUsuario().numero);
+        myRef.child(getUsuario().id).child("complento").setValue(getUsuario().complemento);
+        myRef.child(getUsuario().id).child("cidade").setValue(getUsuario().cidade);
+        myRef.child(getUsuario().id).child("estado").setValue(getUsuario().estado);
+        myRef.child(getUsuario().id).child("telefone").setValue(getUsuario().telefone);
+        myRef.child(getUsuario().id).child("email").setValue(getUsuario().email);
+
 
         if (origem == null) {
 
@@ -382,6 +450,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 //
 //    }
 
+    public View buscaFotoPerfil(View v) {
+
+        Toast toast = Toast.makeText(this, "Add foto", Toast.LENGTH_LONG);
+        toast.show();
+
+        return v;
+    }
+
     public Pet getPet() {
         return pet;
     }
@@ -389,4 +465,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void setPet(Pet pet) {
         this.pet = pet;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }
