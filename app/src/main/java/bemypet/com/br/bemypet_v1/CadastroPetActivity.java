@@ -20,12 +20,21 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
@@ -211,6 +220,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     }
 
     private void preencherDados() {
+
         if(getPet().nome != null) {
             edNomePet.setText(getPet().nome);
         }
@@ -241,8 +251,72 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             }
         }
 
+        if(getPet().raca != null){
+            int selectionPosition = adapter.getPosition(getPet().raca);
+            spinnerRacas.setSelection(selectionPosition);
+        }
 
+        if(getPet().castrado != null) {
+            for (int i = 0; i < radioGroupCastrado.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupCastrado.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(getPet().castrado)) {
+                    child.setChecked(true);
+                }
+            }
+        }
 
+        if(getPet().vermifugado != null) {
+            for (int i = 0; i < radioGroupVermifugado.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupVermifugado.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(getPet().vermifugado)) {
+                    child.setChecked(true);
+                }
+            }
+        }
+
+        if(getPet().dose != null) {
+            if(getPet().dose.equalsIgnoreCase("1")) {
+                chk_primeira_dose.setChecked(Boolean.TRUE);
+            }
+
+            if(getPet().dose.equalsIgnoreCase("2")) {
+                chk_segunda_dose.setChecked(Boolean.TRUE);
+            } else {
+                chk_segunda_dose.setChecked(Boolean.FALSE);
+            }
+        }
+
+        if(getPet().sociavel != null) {
+            for (String sociavel : getPet().sociavel) {
+                if (sociavel.equalsIgnoreCase(chk_sociavel_caes.getText().toString()))
+                    chk_sociavel_caes.setChecked(Boolean.TRUE);
+
+                if (sociavel.equalsIgnoreCase(chk_sociavel_gatos.getText().toString()))
+                    chk_sociavel_gatos.setChecked(Boolean.TRUE);
+
+                if (sociavel.equalsIgnoreCase(chk_sociavel_outros.getText().toString()))
+                    chk_sociavel_outros.setChecked(Boolean.TRUE);
+
+                if (sociavel.equalsIgnoreCase(chk_sociavel_pessoas.getText().toString()))
+                    chk_sociavel_pessoas.setChecked(Boolean.TRUE);
+            }
+        }
+
+        if(getPet().temperamento != null) {
+            for (String temperamento : getPet().temperamento) {
+                if (temperamento.equalsIgnoreCase(radioTemperamentoBravo.getText().toString()))
+                    radioTemperamentoBravo.setChecked(Boolean.TRUE);
+
+                if (temperamento.equalsIgnoreCase(radioTemperamentoComCuidado.getText().toString()))
+                    radioTemperamentoComCuidado.setChecked(Boolean.TRUE);
+
+                if (temperamento.equalsIgnoreCase(radioTemperamentoConviveBem.getText().toString()))
+                    radioTemperamentoConviveBem.setChecked(Boolean.TRUE);
+
+                if (temperamento.equalsIgnoreCase(radioTemperamentoMuitoDocil.getText().toString()))
+                    radioTemperamentoMuitoDocil.setChecked(Boolean.TRUE);
+            }
+        }
 
     }
 
@@ -299,29 +373,89 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     @Override
     public void sendData() {
 
+        if(Utils.validaEditText(edNomePet)){
+            getPet().nome = edNomePet.getText().toString();
+        }
+
+        if(Utils.validaEditText(edtDataNascimento)){
+            getPet().dataNascimento = edtDataNascimento.getText().toString();
+        }
+
+        if(Utils.validaEditText(edtPesoPet)){
+            getPet().pesoAproximado = Integer.valueOf(edtPesoPet.getText().toString());
+        }
+
+        int especieSelecionada = radioGroupEspecie.getCheckedRadioButtonId();
+        RadioButton especie = (RadioButton) findViewById(especieSelecionada);
+        getPet().especie = especie.getText().toString();
+
+        int sexoSelecionado = radioGroupSexo.getCheckedRadioButtonId();
+        RadioButton sexo = (RadioButton) findViewById(sexoSelecionado);
+        getPet().sexo = sexo.getText().toString();
+
+        getPet().raca = spinnerRacas.getSelectedItem().toString();
+
+
+        int castradoSelecionado = radioGroupCastrado.getCheckedRadioButtonId();
+        RadioButton castrado = (RadioButton) findViewById(castradoSelecionado);
+        getPet().castrado = castrado.getText().toString();
+
+
+        int vermifugadoSelecionado = radioGroupVermifugado.getCheckedRadioButtonId();
+        RadioButton vermifugado = (RadioButton) findViewById(vermifugadoSelecionado);
+        getPet().vermifugado = vermifugado.getText().toString();
+
+        if(chk_segunda_dose.isChecked()) {
+            getPet().vermifugado = "2";
+        } else {
+            getPet().vermifugado = "1";
+        }
+
+        //pegar os valores de sociavel selecionados
+        List<String> sociavel = new ArrayList<>();
+        if(chk_sociavel_gatos.isChecked()){
+            sociavel.add(chk_sociavel_gatos.getText().toString());
+        }
+
+        if(chk_sociavel_pessoas.isChecked()){
+            sociavel.add(chk_sociavel_pessoas.getText().toString());
+        }
+
+        if(chk_sociavel_outros.isChecked()){
+            sociavel.add(chk_sociavel_outros.getText().toString());
+        }
+
+        if(chk_sociavel_caes.isChecked()){
+            sociavel.add(chk_sociavel_caes.getText().toString());
+        }
+
+        pet.sociavel = sociavel;
+
+
+        int temperamentoSelecionado = radioGroupTemperamento.getCheckedRadioButtonId();
+        RadioButton temperamento = (RadioButton) findViewById(temperamentoSelecionado);
+        List<String> temperamentoList = new ArrayList<>();
+        temperamentoList.add(temperamento.getText().toString());
+        getPet().temperamento = temperamentoList;
+
+        PontoGeo pontoGeo = new PontoGeo(getDoador().localizacao.lat, getDoador().localizacao.lon);
+
+        salvarPet(getPet());
+
+
     }
 
     //cria steps
     private View criaStepDadosPets(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_dados, null, false);
-
-        //edtNomeUsuario = (EditText) dadosPessoaisStep.findViewById(R.id.edtNomeUsuario);
-
-        //valida os dados do formulário se passar vai para proximo
-//        verticalStepperForm.goToNextStep();
-
         return dadosPetStep;
     }
 
     private View criaStepOutrasInformacoes(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_outras_informacoes, null, false);
-
-
-        //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
-
         return dadosPetStep;
 
     }
@@ -340,5 +474,47 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     public void setDoador(Usuario doador) {
         this.doador = doador;
+    }
+
+    /**
+     * Método para salva pets
+     * //TODO MOVER PARA ACTIVITY DE CADASTRO DE PET
+     * @param entidade
+     */
+    private void salvarPet(Pet entidade) {
+        final Pet pet = entidade;
+
+        FirebaseConnection.getConnection();
+        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+
+        connectedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    FirebaseConnection.getDatabase().child("pets").child(String.valueOf(pet.id)).setValue(pet);
+
+                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
+                    geoFire.setLocation(pet.id, new GeoLocation(pet.localizacao.lat, pet.localizacao.lon), new GeoFire.CompletionListener() {
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+                            if (error != null) {
+                                System.err.println("There was an error saving the location to GeoFire: " + error);
+                            } else {
+                                System.out.println("Location saved on server successfully!");
+                            }
+                        }
+                    });
+                } else {
+                    //logar erro
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Log.i("Cancel", "Listener was cancelled");
+            }
+        });
     }
 }
