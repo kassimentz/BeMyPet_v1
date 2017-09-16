@@ -1,42 +1,49 @@
 package bemypet.com.br.bemypet_v1;
 
-import android.app.ProgressDialog;
+import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.vicmikhailau.maskededittext.MaskedFormatter;
+import com.vicmikhailau.maskededittext.MaskedWatcher;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
-import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
-import bemypet.com.br.bemypet_v1.utils.MultiSpinner;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -46,8 +53,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
 
     private Usuario usuario;
+    private Pet pet;
+
     private VerticalStepperFormLayout verticalStepperForm;
-    private Spinner spinnerUf;
 
     // Information about the steps/fields of the form
     private static final int DADOS_PESSOAIS_STEP_NUM = 0;
@@ -55,14 +63,18 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     private static final int CONTATO_STEP_NUM = 2;
 
     //step DADOS PESSOAIS
-    private LinearLayout dadosPessoaisStep;
-    private EditText edtNomeUsuario;
-
-    private Pet pet;
-
+    ArrayAdapter<String> adapter;
+    private Spinner spinnerUf;
+    private LinearLayout dadosPessoaisStep, localizacaoStep, contatoStep;
+    private EditText edtNomeUsuario, edtDataNascimento, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
+    private ImageView user_profile_photo;
     List<String> ufListagem;
 
     String origem = null;
+
+    MaskedFormatter formatdata, formatCpf, formatCep, formatTelefone;
+
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +92,83 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         initializeActivity();
         initializeVariables();
-        getBundle();
 
-        //usar getbudle pegar exemplo no doancao
-        //adicionar a funcao getBundle para receber os dados do usuario.
-        // testar dentro da getBundle se existe um usuario (se veio algo ou nao)
-        // se o usuario estiver vazio, significa que é novo, nao é edicao.
-        // se o usuario nao estiver vazio, criar um metodo que preenche os dados
-        // do forumlario com as informacoes contidas no objeto usuario
-        // exemplo em PerfilPetActivity linha 76 ou em
-        // PerfilUsuarioActivity linha 71
+        getBundle();
+        if(getUsuario() != null) {
+            preencherDados();
+        }
 
     }
 
+    //inicializando os elementos do layout
+    private void initializeVariables() {
+
+        //UF
+        spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
+
+
+        String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
+        ;
+        ufListagem = new ArrayList<String>(Arrays.asList(ufString));
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, ufListagem);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUf.setAdapter(adapter);
+
+        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+        user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
+
+        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        formatdata = new MaskedFormatter("##/##/####");
+        edtDataNascimento.addTextChangedListener(new MaskedWatcher(formatdata, edtDataNascimento));
+
+        edtDataNascimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+
+                        int s=monthOfYear+1;
+                        String a = dayOfMonth+"/"+s+"/"+year;
+                        edtDataNascimento.setText(""+a);
+                    }
+                };
+
+                Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog d = new DatePickerDialog(CadastroUsuarioActivity.this, dpd, mYear ,mMonth, mDay);
+                d.show();
+
+            }
+        });
+
+        edtCpf = (EditText) findViewById(R.id.edtCpf);
+        formatCpf = new MaskedFormatter("###.###.###-##");
+        edtCpf.addTextChangedListener(new MaskedWatcher(formatCpf, edtCpf));
+
+        edtCep = (EditText) findViewById(R.id.edtCep);
+        formatCep = new MaskedFormatter("#####-###");
+        edtCep.addTextChangedListener(new MaskedWatcher(formatCep, edtCep));
+
+
+        edtEndereco = (EditText) findViewById(R.id.edtEndereco);
+        edtNumero = (EditText) findViewById(R.id.edtNumero);
+        edtComplemento = (EditText) findViewById(R.id.edtComplemento);
+        edtCidade = (EditText) findViewById(R.id.edtCidade);
+        edtTelefone = (EditText) findViewById(R.id.edtTelefone);
+        formatTelefone = new MaskedFormatter("(##)#####-####");
+        edtTelefone.addTextChangedListener(new MaskedWatcher(formatTelefone, edtTelefone));
+
+
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+    }
 
     private void getBundle() {
 
@@ -115,28 +191,48 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
             setPet(pet);
         }
 
-
     }
 
-    //inicializando os elementos do layout
-    private void initializeVariables() {
+    private void preencherDados() {
 
-        //UF
-        spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
-        ArrayAdapter<String> adapter;
+        if (getUsuario().imagens.size() > 0) {
+            // Loading profile image
+            Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+        }
 
-        String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
-        ;
-        ufListagem = new ArrayList<String>(Arrays.asList(ufString));
-
-        adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, ufListagem);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerUf.setAdapter(adapter);
-
-        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
-
-
+        if (getUsuario().nome != null) {
+            edtNomeUsuario.setText(getUsuario().nome);
+        }
+        if (getUsuario().dataNascimento != null) {
+            edtDataNascimento.setText(getUsuario().dataNascimento);
+        }
+        if (getUsuario().cpf != null) {
+            edtCpf.setText(getUsuario().cpf);
+        }
+        if (String.valueOf(getUsuario().cep) != null) {
+            edtCep.setText(String.valueOf(getUsuario().cep));
+        }
+        if (getUsuario().endereco != null) {
+            edtEndereco.setText(getUsuario().endereco);
+        }
+        if (String.valueOf(getUsuario().numero) != null) {
+            edtNumero.setText(String.valueOf(getUsuario().numero));
+        }
+        if (getUsuario().complemento != null) {
+            edtComplemento.setText(getUsuario().complemento);
+        }
+        if (getUsuario().cidade != null) {
+            edtCidade.setText(getUsuario().cidade);
+        }
+        if (getUsuario().estado != null) {
+            spinnerUf.setSelection(adapter.getPosition(getUsuario().estado));
+        }
+        if (getUsuario().telefone != null) {
+            edtTelefone.setText(getUsuario().telefone);
+        }
+        if (getUsuario().email != null) {
+            edtEmail.setText(getUsuario().email);
+        }
     }
 
     private void initializeActivity() {
@@ -186,31 +282,17 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
-//                checkName();
-                verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
 
+                //TODO fazer validacao dos campos antes de passar para o passo seguinte
+                verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
                 break;
             case LOCALIZACAO_STEP_NUM:
-//                checkEmail();
                 verticalStepperForm.setStepAsCompleted(LOCALIZACAO_STEP_NUM);
                 break;
             case CONTATO_STEP_NUM:
-                // As soon as the phone number step is open, we mark it as completed in order to show the "Continue"
-                // button (We do it because this field is optional, so the user can skip it without giving any info)
                 verticalStepperForm.setStepAsCompleted(CONTATO_STEP_NUM);
-                // In this case, the instruction above is equivalent to:
-                // verticalStepperForm.setActiveStepAsCompleted();
                 break;
         }
-    }
-
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
 
@@ -230,76 +312,88 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     private View criaStepLocalizacao() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        dadosPessoaisStep = (LinearLayout) inflater.inflate(
+        localizacaoStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_localizacao, null, false);
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
 
-        return dadosPessoaisStep;
+        return localizacaoStep;
     }
 
     private View criaStepContato() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        dadosPessoaisStep = (LinearLayout) inflater.inflate(
+        contatoStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_contato, null, false);
 
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
 
-        return dadosPessoaisStep;
+        return contatoStep;
 
-    }
-
-    public View buscaFotoPerfil(View v) {
-
-        Toast toast = Toast.makeText(this, "Add foto", Toast.LENGTH_LONG);
-        toast.show();
-
-        return v;
     }
 
 
     @Override
     public void sendData() {
-        //salva os dados usar dialog
 
 
-        getUsuario().nome = edtNomeUsuario.getText().toString();
+        if(Utils.validaEditText(edtNomeUsuario)){
+            getUsuario().nome = edtNomeUsuario.getText().toString();
+        }
+        if(Utils.validaEditText(edtDataNascimento)){
+            getUsuario().dataNascimento = edtDataNascimento.getText().toString();
+        }
+        if(Utils.validaEditText(edtCpf)){
+            getUsuario().cpf = edtCpf.getText().toString();
+        }
+        if(Utils.validaEditText(edtCep)){
+            getUsuario().cep = Integer.parseInt(Utils.removeCaracteresEspeciais(edtCep.getText().toString()));
+        }
+        if(Utils.validaEditText(edtEndereco)){
+            getUsuario().endereco = edtEndereco.getText().toString();
+        }
+        if(Utils.validaEditText(edtNumero)){
+            getUsuario().numero = Integer.parseInt(edtNumero.getText().toString());
+        }
+        if(Utils.validaEditText(edtComplemento)){
+            getUsuario().complemento = edtComplemento.getText().toString();
+        }
+        if(Utils.validaEditText(edtCidade)){
+            getUsuario().cidade = edtCidade.getText().toString();
+        }
+        if(!spinnerUf.getAdapter().isEmpty()){
+            getUsuario().estado = spinnerUf.getSelectedItem().toString();
+        }
+        if(Utils.validaEditText(edtTelefone)){
+            getUsuario().telefone = edtTelefone.getText().toString();
+        }
+        if(Utils.validaEditText(edtEmail)){
+            getUsuario().email = edtEmail.getText().toString();
+        }
 
         salvarUsuario();
-
 
     }
 
 
     private void salvarUsuario() {
-        /**
-         *   this.nome = nome;
-         this.imagens = imagens;
-         this.dataNascimento = dataNascimento;
-         this.cpf = cpf;
-         this.localizacao = localizacao;
-         this.cep = cep;
-         this.endereco = endereco;
-         this.numero = numero;
-         this.complemento = complemento;
-         this.bairro = bairro;
-         this.cidade = cidade;
-         this.estado = estado;
-         this.telefone = telefone;
-         this.email = email;
-         this.meusPets = meusPets;
-         this.petsFavoritos = petsFavoritos;
-         this.denuncias = denuncias;
-         this.notificacoes = notificacoes;
-         this.token = token;
-         */
+
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
         myRef.child(getUsuario().id).child("nome").setValue(getUsuario().nome);
         myRef.child(getUsuario().id).child("imagens").setValue(getUsuario().imagens);
         myRef.child(getUsuario().id).child("dataNascimento").setValue(getUsuario().dataNascimento);
+        myRef.child(getUsuario().id).child("cpf").setValue(getUsuario().cpf);
+        myRef.child(getUsuario().id).child("cep").setValue(getUsuario().cep);
+        myRef.child(getUsuario().id).child("endereco").setValue(getUsuario().endereco);
+        myRef.child(getUsuario().id).child("numero").setValue(getUsuario().numero);
+        myRef.child(getUsuario().id).child("complento").setValue(getUsuario().complemento);
+        myRef.child(getUsuario().id).child("cidade").setValue(getUsuario().cidade);
+        myRef.child(getUsuario().id).child("estado").setValue(getUsuario().estado);
+        myRef.child(getUsuario().id).child("telefone").setValue(getUsuario().telefone);
+        myRef.child(getUsuario().id).child("email").setValue(getUsuario().email);
+
 
         if (origem == null) {
 
@@ -382,6 +476,90 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 //
 //    }
 
+    public View buscaFotoPerfil(View v) {
+
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+        if (ContextCompat.checkSelfPermission(CadastroUsuarioActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(CadastroUsuarioActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(CadastroUsuarioActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 50);
+            }
+        }
+
+        return v;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        try{
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                System.out.println("URI: "+ selectedImage);
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+                System.out.println(picturePath);
+                storeImageToFirebase(picturePath);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void storeImageToFirebase(final String imgPath) {
+
+        Uri file = Uri.fromFile(new File(imgPath));
+        StorageReference imgRef = FirebaseConnection.getStorage().child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
+        UploadTask uploadTask = imgRef.putFile(file);
+
+        final LinearLayout rl = (LinearLayout) findViewById(R.id.usuarioImgLayout);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                if(downloadUrl != null) {
+                    String url = downloadUrl.toString();
+                    getUsuario().addImagem(url);
+
+//                    View imagLayout = getLayoutInflater().inflate(R.layout. , null);
+                    ImageView petImage = (ImageView) findViewById(R.id.user_profile_photo);
+                    petImage.setMaxWidth(45);
+                    petImage.setMaxHeight(45);
+                    Glide.with(CadastroUsuarioActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
+
+                    rl.addView(petImage);
+                    System.out.println(imgPath);
+
+
+                } else {
+                    System.out.println("nulo");
+                }
+            }
+        });
+
+    }
+
+
     public Pet getPet() {
         return pet;
     }
@@ -389,4 +567,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void setPet(Pet pet) {
         this.pet = pet;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }

@@ -20,7 +20,8 @@
         <EditText
             android:id="@+id/edtNomeUsuario"
             style="@style/inputFormulario"
-            android:hint="@string/nome"/>
+            android:hint="@string/nome"
+            />
     </LinearLayout>
 
 
@@ -30,7 +31,8 @@
             style="@style/textoFormulario"
             android:text="@string/foto"/>
     </LinearLayout>
-    <LinearLayout style="@style/layoutLinha">
+    <LinearLayout style="@style/layoutLinha"
+        android:id="@+id/usuarioImgLayout">
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -69,12 +71,13 @@
         <EditText
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormulario"
-            android:hint="@string/data_placeholder"/>
+            android:hint="@string/data_placeholder"
+            android:drawableRight="@drawable/calendar"/>
     </LinearLayout>
 
 
 
-    <!--data nascimento-->
+    <!--cpf-->
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"

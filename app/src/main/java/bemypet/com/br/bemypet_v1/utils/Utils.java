@@ -404,4 +404,13 @@ public class Utils {
             return null;
         }
     }
+
+    public static String removeCaracteresEspeciais (String texto){
+
+        String textoLimpo = texto;
+        textoLimpo = textoLimpo.replaceAll("[^a-zZ-Z0-9 ]", "");
+
+        return textoLimpo;
+
+    }
 }

@@ -29,7 +29,6 @@ public class BeMyPetApplication extends Application {
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("bemypetv1");
         scoresRef.keepSynced(true);
 
-
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor( new LoggingInterceptor() ).build();
 
         Gson gson = new GsonBuilder().create();
