@@ -1,7 +1,14 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,22 +17,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.vicmikhailau.maskededittext.MaskedFormatter;
+import com.vicmikhailau.maskededittext.MaskedWatcher;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Utils;
@@ -56,6 +72,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     String origem = null;
 
+    MaskedFormatter formatdata, formatCpf, formatCep, formatTelefone;
+
+    private static int RESULT_LOAD_IMAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,16 +98,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
             preencherDados();
         }
 
-
-        //usar getbudle pegar exemplo no doancao
-        //adicionar a funcao getBundle para receber os dados do usuario.
-        // testar dentro da getBundle se existe um usuario (se veio algo ou nao)
-        // se o usuario estiver vazio, significa que é novo, nao é edicao.
-        // se o usuario nao estiver vazio, criar um metodo que preenche os dados
-        // do forumlario com as informacoes contidas no objeto usuario
-        // exemplo em PerfilPetActivity linha 76 ou em
-        // PerfilUsuarioActivity linha 71
-
     }
 
     //inicializando os elementos do layout
@@ -108,16 +118,56 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
+
         edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        formatdata = new MaskedFormatter("##/##/####");
+        edtDataNascimento.addTextChangedListener(new MaskedWatcher(formatdata, edtDataNascimento));
+
+        edtDataNascimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+
+                        int s=monthOfYear+1;
+                        String a = dayOfMonth+"/"+s+"/"+year;
+                        edtDataNascimento.setText(""+a);
+                    }
+                };
+
+                Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog d = new DatePickerDialog(CadastroUsuarioActivity.this, dpd, mYear ,mMonth, mDay);
+                d.show();
+
+            }
+        });
+
         edtCpf = (EditText) findViewById(R.id.edtCpf);
+        formatCpf = new MaskedFormatter("###.###.###-##");
+        edtCpf.addTextChangedListener(new MaskedWatcher(formatCpf, edtCpf));
+
         edtCep = (EditText) findViewById(R.id.edtCep);
+        formatCep = new MaskedFormatter("#####-###");
+        edtCep.addTextChangedListener(new MaskedWatcher(formatCep, edtCep));
+
+
         edtEndereco = (EditText) findViewById(R.id.edtEndereco);
         edtNumero = (EditText) findViewById(R.id.edtNumero);
         edtComplemento = (EditText) findViewById(R.id.edtComplemento);
         edtCidade = (EditText) findViewById(R.id.edtCidade);
         edtTelefone = (EditText) findViewById(R.id.edtTelefone);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        formatTelefone = new MaskedFormatter("(##)#####-####");
+        edtTelefone.addTextChangedListener(new MaskedWatcher(formatTelefone, edtTelefone));
 
+
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
     }
 
     private void getBundle() {
@@ -288,10 +338,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     @Override
     public void sendData() {
 
-//        if (user_profile_photo.) {
-//            // Loading profile image
-//            Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
-//        }
 
         if(Utils.validaEditText(edtNomeUsuario)){
             getUsuario().nome = edtNomeUsuario.getText().toString();
@@ -303,7 +349,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
             getUsuario().cpf = edtCpf.getText().toString();
         }
         if(Utils.validaEditText(edtCep)){
-            getUsuario().cep = Integer.parseInt(edtCep.getText().toString());
+            getUsuario().cep = Integer.parseInt(Utils.removeCaracteresEspeciais(edtCep.getText().toString()));
         }
         if(Utils.validaEditText(edtEndereco)){
             getUsuario().endereco = edtEndereco.getText().toString();
@@ -333,27 +379,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
 
     private void salvarUsuario() {
-        /**
-         *   this.nome = nome;
-         this.imagens = imagens;
-         this.dataNascimento = dataNascimento;
-         this.cpf = cpf;
-         this.localizacao = localizacao;
-         this.cep = cep;
-         this.endereco = endereco;
-         this.numero = numero;
-         this.complemento = complemento;
-         this.bairro = bairro;
-         this.cidade = cidade;
-         this.estado = estado;
-         this.telefone = telefone;
-         this.email = email;
-         this.meusPets = meusPets;
-         this.petsFavoritos = petsFavoritos;
-         this.denuncias = denuncias;
-         this.notificacoes = notificacoes;
-         this.token = token;
-         */
+
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
         myRef.child(getUsuario().id).child("nome").setValue(getUsuario().nome);
         myRef.child(getUsuario().id).child("imagens").setValue(getUsuario().imagens);
@@ -452,11 +478,87 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     public View buscaFotoPerfil(View v) {
 
-        Toast toast = Toast.makeText(this, "Add foto", Toast.LENGTH_LONG);
-        toast.show();
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+        if (ContextCompat.checkSelfPermission(CadastroUsuarioActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(CadastroUsuarioActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(CadastroUsuarioActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 50);
+            }
+        }
 
         return v;
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        try{
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                System.out.println("URI: "+ selectedImage);
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+                System.out.println(picturePath);
+                storeImageToFirebase(picturePath);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void storeImageToFirebase(final String imgPath) {
+
+        Uri file = Uri.fromFile(new File(imgPath));
+        StorageReference imgRef = FirebaseConnection.getStorage().child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
+        UploadTask uploadTask = imgRef.putFile(file);
+
+        final LinearLayout rl = (LinearLayout) findViewById(R.id.usuarioImgLayout);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                if(downloadUrl != null) {
+                    String url = downloadUrl.toString();
+                    getUsuario().addImagem(url);
+
+//                    View imagLayout = getLayoutInflater().inflate(R.layout. , null);
+                    ImageView petImage = (ImageView) findViewById(R.id.user_profile_photo);
+                    petImage.setMaxWidth(45);
+                    petImage.setMaxHeight(45);
+                    Glide.with(CadastroUsuarioActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
+
+                    rl.addView(petImage);
+                    System.out.println(imgPath);
+
+
+                } else {
+                    System.out.println("nulo");
+                }
+            }
+        });
+
+    }
+
 
     public Pet getPet() {
         return pet;

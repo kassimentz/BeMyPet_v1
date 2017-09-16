@@ -31,7 +31,8 @@
             style="@style/textoFormulario"
             android:text="@string/foto"/>
     </LinearLayout>
-    <LinearLayout style="@style/layoutLinha">
+    <LinearLayout style="@style/layoutLinha"
+        android:id="@+id/usuarioImgLayout">
 
         <RelativeLayout
             android:id="@+id/profile_layout"
