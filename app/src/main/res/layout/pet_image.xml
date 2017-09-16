@@ -3,15 +3,16 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/img_pet_remove">
+    android:id="@+id/img_pet_remove"
+    android:layout_margin="10dp"
+    android:paddingLeft="10dp">
 
     <ImageView
         android:id="@+id/pet_photo"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:background="@drawable/bg_image"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop" />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="20dp"

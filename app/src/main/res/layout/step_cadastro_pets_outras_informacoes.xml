@@ -209,23 +209,32 @@
     </LinearLayout>
 
     <LinearLayout style="@style/layoutLinha"
-        android:id="@+id/petImgLayout">
-        <ImageView
-            android:id="@+id/user_profile_photo"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/bg_image"
-            android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop" />
+        android:id="@+id/petImgLayout"
+        android:padding="10dp"
+        android:onClick="buscaFotoPet">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:elevation="5dp"
-            android:src="@drawable/add_photo"
-            android:onClick="buscaFotoPet"
-            android:layout_toRightOf="@+id/user_profile_photo"
-            android:layout_marginLeft="-20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/user_profile_photo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_image"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:elevation="5dp"
+                android:src="@drawable/add_photo"
+                android:layout_toRightOf="@+id/user_profile_photo"
+                android:layout_marginLeft="-20dp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

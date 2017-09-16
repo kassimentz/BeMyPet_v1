@@ -466,31 +466,18 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 if(downloadUrl != null) {
                     String url = downloadUrl.toString();
                     getPet().addImagem(url);
-//                    View childLayout = inflater.inflate(R.layout.pet_image, (ViewGroup) findViewById(R.id.img_pet_remove));
-//                    ImageView petImage = (ImageView) childLayout.findViewById(R.id.pet_photo);
-                    //Bitmap myBitmap = BitmapFactory.decodeFile(imgPath);
-//                    petImage.setImageBitmap(myBitmap);
-//                    dadosPetStep.addView(childLayout);
-//                    System.out.println(downloadUrl.toString());
-
-//                    ImageView iv = new ImageView(getApplicationContext());
-//                    iv.setImageBitmap(myBitmap);
 
                     View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
                     ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
-
-                    //petImage.setImageBitmap(myBitmap);
-
+                    petImage.setMaxWidth(45);
+                    petImage.setMaxHeight(45);
                     Glide.with(CadastroPetActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
 
-
-                    LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                    petImage.setLayoutParams(lp);
                     rl.addView(imagLayout);
                     System.out.println(imgPath);
 
