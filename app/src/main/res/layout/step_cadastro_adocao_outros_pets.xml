@@ -49,24 +49,27 @@
 
         <LinearLayout style="@style/colunasFormulario">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btMenosTeve"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="diminueQuantida"
-                android:src="@drawable/remove_number" />
+                android:onClick="diminueQuantidaTevePet"
+                android:src="@drawable/remove_number"
+                />
 
             <EditText
                 android:id="@+id/edtTevePets"
                 style="@style/inputFormulario"
-                android:layout_weight="8" />
+                android:layout_weight="10"
+                 />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btMaisTeve"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="somaQuantidade"
-                android:src="@drawable/add_photo" />
+                android:layout_height="match_parent"
+                android:onClick="somaQuantidadeTevePet"
+                android:src="@drawable/add_photo"
+                />
         </LinearLayout>
     </LinearLayout>
 
@@ -210,23 +213,23 @@
 
         <LinearLayout style="@style/colunasFormulario">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btMenosTem"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="diminueQuantida"
+                android:onClick="diminueQuantidaTemPet"
                 android:src="@drawable/remove_number" />
 
             <EditText
                 android:id="@+id/edtTemPets"
                 style="@style/inputFormulario"
-                android:layout_weight="8" />
+                android:layout_weight="10" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btMaisTem"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="somaQuantidade"
+                android:layout_height="match_parent"
+                android:onClick="somaQuantidadeTemPet"
                 android:src="@drawable/add_photo" />
         </LinearLayout>
     </LinearLayout>

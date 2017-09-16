@@ -13,8 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
 import java.util.List;
 
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
+import bemypet.com.br.bemypet_v1.pojo.Adocao;
+import bemypet.com.br.bemypet_v1.pojo.Pet;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
@@ -33,6 +43,9 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
     List<String> ufListagem;
 
+    private Adocao adocao;
+    private Pet pet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +61,31 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
         initializeActivity();
         initializeVariables();
+        getBundle();
 
-        //usar getbudle pegar exemplo no doancao
+
+    }
+
+
+    private void getBundle() {
+
+        String jsonObj = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            jsonObj = extras.getString("pet");
+        }
+        Pet pet = new Gson().fromJson(jsonObj, Pet.class);
+
+        if(pet != null) {
+            setPet(pet);
+        }
 
 
     }
 
     //inicializando os elementos do layout
     private void initializeVariables() {
+
 
     }
 
@@ -115,6 +145,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
     @Override
     public void sendData() {
 
+
     }
 
     //cria steps
@@ -159,18 +190,68 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
         }
     }
 
-    public void somaQuantidade(View v){
+    private void salvarAdocao(Adocao data) {
+        final Adocao adocao = data;
+        FirebaseConnection.getConnection();
+        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    FirebaseConnection.getDatabase().child("adocoes").child(String.valueOf(adocao.id)).setValue(adocao);
+
+                } else {
+                    //logar erro
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Log.i("Cancel", "Listener was cancelled");
+            }
+        });
+    }
+
+    public void somaQuantidadeTevePet(View v){
 
         Toast toast = Toast.makeText(CadastroAdocaoActivity.this, "soma", Toast.LENGTH_LONG);
         toast.show();
     }
 
 
-    public void diminueQuantida(View v){
+    public void diminueQuantidaTevePet(View v){
+
+        Toast toast = Toast.makeText(CadastroAdocaoActivity.this, "diminue", Toast.LENGTH_LONG);
+        toast.show();
+    }
+    public void somaQuantidadeTemPet(View v){
+
+        Toast toast = Toast.makeText(CadastroAdocaoActivity.this, "soma", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+
+    public void diminueQuantidaTemPet(View v){
 
         Toast toast = Toast.makeText(CadastroAdocaoActivity.this, "diminue", Toast.LENGTH_LONG);
         toast.show();
     }
 
 
+    public Adocao getAdocao() {
+        return adocao;
+    }
+
+    public void setAdocao(Adocao adocao) {
+        this.adocao = adocao;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
 }
