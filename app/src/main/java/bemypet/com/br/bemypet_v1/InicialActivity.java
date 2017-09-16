@@ -30,6 +30,7 @@ import bemypet.com.br.bemypet_v1.fragment.MeusPetsFavoritosFragment;
 import bemypet.com.br.bemypet_v1.fragment.NotificacoesMensagensFragment;
 import bemypet.com.br.bemypet_v1.fragment.TelaInicialFragment;
 import bemypet.com.br.bemypet_v1.pojo.Filtros;
+import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 public class InicialActivity extends AppCompatActivity {
@@ -44,7 +45,7 @@ public class InicialActivity extends AppCompatActivity {
 
     //url para a imagem do perfil do usuario.
     //TODO trocar pelo que retorna do firebase
-    private static final String urlProfileImg = "https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2F1472602263489images-8.jpg?alt=media&token=491fdc24-4593-4ca5-a45d-922edf1eaa54";
+    //private static final String urlProfileImg = "https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2F1472602263489images-8.jpg?alt=media&token=491fdc24-4593-4ca5-a45d-922edf1eaa54";
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -297,12 +298,13 @@ public class InicialActivity extends AppCompatActivity {
      */
     private void loadNavHeader() {
 
+        Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
         // TODO buscar dados do firebase
-        txtNomeUsuario.setText("Kassi Mentz");
-        txtTipoUsuario.setText("Adotante");
+        txtNomeUsuario.setText(usuarioLogado.nome);
+        txtTipoUsuario.setText(usuarioLogado.email);
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        Glide.with(this).load(usuarioLogado.imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
 
         // showing dot next to notifications label
         navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
