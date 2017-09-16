@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.support.v4.app.ActivityCompat;
@@ -48,10 +50,13 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.vicmikhailau.maskededittext.MaskedFormatter;
+import com.vicmikhailau.maskededittext.MaskedWatcher;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
@@ -93,6 +98,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     ArrayAdapter<String> adapter;
 
     private static int RESULT_LOAD_IMAGE = 1;
+    MaskedFormatter formatdata;
+    Integer pesoValue = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,8 +194,45 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
         txtNaoSei = (TextView) findViewById(R.id.txtNaoSei);
         edNomePet = (EditText) findViewById(R.id.edNomePet);
+
         edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        formatdata = new MaskedFormatter("##/##/####");
+        edtDataNascimento.addTextChangedListener(new MaskedWatcher(formatdata, edtDataNascimento));
+
+        edtDataNascimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        int s = monthOfYear+1;
+                        String month = "";
+                        if(s < 10) {
+                            month = "0"+s;
+                        } else {
+                            month = String.valueOf(s);
+                        }
+                        String a = dayOfMonth+"/"+month+"/"+year;
+                        System.out.println(a);
+                        edtDataNascimento.setText(""+a);
+                    }
+                };
+
+                Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog d = new DatePickerDialog(CadastroPetActivity.this, dpd, mYear ,mMonth, mDay);
+                d.show();
+
+            }
+        });
         edtPesoPet = (EditText) findViewById(R.id.edtPesoPet);
+        edtPesoPet.setEnabled(Boolean.FALSE);
+        edtPesoPet.setText(String.valueOf(pesoValue));
         radioGroupEspecie = (RadioGroup) findViewById(R.id.radioGroupEspecie);
         radioGroupSexo = (RadioGroup) findViewById(R.id.radioGroupSexo);
         radioGroupCastrado = (RadioGroup) findViewById(R.id.radioGroupCastrado);
@@ -601,9 +645,24 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         this.doador = doador;
     }
 
+
+    public void diminuirPeso(View v) {
+        if(pesoValue > 1) {
+            pesoValue = pesoValue - 1;
+            edtPesoPet.setText(String.valueOf(pesoValue));
+        } else {
+            Utils.showToastMessage(getApplicationContext(), "Peso deve ser maior que 1!");
+        }
+    }
+
+    public void aumentarPeso(View v) {
+        pesoValue = pesoValue + 1;
+        edtPesoPet.setText(String.valueOf(pesoValue));
+    }
+
+
     /**
      * Método para salva pets
-     * //TODO MOVER PARA ACTIVITY DE CADASTRO DE PET
      * @param entidade
      */
     private void salvarPet(Pet entidade) {
