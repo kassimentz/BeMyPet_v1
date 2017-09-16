@@ -428,6 +428,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        final LinearLayout rl = (LinearLayout) findViewById(R.id.petImgLayout);
+
         super.onActivityResult(requestCode, resultCode, data);
         try{
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
@@ -443,6 +445,17 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 cursor.close();
                 System.out.println(picturePath);
                 storeImageToFirebase(picturePath);
+
+                View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
+                ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
+                petImage.setMaxWidth(45);
+                petImage.setMaxHeight(45);
+                Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                petImage.setImageBitmap(Utils.getRoundedCroppedBitmap(bitmap, 90));
+
+                //Glide.with(CadastroPetActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
+
+                rl.addView(imagLayout);
             }
         }
         catch(Exception e) {
@@ -471,15 +484,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 if(downloadUrl != null) {
                     String url = downloadUrl.toString();
                     getPet().addImagem(url);
-
-                    View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
-                    ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
-                    petImage.setMaxWidth(45);
-                    petImage.setMaxHeight(45);
-                    Glide.with(CadastroPetActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
-
-                    rl.addView(imagLayout);
-                    System.out.println(imgPath);
+                    System.out.println("firebase image: "+url);
 
 
                 } else {
@@ -487,9 +492,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 }
             }
         });
-
-
-
 
     }
 
