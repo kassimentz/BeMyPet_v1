@@ -143,7 +143,7 @@
             android:text="@string/dataNascimento"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
-        <EditText
+        <TextView
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormularioPet"
             android:drawableRight="@drawable/calendar"

@@ -193,6 +193,12 @@ public class InicialActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_novo_pet) {
+            Intent intent = new Intent(this, CadastroPetActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         // user is in notifications fragment
         // and selected 'Mark all as Read'
         if (id == R.id.action_mark_all_read) {
@@ -300,14 +306,15 @@ public class InicialActivity extends AppCompatActivity {
 
         Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
         // TODO buscar dados do firebase
-        txtNomeUsuario.setText(usuarioLogado.nome);
-        txtTipoUsuario.setText(usuarioLogado.email);
+        if(usuarioLogado != null) {
+            txtNomeUsuario.setText(usuarioLogado.nome);
+            txtTipoUsuario.setText(usuarioLogado.email);
 
-        // Loading profile image
-        Glide.with(this).load(usuarioLogado.imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
-
+            // Loading profile image
+            Glide.with(this).load(usuarioLogado.imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        }
         // showing dot next to notifications label
-        navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
+        //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
     }
 
     private Fragment getHomeFragment() {

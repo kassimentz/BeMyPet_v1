@@ -68,11 +68,13 @@
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
+    <string name="action_novo_pet">Novo Pet</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
     <string name="activity_title_cadastro_pet">Cadastro Pet</string>
     <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
+    <string name="required_field">Este campo é obrigatório</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

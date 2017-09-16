@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_novo_pet"
+        android:icon="@drawable/plus_w"
+        android:title="@string/action_novo_pet"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_filtro"
         android:icon="@drawable/ic_magnify"
         android:title="@string/action_filtro"
         app:showAsAction="ifRoom"/>
+
+
+
 
 </menu>
