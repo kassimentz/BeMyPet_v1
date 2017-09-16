@@ -1,34 +1,56 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +92,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     ArrayAdapter<String> adapter;
 
+    private static int RESULT_LOAD_IMAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +115,9 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         //se tem o pet preenchido, entao é edicao do pet e deve preencher os dados
         if(getPet() != null) {
             preencherDados();
+        } else {
+            pet = new Pet();
+            setPet(pet);
         }
 
     }
@@ -318,6 +345,19 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             }
         }
 
+        //percorre as imagens do pet e adicona dinamicamente as imagens no layout
+        if(getPet().imagens != null && getPet().imagens.size() > 0) {
+            LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+            dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_dados, null, false);
+            for (String img : getPet().imagens) {
+                View childLayout = inflater.inflate(R.layout.pet_image, (ViewGroup) findViewById(R.id.img_pet_remove));
+                ImageView petImage = (ImageView) childLayout.findViewById(R.id.pet_photo);
+                Glide.with(this).load(img).apply(RequestOptions.circleCropTransform()).into(petImage);
+                dadosPetStep.addView(childLayout);
+            }
+
+        }
+
     }
 
     private void initializeActivity() {
@@ -367,6 +407,102 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 verticalStepperForm.setStepAsCompleted(OUTRAS_INFORMACOES);
                 break;
         }
+
+    }
+
+    public void buscaFotoPet(View v) {
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+        if (ContextCompat.checkSelfPermission(CadastroPetActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(CadastroPetActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(CadastroPetActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 50);
+            }
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        try{
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                System.out.println("URI: "+ selectedImage);
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+                System.out.println(picturePath);
+                storeImageToFirebase(picturePath);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void storeImageToFirebase(final String imgPath) {
+
+        Uri file = Uri.fromFile(new File(imgPath));
+        StorageReference imgRef = FirebaseConnection.getStorage().child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
+        UploadTask uploadTask = imgRef.putFile(file);
+
+        final LinearLayout rl = (LinearLayout) findViewById(R.id.petImgLayout);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                if(downloadUrl != null) {
+                    String url = downloadUrl.toString();
+                    getPet().addImagem(url);
+//                    View childLayout = inflater.inflate(R.layout.pet_image, (ViewGroup) findViewById(R.id.img_pet_remove));
+//                    ImageView petImage = (ImageView) childLayout.findViewById(R.id.pet_photo);
+                    //Bitmap myBitmap = BitmapFactory.decodeFile(imgPath);
+//                    petImage.setImageBitmap(myBitmap);
+//                    dadosPetStep.addView(childLayout);
+//                    System.out.println(downloadUrl.toString());
+
+//                    ImageView iv = new ImageView(getApplicationContext());
+//                    iv.setImageBitmap(myBitmap);
+
+                    View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
+                    ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
+
+                    //petImage.setImageBitmap(myBitmap);
+
+                    Glide.with(CadastroPetActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
+
+
+                    LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    petImage.setLayoutParams(lp);
+                    rl.addView(imagLayout);
+                    System.out.println(imgPath);
+
+
+                } else {
+                    System.out.println("nulo");
+                }
+            }
+        });
+
+
+
 
     }
 

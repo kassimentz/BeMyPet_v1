@@ -259,6 +259,7 @@
 
     <string name="nome">Nome</string>
     <string name="nome_pet_placeholder">Informe o nome do pet</string>
+    <string name="info_adicionais_placeholder">Informações adicionais</string>
 
     <string name="txtNaoSei">
         <![CDATA[
@@ -306,6 +307,7 @@
     <string name="txtCuidadoPestes">TOMA CUIDADOS CONTRA PESTES?</string>
     <string name="txtGradeProtecao">TEM TELAS/GRADES DE PROTEÇÃO?</string>
     <string name="inforAdicional">INFORMAÇÕES ADICIONAIS</string>
+    <string name="petInfoAdicional">HISTÓRICO E INFORMAÇÕES ADICIONAIS</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
         Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
@@ -357,6 +359,8 @@
     <string name="petVermifugadoTitulo">o pet já foi vermifugado?</string>
     <string name="primeiradose">1ª dose</string>
     <string name="segundadose">2ª dose</string>
+    <string name="txtInfoAdicionalPet">Conte um pouco sobre o pet. Fale sobre seus pais, ou como foi encontrado. Seus irmãos e onde eles estão hoje. Histórico de doenças ou algum tratamento (passado ou em andamento). Se ele possui alguma condição ou necessidades especiais. Qualquer informação será útil.</string>
+    <string name="txtConcluirCadastro">Ao concluir o cadastro do pet, responsabilizo-me sobre as informações fornecidas, atestando a veracidade das mesmas.</string>
 
     <string-array name="spinnerUF">
         <item>item1</item>

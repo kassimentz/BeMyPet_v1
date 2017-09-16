@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cadastroPet"
     android:orientation="vertical">
 
     <View
@@ -206,6 +207,60 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha"
+        android:id="@+id/petImgLayout">
+        <ImageView
+            android:id="@+id/user_profile_photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_image"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:elevation="5dp"
+            android:src="@drawable/add_photo"
+            android:onClick="buscaFotoPet"
+            android:layout_toRightOf="@+id/user_profile_photo"
+            android:layout_marginLeft="-20dp"/>
+
+    </LinearLayout>
+
+    <!--informacoes adicionais-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/petInfoAdicional"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtInfoAdionais"
+            style="@style/inputFormularioPet"
+            android:hint="@string/info_adicionais_placeholder"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textColor="@color/OrangeApp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:text="@string/txtInfoAdicionalPet"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textColor="@color/OrangeApp"
+            android:textAlignment="center"
+            android:text="@string/txtConcluirCadastro"/>
+    </LinearLayout>
+
 
 
 </LinearLayout>

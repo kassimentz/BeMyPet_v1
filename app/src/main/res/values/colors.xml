@@ -15,6 +15,7 @@
     <color name="dark_gray">#4C535B</color>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="backgroundColorPress">#DBDBD3</color>
+    <color name="gray">#e7e7e7</color>
 
 
     <!-- dots inactive colors -->

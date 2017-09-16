@@ -43,6 +43,7 @@ public class Pet {
 
     public Pet() {
         id = UUID.randomUUID().toString();
+        imagens = new ArrayList<>();
     }
 
     public Pet(String nome, String especie, String sexo, String raca,
@@ -132,5 +133,11 @@ public class Pet {
                 ", adotante=" + adotante +
                 ", atualDonoID=" + atualDonoID +
                 '}';
+    }
+
+    public void addImagem(String url) {
+        if(url != null && !url.isEmpty()) {
+            imagens.add(url);
+        }
     }
 }
