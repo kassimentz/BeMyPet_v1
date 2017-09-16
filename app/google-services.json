@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "445046765139",
+    "firebase_url": "https://bemypetv1.firebaseio.com",
+    "project_id": "bemypetv1",
+    "storage_bucket": "bemypetv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445046765139:android:840ebfe37d63de95",
+        "android_client_info": {
+          "package_name": "bemypet.com.br.bemypet_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445046765139-71r227vq97gr5n87f8d4ddck8h4kk9fg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bemypet.com.br.bemypet_v1",
+            "certificate_hash": "2a1d79f23131456dbe7965f12958539731565212"
+          }
+        },
+        {
+          "client_id": "445046765139-htbuh0q9tirgr6dgg13lv5l779tgts35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEgpbvu-QAxeTCJt6tIP5J2gYVi0Dvv_g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445046765139-htbuh0q9tirgr6dgg13lv5l779tgts35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

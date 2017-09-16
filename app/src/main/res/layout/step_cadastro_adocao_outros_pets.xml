@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/OrangeApp" />
+
+    <!--vc teve petsx-->
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtTeveOutroPet" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbTevePetsSIM"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"
+                android:text="@string/sim" />
+
+            <RadioButton
+                android:id="@+id/rbTevePetsNAO"
+                style="@style/checkBoxFormulario"
+                android:text="@string/nao" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <!--QUANTOS-->
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtQuantosPets" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <LinearLayout style="@style/colunasFormulario">
+
+            <ImageView
+                android:id="@+id/btMenosTeve"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="diminueQuantidaTevePet"
+                android:src="@drawable/remove_number"
+                />
+
+            <EditText
+                android:id="@+id/edtTevePets"
+                style="@style/inputFormulario"
+                android:layout_weight="10"
+                 />
+
+            <ImageView
+                android:id="@+id/btMaisTeve"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="somaQuantidadeTevePet"
+                android:src="@drawable/add_photo"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--TIPO DE PESTS TEVE-->
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtTipoPestsTeve" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <LinearLayout style="@style/colunasFormulario">
+
+            <CheckBox
+                android:id="@+id/ckdEspeceCaoTeve"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"
+                android:text="@string/cao" />
+
+            <CheckBox
+                android:id="@+id/chkEspecieGatoTeve"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"
+                android:text="@string/gato" />
+
+            <CheckBox
+                android:id="@+id/chkEspecieOutrosTeve"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"
+                android:text="@string/outros" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtOQueAconteuPest" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <CheckBox
+            android:id="@+id/ckdMorteIdadeAvancada"
+            style="@style/checkBoxFormulario"
+            android:layout_weight="1"
+            android:text="@string/morteIdadeAvancada" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <CheckBox
+            android:id="@+id/chkMorteAcidente"
+            style="@style/checkBoxFormulario"
+            android:layout_weight="1"
+            android:text="@string/morteAcidente" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <CheckBox
+            android:id="@+id/chkRoubo"
+            style="@style/checkBoxFormulario"
+            android:layout_weight="1"
+            android:text="@string/roubo" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <CheckBox
+            android:id="@+id/chkFuga"
+            style="@style/checkBoxFormulario"
+            android:layout_weight="1"
+            android:text="@string/fuga" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <CheckBox
+            android:id="@+id/chkAdocao"
+            style="@style/checkBoxFormulario"
+            android:layout_weight="1"
+            android:text="@string/adocao" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textAlignment="center"
+            android:textColor="@color/OrangeApp"
+            android:text="@string/txtCadastroAdocaoEspecificaoAcontecimento"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtTemOutroPet" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbTemPetsSIM"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"
+                android:text="@string/sim" />
+
+            <RadioButton
+                android:id="@+id/rbTemPetsNAO"
+                style="@style/checkBoxFormulario"
+                android:text="@string/nao" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <!--QUANTOS-->
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtQuantosPets" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <LinearLayout style="@style/colunasFormulario">
+
+            <ImageView
+                android:id="@+id/btMenosTem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="diminueQuantidaTemPet"
+                android:src="@drawable/remove_number" />
+
+            <EditText
+                android:id="@+id/edtTemPets"
+                style="@style/inputFormulario"
+                android:layout_weight="10" />
+
+            <ImageView
+                android:id="@+id/btMaisTem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="somaQuantidadeTemPet"
+                android:src="@drawable/add_photo" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--TIPO DE PESTS TEVE-->
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtTipoPestsTeve" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <LinearLayout style="@style/colunasFormulario">
+
+            <CheckBox
+                android:id="@+id/ckdEspeceCaoTem"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"
+                android:text="@string/cao" />
+
+            <CheckBox
+                android:id="@+id/chkEspecieGatoTem"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"
+                android:text="@string/gato" />
+
+            <CheckBox
+                android:id="@+id/chkEspecieOutrosTem"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="1"
+                android:text="@string/outros" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

@@ -1,5 +1,18 @@
 <resources>
-    <string name="app_name">BeMyPet_v1</string>
+    <string name="app_name">BeMyPet</string>
+
+    <!--keys-->
+    <!--debug-->
+    <string name="google_maps_key_debug" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCcSxPW1Brl5rCzq3R4XlA3i-_16xEa_Bo
+    </string>
+
+
+    <!--release-->
+    <string name="google_maps_key_release" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCEgpbvu-QAxeTCJt6tIP5J2gYVi0Dvv_g
+    </string>
+
 
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
@@ -20,4 +33,342 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
     <string name="title_activity_mapa_pets_disponiveis">Map</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">BeMyPet</string>
+    <string name="nav_mensagens">Notificações / Mensagens</string>
+    <string name="nav_meus_pets">Meus Pets / Favoritos</string>
+    <string name="nav_configuracoes">Configurações</string>
+    <string name="nav_sobre">Sobre</string>
+    <string name="nav_ajuda">Ajuda</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>BeMyPet</item>
+        <item>Notificações</item>
+        <item>Meus Pets</item>
+        <item>Configurações</item>
+        <item>Sobre</item>
+    </string-array>
+
+    <string name="activity_title_sobre">Sobre</string>
+    <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
+    <string name="activity_title_peril_pet">Perfil Pet</string>
+    <string name="activity_title_visualizar_adocao">Solicitação de Adoção</string>
+    <string name="activity_title_confirmar_solicitacao_adocao">Confirmar adoção!</string>
+    <string name="activity_title_adocao_reprovada">Adoção Reprovada</string>
+    <string name="activity_title_adocao_aprovada">Adoção Aprovada</string>
+    <string name="activity_title_denuncia">Visualizar Denúncia</string>
+    <string name="activity_title_peril_usuario">Perfil Usuário</string>
+    <string name="action_clear_all">Limpar</string>
+    <string name="action_filtro">Filtros</string>
+    <string name="action_novo_pet">Novo Pet</string>
+    <string name="action_mark_all_read">Marcar todos como lido</string>
+    <string name="privacy_policy">Políticas de Privacidade</string>
+    <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
+    <string name="activity_title_cadastro_pet">Cadastro Pet</string>
+    <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
+    <string name="required_field">Este campo é obrigatório</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="raca_prompt">Escolha uma raça</string>
+    <string name="cao">Cão</string>
+    <string name="gato">Gato</string>
+    <string name="outros">Outros</string>
+    <string name="macho">Macho</string>
+    <string name="femea">Fêmea</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="sociavelPessoas">Pessoas</string>
+    <string name="sociavelCaes">Cães</string>
+    <string name="sociavelGatos">Gatos</string>
+    <string name="temperamentoBravo">Bravo</string>
+    <string name="temperamentoComCuidado">Com Cuidado</string>
+    <string name="temperamentoConviveBem">Convive Bem</string>
+    <string name="temperamentoMuitoDocil">Muito Dócil</string>
+
+    <string name="especieTitulo">Espécie</string>
+    <string name="sexoTitulo">Sexo</string>
+    <string name="racaTitulo">Raça</string>
+    <string name="idadeTitulo">Idade</string>
+    <string name="pesoTitulo">Peso (KG)</string>
+    <string name="castradoTitulo">Castrado</string>
+    <string name="vermifugadoTitulo">Vermifugado</string>
+    <string name="sociavelTitulo">Sociável</string>
+    <string name="temperamentoTitulo">Temperamento</string>
+    <string name="raioDeBuscaTitulo">Raio de Busca (KM)</string>
+    <string name="raioDeBusca">Raio de Busca:</string>
+    <string name="pesoAproximado">Peso Aproximado:</string>
+    <string name="idadeAproximada">Idade Aproximada:</string>
+
+    <string-array name="raca_array">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Chow Chow</item>
+        <item>Shitsu</item>
+        <item>Golden Retrivier</item>
+        <item>Persa</item>
+        <item>Egipcio</item>
+        <item>Siamês</item>
+    </string-array>
+
+    <string-array name="raca_cao">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Shih Tzu</item>
+        <item>Yorkshire Terrier</item>
+        <item>Poodle</item>
+        <item>Lhasa Apso</item>
+        <item>Buldogue Francês</item>
+        <item>Maltês</item>
+        <item>Golden Retriever</item>
+        <item>Labrador</item>
+        <item>Pug</item>
+        <item>Dachshund</item>
+        <item>Spitz Alemão</item>
+        <item>Pinscher</item>
+        <item>Schnauzer</item>
+        <item>Beagle</item>
+        <item>Cocker Spaniel</item>
+        <item>Border Collie</item>
+        <item>Buldogue Inglês</item>
+        <item>American Pitbull</item>
+        <item>Chow Chow</item>
+    </string-array>
+
+    <string-array name="raca_gato">
+        <item>Qualquer</item>
+        <item>SRD (Sem Raça Definida)</item>
+        <item>Persa</item>
+        <item>Himalaia</item>
+        <item>Siamês</item>
+        <item>Maine Coon</item>
+        <item>Angorá</item>
+        <item>Sphynx</item>
+        <item>Ragdoll</item>
+        <item>Ashera</item>
+        <item>American Shorthair</item>
+        <item>Siberiano</item>
+        <item>Egípcio</item>
+    </string-array>
+
+    <string-array name="raca_outro">
+        <item>Outro</item>
+    </string-array>
+    <string name="title_activity_perfil_pet_scrolling">PerfilPetScrollingActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_adotar_agora">ADOTAR AGORA</string>
+    <string name="mesma_ninhada">MESMA NINHADA</string>
+    <string name="meus_pets">MEUS PETS</string>
+
+    <string name="nome">Nome</string>
+    <string name="nome_pet_placeholder">Informe o nome do pet</string>
+    <string name="info_adicionais_placeholder">Informações adicionais</string>
+
+    <string name="txtNaoSei">
+        <![CDATA[
+        O campo <b>"NÃO SEI" </b> pode ser usado quando o pet ainda é muito novo, e você ainda não sabe identificar o sexo dele.
+        Sugerimos que visite o veterinário para verificar essa informação e, quando souber, volte para atualizá-la!
+        ]]>
+    </string>
+
+    <string name="nome_placeholder">Informe seu nome completo</string>
+    <string name="dataNascimento">Data de Nascimento</string>
+    <string name="data_placeholder">00/00/0000</string>
+    <string name="ninhada_placeholder">Informe o nome da ninhada</string>
+    <string name="cpf">CPF</string>
+    <string name="cpf_placeholder">CPF (somente número)</string>
+    <string name="cep">CEP</string>
+    <string name="cep_placeholder">CEP (somente número) </string>
+    <string name="endereco">Endereço</string>
+    <string name="numero">Número</string>
+    <string name="complemento">Complemento</string>
+    <string name="complemento_placeholder">Bloco / Apto</string>
+    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
+    <string name="telefone">Telefone</string>
+    <string name="telefone_placeholder">Telefone com DDD</string>
+    <string name="email">E-mail</string>
+    <string name="email_placeholder">Informe seu E-mail</string>
+    <string name="localizacao">Localização</string>
+    <string name="localizacao_placeholder">Mapa</string>
+    <string name="foto">Foto</string>
+    <string name="casa">Casa</string>
+    <string name="apartamento">Apartamento</string>
+
+    <string name="txtTeveOutroPet">VOCÊ JÁ TEVE OUTRO(S) PET(S) ANTES?</string>
+    <string name="txtQuantosPets">QUANTOS</string>
+    <string name="txtTipoPestsTeve">QUE TIPO(S) DE PET(S)?</string>
+    <string name="txtOQueAconteuPest">O QUE ACONTECEU COM ELES?</string>
+    <string name="morteIdadeAvancada">Morte por idade avançada</string>
+    <string name="morteAcidente">Morte em acidente</string>
+    <string name="roubo">Roubo</string>
+    <string name="fuga">Fuda do lar</string>
+    <string name="adocao">Adoção</string>
+    <string name="txtTemOutroPet">VOCÊ TEM ALGUM PET ATUALMENTE?</string>
+    <string name="txtMoraAptoCasa">VOCÊ MORA EM CASA OU APARTAMENTO</string>
+    <string name="txtCasaPatio">CASA - POSSUI PATIO?</string>
+    <string name="txtCuidadoPestes">TOMA CUIDADOS CONTRA PESTES?</string>
+    <string name="txtGradeProtecao">TEM TELAS/GRADES DE PROTEÇÃO?</string>
+    <string name="inforAdicional">INFORMAÇÕES ADICIONAIS</string>
+    <string name="petInfoAdicional">HISTÓRICO E INFORMAÇÕES ADICIONAIS</string>
+
+    <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
+        Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
+        para que ele seja muito feliz ao seu lado.</string>
+
+    <string name="txt_confirmar_solicitacao_adocao_p2">Após a confirmação da solicitação, aguarde a resposta do dono do pet!</string>
+
+    <string name="txt_confirmar_solicitacao_adocao_p3">Nesse momento, Báskara já te ama muito!</string>
+    <string name="txtVisualizarAdocao">Visualize aqui qual pet encontrou um novo amigo e quem gostaria de adotá-lo!</string>
+    <string name="txtReprovacaoAdocao1">Infelizmente, sua solicitação de adoção para o pet abaixo foi reprovada.</string>
+    <string name="txtReprovacaoAdocao2">Mas não desanime! existem muitos outros pets procurando por um lar!</string>
+    <string name="txtDenuncia1">Você recebeu uma denúcia. Verifique abaixo os motivos:</string>
+    <string name="tipoDenuncia">Tipo Denúncia:</string>
+    <string name="motivoDenuncia">Motivo Denúncia:</string>
+    <string name="txtDenuncia2">Por favor, verifique os motivos relacionados acima para que uma nova denúncia não aconteça.</string>
+    <string name="title_activity_visualizar_adocao_aprovada">Map</string>
+    <string name="txtAdocaoAprovada">A adoção de Teste foi aprovada! Converse com Doador Nome e combine para buscá-lo!</string>
+    <string name="txtCadastroAdocao">Responda as perguntas seguintes com honestidade. Isso lhe ajudará a adotar um companhetiro mais rapidamento!</string>
+    <string name="txtCadastroAdocaoEspecificaoAcontecimento">Especifique o que, de maneira geral, aconteceu com eles. Use quantas opções forem necessárias.</string>
+    <string name="txtCadastroAdocaoCuidadoPestes">Os cuidados contra pestes incluem controle de pulgas, carrapatos, entrada de animais de rua, plantas venenosas e quaisquer elementos que podem oferecer perigo ao pet.</string>
+    <string name="txtCadastroAdocaoInfoPreenchimento">Preencha com qualquer informação que julgue necessária. Desde informações sobre condições da sua casa ou apartamento, presença de crianças pequenas ou idosos, qual seu propósito para adotar um novo companheiro, entre outras.</string>
+    <string name="txtCadastroAdocaoConclusao">Ao concluir meu cadastro, responsabilizo-me sobre as informações fornecidas, atestando a veracidade das mesmas.</string>
+
+    <string-array name="steps_cadastro_usuario_titles">
+        <item>Dados Pessoais</item>
+        <item>Localização</item>
+        <item>Contato</item>
+    </string-array>
+
+    <string-array name="steps_cadastro_adocao_titles">
+        <item>OUTRO(S) PET(S)</item>
+        <item>LOCALIDADE / MORADIA</item>
+    </string-array>
+
+    <string-array name="steps_cadastro_pet_titles">
+        <item>Dados do Pet</item>
+        <item>Outras Informações</item>
+    </string-array>
+
+    <string name="vertical_form_stepper_form_confirm_button">SALVAR</string>
+    <string name="vertical_form_stepper_form_last_step">Salvar</string>
+    <string name="txtTituloNovoPet1">Preencha o formulário abaixo para realizar o cadastro do pet que você quer colocar para adoção!</string>
+    <string name="dadosPetTitulo">dados do pet</string>
+    <string name="naoSei">Não Sei</string>
+    <string name="txtNaoSeiDataNascimento">Se o pet faz parte de uma ninhada que está para nascer, coloque uma data aproximada para o nascimento. Sugerimos que, assim que a ninhada nascer e, se for necessário, volte para atualizá-la!</string>
+    <string name="fazParteNinhada">Faz parte de ninhada?</string>
+    <string name="nomeNinhada">Nome da Ninhada</string>
+    <string name="petCastradoTitulo">O pet foi castrado?</string>
+    <string name="petVermifugadoTitulo">o pet já foi vermifugado?</string>
+    <string name="primeiradose">1ª dose</string>
+    <string name="segundadose">2ª dose</string>
+    <string name="txtInfoAdicionalPet">Conte um pouco sobre o pet. Fale sobre seus pais, ou como foi encontrado. Seus irmãos e onde eles estão hoje. Histórico de doenças ou algum tratamento (passado ou em andamento). Se ele possui alguma condição ou necessidades especiais. Qualquer informação será útil.</string>
+    <string name="txtConcluirCadastro">Ao concluir o cadastro do pet, responsabilizo-me sobre as informações fornecidas, atestando a veracidade das mesmas.</string>
+
+    <string-array name="spinnerUF">
+        <item>item1</item>
+        <item>item2</item>
+        <item>item3</item>
+        <item>item4</item>
+    </string-array>
+
 </resources>

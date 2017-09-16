@@ -3,11 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/OrangeApp</item>
+        <item name="colorPrimaryDark">@color/YellowToolbar</item>
+        <item name="colorAccent">@color/OrangeApp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textColorPrimary">@color/OrangeApp</item>
+        <item name="android:textColorSecondary">@color/YellowText</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -59,4 +61,183 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">22sp</item>
     </style>
+
+    <style name="checkBoxFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tint">@color/OrangeApp</item>
+        <item name="android:buttonTint">@color/OrangeApp</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/textoCheckbox</item>
+    </style>
+
+    <style name="textoFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:textSize">12dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">@color/textoFormulario</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="layoutLinha" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">4</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="layoutLinhaParagrafo" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="textoParagrafo" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/OrangeApp</item>
+    </style>
+
+    <style name="colunaComCheckbox" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">2</item>
+    </style>
+
+
+
+    <style name="BeMyPetTheme" parent="AppTheme" />
+
+    <style name="colunasFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_weight">4</item>
+        <item name="android:weightSum">3</item>
+    </style>
+
+    <style name="colunasFormularioSpinner" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">3</item>
+    </style>
+
+    <style name="colunasTituloFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">95dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:weightSum">1</item>
+    </style>
+
+    <style name="spinnerFormulario" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/textoCheckbox</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColorHint">@color/textoCheckbox</item>
+        <item name="android:background">@drawable/gradient_spinner</item>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+    </style>
+
+    <style name="radioButtonFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textoCheckbox</item>
+        <item name="android:buttonTint">@color/OrangeApp</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="radioGroupFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+
+    <style name="txtSeekBar" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textoCheckbox</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <style name="seekBar" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:progressDrawable">@drawable/progress_drawable</item>
+        <item name="android:progress">0</item>
+        <item name="android:secondaryProgress">0</item>
+    </style>
+
+    <style name="labelPerfil" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">@color/labelPerfil</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="textoPerfil" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:textSize">12dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">@color/textoPerfil</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="btnPertilAdota" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@drawable/bg_button_adotar</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="inputFormulario" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textColorHint">#b4b4b4</item>
+        <item name="android:background">@drawable/edit_rounded_corners</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="inputFormularioPet" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textColorHint">#b4b4b4</item>
+        <item name="android:background">@drawable/input_rounded_corners</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:inputType">textNoSuggestions</item>
+    </style>
+
+
+
 </resources>

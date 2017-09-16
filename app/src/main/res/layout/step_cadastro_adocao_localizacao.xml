@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtTeveOutroPet" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbCasa"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"
+                android:text="@string/casa" />
+
+            <RadioButton
+                android:id="@+id/rbApartamento"
+                style="@style/checkBoxFormulario"
+                android:text="@string/apartamento" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtCasaPatio" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rPatioNao"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"
+                android:text="@string/nao" />
+
+            <RadioButton
+                android:id="@+id/rbPatioSim"
+                style="@style/checkBoxFormulario"
+                android:text="@string/sim" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtCuidadoPestes" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbCuidadoPesteNao"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"
+                android:text="@string/nao" />
+
+            <RadioButton
+                android:id="@+id/rbCuidadoPesteSim"
+                style="@style/checkBoxFormulario"
+                android:text="@string/sim" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textAlignment="center"
+            android:textColor="@color/OrangeApp"
+            android:text="@string/txtCadastroAdocaoCuidadoPestes"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/txtGradeProtecao" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbGradeNao"
+                style="@style/checkBoxFormulario"
+                android:layout_weight="2"
+                android:text="@string/nao" />
+
+            <RadioButton
+                android:id="@+id/rbGradeSim"
+                style="@style/checkBoxFormulario"
+                android:text="@string/sim" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/inforAdicional" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <EditText
+            android:id="@+id/edtInfoAdionais"
+            style="@style/inputFormulario"
+            android:hint="@string/inforAdicional"
+            />
+    </LinearLayout>
+
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:textAlignment="center"
+            android:textColor="@color/OrangeApp"
+            android:text="@string/txtCadastroAdocaoInfoPreenchimento"/>
+    </LinearLayout>
+
+</LinearLayout>

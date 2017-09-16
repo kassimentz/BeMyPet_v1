@@ -1,0 +1,81 @@
+[
+
+    {
+
+      "nome": "Kira",
+      "especie": "Gato",
+      "sexo": "Fêmea",
+      "raca": "Egípcio",
+      "dataNascimento": "28/11/2016",
+      "idadeAproximada": "1",
+      "pesoAproximado": 3,
+      "parteDeNinhada": "N",
+      "nomeNinhada": "",
+      "castrado": "Sim",
+      "vermifugado": "Sim",
+      "dose": "2",
+      "sociavel": ["Pessoas", "Gatos"],
+      "temperamento": ["Bravo", "Com Cuidado"],
+      "imagens": ["https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2F1472698748116images-4.jpg?alt=media&token=b8ed04b5-0552-4271-9211-4864406b6b00"],
+      "informacoesAdicionais": "",
+      "status": "Disponível",
+      "cadastroAtivo": true,
+      "localizacao": {
+        "lat": -30.0170309,
+        "lon": -51.1660766
+      }
+    },
+    {
+
+      "nome": "Véia",
+      "especie": "Gato",
+      "sexo": "Fêmea",
+      "raca": "Persa",
+      "dataNascimento": "28/11/2016",
+      "idadeAproximada": "11",
+      "pesoAproximado": 3,
+      "parteDeNinhada": "N",
+      "nomeNinhada": "",
+      "castrado": "Sim",
+      "vermifugado": "Não",
+      "dose": "2",
+      "sociavel": ["Gatos"],
+      "temperamento": ["Convive Bem"],
+      "imagens": ["https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2F1472788304343images-10.jpg?alt=media&token=6d823d42-c4e9-4fca-948d-25e17f77fa68"],
+      "informacoesAdicionais": "",
+      "status": "Disponível",
+      "cadastroAtivo": true,
+      "localizacao": {
+        "lat": -29.9794175,
+        "lon": -51.1832403
+      }
+    },
+    {
+
+      "nome": "Teste",
+      "especie": "Cão",
+      "sexo": "Macho",
+      "raca": "Shitsu",
+      "dataNascimento": "28/11/2016",
+      "idadeAproximada": "4",
+      "pesoAproximado": 3,
+      "parteDeNinhada": "N",
+      "nomeNinhada": "",
+      "castrado": "Não",
+      "vermifugado": "Sim",
+      "dose": "2",
+      "sociavel": ["Pessoas", "Gatos"],
+      "temperamento": ["Bravo", "Com Cuidado"],
+      "imagens": ["https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2F1472695765563images-1.jpg?alt=media&token=cbb4d959-7e5d-4029-b799-33638976de40"],
+      "informacoesAdicionais": "",
+      "status": "Disponível",
+      "cadastroAtivo": true,
+      "localizacao": {
+        "lat": -29.9793804,
+        "lon": -51.1832404
+      }
+    }
+      
+
+ 
+]

@@ -7,15 +7,22 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".BeMyPetApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,11 +43,125 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key_release" />
+
+        <activity android:name=".InicialActivity" />
+        <activity android:name=".SobreNosActivity" />
+        <activity android:name=".PoliticaDePrivacidadeActivity" />
+        <activity
+            android:name=".PerfilPetActivity"
+            android:parentActivityName=".InicialActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".FiltrosActivity"
+            android:label="Filtros"
+            android:parentActivityName=".InicialActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".PerfilUsuarioActivity"
+            android:parentActivityName=".InicialActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".ConfirmarSolicitacaoAdocao"
+            android:label="Confirmar Adoção!"
+            android:parentActivityName=".PerfilPetActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PerfilPetActivity" />
+        </activity>
+        <activity
+            android:name=".VisualizarSolicitacaoAdocaoActivity"
+            android:label="Solicitação de Adoção"
+            android:parentActivityName=".VisualizarSolicitacaoAdocaoActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".VisualizarAdocaoReprovadaActivity"
+            android:label="Adoção Reprovada"
+            android:parentActivityName=".VisualizarAdocaoReprovadaActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".VisualizarDenunciaActivity"
+            android:label="Visualizar Denúncia"
+            android:parentActivityName=".VisualizarDenunciaActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".VisualizarAdocaoAprovadaActivity"
+            android:label="@string/title_activity_visualizar_adocao_aprovada"
+            android:parentActivityName=".VisualizarAdocaoAprovadaActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".CadastroUsuarioActivity"
+            android:label="@string/activity_title_cadastro_usuario">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PerfilUsuarioActivity" />
+        </activity>
+
+        <service android:name=".services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".services.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity
-            android:name=".MapaPetsDisponiveisActivity"
-            android:label="@string/title_activity_mapa_pets_disponiveis"></activity>
+            android:name=".CadastroPetActivity"
+            android:label="@string/activity_title_cadastro_pet"
+            android:parentActivityName=".CadastroPetActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+
+        <activity android:name=".CadastroAdocaoActivity"
+            android:label="@string/activity_title_cadastro_adocao">
+
+        </activity>
+
+
     </application>
 
 </manifest>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".PerfilUsuarioActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/visualizarUsuarioToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/header_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_adocao" />
+
+            <ImageView
+                android:id="@+id/user_profile_photo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/header_cover_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-60dp"
+                android:elevation="5dp"
+                android:scaleType="centerCrop" />
+
+            <RelativeLayout
+                android:id="@+id/profile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header_cover_image"
+                android:background="#fff"
+                android:elevation="4dp"
+                android:paddingBottom="10dp">
+
+
+                <TextView
+                    android:id="@+id/nomeUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="70dp"
+                    android:text="KASSIANE"
+                    android:textAlignment="center"
+                    android:textColor="@color/OrangeApp"
+                    android:textSize="24sp"
+                    android:textStyle="normal" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignRight="@+id/nomeUsuario"
+                    android:src="@drawable/edit"
+                    android:onClick="editaPerilUsuario"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="15dp"
+                android:orientation="vertical">
+
+                <!--campos para data nascimento e CPF-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/dataNascimento" />
+
+                        <TextView
+                            android:id="@+id/dataNascPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/dataNascimento" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox"
+                        android:layout_height="match_parent"
+                        android:gravity="bottom">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/cpf" />
+
+                        <TextView
+                            android:id="@+id/cpfPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/cpf" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para cep -->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/cep" />
+
+                        <TextView
+                            android:id="@+id/cepPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/cep" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--campos para endereco-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/endereco" />
+
+                        <TextView
+                            android:id="@+id/enderecoPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/endereco" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--campos para nro e complemento-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/numero" />
+
+                        <TextView
+                            android:id="@+id/numeroPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/numero" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/complemento" />
+
+                        <TextView
+                            android:id="@+id/complementoPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/complemento" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para cidade e estado-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/cidade" />
+
+                        <TextView
+                            android:id="@+id/cidadePessoalPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/cidade" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/estado" />
+
+                        <TextView
+                            android:id="@+id/estadoPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/estado" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para telefone-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/telefone" />
+
+                        <TextView
+                            android:id="@+id/telefonePerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/telefone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--campos para telefone-->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/email" />
+
+                        <TextView
+                            android:id="@+id/emailPerfilUse"
+                            style="@style/textoPerfil"
+                            android:text="@string/email" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/OrangeApp" />
+
+                        <TextView
+                            android:textSize="14dp"
+                            android:textAllCaps="true"
+                            android:textStyle="bold"
+                            android:textColor="@color/OrangeApp"
+                            android:text="@string/meus_pets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@color/OrangeApp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/gridMesmaNinhada"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp">
+
+                    <GridView
+                        android:numColumns="auto_fit"
+                        android:gravity="center"
+                        android:columnWidth="80dp"
+                        android:stretchMode="columnWidth"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/grid" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+</LinearLayout>

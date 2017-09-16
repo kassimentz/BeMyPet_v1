@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="bgMain">#FFEFCC</color>
     <color name="orangeBorder">#F15922</color>
+    <color name="white">#ffffff</color>
+    <color name="OrangeApp">#f15922</color>
+    <color name="GreenButton">#88cc00</color>
+
+    <color name="dark_gray_press">#ff7e8a97</color>
+    <color name="red">#FF3B00</color>
+    <color name="red_press">#990000</color>
+    <color name="dark_gray">#4C535B</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="backgroundColorPress">#DBDBD3</color>
+    <color name="gray">#e7e7e7</color>
 
 
     <!-- dots inactive colors -->
@@ -19,6 +30,20 @@
     <color name="dot_light_screen3">#93c6fd</color>
     <color name="dot_light_screen4">#e4b5fc</color>
 
+    <!--navigation drawer-->
+
+    <color name="colorPrimaryN">#d32f2f</color>
+    <color name="colorPrimaryDarkN">#c72c2c</color>
+    <color name="colorAccentN">#FFFFFF</color>
+    <color name="YellowToolbar">#ffb432</color>
+    <color name="YellowText">#ffcc32</color>
+
+    <color name="textoCheckbox">#6E3632</color>
+    <color name="textoFormulario">#FFCC32</color>
+    <color name="labelPerfil">#f15922</color>
+    <color name="textoPerfil">#6E3632</color>
+
+
     <array name="array_dot_active">
         <item>@color/orangeBorder</item>
         <item>@color/orangeBorder</item>
@@ -32,6 +57,10 @@
         <item>#fff</item>
         <item>#fff</item>
     </array>
+
+    <!--color steps-->
+<color name="step_colorPrimary">@color/OrangeApp</color>
+<color name="step_colorPrimaryDark">@color/colorPrimaryDarkN</color>
 
     <!--Cores!! Marrom (6E3632). Laranja (F15922). Bege-creme (). Amarelo (FFCC32). Amarelo - somente status bar (FFB432)!-->
 </resources>
