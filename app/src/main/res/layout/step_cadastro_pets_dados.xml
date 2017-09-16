@@ -143,7 +143,7 @@
             android:text="@string/dataNascimento"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
-        <EditText
+        <TextView
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormularioPet"
             android:drawableRight="@drawable/calendar"
@@ -177,6 +177,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="diminuirPeso"
             android:src="@drawable/remove_number"/>
         <EditText
             android:id="@+id/edtPesoPet"
@@ -184,6 +185,7 @@
             android:background="@drawable/edit_rounded_corners"
             style="@style/inputFormularioPet"
             android:layout_gravity="fill"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
         <ImageView
@@ -191,6 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="aumentarPeso"
             android:src="@drawable/add_photo"/>
     </LinearLayout>
 

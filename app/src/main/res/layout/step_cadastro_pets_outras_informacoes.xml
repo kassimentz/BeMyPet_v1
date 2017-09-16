@@ -169,12 +169,11 @@
     <!--campos para sociavel e temperamento-->
     <LinearLayout style="@style/layoutLinha">
 
-        <LinearLayout
-            style="@style/colunaComCheckbox">
+        <LinearLayout style="@style/colunaComCheckbox">
 
             <TextView
                 style="@style/textoFormulario"
-                android:text="@string/temperamentoTitulo"/>
+                android:text="@string/temperamentoTitulo" />
 
             <RadioGroup
                 android:id="@+id/radioGroupTemperamento"
@@ -183,24 +182,24 @@
 
                 <RadioButton
                     android:id="@+id/radioTemperamentoBravo"
-                    android:text="@string/temperamentoBravo"
+                    style="@style/radioButtonFormulario"
                     android:checked="true"
-                    style="@style/radioButtonFormulario" />
+                    android:text="@string/temperamentoBravo" />
 
                 <RadioButton
                     android:id="@+id/radioTemperamentoComCuidado"
-                    android:text="@string/temperamentoComCuidado"
-                    style="@style/radioButtonFormulario" />
+                    style="@style/radioButtonFormulario"
+                    android:text="@string/temperamentoComCuidado" />
 
                 <RadioButton
                     android:id="@+id/radioTemperamentoConviveBem"
-                    android:text="@string/temperamentoConviveBem"
-                    style="@style/radioButtonFormulario" />
+                    style="@style/radioButtonFormulario"
+                    android:text="@string/temperamentoConviveBem" />
 
                 <RadioButton
                     android:id="@+id/radioTemperamentoMuitoDocil"
-                    android:text="@string/temperamentoMuitoDocil"
-                    style="@style/radioButtonFormulario" />
+                    style="@style/radioButtonFormulario"
+                    android:text="@string/temperamentoMuitoDocil" />
             </RadioGroup>
 
 
@@ -214,12 +213,12 @@
 
         <LinearLayout style="@style/layoutLinha"
             android:id="@+id/petImgLayout"
-            android:padding="10dp"
-            android:onClick="buscaFotoPet">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:onClick="buscaFotoPet">
 
                 <ImageView
                     android:id="@+id/user_profile_photo"
