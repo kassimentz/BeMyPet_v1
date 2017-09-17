@@ -4,12 +4,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:layout_gravity="center"
+    android:paddingTop="5dp"
     android:layout_margin="10dp">
 
     <ImageView
-        android:id="@+id/imgPet"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:id="@+id/listImgPet"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:padding="2dp"
         android:scaleType="centerCrop"
         android:cropToPadding="true"
@@ -41,11 +44,11 @@
             android:background="@color/YellowText" />
 
         <TextView
-            android:id="@+id/txtIdadePet"
+            android:id="@+id/txtDadosPet"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             style="@style/textoParagrafo"
-            android:text="idade pet" />
+            android:text="Espécie (raça), sexo, idade" />
 
     </LinearLayout>
 
@@ -54,6 +57,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_gravity="center"
+        android:paddingLeft="25dp"
         android:src="@drawable/right"/>
 
 </LinearLayout>
