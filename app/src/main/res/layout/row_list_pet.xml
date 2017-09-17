@@ -30,7 +30,15 @@
             style="@style/textoParagrafo"
             android:textAllCaps="true"
             android:textStyle="bold"
-            android:text="Pet" />
+            android:text="Nome do pet" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/YellowText" />
 
         <TextView
             android:id="@+id/txtIdadePet"
