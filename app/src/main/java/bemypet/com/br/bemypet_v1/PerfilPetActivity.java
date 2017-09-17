@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,13 +19,21 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bemypet.com.br.bemypet_v1.adapters.CustomGridMesmaNinhadaBaseAdapter;
+import bemypet.com.br.bemypet_v1.adapters.MeusPetsFavoritosAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 
 
 public class PerfilPetActivity extends AppCompatActivity {
@@ -38,11 +47,13 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
             pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet;
-    private ImageView header_cover_image, user_profile_photo;
+    private ImageView header_cover_image, user_profile_photo, imgFavoritarPet;
     private Button buttonPerfil;
 
+    private Usuario usuarioLogado;
 
     Boolean esconderBotaoAdotar = Boolean.FALSE;
+    Boolean petFavoritado = Boolean.TRUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +65,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         ActionBar ab = getSupportActionBar();
-        // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-
         ab.setTitle(R.string.activity_title_peril_pet);
 
         initializeVariables();
@@ -109,6 +118,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         header_cover_image = (ImageView) findViewById(R.id.header_cover_image);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         user_profile_name = (TextView) findViewById(R.id.user_profile_name);
+        imgFavoritarPet = (ImageView) findViewById(R.id.imgFavoritarPet);
         especiePerfilPet = (TextView) findViewById(R.id.especiePerfilPet);
         sexoPerfilPet = (TextView) findViewById(R.id.sexoPerfilPet);
         racaPerfilPet = (TextView) findViewById(R.id.racaPerfilPet);
@@ -141,6 +151,28 @@ public class PerfilPetActivity extends AppCompatActivity {
             setPet(pet);
         }
 
+        Usuario usuarioTmp = Utils.getUsuarioSharedPreferences(getApplicationContext());
+        if(usuarioTmp != null) {
+            if (!usuarioTmp.getLogradouro().isEmpty()) {
+                setUsuarioLogado(usuarioTmp);
+                for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
+                    if(pet.id.equalsIgnoreCase(getPet().id)) {
+                        imgFavoritarPet.setImageResource(R.drawable.fav1);
+                        petFavoritado = Boolean.TRUE;
+                        break;
+                    }
+                }
+
+            } else {
+                Utils.showToastMessage(getApplicationContext(), "Para favoritar um pet, primeiro complete seus dados: ");
+                Intent intent = new Intent(getApplicationContext(), CadastroUsuarioActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("origem", "favoritarPet");
+                bundle.putSerializable("pet", new Gson().toJson(getPet()));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        }
 
     }
 
@@ -153,8 +185,6 @@ public class PerfilPetActivity extends AppCompatActivity {
         }
 
         if(getPet().imagens.size() > 0) {
-            // Loading profile image
-
             Glide.with(this).load(getPet().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
             Glide.with(this).load(getPet().imagens.get(getPet().imagens.size()-1)).into(header_cover_image);
         }
@@ -217,6 +247,41 @@ public class PerfilPetActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    public void favoritarPet(View v) {
+        if(petFavoritado == Boolean.FALSE) {
+            getUsuarioLogado().addFavorito(getPet());
+            imgFavoritarPet.setImageResource(R.drawable.fav1);
+        } else {
+            getUsuarioLogado().removerFavorito(getPet());
+            System.out.println(getUsuarioLogado().petsFavoritos);
+            imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+        }
+        updateUsuario();
+    }
+
+    private void updateUsuario() {
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
+        myRef.child(getUsuarioLogado().id).child("petsFavoritos").setValue(getUsuarioLogado().petsFavoritos);
+
+        //selecionar o usuario atualizado e salvar no shared
+        FirebaseDatabase.getInstance().getReference().child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Usuario usuarioTmp = postSnapshot.getValue(Usuario.class);
+                    if(usuarioTmp.id.equalsIgnoreCase(getUsuarioLogado().id)) {
+                        Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuarioTmp);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+    }
+
     public Pet getPet() {
         return pet;
     }
@@ -231,5 +296,13 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     public void setEsconderBotaoAdotar(Boolean esconderBotaoAdotar) {
         this.esconderBotaoAdotar = esconderBotaoAdotar;
+    }
+
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 }

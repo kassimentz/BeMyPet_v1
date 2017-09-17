@@ -104,10 +104,7 @@ public class InicialActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
-        if(usuarioLogado != null) {
-            setUsuarioLogado(usuarioLogado);
-        }
+        updateUsuario();
 
         loadNavHeader();
 
@@ -117,6 +114,13 @@ public class InicialActivity extends AppCompatActivity {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
+        }
+    }
+
+    private void updateUsuario() {
+        Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
+        if(usuarioLogado != null) {
+            setUsuarioLogado(usuarioLogado);
         }
     }
 
@@ -134,6 +138,7 @@ public class InicialActivity extends AppCompatActivity {
             setFiltroActivity(filtro);
         }
 
+        updateUsuario();
     }
 
     @Override

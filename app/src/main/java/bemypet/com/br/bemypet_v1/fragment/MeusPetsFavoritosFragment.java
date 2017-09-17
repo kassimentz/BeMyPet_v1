@@ -94,6 +94,7 @@ public class MeusPetsFavoritosFragment extends Fragment {
         meusFavoritos = new ArrayList<>();
 
         Usuario tmpUsuario = Utils.getUsuarioSharedPreferences(getContext());
+        System.out.println(tmpUsuario.toString());
         if(tmpUsuario != null) {
             setUsuarioLogado(tmpUsuario);
             if(getUsuarioLogado().petsFavoritos != null && getUsuarioLogado().petsFavoritos.size() > 0) {

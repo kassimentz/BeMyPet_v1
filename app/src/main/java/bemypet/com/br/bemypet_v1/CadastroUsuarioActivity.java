@@ -434,7 +434,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         } else if(origem.equalsIgnoreCase("cadastroPet")){
             intent = new Intent(CadastroUsuarioActivity.this, CadastroPetActivity.class);
 
-        } else {
+        } else if(origem.equalsIgnoreCase("favoritarPet")) {
+            intent = new Intent(this, PerfilPetActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("pet", new Gson().toJson(getPet()));
+            bundle.putString("key", "visualizarAdocao");
+            intent.putExtras(bundle);
+        }
+        else {
             intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
         }
 
