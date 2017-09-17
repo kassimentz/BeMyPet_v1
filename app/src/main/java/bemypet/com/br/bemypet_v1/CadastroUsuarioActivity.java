@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -66,7 +68,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     ArrayAdapter<String> adapter;
     private Spinner spinnerUf;
     private LinearLayout dadosPessoaisStep, localizacaoStep, contatoStep;
-    private EditText edtNomeUsuario, edtDataNascimento, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
+    private EditText edtNomeUsuario, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
+    private TextView txtDataNascimento;
     private ImageView user_profile_photo;
     List<String> ufListagem;
 
@@ -119,11 +122,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
 
-        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
-        formatdata = new MaskedFormatter("##/##/####");
-        edtDataNascimento.addTextChangedListener(new MaskedWatcher(formatdata, edtDataNascimento));
-
-        edtDataNascimento.setOnClickListener(new View.OnClickListener() {
+        txtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
+        txtDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -132,9 +132,25 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
 
-                        int s=monthOfYear+1;
-                        String a = dayOfMonth+"/"+s+"/"+year;
-                        edtDataNascimento.setText(""+a);
+                        int s = monthOfYear+1;
+                        String month = "";
+                        if(s < 10) {
+                            month = "0"+s;
+                        } else {
+                            month = String.valueOf(s);
+                        }
+
+                        int d = dayOfMonth;
+                        String day = "";
+                        if(d < 10){
+                            day = "0"+d;
+                        }else{
+                            day = String.valueOf(d);
+                        }
+
+
+                        String a = day+"/"+month+"/"+year;
+                        txtDataNascimento.setText(""+a);
                     }
                 };
 
@@ -152,6 +168,15 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         edtCpf = (EditText) findViewById(R.id.edtCpf);
         formatCpf = new MaskedFormatter("###.###.###-##");
         edtCpf.addTextChangedListener(new MaskedWatcher(formatCpf, edtCpf));
+
+        edtCpf.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    Toast.makeText(getApplicationContext(), "unfocus", 2000).show();
+            }
+        });
+
 
         edtCep = (EditText) findViewById(R.id.edtCep);
         formatCep = new MaskedFormatter("#####-###");
@@ -204,7 +229,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
             edtNomeUsuario.setText(getUsuario().nome);
         }
         if (getUsuario().dataNascimento != null) {
-            edtDataNascimento.setText(getUsuario().dataNascimento);
+            txtDataNascimento.setText(getUsuario().dataNascimento);
         }
         if (getUsuario().cpf != null) {
             edtCpf.setText(getUsuario().cpf);
@@ -233,7 +258,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         if (getUsuario().email != null) {
             edtEmail.setText(getUsuario().email);
         }
+
     }
+
+
 
     private void initializeActivity() {
 
@@ -282,8 +310,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
-
-                //TODO fazer validacao dos campos antes de passar para o passo seguinte
                 verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
                 break;
             case LOCALIZACAO_STEP_NUM:
@@ -301,8 +327,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_dados_pessoais, null, false);
-
-        edtNomeUsuario = (EditText) dadosPessoaisStep.findViewById(R.id.edtNomeUsuario);
 
         //valida os dados do formulário se passar vai para proximo
 //        verticalStepperForm.goToNextStep();
@@ -342,8 +366,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         if(Utils.validaEditText(edtNomeUsuario)){
             getUsuario().nome = edtNomeUsuario.getText().toString();
         }
-        if(Utils.validaEditText(edtDataNascimento)){
-            getUsuario().dataNascimento = edtDataNascimento.getText().toString();
+        if(txtDataNascimento.getText().length() > 0){
+            getUsuario().dataNascimento = txtDataNascimento.getText().toString();
         }
         if(Utils.validaEditText(edtCpf)){
             getUsuario().cpf = edtCpf.getText().toString();
