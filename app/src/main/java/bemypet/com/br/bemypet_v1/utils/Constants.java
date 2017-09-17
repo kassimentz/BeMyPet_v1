@@ -45,7 +45,11 @@ public class Constants {
     public static String STATUS_PET_ADOTADO = "Adotado";
 
 
-
+    //social media
+    public static String FACEBOOK = "com.facebook.katana";
+    public static String TWITTER = "com.twitter.android";
+    public static String INSTAGRAM = "com.instagram.android";
+    public static String PINTEREST = "com.pinterest";
 
 
 }

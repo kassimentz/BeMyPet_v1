@@ -422,6 +422,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         myRef.child(getUsuario().id).child("email").setValue(getUsuario().email);
         myRef.child(getUsuario().id).child("petsFavoritos").setValue(getUsuario().petsFavoritos);
 
+        //atualizando o usuario logado com os novos dados
+        Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuario());
         Intent intent = null;
 
         if (origem == null) {

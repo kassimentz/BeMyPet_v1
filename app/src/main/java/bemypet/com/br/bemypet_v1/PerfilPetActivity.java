@@ -1,38 +1,42 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import bemypet.com.br.bemypet_v1.adapters.CustomGridMesmaNinhadaBaseAdapter;
-import bemypet.com.br.bemypet_v1.adapters.MeusPetsFavoritosAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.utils.Constants;
+import bemypet.com.br.bemypet_v1.utils.SocialMediaUtils;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 
@@ -90,11 +94,22 @@ public class PerfilPetActivity extends AppCompatActivity {
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_share, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 finish();
+                return true;
+
+            case R.id.share:
+                SharingPetToSocialMedia();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -266,23 +281,8 @@ public class PerfilPetActivity extends AppCompatActivity {
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
         myRef.child(getUsuarioLogado().id).child("petsFavoritos").setValue(getUsuarioLogado().petsFavoritos);
 
-        //selecionar o usuario atualizado e salvar no shared
-        FirebaseDatabase.getInstance().getReference().child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Usuario usuarioTmp = postSnapshot.getValue(Usuario.class);
-                    if(usuarioTmp.id.equalsIgnoreCase(getUsuarioLogado().id)) {
-                        Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuarioTmp);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
+        //atualizando o usuario logado com os novos dados
+        Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuarioLogado());
     }
 
     public Pet getPet() {
@@ -308,4 +308,31 @@ public class PerfilPetActivity extends AppCompatActivity {
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
     }
+
+
+    public void SharingPetToSocialMedia() {
+
+        try {
+            Bitmap bmImg = Ion.with(getApplicationContext()).load(pet.imagens.get(0)).asBitmap().get();
+            String title = "Be My Pet - Encontre seu novo amigo!"; //Title you wants to share
+
+            String pathofBmp = MediaStore.Images.Media.insertImage(getContentResolver(), bmImg,"BeMyPet", null);
+            Uri bmpUri = Uri.parse(pathofBmp);
+
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+            shareIntent.setType("*/*");
+            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getPet().nome+ " está a procura de um novo lar! Baixe o BeMyPet e ajude-nos a encontrar um lar para nosso amiguinhos! https://play.google.com/store/apps/details?id=" +getPackageName());
+            startActivity(Intent.createChooser(shareIntent, "Escolha onde compartilhar"));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
