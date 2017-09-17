@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -587,8 +588,12 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             getPet().informacoesAdicionais = "";
         }
 
-        PontoGeo pontoGeo = new PontoGeo(getDoador().localizacao.lat, getDoador().localizacao.lon);
-        getPet().localizacao = pontoGeo;
+
+        if(!getDoador().getLogradouro().isEmpty()) {
+            LatLng latlong = Utils.getLocationFromAddress(getApplicationContext(), getDoador().getLogradouro());
+            PontoGeo pontoGeo = new PontoGeo(latlong.latitude, latlong.longitude);
+            getPet().localizacao = pontoGeo;
+        }
 
         if(Utils.validaEditText(edNomePet)){
             getPet().nome = edNomePet.getText().toString();

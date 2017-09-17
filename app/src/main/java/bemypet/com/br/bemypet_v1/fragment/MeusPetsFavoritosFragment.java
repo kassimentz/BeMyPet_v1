@@ -31,7 +31,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import bemypet.com.br.bemypet_v1.CadastroPetActivity;
+import bemypet.com.br.bemypet_v1.CadastroUsuarioActivity;
 import bemypet.com.br.bemypet_v1.FiltrosActivity;
+import bemypet.com.br.bemypet_v1.PerfilUsuarioActivity;
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.adapters.MeusPetsFavoritosAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
@@ -118,7 +120,16 @@ public class MeusPetsFavoritosFragment extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.novo_pet:
-                Intent intent = new Intent(getContext(), CadastroPetActivity.class);
+                Intent intent;
+                if(!getUsuarioLogado().getLogradouro().isEmpty()) {
+                    intent = new Intent(getContext(), CadastroPetActivity.class);
+                } else {
+                    Utils.showToastMessage(getContext(), "Para cadastrar um pet, primeiro complete seus dados: ");
+                    intent = new Intent(getContext(), CadastroUsuarioActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("origem", "cadastroPet");
+                    intent.putExtras(bundle);
+                }
                 startActivity(intent);
                 return true;
 

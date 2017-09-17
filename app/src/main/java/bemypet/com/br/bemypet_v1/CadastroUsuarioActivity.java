@@ -397,6 +397,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
             getUsuario().email = edtEmail.getText().toString();
         }
 
+        getUsuario().petsFavoritos = new ArrayList<>();
+
+
         salvarUsuario();
 
     }
@@ -417,24 +420,27 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         myRef.child(getUsuario().id).child("estado").setValue(getUsuario().estado);
         myRef.child(getUsuario().id).child("telefone").setValue(getUsuario().telefone);
         myRef.child(getUsuario().id).child("email").setValue(getUsuario().email);
+        myRef.child(getUsuario().id).child("petsFavoritos").setValue(getUsuario().petsFavoritos);
 
+        Intent intent = null;
 
         if (origem == null) {
 
-            Intent intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
+            intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("pet", new Gson().toJson(getPet()));
             intent.putExtras(bundle);
-            startActivity(intent);
-            finish();
+
+        } else if(origem.equalsIgnoreCase("cadastroPet")){
+            intent = new Intent(CadastroUsuarioActivity.this, CadastroPetActivity.class);
 
         } else {
-
-            Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
-            startActivity(intent);
-            finish();
-
+            intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
         }
+
+        startActivity(intent);
+        finish();
+
     }
 
     //TODO ESTA FUNCAO DEVE SER USADA NO LOGIN, PARA SALVAR O USUARIO PELA PRIMEIRA VEZ, COM O TOKKEN E COM O LAT LONG NO GEOFIRE
