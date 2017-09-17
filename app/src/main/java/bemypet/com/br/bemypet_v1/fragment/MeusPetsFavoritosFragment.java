@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import bemypet.com.br.bemypet_v1.CadastroPetActivity;
+import bemypet.com.br.bemypet_v1.FiltrosActivity;
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
@@ -84,7 +87,8 @@ public class MeusPetsFavoritosFragment extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.novo_pet:
-                Utils.showToastMessage(getContext(), "adicionar pet");
+                Intent intent = new Intent(getContext(), CadastroPetActivity.class);
+                startActivity(intent);
                 return true;
 
             default:
