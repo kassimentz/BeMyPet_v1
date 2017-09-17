@@ -17,7 +17,7 @@ public class Adocao {
     public Boolean jaTeveOutrosPets;
     public Integer quantosPetsTeve;
     public List<String> tiposPetsTeve;
-    public String oQueAconteceuComEles;
+    public List<String> oQueAconteceuComEles;
     public Boolean temPetAtualmente;
     public Integer quantosPetsTem;
     public List<String> tiposPetsTem;
@@ -37,7 +37,7 @@ public class Adocao {
 
     public Adocao(Boolean jaTeveOutrosPets,
                   Integer quantosPetsTeve, List<String> tiposPetsTeve,
-                  String oQueAconteceuComEles, Boolean temPetAtualmente,
+                  List<String> oQueAconteceuComEles, Boolean temPetAtualmente,
                   Integer quantosPetsTem, List<String> tiposPetsTem,
                   String tipoMoradia, Boolean possuiPatio,
                   Boolean temCuidadoContraPestes, Boolean possuiTelasProtecao,
