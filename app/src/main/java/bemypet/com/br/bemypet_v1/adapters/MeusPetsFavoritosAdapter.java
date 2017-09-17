@@ -50,7 +50,7 @@ public class MeusPetsFavoritosAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public Pet getItem(int i) {
         return pets.get(i);
     }
 

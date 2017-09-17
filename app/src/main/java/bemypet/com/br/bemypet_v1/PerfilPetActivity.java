@@ -156,10 +156,13 @@ public class PerfilPetActivity extends AppCompatActivity {
             if (!usuarioTmp.getLogradouro().isEmpty()) {
                 setUsuarioLogado(usuarioTmp);
                 for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
-                    if(pet.id.equalsIgnoreCase(getPet().id)) {
+                    if(petTmp.id.equalsIgnoreCase(getPet().id)) {
                         imgFavoritarPet.setImageResource(R.drawable.fav1);
                         petFavoritado = Boolean.TRUE;
                         break;
+                    } else {
+                        imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+                        petFavoritado = Boolean.FALSE;
                     }
                 }
 
@@ -251,9 +254,9 @@ public class PerfilPetActivity extends AppCompatActivity {
         if(petFavoritado == Boolean.FALSE) {
             getUsuarioLogado().addFavorito(getPet());
             imgFavoritarPet.setImageResource(R.drawable.fav1);
+            petFavoritado = Boolean.TRUE;
         } else {
             getUsuarioLogado().removerFavorito(getPet());
-            System.out.println(getUsuarioLogado().petsFavoritos);
             imgFavoritarPet.setImageResource(R.drawable.fav2_v);
         }
         updateUsuario();

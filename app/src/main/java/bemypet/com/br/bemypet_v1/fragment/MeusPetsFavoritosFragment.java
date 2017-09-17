@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ import java.util.concurrent.ExecutionException;
 import bemypet.com.br.bemypet_v1.CadastroPetActivity;
 import bemypet.com.br.bemypet_v1.CadastroUsuarioActivity;
 import bemypet.com.br.bemypet_v1.FiltrosActivity;
+import bemypet.com.br.bemypet_v1.PerfilPetActivity;
 import bemypet.com.br.bemypet_v1.PerfilUsuarioActivity;
 import bemypet.com.br.bemypet_v1.R;
 import bemypet.com.br.bemypet_v1.adapters.MeusPetsFavoritosAdapter;
@@ -107,6 +110,33 @@ public class MeusPetsFavoritosFragment extends Fragment {
 
         buscaMeusPets();
         setHasOptionsMenu(true);
+
+        listViewMeusPets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Pet petClicado = meusPetsAdapter.getItem(position);
+
+                Intent intent = new Intent(getContext(), PerfilPetActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("pet", new Gson().toJson(petClicado));
+                bundle.putString("key", "visualizarAdocao");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        listViewPetsFavoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Pet petFavorito = petsFavoritosAdapter.getItem(position);
+                Intent intent = new Intent(getContext(), PerfilPetActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("pet", new Gson().toJson(petFavorito));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 
