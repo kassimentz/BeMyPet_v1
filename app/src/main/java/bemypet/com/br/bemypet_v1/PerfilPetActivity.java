@@ -23,6 +23,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.CallbackManager;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.ShareOpenGraphAction;
+import com.facebook.share.model.ShareOpenGraphContent;
+import com.facebook.share.model.ShareOpenGraphObject;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -36,7 +44,6 @@ import bemypet.com.br.bemypet_v1.adapters.CustomGridMesmaNinhadaBaseAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Constants;
-import bemypet.com.br.bemypet_v1.utils.SocialMediaUtils;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
 
@@ -58,6 +65,9 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     Boolean esconderBotaoAdotar = Boolean.FALSE;
     Boolean petFavoritado = Boolean.TRUE;
+
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +100,10 @@ public class PerfilPetActivity extends AppCompatActivity {
 
             }
         });
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+
     }
 
 
@@ -108,12 +122,22 @@ public class PerfilPetActivity extends AppCompatActivity {
                 finish();
                 return true;
 
-            case R.id.share:
-                SharingPetToSocialMedia();
+            case R.id.share_twiiter:
+                shareTwitter();
                 return true;
+
+            case R.id.share_facebook:
+                shareFacebook();
+                return true;
+
+            case R.id.share_whatsapp:
+                shareWhatsapp();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -309,8 +333,42 @@ public class PerfilPetActivity extends AppCompatActivity {
         this.usuarioLogado = usuarioLogado;
     }
 
+    private void shareWhatsapp() {
 
-    public void SharingPetToSocialMedia() {
+        Intent shareIntent = new Intent();
+        shareIntent = new Intent();
+        shareIntent.setPackage(Constants.WHATSAPP);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Be My Pet - Encontre seu novo amigo!");
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getPet().nome+ " está a procura de um novo lar! Baixe o BeMyPet e ajude-nos a encontrar um lar para nosso amiguinhos! https://play.google.com/store/apps/details?id=" +getPackageName());
+        shareIntent.putExtra(Intent.EXTRA_STREAM, getPet().imagens.get(0));
+        shareIntent.setType("image/*");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        boolean installed = checkAppInstall(Constants.WHATSAPP);
+        if (installed) {
+            startActivity(shareIntent);
+        } else {
+            Utils.showToastMessage(getApplicationContext(),  "O aplicativo necessita ser instalado antes.");
+        }
+    }
+
+    private void shareFacebook() {
+
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setContentTitle(getPet().nome + " está a procura de um novo lar!")
+                    .setImageUrl(Uri.parse(getPet().imagens.get(0)))
+                    .setContentDescription("Ajude "+getPet().nome+" a encontrar um lar!")
+                    .setContentUrl(Uri.parse(getPet().imagens.get(0)))
+                    //.setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=" +getPackageName()))
+                    .build();
+
+            shareDialog.show(linkContent);  // Show facebook ShareDialog
+        }
+    }
+
+    public void shareTwitter() {
 
         try {
             Bitmap bmImg = Ion.with(getApplicationContext()).load(pet.imagens.get(0)).asBitmap().get();
@@ -323,16 +381,37 @@ public class PerfilPetActivity extends AppCompatActivity {
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
             shareIntent.setType("*/*");
+            shareIntent.setPackage(Constants.TWITTER);
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
             shareIntent.putExtra(Intent.EXTRA_TEXT, getPet().nome+ " está a procura de um novo lar! Baixe o BeMyPet e ajude-nos a encontrar um lar para nosso amiguinhos! https://play.google.com/store/apps/details?id=" +getPackageName());
-            startActivity(Intent.createChooser(shareIntent, "Escolha onde compartilhar"));
+
+
+            boolean installed = checkAppInstall(Constants.TWITTER);
+            if (installed) {
+                startActivity(shareIntent);
+            } else {
+                Utils.showToastMessage(getApplicationContext(),  "O aplicativo necessita ser instalado antes.");
+            }
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean checkAppInstall(String uri) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+
+        return false;
     }
 
 }

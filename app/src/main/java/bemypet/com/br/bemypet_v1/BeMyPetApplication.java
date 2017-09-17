@@ -2,6 +2,8 @@ package bemypet.com.br.bemypet_v1;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,6 +27,10 @@ public class BeMyPetApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("bemypetv1");
         scoresRef.keepSynced(true);
