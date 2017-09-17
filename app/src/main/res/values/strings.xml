@@ -57,8 +57,8 @@
         <item>Sobre</item>
     </string-array>
 
-    <string name="activity_title_sobre">Sobre</string>
-    <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
+    <string name="activity_title_sobre">Sobre o BeMyPet</string>
+    <string name="activity_title_privacy_policy">Termos de Adoção</string>
     <string name="activity_title_peril_pet">Perfil Pet</string>
     <string name="activity_title_visualizar_adocao">Solicitação de Adoção</string>
     <string name="activity_title_confirmar_solicitacao_adocao">Confirmar adoção!</string>
@@ -70,7 +70,7 @@
     <string name="action_filtro">Filtros</string>
     <string name="action_novo_pet">Novo Pet</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
-    <string name="privacy_policy">Políticas de Privacidade</string>
+    <string name="privacy_policy">Políticas de Adoção</string>
     <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
     <string name="activity_title_cadastro_pet">Cadastro Pet</string>
     <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
@@ -372,6 +372,13 @@
     </string-array>
 
     <string name="facebook_app_id">1537764562949663</string>
+    <string name="polAdocao1">Ao realizar uma adoção ou publicar um anúncio de um pet para adoção no aplicativo BeMyPet, você estará responsabilizando-se sobre todas as informações fornecidas, atestando a veracidade das mesmas.</string>
+    <string name="polAdocao2">Você se compromete a:</string>
+    <string name="polAdocao3">- Cuidar do pet e mantê-lo em condições ótimas de espaço, tempo, alimentação, exercício.</string>
+    <string name="polAdocao4">- Oferecer os cuidados veterinários que o animal necessite.</string>
+    <string name="polAdocao5">Não destinar o animal a cria ou reprodução.</string>
+    <string name="polAdocao6">- Se não puder assumir as responsabilidades, não o abandone. Entre em contato novamente com seu antigo dono.</string>
+    <string name="sobre">O BeMyPet é um aplicativo com o intuito de facilitar a adoção de pets e a publicação de anúncios sobre pets disponíveis para adoção. Nosso intuito é diminuir a quantidade de animais abandonados e ajudá-los a encontrar um novo lar.</string>
 
 
 </resources>

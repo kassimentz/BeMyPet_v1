@@ -235,10 +235,10 @@ public class InicialActivity extends AppCompatActivity {
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_MEUS_PETS;
                         break;
-                    case R.id.nav_configuracoes:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_CONFIGURACOES;
-                        break;
+//                    case R.id.nav_configuracoes:
+//                        navItemIndex = 3;
+//                        CURRENT_TAG = TAG_CONFIGURACOES;
+//                        break;
                     case R.id.nav_ajuda:
                         startActivity(new Intent(InicialActivity.this, EscolhaActivity.class));
                         drawer.closeDrawers();

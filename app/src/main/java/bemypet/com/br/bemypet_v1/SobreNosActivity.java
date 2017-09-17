@@ -1,8 +1,10 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.content.Context;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.google.gson.Gson;
 
@@ -16,18 +18,13 @@ public class SobreNosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sobre_nos);
 
-        getBundle();
+        Toolbar myChildToolbar = (Toolbar) findViewById(R.id.sobreToolbar);
+        setSupportActionBar(myChildToolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setTitle(R.string.activity_title_sobre);
     }
 
-    private void getBundle() {
 
-        String jsonObj = null;
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            jsonObj = extras.getString("pet");
-        }
-        Pet pet = new Gson().fromJson(jsonObj, Pet.class);
-
-        Utils.showToastMessage(this, pet.nome+ " funcionou");
-    }
 }
