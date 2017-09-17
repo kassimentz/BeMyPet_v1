@@ -1,6 +1,5 @@
 package bemypet.com.br.bemypet_v1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -25,11 +24,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.CallbackManager;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.ShareOpenGraphAction;
-import com.facebook.share.model.ShareOpenGraphContent;
-import com.facebook.share.model.ShareOpenGraphObject;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -57,7 +51,7 @@ public class PerfilPetActivity extends AppCompatActivity {
     List<String> images = new ArrayList<>();
 
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
-            pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet;
+            pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet, txtOutrasInformacoes;
     private ImageView header_cover_image, user_profile_photo, imgFavoritarPet;
     private Button buttonPerfil;
 
@@ -88,18 +82,19 @@ public class PerfilPetActivity extends AppCompatActivity {
             preencherDados();
         }
 
-        CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilPetActivity.this, nomes, images);
-        grid=(GridView)findViewById(R.id.grid);
-        grid.setAdapter(adapter);
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(PerfilPetActivity.this, "You Clicked at " +nomes.get(position), Toast.LENGTH_SHORT).show();
-
-            }
-        });
+        //TODO ninhada esta comentada nessa versao
+//        CustomGridMesmaNinhadaBaseAdapter adapter = new CustomGridMesmaNinhadaBaseAdapter (PerfilPetActivity.this, nomes, images);
+//        grid=(GridView)findViewById(R.id.grid);
+//        grid.setAdapter(adapter);
+//        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                Toast.makeText(PerfilPetActivity.this, "You Clicked at " +nomes.get(position), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
@@ -157,6 +152,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         header_cover_image = (ImageView) findViewById(R.id.header_cover_image);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         user_profile_name = (TextView) findViewById(R.id.user_profile_name);
+        txtOutrasInformacoes = (TextView) findViewById(R.id.txtOutrasInformacoes);
         imgFavoritarPet = (ImageView) findViewById(R.id.imgFavoritarPet);
         especiePerfilPet = (TextView) findViewById(R.id.especiePerfilPet);
         sexoPerfilPet = (TextView) findViewById(R.id.sexoPerfilPet);
@@ -194,6 +190,9 @@ public class PerfilPetActivity extends AppCompatActivity {
         if(usuarioTmp != null) {
             if (!usuarioTmp.getLogradouro().isEmpty()) {
                 setUsuarioLogado(usuarioTmp);
+                if(getPet().atualDonoID.equalsIgnoreCase(getUsuarioLogado().id)) {
+                    setEsconderBotaoAdotar(Boolean.TRUE);
+                }
                 for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
                     if(petTmp.id.equalsIgnoreCase(getPet().id)) {
                         imgFavoritarPet.setImageResource(R.drawable.fav1);
@@ -276,8 +275,21 @@ public class PerfilPetActivity extends AppCompatActivity {
 
             stringTemperamento.deleteCharAt(stringTemperamento.length()-2);
             temperamentoPerfilPet.setText(stringTemperamento.toString());
-
         }
+
+        if(getPet().informacoesAdicionais != null) {
+            txtOutrasInformacoes.setText(getPet().informacoesAdicionais);
+        }
+    }
+
+    public void editarPerfilPet(View v) {
+        Intent intent = new Intent(this, CadastroPetActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("origem", "editarPet");
+        bundle.putSerializable("pet", new Gson().toJson(getPet()));
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 1);
+        this.finish();
     }
 
     public void confirmarSolicitacaoAdocao(View v) {

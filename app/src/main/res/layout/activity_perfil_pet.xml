@@ -79,6 +79,16 @@
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="-16dp"
+                    android:src="@drawable/edit"
+                    android:onClick="editarPerfilPet"/>
+
             </RelativeLayout>
 
         </RelativeLayout>
@@ -247,8 +257,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras, ao contrário de Conteúdo aqui, conteúdo aqui, fazendo com que ele tenha uma aparência similar a de um texto legível. Muitos softwares de publicação e editores de páginas na internet agora usam Lorem Ipsum como texto-modelo padrão, e uma rápida busca por 'lorem ipsum' mostra vários websites ainda em sua fase de construção. Várias versões novas surgiram ao longo dos anos, eventualmente por acidente, e às vezes de propósito (injetando humor, e coisas do gênero).
-" />
+                        android:id="@+id/txtOutrasInformacoes" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -263,43 +272,44 @@
 
                 </LinearLayout>
 
+                <!--TODO USAR A NINHADA NA PROXIMA VERSAO-->
 
-                <LinearLayout style="@style/layoutLinha">
+                <!--<LinearLayout style="@style/layoutLinha">-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:layout_weight="1"
-                            android:background="@color/OrangeApp" />
+                        <!--<View-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="1dp"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:background="@color/OrangeApp" />-->
 
-                        <TextView
-                            android:textSize="14dp"
-                            android:textAllCaps="true"
-                            android:textStyle="bold"
-                            android:textColor="@color/OrangeApp"
-                            android:id="@+id/textView1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="Mesma Ninhada" />
+                        <!--<TextView-->
+                            <!--android:textSize="14dp"-->
+                            <!--android:textAllCaps="true"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:textColor="@color/OrangeApp"-->
+                            <!--android:id="@+id/textView1"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_margin="5dp"-->
+                            <!--android:text="Mesma Ninhada" />-->
 
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@color/OrangeApp" />
+                        <!--<View-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="1dp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:background="@color/OrangeApp" />-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
 
                 <!--<LinearLayout-->
@@ -309,22 +319,22 @@
                 <!--android:gravity="center_horizontal"-->
                 <!--android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <GridView
-                        android:id="@+id/grid"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:columnWidth="80dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:numColumns="auto_fit"
-                        android:stretchMode="columnWidth" />
-                </LinearLayout>
+                    <!--<GridView-->
+                        <!--android:id="@+id/grid"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:columnWidth="80dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:numColumns="auto_fit"-->
+                        <!--android:stretchMode="columnWidth" />-->
+                <!--</LinearLayout>-->
                 <!--</LinearLayout>-->
 
 
