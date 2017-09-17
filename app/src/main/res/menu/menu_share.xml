@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/action_filtro"
+        app:showAsAction="ifRoom">
+
+        <!-- submenu -->
+        <menu>
+            <item android:id="@+id/share_twiiter"
+                android:title="Twitter"
+                android:icon="@drawable/twitter_ic" />
+
+            <item android:id="@+id/share_facebook"
+                android:icon="@drawable/facebook_ic"
+                android:title="Facebook" />
+
+            <item android:id="@+id/share_whatsapp"
+                android:icon="@drawable/whatsapp_w"
+                android:title="Whatsapp" />
+        </menu>
+
+    </item>
+
+
+</menu>

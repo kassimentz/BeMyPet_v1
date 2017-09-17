@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1.pojo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,8 @@ public class Usuario {
 
     public Usuario() {
         id = UUID.randomUUID().toString();
+        imagens = new ArrayList<>();
+        petsFavoritos = new ArrayList<>();
     }
 
     public Usuario(String nome, List<String> imagens, String dataNascimento, String cpf,
@@ -66,11 +69,32 @@ public class Usuario {
 
     public String getLogradouro() {
         StringBuilder logradouro = new StringBuilder();
-        logradouro.append(this.endereco+", ");
-        logradouro.append(this.numero+", ");
-        logradouro.append(this.cidade);
 
+        if(this.endereco != null && this.numero != null && this.cidade != null) {
+            logradouro.append(this.endereco+", ");
+            logradouro.append(this.numero+", ");
+            logradouro.append(this.cidade);
+        }
         return logradouro.toString();
+    }
+
+    public void addFavorito(Pet pet) {
+        if(pet != null) {
+            this.petsFavoritos.add(pet);
+        }
+    }
+
+    public void removerFavorito (Pet pet) {
+        if(pet != null) {
+
+            for(int i = 0; i < this.petsFavoritos.size(); i++) {
+                Pet p = this.petsFavoritos.get(i);
+                if(p.id.equals(pet.id)) {
+                    this.petsFavoritos.remove(i);
+                    break;
+                }
+            }
+        }
     }
 
     public Map<String, Object> toMap() {

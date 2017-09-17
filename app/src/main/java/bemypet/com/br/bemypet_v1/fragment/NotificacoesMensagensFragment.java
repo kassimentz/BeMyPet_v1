@@ -90,8 +90,6 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         }
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -102,8 +100,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_notificacoes_mensagens, container, false);
         mSearchView = (SearchView) rootView.findViewById(R.id.searchViewNotificacoes);

@@ -52,7 +52,7 @@
     <string-array name="nav_item_activity_titles">
         <item>BeMyPet</item>
         <item>Notificações</item>
-        <item>Meus Pets</item>
+        <item>Lista de Pets</item>
         <item>Configurações</item>
         <item>Sobre</item>
     </string-array>
@@ -370,5 +370,8 @@
         <item>item3</item>
         <item>item4</item>
     </string-array>
+
+    <string name="facebook_app_id">1537764562949663</string>
+
 
 </resources>
