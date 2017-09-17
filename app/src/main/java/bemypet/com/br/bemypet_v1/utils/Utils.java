@@ -38,6 +38,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -403,5 +404,43 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String removeCaracteresEspeciais (String texto){
+
+        String textoLimpo = texto;
+        textoLimpo = textoLimpo.replaceAll("[^a-zZ-Z0-9 ]", "");
+
+        return textoLimpo;
+
+    }
+
+    public static final boolean isNullOrEmpty(String str){
+        return str == null ||  str.length() == 0;
+    }
+
+    public static Integer calculaIdade(String strDate) {
+
+        Date date =  stringToDate(strDate, "dd/mm/yyyy");
+
+        Calendar birth = Calendar.getInstance();
+        birth.setTime(date);
+        Calendar today = Calendar.getInstance();
+
+        int yearDifference = today.get(Calendar.YEAR)
+                - birth.get(Calendar.YEAR);
+
+        if (today.get(Calendar.MONTH) < birth.get(Calendar.MONTH)) {
+            yearDifference--;
+        } else {
+            if (today.get(Calendar.MONTH) == birth.get(Calendar.MONTH)
+                    && today.get(Calendar.DAY_OF_MONTH) < birth
+                    .get(Calendar.DAY_OF_MONTH)) {
+                yearDifference--;
+            }
+
+        }
+
+        return yearDifference;
     }
 }

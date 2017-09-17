@@ -508,48 +508,6 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
 
     /**
-     * Método para salva pets
-     * //TODO MOVER PARA ACTIVITY DE CADASTRO DE PET
-     * @param entidade
-     */
-    private void salvarPet(Pet entidade) {
-        final Pet pet = entidade;
-
-        FirebaseConnection.getConnection();
-        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
-
-
-        connectedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    FirebaseConnection.getDatabase().child("pets").child(String.valueOf(pet.id)).setValue(pet);
-
-                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-                    geoFire.setLocation(pet.id, new GeoLocation(pet.localizacao.lat, pet.localizacao.lon), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (error != null) {
-                                System.err.println("There was an error saving the location to GeoFire: " + error);
-                            } else {
-                                System.out.println("Location saved on server successfully!");
-                            }
-                        }
-                    });
-                } else {
-                    //logar erro
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("Cancel", "Listener was cancelled");
-            }
-        });
-    }
-
-    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that

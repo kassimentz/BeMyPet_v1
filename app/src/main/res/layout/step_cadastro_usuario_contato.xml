@@ -21,6 +21,7 @@
             android:id="@+id/edtTelefone"
             style="@style/inputFormulario"
             android:hint="@string/telefone_placeholder"
+            android:inputType="phone"
             />
     </LinearLayout>
 
@@ -35,6 +36,7 @@
             android:id="@+id/edtEmail"
             style="@style/inputFormulario"
             android:hint="@string/email_placeholder"
+            android:inputType="textEmailAddress"
             />
     </LinearLayout>
 

@@ -122,4 +122,10 @@ public class Usuario {
                 ", token=" + token +
                 '}';
     }
+
+    public void addImagem(String url) {
+        if(url != null && !url.isEmpty()) {
+            imagens.add(url);
+        }
+    }
 }
