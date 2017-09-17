@@ -68,11 +68,13 @@
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
+    <string name="action_novo_pet">Novo Pet</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
     <string name="privacy_policy">Políticas de Privacidade</string>
     <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
     <string name="activity_title_cadastro_pet">Cadastro Pet</string>
     <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
+    <string name="required_field">Este campo é obrigatório</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -98,7 +100,7 @@
     <string name="sexoTitulo">Sexo</string>
     <string name="racaTitulo">Raça</string>
     <string name="idadeTitulo">Idade</string>
-    <string name="pesoTitulo">Peso</string>
+    <string name="pesoTitulo">Peso (KG)</string>
     <string name="castradoTitulo">Castrado</string>
     <string name="vermifugadoTitulo">Vermifugado</string>
     <string name="sociavelTitulo">Sociável</string>
@@ -258,9 +260,20 @@
     <string name="meus_pets">MEUS PETS</string>
 
     <string name="nome">Nome</string>
+    <string name="nome_pet_placeholder">Informe o nome do pet</string>
+    <string name="info_adicionais_placeholder">Informações adicionais</string>
+
+    <string name="txtNaoSei">
+        <![CDATA[
+        O campo <b>"NÃO SEI" </b> pode ser usado quando o pet ainda é muito novo, e você ainda não sabe identificar o sexo dele.
+        Sugerimos que visite o veterinário para verificar essa informação e, quando souber, volte para atualizá-la!
+        ]]>
+    </string>
+
     <string name="nome_placeholder">Informe seu nome completo</string>
     <string name="dataNascimento">Data de Nascimento</string>
     <string name="data_placeholder">00/00/0000</string>
+    <string name="ninhada_placeholder">Informe o nome da ninhada</string>
     <string name="cpf">CPF</string>
     <string name="cpf_placeholder">CPF (somente número)</string>
     <string name="cep">CEP</string>
@@ -296,6 +309,7 @@
     <string name="txtCuidadoPestes">TOMA CUIDADOS CONTRA PESTES?</string>
     <string name="txtGradeProtecao">TEM TELAS/GRADES DE PROTEÇÃO?</string>
     <string name="inforAdicional">INFORMAÇÕES ADICIONAIS</string>
+    <string name="petInfoAdicional">HISTÓRICO E INFORMAÇÕES ADICIONAIS</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
         Ao confirmar, você também estará confirmando um carinho, um lar e todas as condições necessárias
@@ -330,8 +344,25 @@
         <item>LOCALIDADE / MORADIA</item>
     </string-array>
 
+    <string-array name="steps_cadastro_pet_titles">
+        <item>Dados do Pet</item>
+        <item>Outras Informações</item>
+    </string-array>
+
     <string name="vertical_form_stepper_form_confirm_button">SALVAR</string>
     <string name="vertical_form_stepper_form_last_step">Salvar</string>
+    <string name="txtTituloNovoPet1">Preencha o formulário abaixo para realizar o cadastro do pet que você quer colocar para adoção!</string>
+    <string name="dadosPetTitulo">dados do pet</string>
+    <string name="naoSei">Não Sei</string>
+    <string name="txtNaoSeiDataNascimento">Se o pet faz parte de uma ninhada que está para nascer, coloque uma data aproximada para o nascimento. Sugerimos que, assim que a ninhada nascer e, se for necessário, volte para atualizá-la!</string>
+    <string name="fazParteNinhada">Faz parte de ninhada?</string>
+    <string name="nomeNinhada">Nome da Ninhada</string>
+    <string name="petCastradoTitulo">O pet foi castrado?</string>
+    <string name="petVermifugadoTitulo">o pet já foi vermifugado?</string>
+    <string name="primeiradose">1ª dose</string>
+    <string name="segundadose">2ª dose</string>
+    <string name="txtInfoAdicionalPet">Conte um pouco sobre o pet. Fale sobre seus pais, ou como foi encontrado. Seus irmãos e onde eles estão hoje. Histórico de doenças ou algum tratamento (passado ou em andamento). Se ele possui alguma condição ou necessidades especiais. Qualquer informação será útil.</string>
+    <string name="txtConcluirCadastro">Ao concluir o cadastro do pet, responsabilizo-me sobre as informações fornecidas, atestando a veracidade das mesmas.</string>
 
     <string-array name="spinnerUF">
         <item>item1</item>
