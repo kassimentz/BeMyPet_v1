@@ -9,7 +9,6 @@
         android:layout_height="1dp"
         android:background="@color/OrangeApp" />
 
-    <!--vc teve petsx-->
     <LinearLayout style="@style/layoutLinha">
 
         <TextView
@@ -20,6 +19,7 @@
     <LinearLayout style="@style/layoutLinha">
 
         <RadioGroup
+            android:id="@+id/radioGroupTevePet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -33,7 +33,8 @@
             <RadioButton
                 android:id="@+id/rbTevePetsNAO"
                 style="@style/checkBoxFormulario"
-                android:text="@string/nao" />
+                android:text="@string/nao"
+                android:checked="true"/>
         </RadioGroup>
     </LinearLayout>
 
@@ -57,10 +58,11 @@
                 android:src="@drawable/remove_number"
                 />
 
-            <EditText
-                android:id="@+id/edtTevePets"
+            <TextView
+                android:id="@+id/txtTevePets"
                 style="@style/inputFormulario"
                 android:layout_weight="10"
+                android:textAlignment="center"
                  />
 
             <ImageView
@@ -184,6 +186,7 @@
     <LinearLayout style="@style/layoutLinha">
 
         <RadioGroup
+            android:id="@+id/radioGroupTemPet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -220,10 +223,11 @@
                 android:onClick="diminueQuantidaTemPet"
                 android:src="@drawable/remove_number" />
 
-            <EditText
-                android:id="@+id/edtTemPets"
+            <TextView
+                android:id="@+id/txtTemPets"
                 style="@style/inputFormulario"
-                android:layout_weight="10" />
+                android:layout_weight="10"
+                android:textAlignment="center"/>
 
             <ImageView
                 android:id="@+id/btMaisTem"
@@ -266,10 +270,5 @@
 
         </LinearLayout>
     </LinearLayout>
-
-
-
-
-
 
 </LinearLayout>

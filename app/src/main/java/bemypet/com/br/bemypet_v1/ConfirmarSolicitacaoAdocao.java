@@ -189,7 +189,9 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         List<String> tiposPetsTeve = new ArrayList<>();
         tiposPetsTeve.add("gato");
         adocao.tiposPetsTeve = tiposPetsTeve;
-        adocao.oQueAconteceuComEles = "continuam comigo";
+        List<String> oQueAconteceuComEles = new ArrayList<>();
+        oQueAconteceuComEles.add("continuam comigo");
+        adocao.oQueAconteceuComEles = oQueAconteceuComEles;
         adocao.temPetAtualmente = Boolean.TRUE;
         adocao.quantosPetsTem = 2;
         adocao.tiposPetsTem = tiposPetsTeve;
