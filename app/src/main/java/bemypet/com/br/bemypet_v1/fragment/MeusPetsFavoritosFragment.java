@@ -4,11 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import bemypet.com.br.bemypet_v1.R;
+import bemypet.com.br.bemypet_v1.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,9 @@ public class MeusPetsFavoritosFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View rootView;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,14 +68,40 @@ public class MeusPetsFavoritosFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_pets, menu);
+        return;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.novo_pet:
+                Utils.showToastMessage(getContext(), "adicionar pet");
+                return true;
+
+            default:
+                break;
+        }
+
+        return false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meus_pets_favoritos, container, false);
+        //return inflater.inflate(R.layout.fragment_meus_pets_favoritos, container, false);
+        rootView = inflater.inflate(R.layout.fragment_meus_pets_favoritos, container, false);
+        setHasOptionsMenu(true);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
