@@ -34,11 +34,30 @@ public class Usuario {
     public List<Notificacoes> notificacoes;
     public String token;
 
+    
     public Usuario() {
-        id = UUID.randomUUID().toString();
-        imagens = new ArrayList<>();
-        petsFavoritos = new ArrayList<>();
+        this.id = UUID.randomUUID().toString();
+        this.nome = "";
+        this.imagens = new ArrayList<>();
+        this.dataNascimento = "";
+        this.cpf = "";
+        this.localizacao = new PontoGeo();
+        this.cep = 0;
+        this.endereco = "";
+        this.numero = 0;
+        this.complemento = "";
+        this.bairro = "";
+        this.cidade = "";
+        this.estado = "";
+        this.telefone = "";
+        this.email = "";
+        this.meusPets = new ArrayList<>();
+        this.petsFavoritos = new ArrayList<>();
+        this.denuncias = new ArrayList<>();
+        this.notificacoes = new ArrayList<>();
+        this.token = "";
     }
+
 
     public Usuario(String nome, List<String> imagens, String dataNascimento, String cpf,
                       PontoGeo localizacao, Integer cep, String endereco, Integer numero,
