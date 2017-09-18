@@ -289,7 +289,6 @@ public class PerfilPetActivity extends AppCompatActivity {
         bundle.putSerializable("pet", new Gson().toJson(getPet()));
         intent.putExtras(bundle);
         startActivityForResult(intent, 1);
-        this.finish();
     }
 
     public void confirmarSolicitacaoAdocao(View v) {

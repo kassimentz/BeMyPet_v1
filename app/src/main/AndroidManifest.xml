@@ -168,7 +168,7 @@
         <activity
             android:name=".CadastroPetActivity"
             android:label="@string/activity_title_cadastro_pet"
-            android:parentActivityName=".CadastroPetActivity">
+            android:parentActivityName=".InicialActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

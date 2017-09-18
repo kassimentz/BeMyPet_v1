@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.support.v4.app.ActivityCompat;
@@ -123,6 +124,17 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             setPet(pet);
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getBundle() {
@@ -418,8 +430,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
                     }
                 });
-
-
 
             }
 
