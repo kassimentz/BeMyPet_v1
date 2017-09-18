@@ -12,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -234,21 +238,10 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                 Pet pet = null;
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
-                    try {
-                        pet = postSnapshot.getValue(Pet.class);
-                        if(pet.cadastroAtivo && pet.status.equalsIgnoreCase(Constants.STATUS_PET_DISPONIVEL)) {
-                            options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
-                            options.title(pet.nome);
-                            Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
-                            options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
-                            Marker m = getMap().addMarker(options);
-                            m.setTag(pet);
-
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                    pet = postSnapshot.getValue(Pet.class);
+                    if(pet.cadastroAtivo && pet.status.equalsIgnoreCase(Constants.STATUS_PET_DISPONIVEL)) {
+                        final Pet bkpPet = pet;
+                        gerarMarcadorNoMapa(bkpPet);
                     }
                 }
             }
@@ -258,6 +251,24 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         });
 
         setZoomIn();
+    }
+
+    private void gerarMarcadorNoMapa(final Pet bkpPet) {
+        Glide.with(getActivity())
+                .asBitmap()
+                .load(bkpPet.imagens.get(0))
+                .apply(RequestOptions.circleCropTransform())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        options.position(new LatLng((bkpPet.localizacao.lat), bkpPet.localizacao.lon));
+                        options.title(bkpPet.nome);
+                        Bitmap smallMarker = Bitmap.createScaledBitmap(resource, 70, 70, false);
+                        options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                        Marker m = getMap().addMarker(options);
+                        m.setTag(bkpPet);
+                    }
+                });
     }
 
     /**
@@ -281,9 +292,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
                             if(pet.id.equals(idFound)) {
-                                options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
-                                options.title(pet.nome);
-                                getMap().addMarker(options);
+                                final Pet bkpPet = pet;
+                                gerarMarcadorNoMapa(bkpPet);
 
                             }
                         }
@@ -348,19 +358,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                                     Pet petFiltrado = filtrarPet(pet, filtro);
                                     if (petFiltrado != null) {
 
-                                        try {
-                                            options.position(new LatLng((pet.localizacao.lat), pet.localizacao.lon));
-                                            options.title(pet.nome);
-                                            Bitmap bmImg = Ion.with(getContext()).load(pet.imagens.get(0)).asBitmap().get();
-                                            options.icon(BitmapDescriptorFactory.fromBitmap(Utils.getRoundedCroppedBitmap(bmImg, 90)));
-                                            Marker m = getMap().addMarker(options);
-                                            m.setTag(pet);
-
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        } catch (ExecutionException e) {
-                                            e.printStackTrace();
-                                        }
+                                        final Pet bkpPet = pet;
+                                        gerarMarcadorNoMapa(bkpPet);
                                     }
                                 }
                             }

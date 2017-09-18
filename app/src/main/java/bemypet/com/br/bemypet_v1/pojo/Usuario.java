@@ -34,7 +34,7 @@ public class Usuario {
     public List<Notificacoes> notificacoes;
     public String token;
 
-    
+
     public Usuario() {
         this.id = UUID.randomUUID().toString();
         this.nome = "";
