@@ -16,8 +16,8 @@
     <dimen name="nav_header_height">170dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="profile_width">100dp</dimen>
-    <dimen name="profile_height">100dp</dimen>
+    <dimen name="profile_width">85dp</dimen>
+    <dimen name="profile_height">85dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
