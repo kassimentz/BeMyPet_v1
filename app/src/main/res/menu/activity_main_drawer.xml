@@ -15,10 +15,10 @@
             android:icon="@drawable/fav1_w"
             android:title="@string/nav_meus_pets" />
 
-        <item
-            android:id="@+id/nav_configuracoes"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="@string/nav_configuracoes" />
+        <!--<item-->
+            <!--android:id="@+id/nav_configuracoes"-->
+            <!--android:icon="@drawable/ic_settings_black_24dp"-->
+            <!--android:title="@string/nav_configuracoes" />-->
 
         <item
             android:id="@+id/nav_ajuda"
