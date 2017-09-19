@@ -48,6 +48,10 @@
     <string name="nav_sobre">Sobre</string>
     <string name="nav_ajuda">Ajuda</string>
 
+    <string name="denunciar">Sim, Denunciar!</string>
+    <string name="cancelar">Cancelar</string>
+
+
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
         <item>BeMyPet</item>
@@ -379,6 +383,7 @@
     <string name="polAdocao5">Não destinar o animal a cria ou reprodução.</string>
     <string name="polAdocao6">- Se não puder assumir as responsabilidades, não o abandone. Entre em contato novamente com seu antigo dono.</string>
     <string name="sobre">O BeMyPet é um aplicativo com o intuito de facilitar a adoção de pets e a publicação de anúncios sobre pets disponíveis para adoção. Nosso intuito é diminuir a quantidade de animais abandonados e ajudá-los a encontrar um novo lar.</string>
+    <string name="title_activity_denuncia_usuario">DenunciaUsuarioActivity</string>
 
 
 </resources>

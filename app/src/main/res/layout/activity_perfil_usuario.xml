@@ -74,8 +74,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignRight="@+id/nomeUsuario"
-                    android:src="@drawable/edit"
-                    android:onClick="editaPerilUsuario"/>
+                    android:onClick="editaPerilUsuario"
+                    android:src="@drawable/edit" />
 
             </RelativeLayout>
 
@@ -92,8 +92,8 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:padding="15dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <!--campos para data nascimento e CPF-->
                 <LinearLayout style="@style/layoutLinha">
@@ -111,7 +111,8 @@
 
                     </LinearLayout>
 
-                    <LinearLayout style="@style/colunaComCheckbox"
+                    <LinearLayout
+                        style="@style/colunaComCheckbox"
                         android:layout_height="match_parent"
                         android:gravity="bottom">
 
@@ -274,14 +275,14 @@
                             android:background="@color/OrangeApp" />
 
                         <TextView
-                            android:textSize="14dp"
-                            android:textAllCaps="true"
-                            android:textStyle="bold"
-                            android:textColor="@color/OrangeApp"
-                            android:text="@string/meus_pets"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp" />
+                            android:layout_margin="5dp"
+                            android:text="@string/meus_pets"
+                            android:textAllCaps="true"
+                            android:textColor="@color/OrangeApp"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="fill_parent"
@@ -305,13 +306,13 @@
                     android:paddingBottom="15dp">
 
                     <GridView
-                        android:numColumns="auto_fit"
-                        android:gravity="center"
-                        android:columnWidth="80dp"
-                        android:stretchMode="columnWidth"
+                        android:id="@+id/grid"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/grid" />
+                        android:columnWidth="80dp"
+                        android:gravity="center"
+                        android:numColumns="auto_fit"
+                        android:stretchMode="columnWidth" />
 
                 </LinearLayout>
 
