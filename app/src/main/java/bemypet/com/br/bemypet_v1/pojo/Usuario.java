@@ -15,6 +15,7 @@ public class Usuario {
 
     public String id;
     public String nome;
+    public String senha;
     public List<String> imagens;
     public String dataNascimento;
     public String cpf;
@@ -37,6 +38,7 @@ public class Usuario {
 
     public Usuario() {
         this.id = UUID.randomUUID().toString();
+        this.senha = "";
         this.nome = "";
         this.imagens = new ArrayList<>();
         this.dataNascimento = "";
@@ -59,13 +61,14 @@ public class Usuario {
     }
 
 
-    public Usuario(String nome, List<String> imagens, String dataNascimento, String cpf,
+    public Usuario(String nome, String senha, List<String> imagens, String dataNascimento, String cpf,
                       PontoGeo localizacao, Integer cep, String endereco, Integer numero,
                       String complemento, String bairro, String cidade, String estado,
                       String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
                       List<Denuncias> denuncias, List<Notificacoes> notificacoes, String token) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
+        this.senha = senha;
         this.imagens = imagens;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
@@ -119,6 +122,8 @@ public class Usuario {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
+        result.put("nome", nome);
+        result.put("senha", senha);
         result.put("imagens", imagens);
         result.put("dataNascimento", dataNascimento);
         result.put("cpf", cpf);
