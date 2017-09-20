@@ -37,6 +37,7 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
 
     private Pet pet;
     private Usuario usuario;
+    private Adocao adocao;
     private ImageView header_cover_image, user_profile_photo;
     private TextView user_profile_name, txtParagrafo3;
 
@@ -97,16 +98,23 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
     }
 
     private void getBundle() {
-        String jsonObj = null;
+        String jsonPet = null, jsonAdocao = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            jsonObj = extras.getString("pet");
+            jsonPet = extras.getString("pet");
+            jsonAdocao = extras.getString("adocao");
         }
-        Pet pet = new Gson().fromJson(jsonObj, Pet.class);
+        Pet pet = new Gson().fromJson(jsonPet, Pet.class);
+        Adocao adocaoTmp = new Gson().fromJson(jsonAdocao, Adocao.class);
 
         if(pet != null) {
             setPet(pet);
-            System.out.println(pet.toString());
+        }
+
+        if(adocaoTmp != null) {
+            System.out.println("adocao");
+            System.out.println(adocaoTmp.toString());
+            setAdocao(adocaoTmp);
         }
     }
 
@@ -139,15 +147,15 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
     public void aplicarConfirmacaoSolicitacaoAdocao(View v) {
 
         Notificacoes notificacao = new Notificacoes();
-        notificacao.destinatarioId = getPet().doador.id;
+        notificacao.destinatarioId = getPet().atualDonoID;
         notificacao.mensagem = "Boas notícias! "+getUsuario().nome+" gostaria de adotar "+getPet().nome+"!";
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
-        notificacao.titulo = getPet().nome + "encontrou um novo amigo(a)!";
+        notificacao.titulo = getPet().nome + " encontrou um novo amigo(a)!";
         notificacao.statusNotificacao = Constants.STATUS_NOTIFICACAO_REQUER_RESPOSTA;
         notificacao.topico = Constants.TOPICO_SOLICITACAO_ADOCAO;
         notificacao.lida = Boolean.FALSE;
-        notificacao.adocao = criarAdocaoMockada();
+        notificacao.adocao = getAdocao();
         notificacao.denuncia = null;
 
 
@@ -180,63 +188,35 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
             alertDialog.show();
     }
 
-    //TODO APAGAR QUANDO O FORMULARIO ESTIVER OK. USUARIO SÓ PRA MOCK
-    private Adocao criarAdocaoMockada() {
-        //TODO receber essa adocao do formulario preenchido via bundle
-        Adocao adocao = new Adocao();
-        adocao.jaTeveOutrosPets = Boolean.TRUE;
-        adocao.quantosPetsTeve = 2;
-        List<String> tiposPetsTeve = new ArrayList<>();
-        tiposPetsTeve.add("gato");
-        adocao.tiposPetsTeve = tiposPetsTeve;
-        List<String> oQueAconteceuComEles = new ArrayList<>();
-        oQueAconteceuComEles.add("continuam comigo");
-        adocao.oQueAconteceuComEles = oQueAconteceuComEles;
-        adocao.temPetAtualmente = Boolean.TRUE;
-        adocao.quantosPetsTem = 2;
-        adocao.tiposPetsTem = tiposPetsTeve;
-        adocao.tipoMoradia = "apto";
-        adocao.possuiPatio = Boolean.FALSE;
-        adocao.temCuidadoContraPestes = Boolean.TRUE;
-        adocao.possuiTelasProtecao = Boolean.TRUE;
-        adocao.informacoesAdicionais = "bla bla bla";
-        adocao.statusAdocao = Constants.TIPO_NOTIFICACAO_SOLICITADA_ADOCAO;
-        adocao.pet = getPet();
-        adocao.adotante = getUsuario();
-        adocao.doador = getPet().doador;
-
-//        salvarAdocao(adocao);
-        return adocao;
-
-    }
-
     private void updateStatusPet() {
         final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
         myRef.child(getPet().id).child("status").setValue(getPet().status);
     }
 
-    private void salvarNotificacao(Notificacoes data) {
-        final Notificacoes notificacao = data;
+
+
+    private void salvarNotificacao(Notificacoes entidade) {
+        final Notificacoes saveN = entidade;
+
         FirebaseConnection.getConnection();
         DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+
         connectedReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
-                    FirebaseConnection.getDatabase().child("notificacoes").child(String.valueOf(notificacao.id)).setValue(notificacao);
+                    FirebaseConnection.getDatabase().child("notificacoes").child(String.valueOf(saveN.id)).setValue(saveN);
                 } else {
                     //logar erro
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 //Log.i("Cancel", "Listener was cancelled");
             }
         });
     }
-
 
 
     public Pet getPet() {
@@ -255,4 +235,11 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         this.usuario = usuario;
     }
 
+    public Adocao getAdocao() {
+        return adocao;
+    }
+
+    public void setAdocao(Adocao adocao) {
+        this.adocao = adocao;
+    }
 }

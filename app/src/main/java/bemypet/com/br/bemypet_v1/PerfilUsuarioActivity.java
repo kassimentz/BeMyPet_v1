@@ -195,11 +195,13 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
                     for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         pet = postSnapshot.getValue(Pet.class);
-                        if(pet.atualDonoID.equalsIgnoreCase(getUsuario().id)) {
-                            petsUsuario.add(pet);
-                            nomes.add(pet.nome);
-                            if(pet.imagens.size() > 0) {
-                                images.add(pet.imagens.get(0));
+                        if(pet != null) {
+                            if (pet.atualDonoID.equalsIgnoreCase(getUsuario().id)) {
+                                petsUsuario.add(pet);
+                                nomes.add(pet.nome);
+                                if (pet.imagens.size() > 0) {
+                                    images.add(pet.imagens.get(0));
+                                }
                             }
                         }
                     }

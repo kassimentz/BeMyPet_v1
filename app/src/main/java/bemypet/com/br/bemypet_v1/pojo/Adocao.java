@@ -88,7 +88,7 @@ public class Adocao {
     public String toString() {
         return "Adocao{" +
                 "id=" + id +
-                "jaTeveOutrosPets=" + jaTeveOutrosPets +
+                ", jaTeveOutrosPets=" + jaTeveOutrosPets +
                 ", quantosPetsTeve=" + quantosPetsTeve +
                 ", tiposPetsTeve=" + tiposPetsTeve +
                 ", oQueAconteceuComEles=" + oQueAconteceuComEles +
