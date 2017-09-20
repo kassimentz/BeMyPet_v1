@@ -675,14 +675,16 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         getPet().vermifugado = vermifugado.getText().toString();
 
 
-        if(!erro) {
+//        if(!erro) {
             //verificar se veio de edicao ou novo pet
             if(origem.isEmpty()) {
+                System.out.println("origem empty");
                 salvarNovoPet(getPet());
             }else {
+                System.out.println("nnot empty");
                 salvarPetEditado();
             }
-        }
+//        }
 
 
     }
@@ -772,49 +774,22 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     /**
      * Método para salva pets
-     * @param entidade
+     * @param data
      */
-    private void salvarNovoPet(Pet entidade) {
-        final Pet pet = entidade;
-
-        FirebaseConnection.getConnection();
-        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+    private void salvarNovoPet(Pet data) {
+        final Pet localPet = data;
 
 
-        connectedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    FirebaseConnection.getDatabase().child("pets").child(String.valueOf(pet.id)).setValue(pet);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("pets");
 
-                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-                    geoFire.setLocation(pet.id, new GeoLocation(pet.localizacao.lat, pet.localizacao.lon), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (error != null) {
-                                System.err.println("There was an error saving the location to GeoFire: " + error);
-                            } else {
-                                System.out.println("Location saved on server successfully!");
+        myRef.child(data.id).setValue(data);
 
-                                Intent intent = new Intent(CadastroPetActivity.this, PerfilPetActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("pet", new Gson().toJson(getPet()));
-                                intent.putExtras(bundle);
-                                startActivityForResult(intent, 1);
-                                CadastroPetActivity.this.finish();
-                            }
-                        }
-                    });
-                } else {
-                    //logar erro
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("Cancel", "Listener was cancelled");
-            }
-        });
+        Intent intent = new Intent(CadastroPetActivity.this, PerfilPetActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pet", new Gson().toJson(localPet));
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 1);
+        CadastroPetActivity.this.finish();
     }
 }
