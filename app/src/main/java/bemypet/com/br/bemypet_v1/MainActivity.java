@@ -1,6 +1,8 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,11 +113,30 @@ public class MainActivity extends AppCompatActivity {
                     //ff0c5d8e-558e-4c45-8a34-ef34dc8a3dc1
                     //b96b7698-aede-48df-9ffe-89704646768a
                     if(usuario.id.equalsIgnoreCase("ff0c5d8e-558e-4c45-8a34-ef34dc8a3dc1")) {
-                        System.out.println("salvando usuario "+ usuario.nome);
-                        Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
-                        Intent intent = new Intent(MainActivity.this, InicialActivity.class);
-                        startActivity(intent);
-                        MainActivity.this.finish();
+
+
+                        if(usuario.denuncias != null && usuario.denuncias.size() > 10) {
+                            AlertDialog.Builder dialogAprovado = new AlertDialog.Builder(getApplicationContext());
+                            dialogAprovado.setTitle("Número máximo de denúncias atingido!");
+                            dialogAprovado
+                                    .setMessage("Você possui mais de 10 denúncias no aplicativo. Isso significa que você está impedido temporariamente de utilizar o aplicativo. Entre em contato com os administradores.")
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            MainActivity.this.finish();
+                                        }
+                                    });
+
+                            AlertDialog alert = dialogAprovado.create();
+                            alert.show();
+                        } else {
+                            Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
+                            Intent intent = new Intent(MainActivity.this, InicialActivity.class);
+                            startActivity(intent);
+                            MainActivity.this.finish();
+                        }
+
                     }
 
 
