@@ -104,7 +104,7 @@ public class DenunciarUsuarioActivity extends AppCompatActivity {
         notificacao.titulo = "Be My Pet - Denúncia Recebida";
         notificacao.statusNotificacao = Constants.STATUS_NOTIFICACAO_ENVIADA;
         notificacao.tipoNotificacao = getDenuncia().tipo;
-        notificacao.topico = getDenuncia().tipo;
+        notificacao.topico = Constants.TOPICO_DENUNCIA;
         notificacao.lida = Boolean.FALSE;
         notificacao.adocao = null;
         notificacao.denuncia = getDenuncia();

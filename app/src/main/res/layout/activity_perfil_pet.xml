@@ -58,14 +58,16 @@
                 android:paddingBottom="10dp">
 
 
+
                 <ImageView
                     android:id="@+id/imgFavoritarPet"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="16dp"
-                    android:onClick="favoritarPet"
-                    android:src="@drawable/fav2_v" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="35dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="-16dp"
+                    android:src="@drawable/fav2_v"
+                    android:onClick="favoritarPet"/>
 
 
                 <TextView
@@ -80,6 +82,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/btnEditarPet"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:padding="35dp"

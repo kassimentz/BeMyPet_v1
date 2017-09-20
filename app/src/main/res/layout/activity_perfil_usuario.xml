@@ -70,12 +70,17 @@
                     android:textSize="24sp"
                     android:textStyle="normal" />
 
+
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignRight="@+id/nomeUsuario"
-                    android:onClick="editaPerilUsuario"
-                    android:src="@drawable/edit" />
+                    android:id="@+id/btnEditarUsuario"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="-16dp"
+                    android:src="@drawable/edit"
+                    android:onClick="editaPerilUsuario"/>
 
             </RelativeLayout>
 

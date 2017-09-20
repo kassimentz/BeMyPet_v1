@@ -342,7 +342,7 @@ public class Utils {
      * gera um usuario mockado enquanto os cadastros nao estao prontos
      * @return
      */
-    public static Usuario instanciarUsuario(String nome) {
+    public static Usuario instanciarUsuario(String nome, Context context) {
         Usuario usuario = new Usuario();
 
         usuario.nome = nome;
@@ -351,7 +351,7 @@ public class Utils {
         usuario.imagens = imagens;
         usuario.dataNascimento = "28/11/1986";
         usuario.cpf = "001.239.752.23";
-        usuario.localizacao = new PontoGeo(-29.856, -51.234);
+
         usuario.cep = 91120415;
         usuario.endereco = "diomario moojen";
         usuario.numero = 150;
@@ -361,10 +361,13 @@ public class Utils {
         usuario.estado = "RS";
         usuario.telefone = "81111111";
         usuario.email = "kassi@teste.com";
-        usuario.meusPets = new ArrayList<Pet>();
-        usuario.petsFavoritos = new ArrayList<Pet>();
-        usuario.denuncias = new ArrayList<Denuncias>();
-        usuario.notificacoes = new ArrayList<Notificacoes>();
+        LatLng latlong = Utils.getLocationFromAddress(context, usuario.getLogradouro());
+        PontoGeo pontoGeo = new PontoGeo(latlong.latitude, latlong.longitude);
+        usuario.localizacao = pontoGeo;
+        usuario.meusPets = null;
+        usuario.petsFavoritos = null;
+        usuario.denuncias = null;
+        usuario.notificacoes = null;
         return usuario;
     }
 

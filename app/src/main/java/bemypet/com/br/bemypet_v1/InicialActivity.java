@@ -84,6 +84,7 @@ public class InicialActivity extends AppCompatActivity {
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
 
         LinearLayout header = (LinearLayout) navHeader.findViewById(R.id.headerProfile);
+        updateUsuario();
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +105,6 @@ public class InicialActivity extends AppCompatActivity {
 //            }
 //        });
 
-        updateUsuario();
 
         loadNavHeader();
 
@@ -120,7 +120,10 @@ public class InicialActivity extends AppCompatActivity {
     private void updateUsuario() {
         Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
         if(usuarioLogado != null) {
+            System.out.println(usuarioLogado);
             setUsuarioLogado(usuarioLogado);
+        } else {
+            System.out.print("nao tem usuario no shared");
         }
     }
 
@@ -294,14 +297,15 @@ public class InicialActivity extends AppCompatActivity {
      */
     private void loadNavHeader() {
 
-        if(getUsuarioLogado() != null) {
-            txtNomeUsuario.setText(getUsuarioLogado().nome);
-            txtTipoUsuario.setText(getUsuarioLogado().email);
+        if(getUsuarioLogado() == null) {
+            updateUsuario();
+        }
+        txtNomeUsuario.setText(getUsuarioLogado().nome);
+        txtTipoUsuario.setText(getUsuarioLogado().email);
 
-            // Loading profile image
-            if(getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
-                Glide.with(this).load(getUsuarioLogado().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
-            }
+        // Loading profile image
+        if(getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
+            Glide.with(this).load(getUsuarioLogado().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         }
         // showing dot next to notifications label
         //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);

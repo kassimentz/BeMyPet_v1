@@ -398,7 +398,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         }
 
         getUsuario().petsFavoritos = new ArrayList<>();
-
+        getUsuario().meusPets = new ArrayList<>();
 
         salvarUsuario();
 
@@ -421,6 +421,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         myRef.child(getUsuario().id).child("telefone").setValue(getUsuario().telefone);
         myRef.child(getUsuario().id).child("email").setValue(getUsuario().email);
         myRef.child(getUsuario().id).child("petsFavoritos").setValue(getUsuario().petsFavoritos);
+        myRef.child(getUsuario().id).child("meusPets").setValue(getUsuario().meusPets);
 
         //atualizando o usuario logado com os novos dados
         Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuario());

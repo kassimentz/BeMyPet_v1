@@ -32,6 +32,7 @@ import java.util.List;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Adocao;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
+import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -123,6 +124,11 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
         txtTevePets = (TextView) findViewById(R.id.txtTevePets);
         txtTemPets = (TextView) findViewById(R.id.txtTemPets);
+        txtTevePets.setText("0");
+        txtTemPets.setText("0");
+        txtTevePets.setEnabled(Boolean.FALSE);
+        txtTemPets.setEnabled(Boolean.FALSE);
+
         radioGroupTevePet = (RadioGroup) findViewById(R.id.radioGroupTevePet);
         radioGroupTemPet = (RadioGroup) findViewById(R.id.radioGroupTemPet);
         radioGroupTipoMoradia = (RadioGroup) findViewById(R.id.radioGroupTipoMoradia);
@@ -130,8 +136,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
         rbTevePetsSIM = (RadioButton)  findViewById(R.id.rbTevePetsSIM);
         rbTemPetsNAO = (RadioButton)  findViewById(R.id.rbTemPetsNAO);
         rbTemPetsSIM = (RadioButton)  findViewById(R.id.rbTemPetsSIM);
-        txtTevePets.setText("0");
-        txtTemPets.setText("0");
+
 
         radioGroupTevePet.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -388,22 +393,14 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
         if(!txtTevePets.getText().toString().equalsIgnoreCase("0") && rbTevePetsSIM.isChecked()){
             getAdocao().quantosPetsTeve = Integer.parseInt(txtTevePets.getText().toString());
-            erro = Boolean.FALSE;
         } else if(txtTevePets.getText().toString().equalsIgnoreCase("0") && rbTevePetsNAO.isChecked()) {
             getAdocao().quantosPetsTeve = Integer.parseInt(txtTevePets.getText().toString());
-        }else{
-            txtTevePets.setError("Informe a quantidade de de Pets que já teve");
-            erro = Boolean.TRUE;
         }
         
         if(!txtTemPets.getText().toString().equalsIgnoreCase("0") && rbTemPetsSIM.isChecked()){
             getAdocao().quantosPetsTem = Integer.parseInt(txtTemPets.getText().toString());
-            erro = Boolean.FALSE;
         } else if(txtTemPets.getText().toString().equalsIgnoreCase("0") && rbTemPetsNAO.isChecked()) {
             getAdocao().quantosPetsTem = Integer.parseInt(txtTemPets.getText().toString());
-        }else{
-            txtTemPets.setError("Informe a quantidade de de Pets que já tem");
-            erro = Boolean.TRUE;
         }
 
 
@@ -484,9 +481,11 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
             getAdocao().informacoesAdicionais = "";
         }
 
-
+        getAdocao().adotante = Utils.getUsuarioSharedPreferences(getApplicationContext());
+        getAdocao().doador = getPet().doador;
+        getAdocao().pet = getPet();
         if(!erro) {
-            salvarAdocao(adocao);
+            salvarAdocao(getAdocao());
             
         }
     }
@@ -494,10 +493,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
     //cria steps
     private View criaStepOutrosPets(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        outrosPestsStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_adocao_outros_pets, null, false);
-
-
+        outrosPestsStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_adocao_outros_pets, null, false);
         //valida os dados do formulário se passar vai para proximo
 //        verticalStepperForm.goToNextStep();
 
@@ -506,8 +502,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
     private View criaStepLocalizacao(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        localizacaoStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_adocao_localizacao, null, false);
+        localizacaoStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_adocao_localizacao, null, false);
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();
@@ -516,8 +511,10 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
     }
 
 
-    private void salvarAdocao(Adocao data) {
-        final Adocao adocao = data;
+
+    private void salvarAdocao(Adocao entidade) {
+        final Adocao saveA = entidade;
+
         FirebaseConnection.getConnection();
         DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedReference.addValueEventListener(new ValueEventListener() {
@@ -525,11 +522,12 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
+                    FirebaseConnection.getDatabase().child("adocoes").child(String.valueOf(saveA.id)).setValue(saveA);
 
-                    FirebaseConnection.getDatabase().child("adocoes").child(String.valueOf(adocao.id)).setValue(adocao);
                     Intent intent = new Intent(CadastroAdocaoActivity.this, ConfirmarSolicitacaoAdocao.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("pet", new Gson().toJson(getPet()));
+                    bundle.putSerializable("adocao", new Gson().toJson(getAdocao()));
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
@@ -545,6 +543,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
             }
         });
     }
+
 
     public void somaQuantidadeTevePet(View v){
         qtdTeve = qtdTeve + 1;

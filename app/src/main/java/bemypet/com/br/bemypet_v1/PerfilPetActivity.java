@@ -52,12 +52,13 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
             pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet, txtOutrasInformacoes;
-    private ImageView header_cover_image, user_profile_photo, imgFavoritarPet;
+    private ImageView header_cover_image, user_profile_photo, imgFavoritarPet, btnEditarPet;
     private Button buttonPerfil;
 
     private Usuario usuarioLogado;
 
     Boolean esconderBotaoAdotar = Boolean.FALSE;
+    Boolean esconderBotaoEditar = Boolean.FALSE;
     Boolean petFavoritado = Boolean.TRUE;
 
     CallbackManager callbackManager;
@@ -154,6 +155,7 @@ public class PerfilPetActivity extends AppCompatActivity {
         user_profile_name = (TextView) findViewById(R.id.user_profile_name);
         txtOutrasInformacoes = (TextView) findViewById(R.id.txtOutrasInformacoes);
         imgFavoritarPet = (ImageView) findViewById(R.id.imgFavoritarPet);
+        btnEditarPet = (ImageView) findViewById(R.id.btnEditarPet);
         especiePerfilPet = (TextView) findViewById(R.id.especiePerfilPet);
         sexoPerfilPet = (TextView) findViewById(R.id.sexoPerfilPet);
         racaPerfilPet = (TextView) findViewById(R.id.racaPerfilPet);
@@ -177,6 +179,7 @@ public class PerfilPetActivity extends AppCompatActivity {
                 key = extras.getString("key");
                 if(!key.isEmpty()) {
                     setEsconderBotaoAdotar(Boolean.TRUE);
+                    setEsconderBotaoEditar(Boolean.FALSE);
                 }
             }
         }
@@ -192,16 +195,23 @@ public class PerfilPetActivity extends AppCompatActivity {
                 setUsuarioLogado(usuarioTmp);
                 if(getPet().atualDonoID.equalsIgnoreCase(getUsuarioLogado().id)) {
                     setEsconderBotaoAdotar(Boolean.TRUE);
+                    setEsconderBotaoEditar(Boolean.FALSE);
+                } else {
+                    setEsconderBotaoEditar(Boolean.TRUE);
                 }
-                for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
-                    if(petTmp.id.equalsIgnoreCase(getPet().id)) {
-                        imgFavoritarPet.setImageResource(R.drawable.fav1);
-                        petFavoritado = Boolean.TRUE;
-                        break;
-                    } else {
-                        imgFavoritarPet.setImageResource(R.drawable.fav2_v);
-                        petFavoritado = Boolean.FALSE;
+                if(getUsuarioLogado().petsFavoritos.size() > 0) {
+                    for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
+                        if(petTmp.id.equalsIgnoreCase(getPet().id)) {
+                            imgFavoritarPet.setImageResource(R.drawable.fav1);
+                            petFavoritado = Boolean.TRUE;
+                            break;
+                        } else {
+                            imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+                            petFavoritado = Boolean.FALSE;
+                        }
                     }
+                } else {
+                    petFavoritado = Boolean.FALSE;
                 }
 
             } else {
@@ -223,6 +233,12 @@ public class PerfilPetActivity extends AppCompatActivity {
             buttonPerfil.setVisibility(View.INVISIBLE);
         } else {
             buttonPerfil.setVisibility(View.VISIBLE);
+        }
+
+        if(getEsconderBotaoEditar()) {
+            btnEditarPet.setVisibility(View.INVISIBLE);
+        } else {
+            btnEditarPet.setVisibility(View.VISIBLE);
         }
 
         if(getPet().imagens.size() > 0) {
@@ -301,13 +317,21 @@ public class PerfilPetActivity extends AppCompatActivity {
     }
 
     public void favoritarPet(View v) {
+        System.out.println("favoritarPet");
         if(petFavoritado == Boolean.FALSE) {
+            System.out.println("favoritarPet pet favoritado false");
             getUsuarioLogado().addFavorito(getPet());
+            System.out.println("favoritarPet pet adicionado");
             imgFavoritarPet.setImageResource(R.drawable.fav1);
+            System.out.println("favoritarPet trocou a imagem");
             petFavoritado = Boolean.TRUE;
         } else {
+            System.out.println("favoritarPet pet favoritado true");
             getUsuarioLogado().removerFavorito(getPet());
+            System.out.println("favoritarPet pet removido");
             imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+            petFavoritado = Boolean.FALSE;
+            System.out.println("favoritarPet trocou a imagem");
         }
         updateUsuario();
     }
@@ -405,4 +429,11 @@ public class PerfilPetActivity extends AppCompatActivity {
         return false;
     }
 
+    public Boolean getEsconderBotaoEditar() {
+        return esconderBotaoEditar;
+    }
+
+    public void setEsconderBotaoEditar(Boolean esconderBotaoEditar) {
+        this.esconderBotaoEditar = esconderBotaoEditar;
+    }
 }

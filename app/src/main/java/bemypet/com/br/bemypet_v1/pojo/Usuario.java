@@ -100,6 +100,12 @@ public class Usuario {
         return logradouro.toString();
     }
 
+    public void addMeuPet(Pet pet) {
+        if(pet != null) {
+            this.meusPets.add(pet);
+        }
+    }
+
     public void addFavorito(Pet pet) {
         if(pet != null) {
             this.petsFavoritos.add(pet);
