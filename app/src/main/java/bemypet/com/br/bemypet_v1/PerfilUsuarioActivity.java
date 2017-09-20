@@ -44,9 +44,12 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private TextView nomeUsuario, dataNascPerfilUse, cpfPerfilUse, cepPerfilUse, enderecoPerfilUse,
             numeroPerfilUse, complementoPerfilUse, cidadePessoalPerfilUse, estadoPerfilUse,
             telefonePerfilUse, emailPerfilUse;
-    private ImageView header_cover_image, user_profile_photo;
+    private ImageView header_cover_image, user_profile_photo, btnEditarUsuario;
 
     private Usuario usuario;
+    private Usuario usuarioLogado;
+
+    Boolean esconderBotaoEditar = Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,9 +140,27 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
                 setUsuario(Utils.getUsuarioSharedPreferences(getApplicationContext()));
             }
         }
+
+        if(Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
+            setUsuarioLogado(Utils.getUsuarioSharedPreferences(getApplicationContext()));
+        }
+
+        //trata-se do proprio usuario acessando seu perfil, entao ele pode editar
+        //se for outro usuario visualizando o perfil, nao pode editar
+        if(getUsuario().id.equalsIgnoreCase(getUsuarioLogado().id)) {
+            setEsconderBotaoEditar(Boolean.FALSE);
+        } else {
+            setEsconderBotaoEditar(Boolean.TRUE);
+        }
     }
 
     private void preencherDados() {
+
+        if(getEsconderBotaoEditar()) {
+            btnEditarUsuario.setVisibility(View.INVISIBLE);
+        } else {
+            btnEditarUsuario.setVisibility(View.VISIBLE);
+        }
 
         if(getUsuario().imagens.size() > 0) {
             // Loading profile image
@@ -219,6 +240,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
     private void initializeVariables() {
         header_cover_image = (ImageView) findViewById(R.id.header_cover_image);
+        btnEditarUsuario = (ImageView) findViewById(R.id.btnEditarUsuario);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         nomeUsuario = (TextView) findViewById(R.id.nomeUsuario);
         dataNascPerfilUse = (TextView) findViewById(R.id.dataNascPerfilUse);
@@ -248,5 +270,21 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
         this.finish();
+    }
+
+    public Boolean getEsconderBotaoEditar() {
+        return esconderBotaoEditar;
+    }
+
+    public void setEsconderBotaoEditar(Boolean esconderBotaoEditar) {
+        this.esconderBotaoEditar = esconderBotaoEditar;
+    }
+
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 }
