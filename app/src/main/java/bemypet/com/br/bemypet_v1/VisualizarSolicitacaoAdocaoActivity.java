@@ -118,7 +118,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     public void reprovarAdocao(View v) {
 
         Notificacoes notificacao = new Notificacoes();
-        notificacao.id = getAdotante().id;
+        notificacao.destinatarioId = getAdotante().id;
         notificacao.mensagem = "Adoção Reprovada. Infelizmente o usuário "+getPet().doador.nome+" reprovou a adoção do pet "+getPet().nome;
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();
@@ -213,7 +213,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     public void aprovarAdocao(View v) {
 
         Notificacoes notificacao = new Notificacoes();
-        notificacao.id = getAdotante().id;
+        notificacao.destinatarioId = getAdotante().id;
         notificacao.mensagem = "Adoção Aprovada! O usuário "+getPet().doador.nome+" aprovou sua solicitação para a adoção do pet "+getPet().nome+ " Entre em contato com ele para combinar tudo direitinho!";
         notificacao.data = Utils.getCurrentDate();
         notificacao.hora = Utils.getCurrentTime();

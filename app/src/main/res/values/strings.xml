@@ -69,6 +69,7 @@
     <string name="activity_title_adocao_reprovada">Adoção Reprovada</string>
     <string name="activity_title_adocao_aprovada">Adoção Aprovada</string>
     <string name="activity_title_denuncia">Visualizar Denúncia</string>
+    <string name="activity_title_denunciar">Denunciar Usuário</string>
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>

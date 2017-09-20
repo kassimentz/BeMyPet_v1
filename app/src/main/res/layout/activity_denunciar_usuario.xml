@@ -20,7 +20,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/visualizarDenunciaToolbar"
+                android:id="@+id/denunciarToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -93,8 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -110,77 +109,66 @@
             <!--tipo, motivo, data, hora-->
 
             <LinearLayout style="@style/layoutLinha"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:weightSum="6">
+                android:layout_margin="10dp">
 
-                <LinearLayout style="@style/colunaComCheckbox"
-                    android:layout_weight="4"
-                    android:layout_gravity="center">
-                    <TextView
-                        style="@style/textoFormulario"
-                        android:text="@string/tipoDenuncia"/>
-                </LinearLayout>
-                <LinearLayout style="@style/colunaComCheckbox">
-                    <RadioGroup
-                        android:id="@+id/radioGroupEspecie"
-                        style="@style/radioGroupFormulario"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <RadioButton
-                            android:id="@+id/radioMausTratos"
-                            android:text="@string/denuncia_maus_tratos"
-                            android:checked="true"
-                            style="@style/radioButtonFormulario"
-                            android:layout_weight="1"/>
-
-                        <RadioButton
-                            android:id="@+id/radioImproprio"
-                            android:text="@string/denuncia_conteudo_improprio"
-                            style="@style/radioButtonFormulario"
-                            android:layout_weight="1"/>
-
-                    </RadioGroup>
-                </LinearLayout>
-
+                <TextView
+                    style="@style/textoFormulario"
+                    android:text="@string/tipoDenuncia" />
             </LinearLayout>
-            <LinearLayout style="@style/layoutLinha"
-                android:layout_marginTop="10dp"
-                android:weightSum="6"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
 
+            <LinearLayout
+                style="@style/layoutLinha"
+                android:layout_margin="10dp">
+
+                <RadioGroup
+                    android:id="@+id/radioGroupDenuncia"
+                    style="@style/radioGroupFormulario"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radioMausTratos"
+                        android:text="@string/denuncia_maus_tratos"
+                        android:checked="true"
+                        style="@style/radioButtonFormulario"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/radioImproprio"
+                        android:text="@string/denuncia_conteudo_improprio"
+                        style="@style/radioButtonFormulario"
+                        android:layout_weight="1"/>
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout style="@style/layoutLinha"
+                android:layout_margin="10dp">
+                <TextView
+                    style="@style/textoFormulario"
+                    android:text="@string/motivoDenuncia"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/layoutLinha">
                 <LinearLayout style="@style/colunaComCheckbox"
-                    android:layout_weight="4"
-                    android:layout_marginTop="5dp">
-                    <TextView
-                        style="@style/textoFormulario"
-                        android:text="@string/motivoDenuncia"/>
-                </LinearLayout>
-                <LinearLayout style="@style/colunaComCheckbox"
-                    android:layout_weight="2"
-                    android:layout_gravity="center">
+                    android:layout_margin="10dp">
                     <EditText
-                        android:id="@+id/edNomePet"
+                        android:id="@+id/edMotivoDenuncia"
                         style="@style/inputFormularioPet"
                         android:hint="@string/motivo_denuncia_placeholder"/>
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView

@@ -180,7 +180,17 @@
         <activity
             android:name=".CadastroAdocaoActivity"
             android:label="@string/activity_title_cadastro_adocao" />
-        <activity android:name=".DenunciarUsuarioActivity"></activity>
+
+        <activity
+            android:name=".DenunciarUsuarioActivity"
+            android:label="@string/activity_title_denunciar"
+            android:parentActivityName=".InicialActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
     </application>
 
 </manifest>
