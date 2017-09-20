@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     //b96b7698-aede-48df-9ffe-89704646768a
                     if(usuario.id.equalsIgnoreCase("ff0c5d8e-558e-4c45-8a34-ef34dc8a3dc1")) {
 
-
+                        //TODO Esta verificacao terá de ser realizada no login do usuario.
                         if(usuario.denuncias != null && usuario.denuncias.size() > 10) {
                             AlertDialog.Builder dialogAprovado = new AlertDialog.Builder(getApplicationContext());
                             dialogAprovado.setTitle("Número máximo de denúncias atingido!");
