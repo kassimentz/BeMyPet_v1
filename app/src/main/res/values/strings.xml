@@ -84,6 +84,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+    <string name="denuncia_maus_tratos">Denúncia por maus tratos</string>
+    <string name="denuncia_conteudo_improprio">Denúncia por conteúdo impróprio</string>
+
     <string name="raca_prompt">Escolha uma raça</string>
     <string name="cao">Cão</string>
     <string name="gato">Gato</string>
@@ -384,6 +387,9 @@
     <string name="polAdocao6">- Se não puder assumir as responsabilidades, não o abandone. Entre em contato novamente com seu antigo dono.</string>
     <string name="sobre">O BeMyPet é um aplicativo com o intuito de facilitar a adoção de pets e a publicação de anúncios sobre pets disponíveis para adoção. Nosso intuito é diminuir a quantidade de animais abandonados e ajudá-los a encontrar um novo lar.</string>
     <string name="title_activity_denuncia_usuario">DenunciaUsuarioActivity</string>
+    <string name="txtDenunciar1">Informe abaixo o tipo da sua denúncia e os motivos que o levaram a criar esta denúncia.</string>
+    <string name="motivo_denuncia_placeholder">Informe o motivo da denúncia</string>
+    <string name="denunciar2">Seus dados não serão enviados para o denunciado. Mas tenha ciência que esta denúncia poderá prejudicar o usuário. Portanto, somente denuncie casos verídicos. Todas as informações são de sua responsabilidade</string>
 
 
 </resources>
