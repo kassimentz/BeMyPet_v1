@@ -46,34 +46,64 @@
             android:text="@string/txtQuantosPets" />
     </LinearLayout>
 
-    <LinearLayout style="@style/layoutLinha">
+    <LinearLayout
+        style="@style/layoutLinha"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="3">
+        <ImageView
+            android:id="@+id/btMenosTeve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="diminueQuantidaTevePet"
+            android:src="@drawable/remove_number"/>
+        <EditText
+            android:id="@+id/txtTevePets"
+            android:layout_width="30dp"
+            android:background="@drawable/edit_rounded_corners"
+            style="@style/inputFormularioPet"
+            android:layout_gravity="fill"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
 
-        <LinearLayout style="@style/colunasFormulario">
-
-            <ImageView
-                android:id="@+id/btMenosTeve"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:onClick="diminueQuantidaTevePet"
-                android:src="@drawable/remove_number"
-                />
-
-            <TextView
-                android:id="@+id/txtTevePets"
-                style="@style/inputFormulario"
-                android:layout_weight="10"
-                android:textAlignment="center"
-                 />
-
-            <ImageView
-                android:id="@+id/btMaisTeve"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:onClick="somaQuantidadeTevePet"
-                android:src="@drawable/add_photo"
-                />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/btMaisTeve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="somaQuantidadeTevePet"
+            android:src="@drawable/add_photo"/>
     </LinearLayout>
+
+    <!--<LinearLayout style="@style/layoutLinha">-->
+
+        <!--<LinearLayout style="@style/colunasFormulario">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/btMenosTeve"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:onClick="diminueQuantidaTevePet"-->
+                <!--android:src="@drawable/remove_number"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtTevePets"-->
+                <!--style="@style/inputFormulario"-->
+                <!--android:layout_weight="10"-->
+                <!--android:textAlignment="center"-->
+                 <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/btMaisTeve"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:onClick="somaQuantidadeTevePet"-->
+                <!--android:src="@drawable/add_photo"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 
     <!--TIPO DE PESTS TEVE-->
     <LinearLayout style="@style/layoutLinha">
@@ -206,37 +236,66 @@
 
     <!--QUANTOS-->
     <LinearLayout style="@style/layoutLinha">
-
         <TextView
             style="@style/textoFormulario"
             android:text="@string/txtQuantosPets" />
     </LinearLayout>
 
-    <LinearLayout style="@style/layoutLinha">
+    <LinearLayout
+        style="@style/layoutLinha"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="3">
+        <ImageView
+            android:id="@+id/btMenosTem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="diminueQuantidaTemPet"
+            android:src="@drawable/remove_number"/>
+        <EditText
+            android:id="@+id/txtTemPets"
+            android:layout_width="30dp"
+            android:background="@drawable/edit_rounded_corners"
+            style="@style/inputFormularioPet"
+            android:layout_gravity="fill"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
 
-        <LinearLayout style="@style/colunasFormulario">
-
-            <ImageView
-                android:id="@+id/btMenosTem"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:onClick="diminueQuantidaTemPet"
-                android:src="@drawable/remove_number" />
-
-            <TextView
-                android:id="@+id/txtTemPets"
-                style="@style/inputFormulario"
-                android:layout_weight="10"
-                android:textAlignment="center"/>
-
-            <ImageView
-                android:id="@+id/btMaisTem"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:onClick="somaQuantidadeTemPet"
-                android:src="@drawable/add_photo" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/btMaisTem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="somaQuantidadeTemPet"
+            android:src="@drawable/add_photo"/>
     </LinearLayout>
+
+    <!--<LinearLayout style="@style/layoutLinha">-->
+
+        <!--<LinearLayout style="@style/colunasFormulario">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/btMenosTem"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:onClick="diminueQuantidaTemPet"-->
+                <!--android:src="@drawable/remove_number" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtTemPets"-->
+                <!--style="@style/inputFormulario"-->
+                <!--android:layout_weight="10"-->
+                <!--android:textAlignment="center"/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/btMaisTem"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:onClick="somaQuantidadeTemPet"-->
+                <!--android:src="@drawable/add_photo" />-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 
     <!--TIPO DE PESTS TEVE-->
     <LinearLayout style="@style/layoutLinha">

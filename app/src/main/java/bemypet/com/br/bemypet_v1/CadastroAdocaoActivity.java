@@ -124,6 +124,11 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
         txtTevePets = (TextView) findViewById(R.id.txtTevePets);
         txtTemPets = (TextView) findViewById(R.id.txtTemPets);
+        txtTevePets.setText("0");
+        txtTemPets.setText("0");
+        txtTevePets.setEnabled(Boolean.FALSE);
+        txtTemPets.setEnabled(Boolean.FALSE);
+
         radioGroupTevePet = (RadioGroup) findViewById(R.id.radioGroupTevePet);
         radioGroupTemPet = (RadioGroup) findViewById(R.id.radioGroupTemPet);
         radioGroupTipoMoradia = (RadioGroup) findViewById(R.id.radioGroupTipoMoradia);
@@ -131,8 +136,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
         rbTevePetsSIM = (RadioButton)  findViewById(R.id.rbTevePetsSIM);
         rbTemPetsNAO = (RadioButton)  findViewById(R.id.rbTemPetsNAO);
         rbTemPetsSIM = (RadioButton)  findViewById(R.id.rbTemPetsSIM);
-        txtTevePets.setText("0");
-        txtTemPets.setText("0");
+
 
         radioGroupTevePet.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -489,10 +493,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
     //cria steps
     private View criaStepOutrosPets(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        outrosPestsStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_adocao_outros_pets, null, false);
-
-
+        outrosPestsStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_adocao_outros_pets, null, false);
         //valida os dados do formulário se passar vai para proximo
 //        verticalStepperForm.goToNextStep();
 
@@ -501,8 +502,7 @@ public class CadastroAdocaoActivity extends AppCompatActivity implements Vertica
 
     private View criaStepLocalizacao(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-        localizacaoStep = (LinearLayout) inflater.inflate(
-                R.layout.step_cadastro_adocao_localizacao, null, false);
+        localizacaoStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_adocao_localizacao, null, false);
 
         //valida os dados do formulário se passar vai para proximo
         verticalStepperForm.goToNextStep();

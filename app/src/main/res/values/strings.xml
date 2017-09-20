@@ -348,8 +348,8 @@
     </string-array>
 
     <string-array name="steps_cadastro_adocao_titles">
-        <item>OUTRO(S) PET(S)</item>
-        <item>LOCALIDADE / MORADIA</item>
+        <item>Outro(s) Pet(s)</item>
+        <item>Localidade / Moradia</item>
     </string-array>
 
     <string-array name="steps_cadastro_pet_titles">

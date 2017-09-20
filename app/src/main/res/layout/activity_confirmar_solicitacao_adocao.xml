@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".ConfirmarSolicitacaoAdocao"
-    android:background="@color/white">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <!-- Header aligned to top -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:orientation="vertical" >
+        android:layout_alignParentTop="true"
+        android:background="@color/OrangeApp"
+        android:gravity="center" >
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -27,99 +28,16 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/header_cover_image"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/bg"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:id="@+id/user_profile_photo"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_below="@+id/header_cover_image"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="-60dp"
-                android:elevation="5dp"
-                android:src="@drawable/cat_profile"
-                android:scaleType="centerCrop" />
-
-            <RelativeLayout
-                android:id="@+id/profile_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/header_cover_image"
-                android:background="#fff"
-                android:elevation="4dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/user_profile_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="60dp"
-                    android:text="Báskara"
-                    android:textAllCaps="false"
-                    android:textColor="@color/OrangeApp"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp">
-
-                <LinearLayout style="@style/layoutLinhaParagrafo">
-                    <TextView
-                        style="@style/textoParagrafo"
-                        android:textAlignment="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_confirmar_solicitacao_adocao_p1"/>
-                </LinearLayout>
-
-                <LinearLayout style="@style/layoutLinhaParagrafo">
-                    <TextView
-                        style="@style/textoParagrafo"
-                        android:textAlignment="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_confirmar_solicitacao_adocao_p2"/>
-                </LinearLayout>
-
-                <LinearLayout style="@style/layoutLinhaParagrafo">
-                    <TextView
-                        android:id="@+id/txtParagrafo3"
-                        style="@style/textoParagrafo"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_confirmar_solicitacao_adocao_p3"/>
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+    <!-- Footer aligned to bottom -->
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,18 +45,18 @@
             android:orientation="horizontal"
             android:layout_margin="0dp"
             android:padding="0dp"
-            android:weightSum="3">
+            android:weightSum="4">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="2">
+                android:layout_weight="3">
 
                 <Button
                     android:id="@+id/btnCancelarConfirmacaoSolicitacaoAdocao"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/btn_cancelar_confirmar_solicitacao_adocao"
                     android:textSize="26dp"
                     android:onClick="cancelarConfirmacaoSolicitacaoAdocao"/>
@@ -153,7 +71,7 @@
                 <Button
                     android:id="@+id/btnAplicarConfirmarcaoSolicitacaoAdocao"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/btn_aplicar_confirmar_solicitacao_adocao"
                     android:text="Confirmar"
                     android:textAllCaps="true"
@@ -164,7 +82,101 @@
         </LinearLayout>
 
 
+    </RelativeLayout>
 
-    </LinearLayout>
+    <!-- Scrollable Item below header and above footer -->
+    <ScrollView
+        android:id="@+id/scrollableContents"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/footer"
+        android:background="@color/white"
+        android:layout_below="@id/header" >
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/header_cover_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/bg"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/user_profile_photo"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_below="@+id/header_cover_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-60dp"
+                    android:elevation="5dp"
+                    android:src="@drawable/cat_profile"
+                    android:scaleType="centerCrop" />
+
+                <RelativeLayout
+                    android:id="@+id/profile_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header_cover_image"
+                    android:background="#fff"
+                    android:elevation="4dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/user_profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="60dp"
+                        android:text="Báskara"
+                        android:textAllCaps="false"
+                        android:textColor="@color/OrangeApp"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout style="@style/layoutLinhaParagrafo">
+                <TextView
+                    style="@style/textoParagrafo"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_confirmar_solicitacao_adocao_p1"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/layoutLinhaParagrafo">
+                <TextView
+                    style="@style/textoParagrafo"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_confirmar_solicitacao_adocao_p2"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/layoutLinhaParagrafo">
+                <TextView
+                    android:id="@+id/txtParagrafo3"
+                    style="@style/textoParagrafo"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_confirmar_solicitacao_adocao_p3"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
