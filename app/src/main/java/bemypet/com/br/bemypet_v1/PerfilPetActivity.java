@@ -199,15 +199,19 @@ public class PerfilPetActivity extends AppCompatActivity {
                 } else {
                     setEsconderBotaoEditar(Boolean.TRUE);
                 }
-                for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
-                    if(petTmp.id.equalsIgnoreCase(getPet().id)) {
-                        imgFavoritarPet.setImageResource(R.drawable.fav1);
-                        petFavoritado = Boolean.TRUE;
-                        break;
-                    } else {
-                        imgFavoritarPet.setImageResource(R.drawable.fav2_v);
-                        petFavoritado = Boolean.FALSE;
+                if(getUsuarioLogado().petsFavoritos.size() > 0) {
+                    for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
+                        if(petTmp.id.equalsIgnoreCase(getPet().id)) {
+                            imgFavoritarPet.setImageResource(R.drawable.fav1);
+                            petFavoritado = Boolean.TRUE;
+                            break;
+                        } else {
+                            imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+                            petFavoritado = Boolean.FALSE;
+                        }
                     }
+                } else {
+                    petFavoritado = Boolean.FALSE;
                 }
 
             } else {
@@ -313,13 +317,21 @@ public class PerfilPetActivity extends AppCompatActivity {
     }
 
     public void favoritarPet(View v) {
+        System.out.println("favoritarPet");
         if(petFavoritado == Boolean.FALSE) {
+            System.out.println("favoritarPet pet favoritado false");
             getUsuarioLogado().addFavorito(getPet());
+            System.out.println("favoritarPet pet adicionado");
             imgFavoritarPet.setImageResource(R.drawable.fav1);
+            System.out.println("favoritarPet trocou a imagem");
             petFavoritado = Boolean.TRUE;
         } else {
+            System.out.println("favoritarPet pet favoritado true");
             getUsuarioLogado().removerFavorito(getPet());
+            System.out.println("favoritarPet pet removido");
             imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+            petFavoritado = Boolean.FALSE;
+            System.out.println("favoritarPet trocou a imagem");
         }
         updateUsuario();
     }
