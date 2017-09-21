@@ -37,6 +37,7 @@ import bemypet.com.br.bemypet_v1.VisualizarDenunciaActivity;
 import bemypet.com.br.bemypet_v1.VisualizarSolicitacaoAdocaoActivity;
 import bemypet.com.br.bemypet_v1.adapters.NotificacoesAdapter;
 import bemypet.com.br.bemypet_v1.adapters.SwipeListViewAdapter;
+import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Constants;
@@ -90,8 +91,6 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
         }
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -99,11 +98,11 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
             mSearchView.setQuery("", false);
             mSearchView.clearFocus();
         }
+        buscarNotificacoes();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_notificacoes_mensagens, container, false);
         mSearchView = (SearchView) rootView.findViewById(R.id.searchViewNotificacoes);
@@ -117,6 +116,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Notificacoes n = notificacoesList.get(position);
+                System.out.println(n.toString());
                 if(!n.lida) {
                     n.lida = Boolean.TRUE;
                     updateNotificacao(n);
@@ -127,22 +127,29 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
                 if(n.topico.equalsIgnoreCase(Constants.TOPICO_SOLICITACAO_ADOCAO)) {
                     intent = new Intent(getContext(), VisualizarSolicitacaoAdocaoActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
 
                 if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_APROVADA)) {
                     intent = new Intent(getContext(), VisualizarAdocaoAprovadaActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
 
                 if(n.topico.equalsIgnoreCase(Constants.TOPICO_ADOÇÃO_REPROVADA)) {
                     intent = new Intent(getContext(), VisualizarAdocaoReprovadaActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
 
                 if(n.topico.equalsIgnoreCase(Constants.TOPICO_DENUNCIA)) {
                     intent = new Intent(getContext(), VisualizarDenunciaActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
 
-                intent.putExtras(bundle);
-                startActivity(intent);
+
             }
         });
         mListView.setOnTouchListener(new View.OnTouchListener() {
@@ -234,26 +241,37 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
 
     private void buscarNotificacoes() {
 
-        FirebaseDatabase.getInstance().getReference().child("notificacoes").addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference notificacoesRef = FirebaseDatabase.getInstance().getReference().child("notificacoes");
+        notificacoesRef.keepSynced(true);
+        notificacoesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Notificacoes notificacao = null;
-
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     notificacao = postSnapshot.getValue(Notificacoes.class);
+
                     if(notificacao.destinatarioId.equalsIgnoreCase(getUsuarioLogado().id)) {
-                        notificacoesList.add(notificacao);
+                        if(!notificacao.statusNotificacao.equalsIgnoreCase(Constants.STATUS_NOTIFICACAO_RESPONDIDA)) {
+                            notificacoesList.add(notificacao);
+                        }
+
                     }
+                    //notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
+                    mAdapter = new SwipeListViewAdapter(getContext(), notificacoesList);
+                    mListView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+
+
+
+
                 }
-                //notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
-                mAdapter = new SwipeListViewAdapter(getContext(), notificacoesList);
-                mListView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+
+
 
     }
 

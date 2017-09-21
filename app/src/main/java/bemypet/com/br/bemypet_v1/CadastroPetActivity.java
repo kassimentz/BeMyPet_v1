@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -122,6 +124,17 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             setPet(pet);
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getBundle() {
@@ -398,12 +411,26 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         //percorre as imagens do pet e adicona dinamicamente as imagens no layout
         if(getPet().imagens != null && getPet().imagens.size() > 0) {
             LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+            final LinearLayout rl = (LinearLayout) findViewById(R.id.petImgLayout);
             dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_dados, null, false);
-            for (String img : getPet().imagens) {
-                View childLayout = inflater.inflate(R.layout.pet_image, (ViewGroup) findViewById(R.id.img_pet_remove));
-                ImageView petImage = (ImageView) childLayout.findViewById(R.id.pet_photo);
-                Glide.with(this).load(img).apply(RequestOptions.circleCropTransform()).into(petImage);
-                dadosPetStep.addView(childLayout);
+            for (final String img : getPet().imagens) {
+
+                final View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
+                ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
+                petImage.setMaxWidth(45);
+                petImage.setMaxHeight(45);
+                Glide.with(CadastroPetActivity.this).load(img).apply(RequestOptions.circleCropTransform()).into(petImage);
+                rl.addView(imagLayout);
+                imagLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(getPet().imagens.contains(img)) {
+                            getPet().imagens.remove(img);
+                        }
+
+                    }
+                });
+
             }
 
         }
@@ -522,7 +549,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 if(downloadUrl != null) {
                     final String url = downloadUrl.toString();
                     getPet().addImagem(url);
-                    System.out.println("firebase image: "+url);
 
                     final View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
                     ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
@@ -565,7 +591,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             getPet().dataNascimento = edtDataNascimento.getText().toString();
         }
 
-        getPet().doador = new Usuario();
+        getPet().doador = getDoador();
 
         if(chk_segunda_dose.isChecked()) {
             getPet().vermifugado = "2";
@@ -587,8 +613,12 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             getPet().informacoesAdicionais = "";
         }
 
-        PontoGeo pontoGeo = new PontoGeo(getDoador().localizacao.lat, getDoador().localizacao.lon);
-        getPet().localizacao = pontoGeo;
+
+        if(!getDoador().getLogradouro().isEmpty()) {
+            LatLng latlong = Utils.getLocationFromAddress(getApplicationContext(), getDoador().getLogradouro());
+            PontoGeo pontoGeo = new PontoGeo(latlong.latitude, latlong.longitude);
+            getPet().localizacao = pontoGeo;
+        }
 
         if(Utils.validaEditText(edNomePet)){
             getPet().nome = edNomePet.getText().toString();
@@ -645,21 +675,23 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         getPet().vermifugado = vermifugado.getText().toString();
 
 
-        if(!erro) {
+//        if(!erro) {
             //verificar se veio de edicao ou novo pet
             if(origem.isEmpty()) {
+                System.out.println("origem empty");
                 salvarNovoPet(getPet());
             }else {
+                System.out.println("nnot empty");
                 salvarPetEditado();
             }
-        }
+//        }
 
 
     }
 
     private void salvarPetEditado() {
 
-        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("usuarios");
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
         myRef.child(getPet().id).child("adotante").setValue(getPet().adotante);
         myRef.child(getPet().id).child("atualDonoID").setValue(getPet().atualDonoID);
         myRef.child(getPet().id).child("cadastroAtivo").setValue(getPet().cadastroAtivo);
@@ -682,7 +714,13 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         myRef.child(getPet().id).child("status").setValue(getPet().status);
         myRef.child(getPet().id).child("temperamento").setValue(getPet().temperamento);
         myRef.child(getPet().id).child("vermifugado").setValue(getPet().vermifugado);
-        CadastroPetActivity.this.finish();
+
+        Intent intent = new Intent(this, PerfilPetActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pet", new Gson().toJson(getPet()));
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 1);
+        this.finish();
 
     }
 
@@ -736,43 +774,22 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     /**
      * Método para salva pets
-     * @param entidade
+     * @param data
      */
-    private void salvarNovoPet(Pet entidade) {
-        final Pet pet = entidade;
-
-        FirebaseConnection.getConnection();
-        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+    private void salvarNovoPet(Pet data) {
+        final Pet localPet = data;
 
 
-        connectedReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    FirebaseConnection.getDatabase().child("pets").child(String.valueOf(pet.id)).setValue(pet);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("pets");
 
-                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-                    geoFire.setLocation(pet.id, new GeoLocation(pet.localizacao.lat, pet.localizacao.lon), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (error != null) {
-                                System.err.println("There was an error saving the location to GeoFire: " + error);
-                            } else {
-                                System.out.println("Location saved on server successfully!");
-                                CadastroPetActivity.this.finish();
-                            }
-                        }
-                    });
-                } else {
-                    //logar erro
-                }
-            }
+        myRef.child(data.id).setValue(data);
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("Cancel", "Listener was cancelled");
-            }
-        });
+        Intent intent = new Intent(CadastroPetActivity.this, PerfilPetActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pet", new Gson().toJson(localPet));
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 1);
+        CadastroPetActivity.this.finish();
     }
 }

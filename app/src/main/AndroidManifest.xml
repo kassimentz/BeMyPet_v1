@@ -22,6 +22,14 @@
         android:roundIcon="@mipmap/launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1537764562949663"
+            android:exported="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -46,8 +54,22 @@
             android:value="@string/google_maps_key_release" />
 
         <activity android:name=".InicialActivity" />
-        <activity android:name=".SobreNosActivity" />
-        <activity android:name=".PoliticaDePrivacidadeActivity" />
+        <activity
+            android:name=".SobreNosActivity"
+            android:parentActivityName=".InicialActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
+        <activity
+            android:name=".PoliticaDePrivacidadeActivity"
+            android:parentActivityName=".InicialActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
+        </activity>
         <activity
             android:name=".PerfilPetActivity"
             android:parentActivityName=".InicialActivity"
@@ -148,20 +170,27 @@
         <activity
             android:name=".CadastroPetActivity"
             android:label="@string/activity_title_cadastro_pet"
-            android:parentActivityName=".CadastroPetActivity">
+            android:parentActivityName=".InicialActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InicialActivity" />
         </activity>
+        <activity
+            android:name=".CadastroAdocaoActivity"
+            android:label="@string/activity_title_cadastro_adocao" />
 
-        <activity android:name=".CadastroAdocaoActivity"
-            android:label="@string/activity_title_cadastro_adocao">
+        <activity
+            android:name=".DenunciarUsuarioActivity"
+            android:label="@string/activity_title_denunciar"
+            android:parentActivityName=".InicialActivity">
 
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InicialActivity" />
         </activity>
-
-
     </application>
 
 </manifest>

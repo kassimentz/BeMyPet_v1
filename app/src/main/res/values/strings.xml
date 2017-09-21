@@ -44,33 +44,38 @@
     <string name="nav_home">BeMyPet</string>
     <string name="nav_mensagens">Notificações / Mensagens</string>
     <string name="nav_meus_pets">Meus Pets / Favoritos</string>
-    <string name="nav_configuracoes">Configurações</string>
+    <!--<string name="nav_configuracoes">Configurações</string>-->
     <string name="nav_sobre">Sobre</string>
     <string name="nav_ajuda">Ajuda</string>
+
+    <string name="denunciar">Sim, Denunciar!</string>
+    <string name="cancelar">Cancelar</string>
+
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
         <item>BeMyPet</item>
         <item>Notificações</item>
-        <item>Meus Pets</item>
+        <item>Lista de Pets</item>
         <item>Configurações</item>
         <item>Sobre</item>
     </string-array>
 
-    <string name="activity_title_sobre">Sobre</string>
-    <string name="activity_title_privacy_policy">Políticas de Privacidade</string>
+    <string name="activity_title_sobre">Sobre o BeMyPet</string>
+    <string name="activity_title_privacy_policy">Termos de Adoção</string>
     <string name="activity_title_peril_pet">Perfil Pet</string>
     <string name="activity_title_visualizar_adocao">Solicitação de Adoção</string>
     <string name="activity_title_confirmar_solicitacao_adocao">Confirmar adoção!</string>
     <string name="activity_title_adocao_reprovada">Adoção Reprovada</string>
     <string name="activity_title_adocao_aprovada">Adoção Aprovada</string>
     <string name="activity_title_denuncia">Visualizar Denúncia</string>
+    <string name="activity_title_denunciar">Denunciar Usuário</string>
     <string name="activity_title_peril_usuario">Perfil Usuário</string>
     <string name="action_clear_all">Limpar</string>
     <string name="action_filtro">Filtros</string>
     <string name="action_novo_pet">Novo Pet</string>
     <string name="action_mark_all_read">Marcar todos como lido</string>
-    <string name="privacy_policy">Políticas de Privacidade</string>
+    <string name="privacy_policy">Políticas de Adoção</string>
     <string name="activity_title_cadastro_usuario">Cadastro Usuário</string>
     <string name="activity_title_cadastro_pet">Cadastro Pet</string>
     <string name="activity_title_cadastro_adocao">Cadastro Adoção</string>
@@ -79,6 +84,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    <string name="denuncia_maus_tratos">Denúncia por maus tratos</string>
+    <string name="denuncia_conteudo_improprio">Denúncia por conteúdo impróprio</string>
 
     <string name="raca_prompt">Escolha uma raça</string>
     <string name="cao">Cão</string>
@@ -340,8 +348,8 @@
     </string-array>
 
     <string-array name="steps_cadastro_adocao_titles">
-        <item>OUTRO(S) PET(S)</item>
-        <item>LOCALIDADE / MORADIA</item>
+        <item>Outro(s) Pet(s)</item>
+        <item>Localidade / Moradia</item>
     </string-array>
 
     <string-array name="steps_cadastro_pet_titles">
@@ -370,5 +378,19 @@
         <item>item3</item>
         <item>item4</item>
     </string-array>
+
+    <string name="facebook_app_id">1537764562949663</string>
+    <string name="polAdocao1">Ao realizar uma adoção ou publicar um anúncio de um pet para adoção no aplicativo BeMyPet, você estará responsabilizando-se sobre todas as informações fornecidas, atestando a veracidade das mesmas.</string>
+    <string name="polAdocao2">Você se compromete a:</string>
+    <string name="polAdocao3">- Cuidar do pet e mantê-lo em condições ótimas de espaço, tempo, alimentação, exercício.</string>
+    <string name="polAdocao4">- Oferecer os cuidados veterinários que o animal necessite.</string>
+    <string name="polAdocao5">Não destinar o animal a cria ou reprodução.</string>
+    <string name="polAdocao6">- Se não puder assumir as responsabilidades, não o abandone. Entre em contato novamente com seu antigo dono.</string>
+    <string name="sobre">O BeMyPet é um aplicativo com o intuito de facilitar a adoção de pets e a publicação de anúncios sobre pets disponíveis para adoção. Nosso intuito é diminuir a quantidade de animais abandonados e ajudá-los a encontrar um novo lar.</string>
+    <string name="title_activity_denuncia_usuario">DenunciaUsuarioActivity</string>
+    <string name="txtDenunciar1">Informe abaixo o tipo da sua denúncia e os motivos que o levaram a criar esta denúncia.</string>
+    <string name="motivo_denuncia_placeholder">Informe o motivo da denúncia</string>
+    <string name="denunciar2">Seus dados não serão enviados para o denunciado. Mas tenha ciência que esta denúncia poderá prejudicar o usuário. Portanto, somente denuncie casos verídicos. Todas as informações são de sua responsabilidade</string>
+
 
 </resources>

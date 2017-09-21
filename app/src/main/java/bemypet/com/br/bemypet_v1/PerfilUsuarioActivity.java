@@ -1,10 +1,15 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,9 +44,12 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private TextView nomeUsuario, dataNascPerfilUse, cpfPerfilUse, cepPerfilUse, enderecoPerfilUse,
             numeroPerfilUse, complementoPerfilUse, cidadePessoalPerfilUse, estadoPerfilUse,
             telefonePerfilUse, emailPerfilUse;
-    private ImageView header_cover_image, user_profile_photo;
+    private ImageView header_cover_image, user_profile_photo, btnEditarUsuario;
 
     private Usuario usuario;
+    private Usuario usuarioLogado;
+
+    Boolean esconderBotaoEditar = Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,12 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_usuario, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -73,8 +87,42 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.denunciar_usuario:
+                denunciarUsuario();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void denunciarUsuario() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(PerfilUsuarioActivity.this);
+        builder.setTitle("Denunciar Usuário");
+        builder.setMessage("Você tem certeza que deseja denunciar o usuario "+getUsuario().nome+" ? Todas as informações fornecidas serão de sua responsabilidade.");
+        builder.setPositiveButton(R.string.denunciar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                dialog.dismiss();
+                Intent intent = new Intent(PerfilUsuarioActivity.this, DenunciarUsuarioActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("usuarioDenunciado", new Gson().toJson(getUsuario()));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+                dialog.cancel();
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        if(!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     private void getBundle() {
@@ -92,9 +140,27 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
                 setUsuario(Utils.getUsuarioSharedPreferences(getApplicationContext()));
             }
         }
+
+        if(Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
+            setUsuarioLogado(Utils.getUsuarioSharedPreferences(getApplicationContext()));
+        }
+
+        //trata-se do proprio usuario acessando seu perfil, entao ele pode editar
+        //se for outro usuario visualizando o perfil, nao pode editar
+        if(getUsuario().id.equalsIgnoreCase(getUsuarioLogado().id)) {
+            setEsconderBotaoEditar(Boolean.FALSE);
+        } else {
+            setEsconderBotaoEditar(Boolean.TRUE);
+        }
     }
 
     private void preencherDados() {
+
+        if(getEsconderBotaoEditar()) {
+            btnEditarUsuario.setVisibility(View.INVISIBLE);
+        } else {
+            btnEditarUsuario.setVisibility(View.VISIBLE);
+        }
 
         if(getUsuario().imagens.size() > 0) {
             // Loading profile image
@@ -150,11 +216,13 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
                     for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                         pet = postSnapshot.getValue(Pet.class);
-                        if(pet.atualDonoID.equalsIgnoreCase(getUsuario().id)) {
-                            petsUsuario.add(pet);
-                            nomes.add(pet.nome);
-                            if(pet.imagens.size() > 0) {
-                                images.add(pet.imagens.get(0));
+                        if(pet != null) {
+                            if (pet.atualDonoID.equalsIgnoreCase(getUsuario().id)) {
+                                petsUsuario.add(pet);
+                                nomes.add(pet.nome);
+                                if (pet.imagens.size() > 0) {
+                                    images.add(pet.imagens.get(0));
+                                }
                             }
                         }
                     }
@@ -172,6 +240,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
     private void initializeVariables() {
         header_cover_image = (ImageView) findViewById(R.id.header_cover_image);
+        btnEditarUsuario = (ImageView) findViewById(R.id.btnEditarUsuario);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         nomeUsuario = (TextView) findViewById(R.id.nomeUsuario);
         dataNascPerfilUse = (TextView) findViewById(R.id.dataNascPerfilUse);
@@ -201,5 +270,21 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
         this.finish();
+    }
+
+    public Boolean getEsconderBotaoEditar() {
+        return esconderBotaoEditar;
+    }
+
+    public void setEsconderBotaoEditar(Boolean esconderBotaoEditar) {
+        this.esconderBotaoEditar = esconderBotaoEditar;
+    }
+
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 }

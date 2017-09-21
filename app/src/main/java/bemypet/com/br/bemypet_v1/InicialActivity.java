@@ -43,10 +43,6 @@ public class InicialActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
 
-    //url para a imagem do perfil do usuario.
-    //TODO trocar pelo que retorna do firebase
-    //private static final String urlProfileImg = "https://firebasestorage.googleapis.com/v0/b/bemypet-61485.appspot.com/o/images%2F1472602263489images-8.jpg?alt=media&token=491fdc24-4593-4ca5-a45d-922edf1eaa54";
-
     // index to identify current nav menu item
     public static int navItemIndex = 0;
 
@@ -65,6 +61,7 @@ public class InicialActivity extends AppCompatActivity {
     private Handler mHandler;
 
     private Filtros filtroActivity;
+    private Usuario usuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,45 +78,52 @@ public class InicialActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        // Navigation view header
         navHeader = navigationView.getHeaderView(0);
         txtNomeUsuario = (TextView) navHeader.findViewById(R.id.nomeUsuario);
         txtTipoUsuario = (TextView) navHeader.findViewById(R.id.tipoUsuario);
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
 
         LinearLayout header = (LinearLayout) navHeader.findViewById(R.id.headerProfile);
+        updateUsuario();
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                System.out.println("visualizar perfil usuario");
                 Intent intent = new Intent(InicialActivity.this, PerfilUsuarioActivity.class);
                 drawer.closeDrawers();
                 startActivity(intent);
             }
         });
 
-        // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
-        // load nav menu header data
+
         loadNavHeader();
 
-        // initializing navigation menu
         setUpNavigationView();
 
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
+        }
+    }
+
+    private void updateUsuario() {
+        Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
+        if(usuarioLogado != null) {
+            System.out.println(usuarioLogado);
+            setUsuarioLogado(usuarioLogado);
+        } else {
+            System.out.print("nao tem usuario no shared");
         }
     }
 
@@ -137,7 +141,7 @@ public class InicialActivity extends AppCompatActivity {
             setFiltroActivity(filtro);
         }
 
-
+        updateUsuario();
     }
 
     @Override
@@ -147,11 +151,7 @@ public class InicialActivity extends AppCompatActivity {
             return;
         }
 
-        // This code loads home fragment when back key is pressed
-        // when user is in other fragment than home
         if (shouldLoadHomeFragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
             if (navItemIndex != 0) {
                 navItemIndex = 0;
                 CURRENT_TAG = TAG_HOME;
@@ -159,15 +159,12 @@ public class InicialActivity extends AppCompatActivity {
                 return;
             }
         }
-
         super.onBackPressed();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
 
-        // show menu only when home fragment is selected
         if (navItemIndex == 0) {
             getMenuInflater().inflate(R.menu.inicial, menu);
         }
@@ -181,12 +178,9 @@ public class InicialActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_filtro) {
             Intent intent = new Intent(this, FiltrosActivity.class);
             startActivity(intent);
@@ -194,7 +188,16 @@ public class InicialActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_novo_pet) {
-            Intent intent = new Intent(this, CadastroPetActivity.class);
+            Intent intent;
+            if(!getUsuarioLogado().getLogradouro().isEmpty()) {
+                intent = new Intent(getApplicationContext(), CadastroPetActivity.class);
+            } else {
+                Utils.showToastMessage(getApplicationContext(), "Para cadastrar um pet, primeiro complete seus dados: ");
+                intent = new Intent(getApplicationContext(), CadastroUsuarioActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("origem", "cadastroPet");
+                intent.putExtras(bundle);
+            }
             startActivity(intent);
             return true;
         }
@@ -215,16 +218,14 @@ public class InicialActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationView() {
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
+
                     case R.id.nav_home:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
@@ -237,22 +238,19 @@ public class InicialActivity extends AppCompatActivity {
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_MEUS_PETS;
                         break;
-                    case R.id.nav_configuracoes:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_CONFIGURACOES;
-                        break;
+//                    case R.id.nav_configuracoes:
+//                        navItemIndex = 3;
+//                        CURRENT_TAG = TAG_CONFIGURACOES;
+//                        break;
                     case R.id.nav_ajuda:
-                        // launch new intent instead of loading fragment
                         startActivity(new Intent(InicialActivity.this, EscolhaActivity.class));
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_sobre:
-                        // launch new intent instead of loading fragment
                         startActivity(new Intent(InicialActivity.this, SobreNosActivity.class));
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_privacy_policy:
-                        // launch new intent instead of loading fragment
                         startActivity(new Intent(InicialActivity.this, PoliticaDePrivacidadeActivity.class));
                         drawer.closeDrawers();
                         return true;
@@ -260,7 +258,6 @@ public class InicialActivity extends AppCompatActivity {
                         navItemIndex = 0;
                 }
 
-                //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 } else {
@@ -279,21 +276,17 @@ public class InicialActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
                 super.onDrawerOpened(drawerView);
             }
         };
 
-        //Setting the actionbarToggle to drawer layout
         drawer.setDrawerListener(actionBarDrawerToggle);
 
-        //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
     }
 
@@ -304,14 +297,15 @@ public class InicialActivity extends AppCompatActivity {
      */
     private void loadNavHeader() {
 
-        Usuario usuarioLogado = Utils.getUsuarioSharedPreferences(getApplicationContext());
-        // TODO buscar dados do firebase
-        if(usuarioLogado != null) {
-            txtNomeUsuario.setText(usuarioLogado.nome);
-            txtTipoUsuario.setText(usuarioLogado.email);
+        if(getUsuarioLogado() == null) {
+            updateUsuario();
+        }
+        txtNomeUsuario.setText(getUsuarioLogado().nome);
+        txtTipoUsuario.setText(getUsuarioLogado().email);
 
-            // Loading profile image
-            Glide.with(this).load(usuarioLogado.imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+        // Loading profile image
+        if(getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
+            Glide.with(this).load(getUsuarioLogado().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
         }
         // showing dot next to notifications label
         //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
@@ -328,11 +322,9 @@ public class InicialActivity extends AppCompatActivity {
                 NotificacoesMensagensFragment notificacoesMensagensFragment = new NotificacoesMensagensFragment();
                 return notificacoesMensagensFragment;
             case 2:
-                // movies fragment
                 MeusPetsFavoritosFragment meusPetsFavoritosFragment = new MeusPetsFavoritosFragment();
                 return meusPetsFavoritosFragment;
             case 3:
-                // notifications fragment
                 ConfiguracoesFragment configuracoesFragment = new ConfiguracoesFragment();
                 return configuracoesFragment;
 
@@ -347,30 +339,21 @@ public class InicialActivity extends AppCompatActivity {
      */
     private void loadHomeFragment() {
 
-        // selecting appropriate nav menu item
         selectNavMenu();
 
-        // set toolbar title
         setToolbarTitle();
 
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
 
-            // show or hide the fab button
             toggleFab();
             return;
         }
 
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
-                // update the main content by replacing fragments
+
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
@@ -380,18 +363,14 @@ public class InicialActivity extends AppCompatActivity {
             }
         };
 
-        // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
 
-        // show or hide the fab button
         toggleFab();
 
-        //Closing drawer on item click
         drawer.closeDrawers();
 
-        // refresh toolbar menu
         invalidateOptionsMenu();
 
     }
@@ -404,7 +383,6 @@ public class InicialActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
-    // show or hide the fab
     private void toggleFab() {
         if (navItemIndex == 0)
             fab.show();
@@ -420,4 +398,11 @@ public class InicialActivity extends AppCompatActivity {
         this.filtroActivity = filtroActivity;
     }
 
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+    }
 }

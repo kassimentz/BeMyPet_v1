@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1.pojo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class Usuario {
 
     public String id;
     public String nome;
+    public String senha;
     public List<String> imagens;
     public String dataNascimento;
     public String cpf;
@@ -33,17 +35,40 @@ public class Usuario {
     public List<Notificacoes> notificacoes;
     public String token;
 
+
     public Usuario() {
-        id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
+        this.senha = "";
+        this.nome = "";
+        this.imagens = new ArrayList<>();
+        this.dataNascimento = "";
+        this.cpf = "";
+        this.localizacao = new PontoGeo();
+        this.cep = 0;
+        this.endereco = "";
+        this.numero = 0;
+        this.complemento = "";
+        this.bairro = "";
+        this.cidade = "";
+        this.estado = "";
+        this.telefone = "";
+        this.email = "";
+        this.meusPets = new ArrayList<>();
+        this.petsFavoritos = new ArrayList<>();
+        this.denuncias = new ArrayList<>();
+        this.notificacoes = new ArrayList<>();
+        this.token = "";
     }
 
-    public Usuario(String nome, List<String> imagens, String dataNascimento, String cpf,
+
+    public Usuario(String nome, String senha, List<String> imagens, String dataNascimento, String cpf,
                       PontoGeo localizacao, Integer cep, String endereco, Integer numero,
                       String complemento, String bairro, String cidade, String estado,
                       String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
                       List<Denuncias> denuncias, List<Notificacoes> notificacoes, String token) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
+        this.senha = senha;
         this.imagens = imagens;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
@@ -66,16 +91,45 @@ public class Usuario {
 
     public String getLogradouro() {
         StringBuilder logradouro = new StringBuilder();
-        logradouro.append(this.endereco+", ");
-        logradouro.append(this.numero+", ");
-        logradouro.append(this.cidade);
 
+        if(this.endereco != null && this.numero != null && this.cidade != null) {
+            logradouro.append(this.endereco+", ");
+            logradouro.append(this.numero+", ");
+            logradouro.append(this.cidade);
+        }
         return logradouro.toString();
+    }
+
+    public void addMeuPet(Pet pet) {
+        if(pet != null) {
+            this.meusPets.add(pet);
+        }
+    }
+
+    public void addFavorito(Pet pet) {
+        if(pet != null) {
+            this.petsFavoritos.add(pet);
+        }
+    }
+
+    public void removerFavorito (Pet pet) {
+        if(pet != null) {
+
+            for(int i = 0; i < this.petsFavoritos.size(); i++) {
+                Pet p = this.petsFavoritos.get(i);
+                if(p.id.equals(pet.id)) {
+                    this.petsFavoritos.remove(i);
+                    break;
+                }
+            }
+        }
     }
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
+        result.put("nome", nome);
+        result.put("senha", senha);
         result.put("imagens", imagens);
         result.put("dataNascimento", dataNascimento);
         result.put("cpf", cpf);
