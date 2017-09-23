@@ -86,6 +86,7 @@
     <LinearLayout style="@style/layoutLinha">
         <EditText
             android:id="@+id/edtCpf"
+            android:inputType="number"
             style="@style/inputFormulario"
             android:hint="@string/cpf_placeholder"/>
     </LinearLayout>
