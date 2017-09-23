@@ -59,6 +59,7 @@ import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.PontoGeo;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Constants;
+import bemypet.com.br.bemypet_v1.utils.FormUtils;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -73,7 +74,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     private static final int OUTRAS_INFORMACOES = 1;
 
     private LinearLayout dadosPetStep;
-    private EditText edNomePet, edtPesoPet, edtInfoAdionais;
+    private EditText edNomePet, edtPesoPet, edtInfoAdionais, edtUrlFoto, edtDataNascimento;
     private RadioGroup radioGroupEspecie, radioGroupSexo, radioGroupCastrado, radioGroupVermifugado,
             radioGroupTemperamento;
     private RadioButton radioCao, radioGato, radioOutros, radioMacho, radioFemea, radioNaoSei,
@@ -84,7 +85,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     private ImageView imgReduzirPeso, imgAumentarPeso;
     private CheckBox chk_primeira_dose, chk_segunda_dose, chk_sociavel_pessoas, chk_sociavel_caes,
             chk_sociavel_gatos, chk_sociavel_outros;
-    private TextView txtNaoSei, edtDataNascimento;
+    private TextView txtNaoSei;
 
     List<String> racasCao = new ArrayList<>();
     List<String> racasGato = new ArrayList<>();
@@ -112,9 +113,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
         ab.setTitle(R.string.activity_title_cadastro_pet);
 
+        getBundle();
         initializeActivity();
         initializeVariables();
-        getBundle();
+
 
         //se tem o pet preenchido, entao é edicao do pet e deve preencher os dados
         if(getPet() != null) {
@@ -207,13 +209,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
         txtNaoSei = (TextView) findViewById(R.id.txtNaoSei);
         edNomePet = (EditText) findViewById(R.id.edNomePet);
+        edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
 
-        edtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
+        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
         edtInfoAdionais = (EditText) findViewById(R.id.edtInfoAdionais);
-
-//        formatdata = new MaskedFormatter("##/##/####");
-//        edtDataNascimento.addTextChangedListener(new MaskedWatcher(formatdata, edtDataNascimento));
-
         edtDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -306,14 +305,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     }
 
     private void preencherDados() {
-
-        if(getPet().nome != null) {
-            edNomePet.setText(getPet().nome);
-        }
-
-        if(getPet().dataNascimento != null) {
-            edtDataNascimento.setText(getPet().dataNascimento);
-        }
 
         if(getPet().pesoAproximado != null) {
             edtPesoPet.setText(String.valueOf(getPet().pesoAproximado));
@@ -408,33 +399,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             }
         }
 
-        //percorre as imagens do pet e adicona dinamicamente as imagens no layout
-        if(getPet().imagens != null && getPet().imagens.size() > 0) {
-            LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-            final LinearLayout rl = (LinearLayout) findViewById(R.id.petImgLayout);
-            dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_dados, null, false);
-            for (final String img : getPet().imagens) {
-
-                final View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
-                ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
-                petImage.setMaxWidth(45);
-                petImage.setMaxHeight(45);
-                Glide.with(CadastroPetActivity.this).load(img).apply(RequestOptions.circleCropTransform()).into(petImage);
-                rl.addView(imagLayout);
-                imagLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(getPet().imagens.contains(img)) {
-                            getPet().imagens.remove(img);
-                        }
-
-                    }
-                });
-
-            }
-
-        }
-
     }
 
     private void initializeActivity() {
@@ -478,10 +442,69 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
         switch (stepNumber) {
             case DADOS_PET:
-                verticalStepperForm.setStepAsCompleted(DADOS_PET);
+                /**
+                 * ============ INICIO VALIDACAO DADOS PET ============
+                 */
+
+                //validando nome do pet
+                edNomePet = (EditText) findViewById(R.id.edNomePet);
+                FormUtils.preencherValidarCampos(verticalStepperForm, edNomePet, 3, "Preencha o nome corretamente");
+                if (getPet()!= null && getPet().nome != null) {
+                    edNomePet.setText(getPet().nome);
+                } else {
+                    edNomePet.setText("");
+                }
+
+                //validando data de nascimento
+                edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
+                if (getPet()!= null && getPet().dataNascimento != null) {
+                    edtDataNascimento.setText(getPet().dataNascimento);
+                }
+
+                /**
+                 * ============ FIM VALIDACAO DADOS PET ============
+                 */
+
                 break;
             case OUTRAS_INFORMACOES:
-                verticalStepperForm.setStepAsCompleted(OUTRAS_INFORMACOES);
+                /**
+                 * ============ INICIO VALIDACAO OUTROS DADOS PET ============
+                 */
+
+                //validando imagem
+                edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtUrlFoto, 1, "Ao menos uma foto deve ser adicionada");
+                //percorre as imagens do pet e adicona dinamicamente as imagens no layout
+                if(getPet()!= null &&  getPet().imagens != null && getPet().imagens.size() > 0) {
+                    LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                    final LinearLayout rl = (LinearLayout) findViewById(R.id.petImgLayout);
+                    dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_dados, null, false);
+                    for (final String img : getPet().imagens) {
+
+                        final View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
+                        ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
+                        petImage.setMaxWidth(45);
+                        petImage.setMaxHeight(45);
+                        Glide.with(CadastroPetActivity.this).load(img).apply(RequestOptions.circleCropTransform()).into(petImage);
+                        rl.addView(imagLayout);
+                        imagLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(getPet().imagens.contains(img)) {
+                                    getPet().imagens.remove(img);
+                                }
+
+                            }
+                        });
+
+                    }
+
+                }
+
+                /**
+                 * ============ FIM VALIDACAO OUTROS DADOS PET ============
+                 */
                 break;
         }
 

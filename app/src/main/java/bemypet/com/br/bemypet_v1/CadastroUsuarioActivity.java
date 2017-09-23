@@ -14,9 +14,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,11 +22,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.StringLoader;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -292,31 +287,39 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 //validando nome do usuario
                 edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtNomeUsuario, 3, "Preencha o nome corretamente");
-                if (getUsuario().nome != null) {
+                if (getUsuario() != null && getUsuario().nome != null) {
                     edtNomeUsuario.setText(getUsuario().nome);
+                } else {
+                    edtNomeUsuario.setText("");
                 }
 
                 //validando data de nascimento
                 edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
-                if (getUsuario().dataNascimento != null) {
+                if (getUsuario() != null && getUsuario().dataNascimento != null) {
                     edtDataNascimento.setText(getUsuario().dataNascimento);
+                } else {
+                    edtDataNascimento.setText("");
                 }
 
                 //validando cpf
                 edtCpf = (EditText) findViewById(R.id.edtCpf);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtCpf, 14, "Preencha o cpf corretamente");
-                if (getUsuario().cpf != null) {
+                if (getUsuario() != null && getUsuario().cpf != null) {
                     edtCpf.setText(getUsuario().cpf);
+                } else {
+                    edtCpf.setText("");
                 }
 
                 //validando imagem
                 edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
                 user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
-                FormUtils.preencherValidarCampos(verticalStepperForm, edtUrlFoto, 14, "Ao menos uma foto deve ser adicionada");
-                if (getUsuario().imagens != null && getUsuario().imagens.size() > 0) {
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtUrlFoto, 1, "Ao menos uma foto deve ser adicionada");
+                if (getUsuario() != null && getUsuario().imagens != null && getUsuario().imagens.size() > 0) {
                     edtUrlFoto.setText(getUsuario().imagens.get(getUsuario().imagens.size() -1));
                     Glide.with(this).load(getUsuario().imagens.get(getUsuario().imagens.size() -1)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+                } else {
+                    edtUrlFoto.setText("");
                 }
 
                 /**
@@ -332,22 +335,28 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 //validando endereco
                 edtEndereco = (EditText) findViewById(R.id.edtEndereco);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtEndereco, 14, "Preencha o endereco corretamente");
-                if (getUsuario().endereco != null) {
+                if (getUsuario() != null && getUsuario().endereco != null) {
                     edtEndereco.setText(getUsuario().endereco);
+                } else {
+                    edtEndereco.setText("");
                 }
 
                 //validando numero
                 edtNumero = (EditText) findViewById(R.id.edtNumero);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtNumero, 1, "Preencha o número corretamente");
-                if (getUsuario().numero != null) {
+                if (getUsuario() != null && getUsuario().numero != null) {
                     edtNumero.setText(String.valueOf(getUsuario().numero));
+                } else {
+                    edtNumero.setText("");
                 }
 
                 //validando cidade
                 edtCidade = (EditText) findViewById(R.id.edtCidade);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtCidade, 3, "Preencha a cidade corretamente");
-                if (getUsuario().cidade != null) {
+                if (getUsuario() != null && getUsuario().cidade != null) {
                     edtCidade.setText(getUsuario().cidade);
+                } else {
+                    edtCidade.setText("");
                 }
 
                 /**
@@ -363,8 +372,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 //validando telefone
                 edtTelefone = (EditText) findViewById(R.id.edtTelefone);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtTelefone, 14, "Preencha o telefone corretamente, com ddd");
-                if (getUsuario().telefone != null) {
+                if (getUsuario() != null && getUsuario().telefone != null) {
                     edtTelefone.setText(getUsuario().telefone);
+                } else {
+                    edtTelefone.setText("");
                 }
 
                 /**
