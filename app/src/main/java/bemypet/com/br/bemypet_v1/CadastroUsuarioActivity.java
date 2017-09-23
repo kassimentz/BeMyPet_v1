@@ -50,6 +50,7 @@ import java.util.List;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
+import bemypet.com.br.bemypet_v1.utils.FormUtils;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -290,21 +291,21 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
                 //validando nome do usuario
                 edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
-                preencherValidarCampos(edtNomeUsuario, 3, "Preencha o nome corretamente");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtNomeUsuario, 3, "Preencha o nome corretamente");
                 if (getUsuario().nome != null) {
                     edtNomeUsuario.setText(getUsuario().nome);
                 }
 
                 //validando data de nascimento
                 edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
-                preencherValidarCampos(edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
                 if (getUsuario().dataNascimento != null) {
                     edtDataNascimento.setText(getUsuario().dataNascimento);
                 }
 
                 //validando cpf
                 edtCpf = (EditText) findViewById(R.id.edtCpf);
-                preencherValidarCampos(edtCpf, 14, "Preencha o cpf corretamente");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtCpf, 14, "Preencha o cpf corretamente");
                 if (getUsuario().cpf != null) {
                     edtCpf.setText(getUsuario().cpf);
                 }
@@ -312,7 +313,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 //validando imagem
                 edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
                 user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
-                preencherValidarCampos(edtCpf, 14, "Ao menos uma foto deve ser adicionada");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtUrlFoto, 14, "Ao menos uma foto deve ser adicionada");
                 if (getUsuario().imagens != null && getUsuario().imagens.size() > 0) {
                     edtUrlFoto.setText(getUsuario().imagens.get(0));
                     Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
@@ -330,21 +331,21 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
                 //validando endereco
                 edtEndereco = (EditText) findViewById(R.id.edtEndereco);
-                preencherValidarCampos(edtEndereco, 14, "Preencha o endereco corretamente");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtEndereco, 14, "Preencha o endereco corretamente");
                 if (getUsuario().endereco != null) {
                     edtEndereco.setText(getUsuario().endereco);
                 }
 
                 //validando numero
                 edtNumero = (EditText) findViewById(R.id.edtNumero);
-                preencherValidarCampos(edtNumero, 1, "Preencha o número corretamente");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtNumero, 1, "Preencha o número corretamente");
                 if (getUsuario().numero != null) {
                     edtNumero.setText(String.valueOf(getUsuario().numero));
                 }
 
                 //validando cidade
                 edtCidade = (EditText) findViewById(R.id.edtCidade);
-                preencherValidarCampos(edtCidade, 3, "Preencha a cidade corretamente");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtCidade, 3, "Preencha a cidade corretamente");
                 if (getUsuario().cidade != null) {
                     edtCidade.setText(getUsuario().cidade);
                 }
@@ -361,7 +362,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
                 //validando telefone
                 edtTelefone = (EditText) findViewById(R.id.edtTelefone);
-                preencherValidarCampos(edtTelefone, 14, "Preencha o telefone corretamente, com ddd");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtTelefone, 14, "Preencha o telefone corretamente, com ddd");
                 if (getUsuario().telefone != null) {
                     edtTelefone.setText(getUsuario().telefone);
                 }
@@ -371,48 +372,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                  */
                 break;
         }
-    }
-
-    private void preencherValidarCampos(EditText edtText, final int length, final String message) {
-
-        edtText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkString(s.toString(), length, message);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-        edtText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(checkString(v.getText().toString(), length, message)) {
-                    verticalStepperForm.goToNextStep();
-                }
-                return false;
-            }
-        });
-
-    }
-
-    private boolean checkString(String valor, int length, String message) {
-        boolean checkOk = false;
-        String titleErrorString = message;
-        String titleError = String.format(titleErrorString, 3);
-
-        if(valor.length() >= length) {
-            checkOk = true;
-            verticalStepperForm.setActiveStepAsCompleted();
-        } else {
-            verticalStepperForm.setActiveStepAsUncompleted(titleError);
-            checkOk = false;
-        }
-
-        return checkOk;
     }
 
 
