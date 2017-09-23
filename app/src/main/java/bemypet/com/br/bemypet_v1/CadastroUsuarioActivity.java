@@ -102,7 +102,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         initializeVariables();
 
         if(getUsuario() != null) {
-            preencherDados();
+            //preencherDados();
         }
 
     }
@@ -312,13 +312,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
-//                 verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
-                edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
-                if (getUsuario().nome != null) {
-                    edtNomeUsuario.setText("ka");
-                }
-
-                checkName(edtNomeUsuario.getText().toString());
+                preencherValidarNome();
+                preencherValidarCPF();
                 break;
             case LOCALIZACAO_STEP_NUM:
                 verticalStepperForm.setStepAsCompleted(LOCALIZACAO_STEP_NUM);
@@ -329,29 +324,96 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         }
     }
 
+    private void preencherValidarNome() {
+        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+        edtNomeUsuario.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        edtNomeUsuario.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(checkName(v.getText().toString())) {
+                    verticalStepperForm.goToNextStep();
+                }
+                return false;
+            }
+        });
+
+        if (getUsuario().nome != null) {
+            edtNomeUsuario.setText(getUsuario().nome);
+        }
+    }
+
+    private void preencherValidarCPF() {
+        edtCpf = (EditText) findViewById(R.id.edtCpf);
+        edtCpf.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkCpf(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        edtCpf.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(checkCpf(v.getText().toString())) {
+                    verticalStepperForm.goToNextStep();
+                }
+                return false;
+            }
+        });
+
+        if (getUsuario().cpf != null) {
+            edtCpf.setText(getUsuario().cpf);
+        }
+    }
+
+    private boolean checkCpf(String cpf) {
+        boolean titleIsCorrect = false;
+
+        if(cpf.length() == 14) {
+            titleIsCorrect = true;
+            verticalStepperForm.setActiveStepAsCompleted();
+
+        } else {
+            String titleErrorString = "Preencha o cpf corretamente";
+            String titleError = String.format(titleErrorString, 3);
+            verticalStepperForm.setActiveStepAsUncompleted(titleError);
+        }
+
+        return titleIsCorrect;
+    }
+
 
     private boolean checkName(String nome) {
-
 
         boolean titleIsCorrect = false;
 
         if(nome.length() >= 3) {
             titleIsCorrect = true;
-
             verticalStepperForm.setActiveStepAsCompleted();
-            // Equivalent to: verticalStepperForm.setStepAsCompleted(TITLE_STEP_NUM);
 
         } else {
             String titleErrorString = "Preencha o nome com mais de 3 caracters";
             String titleError = String.format(titleErrorString, 3);
-
             verticalStepperForm.setActiveStepAsUncompleted(titleError);
-            // Equivalent to: verticalStepperForm.setStepAsUncompleted(TITLE_STEP_NUM, titleError);
-
         }
 
         return titleIsCorrect;
-
     }
 
 
