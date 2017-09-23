@@ -379,6 +379,7 @@ public class FiltrosActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(filtros);
         if(Utils.saveJsonFile(this, "filtros.json", json)) {
+            System.out.println("json filtros");
             System.out.println(json);
             Utils.showToastMessage(this, "Filtro salvo com sucesso");
         } else {

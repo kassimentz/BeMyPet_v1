@@ -62,6 +62,7 @@ public class InicialActivity extends AppCompatActivity {
 
     private Filtros filtroActivity;
     private Usuario usuarioLogado;
+    private Boolean hasFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +139,11 @@ public class InicialActivity extends AppCompatActivity {
         }
         Filtros filtro = new Gson().fromJson(jsonObj, Filtros.class);
         if(filtro!=null) {
+            //mostrar o icone para limpar filtro
+            setHasFilter(Boolean.TRUE);
             setFiltroActivity(filtro);
+        } else {
+            setHasFilter(Boolean.FALSE);
         }
 
         updateUsuario();
@@ -177,15 +182,41 @@ public class InicialActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem hasFiltro = menu.findItem(R.id.action_filtro);
+        if(getHasFilter()) {
+            hasFiltro.setVisible(Boolean.FALSE);
+        } else {
+            hasFiltro.setVisible(Boolean.TRUE);
+        }
+
+        MenuItem hasNoFiltro = menu.findItem(R.id.action_remove_filtro);
+        if(getHasFilter()) {
+            hasNoFiltro.setVisible(Boolean.TRUE);
+        } else {
+            hasNoFiltro.setVisible(Boolean.FALSE);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+
+        if (id == R.id.action_remove_filtro) {
+            Intent intent = new Intent(this, InicialActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
 
         if (id == R.id.action_filtro) {
             Intent intent = new Intent(this, FiltrosActivity.class);
             startActivity(intent);
             return true;
         }
+
 
         if (id == R.id.action_novo_pet) {
             Intent intent;
@@ -404,5 +435,13 @@ public class InicialActivity extends AppCompatActivity {
 
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
+    }
+
+    public Boolean getHasFilter() {
+        return hasFilter;
+    }
+
+    public void setHasFilter(Boolean hasFilter) {
+        this.hasFilter = hasFilter;
     }
 }

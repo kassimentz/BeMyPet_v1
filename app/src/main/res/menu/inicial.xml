@@ -6,13 +6,19 @@
         android:id="@+id/action_novo_pet"
         android:icon="@drawable/plus_w"
         android:title="@string/action_novo_pet"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_filtro"
-        android:icon="@drawable/ic_magnify"
+        android:icon="@drawable/ic_filter_outline"
         android:title="@string/action_filtro"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_remove_filtro"
+        android:icon="@drawable/ic_filter_remove_outline"
+        android:title="@string/action_filtro"
+        app:showAsAction="always"/>
 
 
 

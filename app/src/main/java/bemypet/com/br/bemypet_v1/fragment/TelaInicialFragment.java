@@ -202,6 +202,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         if(getPontoLocalizacao()) {
             InicialActivity activity = (InicialActivity) getActivity();
             Filtros filtro  = activity.getFiltroActivity();
+            System.out.println("tem filtro");
+            System.out.println(filtro);
             if(filtro != null) {
                 buscarPetsPorFiltro(filtro);
             } else {
@@ -357,17 +359,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
                             //somente testar os filtros se o pet estiver disponivel para adocao = cadastro ativo
-                            if(pet.cadastroAtivo && !pet.status.equalsIgnoreCase(Constants.STATUS_PET_EM_PROCESSO_DE_ADOCAO)) {
-                                if (pet.id.equals(idFound)) {
+                            if(pet.cadastroAtivo && pet.status.equalsIgnoreCase(Constants.STATUS_PET_DISPONIVEL)) {
+                                //realizar os filtros no pet
+                                Pet petFiltrado = filtrarPet(pet, filtro);
+                                if (petFiltrado != null) {
 
-                                    //realizar os filtros no pet
-                                    Pet petFiltrado = filtrarPet(pet, filtro);
-                                    if (petFiltrado != null) {
-
-                                        final Pet bkpPet = pet;
-                                        gerarMarcadorNoMapa(bkpPet);
-                                    }
+                                    final Pet bkpPet = pet;
+                                    gerarMarcadorNoMapa(bkpPet);
                                 }
+
                             }
                         }
                     }
@@ -420,61 +420,86 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
+            return null;
         }
 
         if(pet.sexo.equalsIgnoreCase(filtro.sexo) || filtro.sexo.equalsIgnoreCase("TODOS")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
+            return null;
         }
 
         if(filtro.raca.contains(pet.raca) || filtro.raca.contains("Qualquer") || filtro.raca.isEmpty()) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
+            return null;
         }
 
-        if(Integer.valueOf(pet.idadeAproximada) >= Integer.valueOf(filtro.idadeInicial) &&
-                Integer.valueOf(pet.idadeAproximada) <= Integer.valueOf(filtro.idadeFinal))   {
+        if(pet.idadeAproximada != null) {
+            if (Integer.valueOf(pet.idadeAproximada) >= Integer.valueOf(filtro.idadeInicial) &&
+                    Integer.valueOf(pet.idadeAproximada) <= Integer.valueOf(filtro.idadeFinal)) {
+                petValido = Boolean.TRUE;
+            } else {
+                petValido = Boolean.FALSE;
+                return null;
+            }
+        }else {
             petValido = Boolean.TRUE;
-        } else {
-            petValido = Boolean.FALSE;
         }
 
-        if(pet.pesoAproximado >= Integer.valueOf(filtro.pesoInicial) &&
-               pet.pesoAproximado <= Integer.valueOf(filtro.pesoFinal))   {
-            petValido = Boolean.TRUE;
+        if(pet.pesoAproximado != null) {
+            if (pet.pesoAproximado >= Integer.valueOf(filtro.pesoInicial) &&
+                    pet.pesoAproximado <= Integer.valueOf(filtro.pesoFinal)) {
+                petValido = Boolean.TRUE;
+            } else {
+                petValido = Boolean.FALSE;
+                return null;
+            }
         } else {
-            petValido = Boolean.FALSE;
+            petValido = Boolean.TRUE;
         }
 
         if(pet.castrado.equalsIgnoreCase(filtro.castrado) || filtro.castrado.equalsIgnoreCase("TODOS")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
+            return null;
         }
 
         if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado) || filtro.vermifugado.equalsIgnoreCase("TODOS")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
+            return null;
         }
 
         //verifica se ao menos um elemento da lista sociavel do pet existe no filtro
-        if(!Collections.disjoint(pet.sociavel, filtro.sociavel)) {
-            petValido = Boolean.TRUE;
+        if(pet.sociavel != null) {
+            if (!Collections.disjoint(pet.sociavel, filtro.sociavel) || filtro.sociavel.isEmpty()) {
+                petValido = Boolean.TRUE;
 
+            } else {
+                petValido = Boolean.FALSE;
+                return null;
+
+            }
         } else {
-            petValido = Boolean.FALSE;
-
+            petValido = Boolean.TRUE;
         }
 
-        //verifica se ao menos um elemento da lista temperamento do pet existe no filtro
-        if(!Collections.disjoint(pet.temperamento, filtro.temperamento)) {
-            petValido = Boolean.TRUE;
+        if(pet.temperamento != null) {
+            //verifica se ao menos um elemento da lista temperamento do pet existe no filtro
+            if (!Collections.disjoint(pet.temperamento, filtro.temperamento) || filtro.temperamento.isEmpty()) {
+                petValido = Boolean.TRUE;
 
+            } else {
+                petValido = Boolean.FALSE;
+                return null;
+            }
         } else {
-            petValido = Boolean.FALSE;
+            petValido = Boolean.TRUE;
         }
 
 
