@@ -254,9 +254,15 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     }
 
     private void gerarMarcadorNoMapa(final Pet bkpPet) {
+        String img = "";
+        if(bkpPet.imagens.size() > 0) {
+            img = bkpPet.imagens.get(0);
+        } else {
+            img = "https://firebasestorage.googleapis.com/v0/b/bemypetv1.appspot.com/o/images%2Fperfil_ninhada.png?alt=media&token=c2c3a028-479b-4bd2-8bd1-df7fc661bb66";
+        }
         Glide.with(getActivity())
                 .asBitmap()
-                .load(bkpPet.imagens.get(0))
+                .load(img)
                 .apply(RequestOptions.circleCropTransform())
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
