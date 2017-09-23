@@ -14,6 +14,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -93,10 +96,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         ab.setTitle(R.string.activity_title_cadastro_usuario);
 
+        getBundle();
+
         initializeActivity();
         initializeVariables();
 
-        getBundle();
         if(getUsuario() != null) {
             preencherDados();
         }
@@ -111,7 +115,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
 
         String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
-        ;
+
         ufListagem = new ArrayList<String>(Arrays.asList(ufString));
 
         adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -265,8 +269,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     private void initializeActivity() {
 
-        // Time step vars
-
         // Vertical Stepper form vars
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimaryDark);
@@ -310,7 +312,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
-                verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
+//                 verticalStepperForm.setStepAsCompleted(DADOS_PESSOAIS_STEP_NUM);
+                edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+                if (getUsuario().nome != null) {
+                    edtNomeUsuario.setText("ka");
+                }
+
+                checkName(edtNomeUsuario.getText().toString());
                 break;
             case LOCALIZACAO_STEP_NUM:
                 verticalStepperForm.setStepAsCompleted(LOCALIZACAO_STEP_NUM);
@@ -322,15 +330,36 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     }
 
 
+    private boolean checkName(String nome) {
+
+
+        boolean titleIsCorrect = false;
+
+        if(nome.length() >= 3) {
+            titleIsCorrect = true;
+
+            verticalStepperForm.setActiveStepAsCompleted();
+            // Equivalent to: verticalStepperForm.setStepAsCompleted(TITLE_STEP_NUM);
+
+        } else {
+            String titleErrorString = "Preencha o nome com mais de 3 caracters";
+            String titleError = String.format(titleErrorString, 3);
+
+            verticalStepperForm.setActiveStepAsUncompleted(titleError);
+            // Equivalent to: verticalStepperForm.setStepAsUncompleted(TITLE_STEP_NUM, titleError);
+
+        }
+
+        return titleIsCorrect;
+
+    }
+
+
     //cria steps
     private View criaStepDadosPessoais() {
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPessoaisStep = (LinearLayout) inflater.inflate(
                 R.layout.step_cadastro_usuario_dados_pessoais, null, false);
-
-        //valida os dados do formulário se passar vai para proximo
-//        verticalStepperForm.goToNextStep();
-
         return dadosPessoaisStep;
     }
 
