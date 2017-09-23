@@ -14,13 +14,13 @@
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"
-            android:text="@string/nome"/>
+            android:text= "@string/nome"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
         <EditText
             android:id="@+id/edtNomeUsuario"
             style="@style/inputFormulario"
-            android:hint="@string/nome"
+            android:hint="@string/nome_placeholder"
             />
     </LinearLayout>
 
@@ -31,32 +31,39 @@
             style="@style/textoFormulario"
             android:text="@string/foto"/>
     </LinearLayout>
-    <LinearLayout style="@style/layoutLinha"
-        android:id="@+id/usuarioImgLayout">
+
+    <LinearLayout
+        android:id="@+id/usuarioImgLayout"
+        style="@style/layoutLinha">
 
         <RelativeLayout
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:paddingBottom="10dp">
+            android:onClick="buscaFotoPerfil">
 
             <ImageView
                 android:id="@+id/user_profile_photo"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/bg_circle"
                 android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_circle"
                 android:scaleType="centerCrop" />
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:elevation="2dp"
-                android:src="@drawable/add_photo"
-                android:onClick="buscaFotoPerfil"
+                android:layout_marginLeft="-40dp"
                 android:layout_toRightOf="@+id/user_profile_photo"
-                android:layout_marginLeft="-40dp"/>
+                android:elevation="2dp"
+                android:src="@drawable/add_photo" />
+
+            <EditText
+                android:id="@+id/edtUrlFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -68,10 +75,11 @@
             android:text="@string/dataNascimento"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
-        <TextView
+        <EditText
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormulario"
             android:hint="@string/data_placeholder"
+            android:inputType="number"
             android:drawableRight="@drawable/calendar"/>
     </LinearLayout>
 
@@ -86,6 +94,7 @@
     <LinearLayout style="@style/layoutLinha">
         <EditText
             android:id="@+id/edtCpf"
+            android:inputType="number"
             style="@style/inputFormulario"
             android:hint="@string/cpf_placeholder"/>
     </LinearLayout>
