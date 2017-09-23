@@ -278,8 +278,10 @@ public class PerfilPetActivity extends AppCompatActivity {
                 stringSociavel.append(", ");
             }
 
-            stringSociavel.deleteCharAt(stringSociavel.length()-2);
-            sociavelPerfilPet.setText(stringSociavel.toString());
+            if(stringSociavel.length() > 1) {
+                stringSociavel.deleteCharAt(stringSociavel.length() - 2);
+                sociavelPerfilPet.setText(stringSociavel.toString());
+            }
 
         }
         if(getPet().temperamento != null) {
@@ -289,8 +291,10 @@ public class PerfilPetActivity extends AppCompatActivity {
                 stringTemperamento.append(", ");
             }
 
-            stringTemperamento.deleteCharAt(stringTemperamento.length()-2);
-            temperamentoPerfilPet.setText(stringTemperamento.toString());
+            if(stringTemperamento.length() > 1) {
+                stringTemperamento.deleteCharAt(stringTemperamento.length() - 2);
+                temperamentoPerfilPet.setText(stringTemperamento.toString());
+            }
         }
 
         if(getPet().informacoesAdicionais != null) {

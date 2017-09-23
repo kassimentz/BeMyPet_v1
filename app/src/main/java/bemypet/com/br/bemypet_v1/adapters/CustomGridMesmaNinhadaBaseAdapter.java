@@ -64,7 +64,7 @@ public class CustomGridMesmaNinhadaBaseAdapter extends BaseAdapter{
             TextView textView = (TextView)grid.findViewById(R.id.gridMinhaNinhadaTxt);
             ImageView imageView = (ImageView)grid.findViewById(R.id.gridMinhaNinhadaImg);
             textView.setText(nomes.get(position));
-            if(images.size() > 0) {
+            if(images.size() > 0 && position < images.size()) {
                 Glide.with(mContext).load(images.get(position)).apply(RequestOptions.circleCropTransform()).into(imageView);
             }
         } else {
