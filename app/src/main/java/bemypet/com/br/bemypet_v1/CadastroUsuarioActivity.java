@@ -72,7 +72,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     private Spinner spinnerUf;
     private LinearLayout dadosPessoaisStep, localizacaoStep, contatoStep;
     private EditText edtNomeUsuario, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
-    private TextView txtDataNascimento;
+    private EditText edtDataNascimento, edtUrlFoto;
     private ImageView user_profile_photo;
     List<String> ufListagem;
 
@@ -124,10 +124,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         spinnerUf.setAdapter(adapter);
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+        edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
 
-        txtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
-        txtDataNascimento.setOnClickListener(new View.OnClickListener() {
+        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        edtDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -154,7 +155,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
 
                         String a = day+"/"+month+"/"+year;
-                        txtDataNascimento.setText(""+a);
+                        edtDataNascimento.setText(""+a);
                     }
                 };
 
@@ -224,20 +225,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     private void preencherDados() {
 
+        //preencher somente os dados que nao sao obrigatorios
+
         if (getUsuario().imagens.size() > 0) {
             // Loading profile image
             Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
         }
 
-        if (getUsuario().nome != null) {
-            edtNomeUsuario.setText(getUsuario().nome);
-        }
-        if (getUsuario().dataNascimento != null) {
-            txtDataNascimento.setText(getUsuario().dataNascimento);
-        }
-        if (getUsuario().cpf != null) {
-            edtCpf.setText(getUsuario().cpf);
-        }
+
         if (String.valueOf(getUsuario().cep) != null) {
             edtCep.setText(String.valueOf(getUsuario().cep));
         }
@@ -312,8 +307,40 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
-                preencherValidarNome();
-                preencherValidarCPF();
+
+                //validando nome do usuario
+                edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+                preencherValidarCampos(edtNomeUsuario, 3, "Preencha o nome corretamente");
+                if (getUsuario().nome != null) {
+                    edtNomeUsuario.setText(getUsuario().nome);
+                }
+
+                //validando data de nascimento
+                edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+                preencherValidarCampos(edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
+                if (getUsuario().dataNascimento != null) {
+                    edtDataNascimento.setText(getUsuario().dataNascimento);
+                }
+
+                //validando cpf
+                edtCpf = (EditText) findViewById(R.id.edtCpf);
+                preencherValidarCampos(edtCpf, 14, "Preencha o cpf corretamente");
+                if (getUsuario().cpf != null) {
+                    edtCpf.setText(getUsuario().cpf);
+                }
+
+                //validando imagem
+                edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
+                user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
+                preencherValidarCampos(edtCpf, 14, "Ao menos uma foto deve ser adicionada");
+                if (getUsuario().imagens != null && getUsuario().imagens.size() > 0) {
+                    edtUrlFoto.setText(getUsuario().imagens.get(0));
+                    Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+                }
+
+
+
+
                 break;
             case LOCALIZACAO_STEP_NUM:
                 verticalStepperForm.setStepAsCompleted(LOCALIZACAO_STEP_NUM);
@@ -324,96 +351,46 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         }
     }
 
-    private void preencherValidarNome() {
-        edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
-        edtNomeUsuario.addTextChangedListener(new TextWatcher() {
+    private void preencherValidarCampos(EditText edtText, final int length, final String message) {
+
+        edtText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkName(s.toString());
+                checkString(s.toString(), length, message);
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        edtNomeUsuario.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        edtText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(checkName(v.getText().toString())) {
+                if(checkString(v.getText().toString(), length, message)) {
                     verticalStepperForm.goToNextStep();
                 }
                 return false;
             }
         });
 
-        if (getUsuario().nome != null) {
-            edtNomeUsuario.setText(getUsuario().nome);
-        }
     }
 
-    private void preencherValidarCPF() {
-        edtCpf = (EditText) findViewById(R.id.edtCpf);
-        edtCpf.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    private boolean checkString(String valor, int length, String message) {
+        boolean checkOk = false;
+        String titleErrorString = message;
+        String titleError = String.format(titleErrorString, 3);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checkCpf(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-        edtCpf.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(checkCpf(v.getText().toString())) {
-                    verticalStepperForm.goToNextStep();
-                }
-                return false;
-            }
-        });
-
-        if (getUsuario().cpf != null) {
-            edtCpf.setText(getUsuario().cpf);
-        }
-    }
-
-    private boolean checkCpf(String cpf) {
-        boolean titleIsCorrect = false;
-
-        if(cpf.length() == 14) {
-            titleIsCorrect = true;
+        if(valor.length() >= length) {
+            checkOk = true;
             verticalStepperForm.setActiveStepAsCompleted();
-
         } else {
-            String titleErrorString = "Preencha o cpf corretamente";
-            String titleError = String.format(titleErrorString, 3);
             verticalStepperForm.setActiveStepAsUncompleted(titleError);
+            checkOk = false;
         }
 
-        return titleIsCorrect;
-    }
-
-
-    private boolean checkName(String nome) {
-
-        boolean titleIsCorrect = false;
-
-        if(nome.length() >= 3) {
-            titleIsCorrect = true;
-            verticalStepperForm.setActiveStepAsCompleted();
-
-        } else {
-            String titleErrorString = "Preencha o nome com mais de 3 caracters";
-            String titleError = String.format(titleErrorString, 3);
-            verticalStepperForm.setActiveStepAsUncompleted(titleError);
-        }
-
-        return titleIsCorrect;
+        return checkOk;
     }
 
 
@@ -457,8 +434,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         if(Utils.validaEditText(edtNomeUsuario)){
             getUsuario().nome = edtNomeUsuario.getText().toString();
         }
-        if(txtDataNascimento.getText().length() > 0){
-            getUsuario().dataNascimento = txtDataNascimento.getText().toString();
+        if(edtDataNascimento.getText().length() > 0){
+            getUsuario().dataNascimento = edtDataNascimento.getText().toString();
         }
         if(Utils.validaEditText(edtCpf)){
             getUsuario().cpf = edtCpf.getText().toString();
@@ -656,8 +633,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         StorageReference imgRef = FirebaseConnection.getStorage().child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
         UploadTask uploadTask = imgRef.putFile(file);
 
-        final LinearLayout rl = (LinearLayout) findViewById(R.id.usuarioImgLayout);
-
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception exception) {
@@ -672,15 +647,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                     String url = downloadUrl.toString();
                     getUsuario().addImagem(url);
 
-//                    View imagLayout = getLayoutInflater().inflate(R.layout. , null);
                     ImageView petImage = (ImageView) findViewById(R.id.user_profile_photo);
                     petImage.setMaxWidth(45);
                     petImage.setMaxHeight(45);
                     Glide.with(CadastroUsuarioActivity.this).load(url).apply(RequestOptions.circleCropTransform()).into(petImage);
-
-                    rl.addView(petImage);
-                    System.out.println(imgPath);
-
+                    edtUrlFoto.setText(url);
 
                 } else {
                     System.out.println("nulo");
