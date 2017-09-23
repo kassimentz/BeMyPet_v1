@@ -267,7 +267,7 @@
     <string name="mesma_ninhada">MESMA NINHADA</string>
     <string name="meus_pets">MEUS PETS</string>
 
-    <string name="nome">Nome</string>
+    <string name="nome">Nome *</string>
     <string name="nome_pet_placeholder">Informe o nome do pet</string>
     <string name="info_adicionais_placeholder">Informações adicionais</string>
 
@@ -279,26 +279,26 @@
     </string>
 
     <string name="nome_placeholder">Informe seu nome completo</string>
-    <string name="dataNascimento">Data de Nascimento</string>
+    <string name="dataNascimento">Data de Nascimento * </string>
     <string name="data_placeholder">00/00/0000</string>
     <string name="ninhada_placeholder">Informe o nome da ninhada</string>
-    <string name="cpf">CPF</string>
+    <string name="cpf">CPF *</string>
     <string name="cpf_placeholder">CPF (somente número)</string>
     <string name="cep">CEP</string>
     <string name="cep_placeholder">CEP (somente número) </string>
-    <string name="endereco">Endereço</string>
-    <string name="numero">Número</string>
+    <string name="endereco">Endereço *</string>
+    <string name="numero">Número *</string>
     <string name="complemento">Complemento</string>
     <string name="complemento_placeholder">Bloco / Apto</string>
-    <string name="cidade">Cidade</string>
+    <string name="cidade">Cidade *</string>
     <string name="estado">Estado</string>
-    <string name="telefone">Telefone</string>
+    <string name="telefone">Telefone *</string>
     <string name="telefone_placeholder">Telefone com DDD</string>
     <string name="email">E-mail</string>
     <string name="email_placeholder">Informe seu E-mail</string>
     <string name="localizacao">Localização</string>
     <string name="localizacao_placeholder">Mapa</string>
-    <string name="foto">Foto</string>
+    <string name="foto">Foto *</string>
     <string name="casa">Casa</string>
     <string name="apartamento">Apartamento</string>
 

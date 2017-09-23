@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.StringLoader;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -102,7 +103,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         initializeVariables();
 
         if(getUsuario() != null) {
-            //preencherDados();
+            preencherDados();
         }
 
     }
@@ -112,7 +113,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         //UF
         spinnerUf = (Spinner) findViewById(R.id.spinnerUf);
-
 
         String[] ufString = new String[]{"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
 
@@ -195,8 +195,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         edtTelefone = (EditText) findViewById(R.id.edtTelefone);
         formatTelefone = new MaskedFormatter("(##)#####-####");
         edtTelefone.addTextChangedListener(new MaskedWatcher(formatTelefone, edtTelefone));
-
-
         edtEmail = (EditText) findViewById(R.id.edtEmail);
     }
 
@@ -227,33 +225,18 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         //preencher somente os dados que nao sao obrigatorios
 
-        if (getUsuario().imagens.size() > 0) {
-            // Loading profile image
-            Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
-        }
-
-
         if (String.valueOf(getUsuario().cep) != null) {
             edtCep.setText(String.valueOf(getUsuario().cep));
         }
-        if (getUsuario().endereco != null) {
-            edtEndereco.setText(getUsuario().endereco);
-        }
-        if (String.valueOf(getUsuario().numero) != null) {
-            edtNumero.setText(String.valueOf(getUsuario().numero));
-        }
+
         if (getUsuario().complemento != null) {
             edtComplemento.setText(getUsuario().complemento);
         }
-        if (getUsuario().cidade != null) {
-            edtCidade.setText(getUsuario().cidade);
-        }
+
         if (getUsuario().estado != null) {
             spinnerUf.setSelection(adapter.getPosition(getUsuario().estado));
         }
-        if (getUsuario().telefone != null) {
-            edtTelefone.setText(getUsuario().telefone);
-        }
+
         if (getUsuario().email != null) {
             edtEmail.setText(getUsuario().email);
         }
@@ -261,21 +244,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     }
 
 
-
     private void initializeActivity() {
 
-        // Vertical Stepper form vars
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getApplicationContext(), R.color.step_colorPrimaryDark);
         String[] stepsTitles = getResources().getStringArray(R.array.steps_cadastro_usuario_titles);
-        //String[] stepsSubtitles = getResources().getStringArray(R.array.steps_subtitles);
-
-        // Here we find and initialize the form
         verticalStepperForm = (VerticalStepperFormLayout) findViewById(R.id.vertical_stepper_form);
         VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, stepsTitles, this, this)
                 .stepTitleTextColor(Color.rgb(241, 89, 34))
-                //.stepsSubtitles(stepsSubtitles)
-//                .materialDesignInDisabledSteps(true) // false by default
                 .showVerticalLineWhenStepsAreCollapsed(true) // false by default
                 .primaryColor(colorPrimary)
                 .primaryDarkColor(colorPrimaryDark)
@@ -308,6 +284,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         switch (stepNumber) {
             case DADOS_PESSOAIS_STEP_NUM:
 
+                /**
+                 * ============ INICIO VALIDACAO DADOS PESSOAIS ============
+                 */
+
                 //validando nome do usuario
                 edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
                 preencherValidarCampos(edtNomeUsuario, 3, "Preencha o nome corretamente");
@@ -338,15 +318,57 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                     Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
                 }
 
-
-
+                /**
+                 * ============ FIM VALIDACAO DADOS PESSOAIS ============
+                 */
 
                 break;
             case LOCALIZACAO_STEP_NUM:
-                verticalStepperForm.setStepAsCompleted(LOCALIZACAO_STEP_NUM);
+                /**
+                 * ============ INICIO VALIDACAO DADOS LOCALIZACAO ============
+                 */
+
+                //validando endereco
+                edtEndereco = (EditText) findViewById(R.id.edtEndereco);
+                preencherValidarCampos(edtEndereco, 14, "Preencha o endereco corretamente");
+                if (getUsuario().endereco != null) {
+                    edtEndereco.setText(getUsuario().endereco);
+                }
+
+                //validando numero
+                edtNumero = (EditText) findViewById(R.id.edtNumero);
+                preencherValidarCampos(edtNumero, 1, "Preencha o número corretamente");
+                if (getUsuario().numero != null) {
+                    edtNumero.setText(String.valueOf(getUsuario().numero));
+                }
+
+                //validando cidade
+                edtCidade = (EditText) findViewById(R.id.edtCidade);
+                preencherValidarCampos(edtCidade, 3, "Preencha a cidade corretamente");
+                if (getUsuario().cidade != null) {
+                    edtCidade.setText(getUsuario().cidade);
+                }
+
+                /**
+                 * ============ FIM VALIDACAO DADOS LOCALIZACAO ============
+                 */
                 break;
             case CONTATO_STEP_NUM:
-                verticalStepperForm.setStepAsCompleted(CONTATO_STEP_NUM);
+
+                /**
+                 * ============ INICIO VALIDACAO DADOS CONTATO ============
+                 */
+
+                //validando telefone
+                edtTelefone = (EditText) findViewById(R.id.edtTelefone);
+                preencherValidarCampos(edtTelefone, 14, "Preencha o telefone corretamente, com ddd");
+                if (getUsuario().telefone != null) {
+                    edtTelefone.setText(getUsuario().telefone);
+                }
+
+                /**
+                 * ============ FIM VALIDACAO DADOS CONTATO ============
+                 */
                 break;
         }
     }

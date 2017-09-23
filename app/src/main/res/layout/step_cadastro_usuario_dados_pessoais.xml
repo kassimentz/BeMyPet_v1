@@ -14,13 +14,13 @@
     <LinearLayout style="@style/layoutLinha">
         <TextView
             style="@style/textoFormulario"
-            android:text="@string/nome"/>
+            android:text= "@string/nome"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
         <EditText
             android:id="@+id/edtNomeUsuario"
             style="@style/inputFormulario"
-            android:hint="@string/nome"
+            android:hint="@string/nome_placeholder"
             />
     </LinearLayout>
 
