@@ -315,8 +315,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtUrlFoto, 14, "Ao menos uma foto deve ser adicionada");
                 if (getUsuario().imagens != null && getUsuario().imagens.size() > 0) {
-                    edtUrlFoto.setText(getUsuario().imagens.get(0));
-                    Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+                    edtUrlFoto.setText(getUsuario().imagens.get(getUsuario().imagens.size() -1));
+                    Glide.with(this).load(getUsuario().imagens.get(getUsuario().imagens.size() -1)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
                 }
 
                 /**
