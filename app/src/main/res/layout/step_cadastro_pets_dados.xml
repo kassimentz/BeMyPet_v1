@@ -147,6 +147,7 @@
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormularioPet"
             android:drawableRight="@drawable/calendar"
+
             android:hint="@string/data_placeholder"/>
     </LinearLayout>
 

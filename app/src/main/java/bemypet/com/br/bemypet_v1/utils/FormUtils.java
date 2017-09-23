@@ -6,6 +6,10 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.List;
+
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 
 /**
@@ -37,8 +41,8 @@ public class FormUtils {
                 return false;
             }
         });
-
     }
+
 
     private static boolean checkString(final VerticalStepperFormLayout verticalStepperForm, String valor, int length, String message) {
         boolean checkOk = false;
@@ -55,4 +59,5 @@ public class FormUtils {
 
         return checkOk;
     }
+
 }

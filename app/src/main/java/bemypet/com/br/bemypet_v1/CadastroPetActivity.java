@@ -91,6 +91,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     List<String> racasGato = new ArrayList<>();
     List<String> racasOutros = new ArrayList<>();
     List<String> racas = new ArrayList<>();
+    List<String> imagens = new ArrayList<>();
 
     ArrayAdapter<String> adapter;
 
@@ -114,17 +115,17 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         ab.setTitle(R.string.activity_title_cadastro_pet);
 
         getBundle();
+        if(getPet() == null) {
+            pet = new Pet();
+            setPet(pet);
+        }
         initializeActivity();
         initializeVariables();
 
 
         //se tem o pet preenchido, entao é edicao do pet e deve preencher os dados
-        if(getPet() != null) {
-            preencherDados();
-        } else {
-            pet = new Pet();
-            setPet(pet);
-        }
+        preencherDados();
+
 
     }
 
@@ -212,14 +213,14 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
 
         edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
-        edtInfoAdionais = (EditText) findViewById(R.id.edtInfoAdionais);
         edtDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
 
                         int s = monthOfYear+1;
                         String month = "";
@@ -228,8 +229,17 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                         } else {
                             month = String.valueOf(s);
                         }
-                        String a = dayOfMonth+"/"+month+"/"+year;
-                        System.out.println(a);
+
+                        int d = dayOfMonth;
+                        String day = "";
+                        if(d < 10){
+                            day = "0"+d;
+                        }else{
+                            day = String.valueOf(d);
+                        }
+
+
+                        String a = day+"/"+month+"/"+year;
                         edtDataNascimento.setText(""+a);
                     }
                 };
@@ -244,6 +254,9 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
             }
         });
+        
+        edtInfoAdionais = (EditText) findViewById(R.id.edtInfoAdionais);
+
         edtPesoPet = (EditText) findViewById(R.id.edtPesoPet);
         edtPesoPet.setEnabled(Boolean.FALSE);
         edtPesoPet.setText(String.valueOf(pesoValue));
@@ -448,18 +461,38 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
                 //validando nome do pet
                 edNomePet = (EditText) findViewById(R.id.edNomePet);
-                FormUtils.preencherValidarCampos(verticalStepperForm, edNomePet, 3, "Preencha o nome corretamente");
+                edNomePet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus)
+                            getPet().nome = edNomePet.getText().toString();
+                    }
+                });
+
+                FormUtils.preencherValidarCampos(verticalStepperForm, edNomePet, 5, "Os campos nome e data de nascimento são obrigatórios");
                 if (getPet()!= null && getPet().nome != null) {
                     edNomePet.setText(getPet().nome);
                 } else {
-                    edNomePet.setText("");
+                    getPet().nome = edNomePet.getText().toString();
                 }
 
                 //validando data de nascimento
                 edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
-                FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
+                edtDataNascimento.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus)
+                            getPet().dataNascimento = edtDataNascimento.getText().toString();
+                    }
+                });
+                FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Os campos nome e data de nascimento são obrigatórios");
                 if (getPet()!= null && getPet().dataNascimento != null) {
+                    System.out.print("get pet != null");
+                    System.out.print(getPet().dataNascimento);
                     edtDataNascimento.setText(getPet().dataNascimento);
+                } else {
+                    System.out.print("get pet == null");
+                    getPet().dataNascimento = edtDataNascimento.getText().toString();
                 }
 
                 /**
@@ -474,6 +507,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
                 //validando imagem
                 edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
+                edtUrlFoto.setVisibility(View.INVISIBLE);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtUrlFoto, 1, "Ao menos uma foto deve ser adicionada");
                 //percorre as imagens do pet e adicona dinamicamente as imagens no layout
                 if(getPet()!= null &&  getPet().imagens != null && getPet().imagens.size() > 0) {
@@ -486,6 +520,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                         ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
                         petImage.setMaxWidth(45);
                         petImage.setMaxHeight(45);
+                        edtUrlFoto.setText("tem imagem");
                         Glide.with(CadastroPetActivity.this).load(img).apply(RequestOptions.circleCropTransform()).into(petImage);
                         rl.addView(imagLayout);
                         imagLayout.setOnClickListener(new View.OnClickListener() {
@@ -499,7 +534,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                         });
 
                     }
-
+                } else {
+                    edtUrlFoto.setText("");
                 }
 
                 /**
@@ -569,10 +605,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 StorageMetadata metadata = taskSnapshot.getMetadata();
 
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
                 if(downloadUrl != null) {
                     final String url = downloadUrl.toString();
                     getPet().addImagem(url);
-
                     final View imagLayout = getLayoutInflater().inflate(R.layout.pet_image, null);
                     ImageView petImage = (ImageView) imagLayout.findViewById(R.id.pet_photo);
                     petImage.setMaxWidth(45);
@@ -588,6 +624,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
                         }
                     });
+                    edtUrlFoto.setText("tem foto");
                     
                 } else {
                     System.out.println("nulo");
@@ -610,10 +647,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         RadioButton castrado = (RadioButton) findViewById(castradoSelecionado);
         getPet().castrado = castrado.getText().toString();
 
-        if(!edtDataNascimento.getText().toString().isEmpty()){
-            getPet().dataNascimento = edtDataNascimento.getText().toString();
-        }
-
         getPet().doador = getDoador();
 
         if(chk_segunda_dose.isChecked()) {
@@ -627,8 +660,12 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         int especieSelecionada = radioGroupEspecie.getCheckedRadioButtonId();
         RadioButton especie = (RadioButton) findViewById(especieSelecionada);
         getPet().especie = especie.getText().toString();
-
-        getPet().idadeAproximada = String.valueOf(Utils.calculaIdade(edtDataNascimento.getText().toString()));
+        getPet().dataNascimento = edtDataNascimento.getText().toString();
+        if(edtDataNascimento.getText().length() > 0) {
+            getPet().idadeAproximada = String.valueOf(Utils.calculaIdade(edtDataNascimento.getText().toString()));
+        }else {
+            getPet().idadeAproximada = "0";
+        }
 
         if(Utils.validaEditText(edtInfoAdionais)){
             getPet().informacoesAdicionais = edtInfoAdionais.getText().toString();
@@ -643,13 +680,6 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             getPet().localizacao = pontoGeo;
         }
 
-        if(Utils.validaEditText(edNomePet)){
-            getPet().nome = edNomePet.getText().toString();
-            erro = Boolean.FALSE;
-        } else {
-            edNomePet.setError(getString(R.string.required_field));
-            erro = Boolean.TRUE;
-        }
 
         getPet().parteDeNinhada = "N";
         getPet().nomeNinhada = "";
@@ -683,9 +713,9 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             sociavel.add(chk_sociavel_caes.getText().toString());
         }
 
-        pet.sociavel = sociavel;
+        getPet().sociavel = sociavel;
 
-        pet.status = Constants.STATUS_PET_DISPONIVEL;
+        getPet().status = Constants.STATUS_PET_DISPONIVEL;
 
         int temperamentoSelecionado = radioGroupTemperamento.getCheckedRadioButtonId();
         RadioButton temperamento = (RadioButton) findViewById(temperamentoSelecionado);
@@ -752,6 +782,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     private View criaStepDadosPets(){
         LayoutInflater inflater = LayoutInflater.from(getBaseContext());
         dadosPetStep = (LinearLayout) inflater.inflate(R.layout.step_cadastro_pets_dados, null, false);
+        //valida os dados do formulário se passar vai para proximo
+        verticalStepperForm.goToNextStep();
         return dadosPetStep;
     }
 
