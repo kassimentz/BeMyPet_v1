@@ -37,5 +37,14 @@
                 android:title="@string/privacy_policy" />
         </menu>
     </item>
+    <item>
+        <menu>
+            <item
+                android:id="@+id/nav_sair"
+                android:icon="@drawable/back"
+                android:title="@string/nav_sair" />
+
+        </menu>
+    </item>
 
 </menu>

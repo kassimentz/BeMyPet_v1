@@ -51,9 +51,11 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.vicmikhailau:MaskedEditText:2.0.3'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
+    compile 'com.google.android.gms:play-services-auth:10.2.6'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 }
+
 
 
 

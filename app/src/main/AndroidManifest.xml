@@ -38,6 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity">
+
+        </activity>
         <activity android:name=".EscolhaActivity" />
         <activity android:name=".IntroAdotanteActivity" />
         <activity android:name=".IntroAdocaoActivity" />
@@ -180,7 +183,6 @@
         <activity
             android:name=".CadastroAdocaoActivity"
             android:label="@string/activity_title_cadastro_adocao" />
-
         <activity
             android:name=".DenunciarUsuarioActivity"
             android:label="@string/activity_title_denunciar"

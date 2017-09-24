@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "445046765139-4frd0ivpl485d6csvfqem9ld2se8aekl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bemypet.com.br.bemypet_v1",
+            "certificate_hash": "b32cfe6ce1459a9d0a75cbb3190326f4f6acec61"
+          }
+        },
+        {
           "client_id": "445046765139-71r227vq97gr5n87f8d4ddck8h4kk9fg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
