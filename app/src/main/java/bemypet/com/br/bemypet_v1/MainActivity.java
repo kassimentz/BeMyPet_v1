@@ -63,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getBundle();
+
+        if(getUsuarioLogado() == null) {
+            usuarioLogado = new Usuario();
+            setUsuarioLogado(usuarioLogado);
+        }
+
         //LOGIN GOOGLE
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -87,12 +94,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         };
 
-        getBundle();
 
-        if(getUsuarioLogado() == null) {
-            usuarioLogado = new Usuario();
-            setUsuarioLogado(usuarioLogado);
-        }
     }
 
     private void getBundle() {
@@ -109,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         getUsuarioLogado().nome = user.getDisplayName();
 //        getUsuarioLogado().id = user.getUid();
 
-//        storeImageToFirebase(user.getPhotoUrl());
+        storeImageToFirebase(user.getPhotoUrl());
 
-        salvarUsuario(getUsuarioLogado());
+        salvarUsuario();
 
     }
 
@@ -178,8 +180,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
 
-    private void salvarUsuario(Usuario entidade) {
-        final Usuario usuario = entidade;
+    private void salvarUsuario() {
 
         //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
@@ -195,9 +196,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
-                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(getUsuarioLogado().id)).setValue(usuario);
 
-                                Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuarioLogado());
+                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(getUsuarioLogado().id)).setValue(getUsuarioLogado());
+                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuarioLogado());
 
 
                 } else {
