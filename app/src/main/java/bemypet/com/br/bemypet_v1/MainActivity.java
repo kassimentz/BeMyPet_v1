@@ -109,41 +109,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         getUsuarioLogado().email = user.getEmail();
         getUsuarioLogado().nome = user.getDisplayName();
+        getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
 //        getUsuarioLogado().id = user.getUid();
 
-        storeImageToFirebase(user.getPhotoUrl());
+        System.out.println(user.getEmail());
+        System.out.println(user.getDisplayName());
+
 
         salvarUsuario();
 
     }
 
-    private void storeImageToFirebase(final Uri imgPath) {
 
-        Uri file = imgPath;
-        StorageReference imgRef = FirebaseConnection.getStorage().child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
-        UploadTask uploadTask = imgRef.putFile(file);
-
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                if(downloadUrl != null) {
-                    String url = downloadUrl.toString();
-                    getUsuarioLogado().addImagem(url);
-
-                } else {
-                    System.out.println("nulo");
-                }
-            }
-        });
-
-    }
 
     @Override
     protected void onStart() {
@@ -188,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         getUsuarioLogado().token = refreshedToken;
 
+        System.out.println(getUsuarioLogado().toString());
         FirebaseConnection.getConnection();
         DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
 
