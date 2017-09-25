@@ -23,11 +23,23 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bg_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        />
     <LinearLayout
+        android:id="@+id/form_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/bg_layout"
         android:gravity="center">
+        
+
 
         <LinearLayout
             android:layout_width="wrap_content"

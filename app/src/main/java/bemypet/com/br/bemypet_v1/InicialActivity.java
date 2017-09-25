@@ -31,6 +31,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import bemypet.com.br.bemypet_v1.fragment.ConfiguracoesFragment;
@@ -73,6 +74,8 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
     private Boolean hasFilter;
 
     private GoogleApiClient googleApiClient;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,8 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -471,6 +476,8 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
 
 
     private void logOut(){
+        firebaseAuth.signOut();
+
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {

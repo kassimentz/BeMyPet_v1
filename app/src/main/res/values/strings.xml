@@ -395,5 +395,6 @@
     <string name="denunciar2">Seus dados não serão enviados para o denunciado. Mas tenha ciência que esta denúncia poderá prejudicar o usuário. Portanto, somente denuncie casos verídicos. Todas as informações são de sua responsabilidade</string>
 
     <string name="mensagem_erro_logout">Não foi possível sair.</string>
+    <string name="mensagem_erro_login">Não foi possível efetuar login.</string>
 
 </resources>
