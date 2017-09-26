@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ProgressBar progress_bar_login;
     private LinearLayout form_login;
 
+    private LinearLayout layouCadastroEmail;
 
 
     @Override
@@ -83,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         progress_bar_login = (ProgressBar) findViewById(R.id.progress_bar_login);
         form_login = (LinearLayout) findViewById(R.id.form_login);
+        layouCadastroEmail = (LinearLayout) findViewById(R.id.layouCadastroEmail);
     }
 
     @Override
@@ -151,5 +153,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    public void mostraCampos(View v) {
+        if(layouCadastroEmail.getVisibility() == View.VISIBLE) {
+            layouCadastroEmail.setVisibility(View.INVISIBLE);
+        } else {
+            layouCadastroEmail.setVisibility(View.VISIBLE);
+        }
+    }
 
 }

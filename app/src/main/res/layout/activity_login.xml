@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgMain"
     tools:context="bemypet.com.br.bemypet_v1.LoginActivity">
 
     <LinearLayout
         android:id="@+id/bg_layout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:orientation="vertical"
         android:background="@drawable/bg"
-        >
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:src="@drawable/logo_simb"/>
+            android:src="@drawable/logo_simb" />
 
     </LinearLayout>
 
@@ -30,83 +30,109 @@
         android:layout_below="@+id/bg_layout"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/form_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/bg_layout"
-        android:gravity="center">
-        
-
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:textAlignment="center"
-            android:layout_gravity="center">
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_margin="20dp"
+            android:weightSum="2">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                style="@style/FontTitle"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"/>
-
-            <LinearLayout style="@style/layoutLinha">
-                <EditText
-                    android:id="@+id/edtEmailLogin"
-                    style="@style/inputFormulario"
-                    android:hint="@string/email_placeholder"
-                    />
-            </LinearLayout>
-
-            <LinearLayout style="@style/layoutLinha">
-                <EditText
-                    android:id="@+id/edtSenhaLogin"
-                    style="@style/inputFormulario"
-                    android:inputType="textPassword"
-                    android:hint="@string/senha_placeholder"
-                    />
-            </LinearLayout>
-
-            <Button
-                android:layout_below="@+id/txtSubTitle"
-                android:layout_marginTop="5dp"
+            <com.google.android.gms.common.SignInButton
+                android:layout_weight="1"
+                android:id="@+id/btnLoginGoogle"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_centerInParent="true"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:onClick="login"
-                android:background="@drawable/botao_transp"
-                style="@style/FontButton"
-                android:text="LOGIN"/>
+                android:layout_height="wrap_content" />
 
-            <LinearLayout
+            <!--//TODO TROCAR ESSE BOTAO PELO FACEBOOK-->
+            <com.google.android.gms.common.SignInButton
+                android:layout_weight="1"
+                android:id="@+id/btnLoginFacebook"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/btnLoginGoogle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-
-            </LinearLayout>
-
-
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <TextView
+                style="@style/labelPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/cadastroEmail"
+                android:onClick="mostraCampos"/>
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/layouCadastroEmail"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:textAlignment="center"
+                    android:layout_gravity="center">
+
+                    <LinearLayout style="@style/layoutLinha">
+                        <EditText
+                            android:id="@+id/edtEmailLogin"
+                            style="@style/inputFormulario"
+                            android:hint="@string/email_placeholder"/>
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/layoutLinha">
+                        <EditText
+                            android:id="@+id/edtSenhaLogin"
+                            style="@style/inputFormulario"
+                            android:inputType="textPassword"
+                            android:hint="@string/senha_placeholder"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_below="@+id/txtSubTitle"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_centerInParent="true"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:onClick="login"
+                        android:background="@drawable/botao_transp"
+                        style="@style/FontButton"
+                        android:text="LOGIN"/>
+
+                </LinearLayout>
+
+
+            </ScrollView>
+        </LinearLayout>
+
+        </LinearLayout>
+
+
+
 
 
 </RelativeLayout>
