@@ -42,20 +42,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:layout_margin="20dp"
-            android:weightSum="2">
+            android:layout_gravity="center"
+            android:gravity="center">
 
             <com.google.android.gms.common.SignInButton
-                android:layout_weight="1"
                 android:id="@+id/btnLoginGoogle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <!--//TODO TROCAR ESSE BOTAO PELO FACEBOOK-->
             <com.google.android.gms.common.SignInButton
-                android:layout_weight="1"
                 android:id="@+id/btnLoginFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -71,6 +69,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/criarLoginApp"
                 style="@style/labelPerfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,55 +77,6 @@
                 android:text="@string/cadastroEmail"
                 android:onClick="mostraCampos"/>
 
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/layouCadastroEmail"
-                    android:visibility="invisible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:textAlignment="center"
-                    android:layout_gravity="center">
-
-                    <LinearLayout style="@style/layoutLinha">
-                        <EditText
-                            android:id="@+id/edtEmailLogin"
-                            style="@style/inputFormulario"
-                            android:hint="@string/email_placeholder"/>
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/layoutLinha">
-                        <EditText
-                            android:id="@+id/edtSenhaLogin"
-                            style="@style/inputFormulario"
-                            android:inputType="textPassword"
-                            android:hint="@string/senha_placeholder"/>
-                    </LinearLayout>
-
-                    <Button
-                        android:layout_below="@+id/txtSubTitle"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_centerInParent="true"
-                        android:textAlignment="center"
-                        android:layout_gravity="center"
-                        android:onClick="login"
-                        android:background="@drawable/botao_transp"
-                        style="@style/FontButton"
-                        android:text="LOGIN"/>
-
-                </LinearLayout>
-
-
-            </ScrollView>
         </LinearLayout>
 
         </LinearLayout>

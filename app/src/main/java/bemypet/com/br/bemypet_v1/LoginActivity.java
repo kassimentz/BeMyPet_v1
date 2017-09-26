@@ -1,12 +1,22 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -38,6 +48,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LinearLayout form_login;
 
     private LinearLayout layouCadastroEmail;
+
+    private TextView criarLoginApp;
 
 
     @Override
@@ -85,6 +97,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         progress_bar_login = (ProgressBar) findViewById(R.id.progress_bar_login);
         form_login = (LinearLayout) findViewById(R.id.form_login);
         layouCadastroEmail = (LinearLayout) findViewById(R.id.layouCadastroEmail);
+
+        criarLoginApp = (TextView) findViewById(R.id.criarLoginApp);
+        criarLoginApp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
     @Override
@@ -154,11 +169,47 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void mostraCampos(View v) {
-        if(layouCadastroEmail.getVisibility() == View.VISIBLE) {
-            layouCadastroEmail.setVisibility(View.INVISIBLE);
-        } else {
-            layouCadastroEmail.setVisibility(View.VISIBLE);
-        }
+        showLoginDialog();
+    }
+
+    private void showLoginDialog() {
+
+        final Dialog login = new Dialog(this);
+
+        login.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        login.setContentView(R.layout.create_account_login);
+        final EditText email = (EditText) login.findViewById(R.id.edtEmailLogin);
+        final EditText senha = (EditText) login.findViewById(R.id.edtSenhaLogin);
+
+        login.setTitle("Login em BeMyPet");
+
+        Button btnLogin = (Button) login.findViewById(R.id.btnLogin);
+        Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(email.getText().toString().trim().length() > 0 && senha.getText().toString().trim().length() > 0) {
+                    // Validate Your login credential here than display message
+                    Toast.makeText(LoginActivity.this, "Login Sucessfull, "+email.getText().toString(), Toast.LENGTH_LONG).show();
+
+                    // Redirect to dashboard / home screen.
+                    login.dismiss();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Please enter Username and Password", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login.dismiss();
+            }
+        });
+
+        login.show();
     }
 
 }
