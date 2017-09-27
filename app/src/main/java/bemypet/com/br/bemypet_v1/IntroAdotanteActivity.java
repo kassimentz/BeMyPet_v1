@@ -26,6 +26,8 @@ public class IntroAdotanteActivity extends AppCompatActivity {
     private int[] layouts;
     private PrefManager prefManager;
 
+    String origem = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,8 @@ public class IntroAdotanteActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_intro_adotante);
 
+        getBundle();
+
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
 
@@ -65,7 +69,23 @@ public class IntroAdotanteActivity extends AppCompatActivity {
 
     }
 
+    private void getBundle() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("origem")) {
+                origem = extras.getString("origem");
+            }
+        }
+    }
+
     public void fecharIntroAdotante(View v){
+        Intent intent = null;
+        if(origem != null) {
+            intent = new Intent(this, InicialActivity.class);
+        } else {
+            intent = new Intent(this, MainActivity.class);
+        }
+        startActivity(intent);
         this.finish();
     }
 

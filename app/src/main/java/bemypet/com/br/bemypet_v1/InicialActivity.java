@@ -211,17 +211,21 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem hasFiltro = menu.findItem(R.id.action_filtro);
-        if(getHasFilter()) {
-            hasFiltro.setVisible(Boolean.FALSE);
-        } else {
-            hasFiltro.setVisible(Boolean.TRUE);
+        if(hasFiltro != null) {
+            if (getHasFilter()) {
+                hasFiltro.setVisible(Boolean.FALSE);
+            } else {
+                hasFiltro.setVisible(Boolean.TRUE);
+            }
         }
 
         MenuItem hasNoFiltro = menu.findItem(R.id.action_remove_filtro);
-        if(getHasFilter()) {
-            hasNoFiltro.setVisible(Boolean.TRUE);
-        } else {
-            hasNoFiltro.setVisible(Boolean.FALSE);
+        if(hasNoFiltro != null) {
+            if (getHasFilter()) {
+                hasNoFiltro.setVisible(Boolean.TRUE);
+            } else {
+                hasNoFiltro.setVisible(Boolean.FALSE);
+            }
         }
         return true;
     }
@@ -301,7 +305,11 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
 //                        CURRENT_TAG = TAG_CONFIGURACOES;
 //                        break;
                     case R.id.nav_ajuda:
-                        startActivity(new Intent(InicialActivity.this, EscolhaActivity.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("origem", "inicial");
+                        Intent intent = new Intent(InicialActivity.this, EscolhaActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_sobre:
@@ -359,13 +367,14 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
 
         if(getUsuarioLogado() == null) {
             updateUsuario();
-        }
-        txtNomeUsuario.setText(getUsuarioLogado().nome);
-        txtTipoUsuario.setText(getUsuarioLogado().email);
+        } else {
+            txtNomeUsuario.setText(getUsuarioLogado().nome);
+            txtTipoUsuario.setText(getUsuarioLogado().email);
 
-        // Loading profile image
-        if(getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
-            Glide.with(this).load(getUsuarioLogado().imagens.get(getUsuarioLogado().imagens.size()-1)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+            // Loading profile image
+            if (getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
+                Glide.with(this).load(getUsuarioLogado().imagens.get(getUsuarioLogado().imagens.size() - 1)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+            }
         }
         // showing dot next to notifications label
         //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
