@@ -377,6 +377,7 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
             if (getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
                 Glide.with(this).load(getUsuarioLogado().imagens.get(getUsuarioLogado().imagens.size() - 1)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
             }
+
         }
         // showing dot next to notifications label
         //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
