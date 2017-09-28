@@ -165,8 +165,8 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         if(getUsuario().imagens.size() > 0) {
             // Loading profile image
 
-            Glide.with(this).load(getUsuario().imagens.get(0)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
-            Glide.with(this).load(getUsuario().imagens.get(getUsuario().imagens.size()-1)).into(header_cover_image);
+            Glide.with(this).load(getUsuario().imagens.get(getUsuario().imagens.size()-1)).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
+            Glide.with(this).load(getUsuario().imagens.get(0)).into(header_cover_image);
         }
         
         if(getUsuario().nome != null) {
