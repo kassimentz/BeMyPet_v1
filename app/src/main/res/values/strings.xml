@@ -47,6 +47,7 @@
     <!--<string name="nav_configuracoes">Configurações</string>-->
     <string name="nav_sobre">Sobre</string>
     <string name="nav_ajuda">Ajuda</string>
+    <string name="nav_sair">LogOut</string>
 
     <string name="denunciar">Sim, Denunciar!</string>
     <string name="cancelar">Cancelar</string>
@@ -301,6 +302,7 @@
     <string name="foto">Foto *</string>
     <string name="casa">Casa</string>
     <string name="apartamento">Apartamento</string>
+    <string name="senha_placeholder">Informe sua senha</string>
 
     <string name="txtTeveOutroPet">VOCÊ JÁ TEVE OUTRO(S) PET(S) ANTES?</string>
     <string name="txtQuantosPets">QUANTOS</string>
@@ -391,6 +393,10 @@
     <string name="txtDenunciar1">Informe abaixo o tipo da sua denúncia e os motivos que o levaram a criar esta denúncia.</string>
     <string name="motivo_denuncia_placeholder">Informe o motivo da denúncia</string>
     <string name="denunciar2">Seus dados não serão enviados para o denunciado. Mas tenha ciência que esta denúncia poderá prejudicar o usuário. Portanto, somente denuncie casos verídicos. Todas as informações são de sua responsabilidade</string>
+
+    <string name="mensagem_erro_logout">Não foi possível sair.</string>
+    <string name="mensagem_erro_login">Não foi possível efetuar login.</string>
+    <string name="cadastroEmail"><u>Criar um login no App</u></string>
 
 
 </resources>

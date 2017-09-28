@@ -1,6 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -19,10 +20,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import bemypet.com.br.bemypet_v1.fragment.ConfiguracoesFragment;
@@ -33,7 +42,7 @@ import bemypet.com.br.bemypet_v1.pojo.Filtros;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
-public class InicialActivity extends AppCompatActivity {
+public class InicialActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -63,6 +72,10 @@ public class InicialActivity extends AppCompatActivity {
     private Filtros filtroActivity;
     private Usuario usuarioLogado;
     private Boolean hasFilter;
+
+    private GoogleApiClient googleApiClient;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +129,20 @@ public class InicialActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+
+        //LOGIN GOOGLE
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     private void updateUsuario() {
@@ -184,17 +211,21 @@ public class InicialActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem hasFiltro = menu.findItem(R.id.action_filtro);
-        if(getHasFilter()) {
-            hasFiltro.setVisible(Boolean.FALSE);
-        } else {
-            hasFiltro.setVisible(Boolean.TRUE);
+        if(hasFiltro != null) {
+            if (getHasFilter()) {
+                hasFiltro.setVisible(Boolean.FALSE);
+            } else {
+                hasFiltro.setVisible(Boolean.TRUE);
+            }
         }
 
         MenuItem hasNoFiltro = menu.findItem(R.id.action_remove_filtro);
-        if(getHasFilter()) {
-            hasNoFiltro.setVisible(Boolean.TRUE);
-        } else {
-            hasNoFiltro.setVisible(Boolean.FALSE);
+        if(hasNoFiltro != null) {
+            if (getHasFilter()) {
+                hasNoFiltro.setVisible(Boolean.TRUE);
+            } else {
+                hasNoFiltro.setVisible(Boolean.FALSE);
+            }
         }
         return true;
     }
@@ -220,7 +251,9 @@ public class InicialActivity extends AppCompatActivity {
 
         if (id == R.id.action_novo_pet) {
             Intent intent;
-            if(!getUsuarioLogado().getLogradouro().isEmpty()) {
+            System.out.println(getUsuarioLogado().getLogradouro().toString() + " logradouro");
+            System.out.println(getUsuarioLogado().getLogradouro().toString().length());
+            if(getUsuarioLogado().getLogradouro().toString().length() > 1) {
                 intent = new Intent(getApplicationContext(), CadastroPetActivity.class);
             } else {
                 Utils.showToastMessage(getApplicationContext(), "Para cadastrar um pet, primeiro complete seus dados: ");
@@ -274,7 +307,11 @@ public class InicialActivity extends AppCompatActivity {
 //                        CURRENT_TAG = TAG_CONFIGURACOES;
 //                        break;
                     case R.id.nav_ajuda:
-                        startActivity(new Intent(InicialActivity.this, EscolhaActivity.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("origem", "inicial");
+                        Intent intent = new Intent(InicialActivity.this, EscolhaActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_sobre:
@@ -285,6 +322,9 @@ public class InicialActivity extends AppCompatActivity {
                         startActivity(new Intent(InicialActivity.this, PoliticaDePrivacidadeActivity.class));
                         drawer.closeDrawers();
                         return true;
+                    case R.id.nav_sair:
+                        logOut();
+                        break;
                     default:
                         navItemIndex = 0;
                 }
@@ -301,7 +341,6 @@ public class InicialActivity extends AppCompatActivity {
                 return true;
             }
         });
-
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
@@ -330,13 +369,15 @@ public class InicialActivity extends AppCompatActivity {
 
         if(getUsuarioLogado() == null) {
             updateUsuario();
-        }
-        txtNomeUsuario.setText(getUsuarioLogado().nome);
-        txtTipoUsuario.setText(getUsuarioLogado().email);
+        } else {
+            txtNomeUsuario.setText(getUsuarioLogado().nome);
+            txtTipoUsuario.setText(getUsuarioLogado().email);
 
-        // Loading profile image
-        if(getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
-            Glide.with(this).load(getUsuarioLogado().imagens.get(getUsuarioLogado().imagens.size()-1)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+            // Loading profile image
+            if (getUsuarioLogado().imagens != null && getUsuarioLogado().imagens.size() > 0) {
+                Glide.with(this).load(getUsuarioLogado().imagens.get(getUsuarioLogado().imagens.size() - 1)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
+            }
+
         }
         // showing dot next to notifications label
         //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
@@ -443,5 +484,34 @@ public class InicialActivity extends AppCompatActivity {
 
     public void setHasFilter(Boolean hasFilter) {
         this.hasFilter = hasFilter;
+    }
+
+
+    private void logOut(){
+        firebaseAuth.signOut();
+
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                if(status.isSuccess()){
+                    drawer.closeDrawers();
+                    goLoginScreen();
+                }else{
+                    drawer.closeDrawers();
+                    Toast.makeText(getApplicationContext(), R.string.mensagem_erro_logout, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

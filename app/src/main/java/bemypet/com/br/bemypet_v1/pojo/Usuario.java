@@ -92,7 +92,12 @@ public class Usuario {
     public String getLogradouro() {
         StringBuilder logradouro = new StringBuilder();
 
-        if(this.endereco != null && this.numero != null && this.cidade != null) {
+        if(this.endereco != null
+                && this.endereco.length() >1
+                && this.numero != null
+                && this.numero > 0
+                && this.cidade != null
+                && this.cidade.length() > 1) {
             logradouro.append(this.endereco+", ");
             logradouro.append(this.numero+", ");
             logradouro.append(this.cidade);

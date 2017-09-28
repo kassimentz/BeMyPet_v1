@@ -25,6 +25,7 @@ public class IntroAdocaoActivity extends AppCompatActivity {
     private TextView[] dots;
     private int[] layouts;
     private PrefManager prefManager;
+    String origem = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class IntroAdocaoActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_intro_adocao);
+        getBundle();
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -65,7 +67,23 @@ public class IntroAdocaoActivity extends AppCompatActivity {
 
     }
 
+    private void getBundle() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("origem")) {
+                origem = extras.getString("origem");
+            }
+        }
+    }
+
     public void fecharIntroAdocao(View v){
+        Intent intent = null;
+        if(origem != null) {
+            intent = new Intent(this, InicialActivity.class);
+        } else {
+            intent = new Intent(this, MainActivity.class);
+        }
+        startActivity(intent);
         this.finish();
     }
 

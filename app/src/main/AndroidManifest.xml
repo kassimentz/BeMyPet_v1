@@ -31,14 +31,18 @@
             android:authorities="com.facebook.app.FacebookContentProvider1537764562949663"
             android:exported="true" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+
+        <activity android:name=".LoginActivity">
+
+        </activity>
+        <activity android:name=".EscolhaActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EscolhaActivity" />
         <activity android:name=".IntroAdotanteActivity" />
         <activity android:name=".IntroAdocaoActivity" />
         <!--
@@ -180,7 +184,6 @@
         <activity
             android:name=".CadastroAdocaoActivity"
             android:label="@string/activity_title_cadastro_adocao" />
-
         <activity
             android:name=".DenunciarUsuarioActivity"
             android:label="@string/activity_title_denunciar"

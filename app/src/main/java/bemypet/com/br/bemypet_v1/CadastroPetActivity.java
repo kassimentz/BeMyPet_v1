@@ -43,6 +43,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -589,7 +590,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     private void storeImageToFirebase(final String imgPath) {
 
         Uri file = Uri.fromFile(new File(imgPath));
-        StorageReference imgRef = FirebaseConnection.getStorage().child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference imgRef = storageReference.child("images/"+String.valueOf(System.currentTimeMillis()+file.getLastPathSegment()));
         UploadTask uploadTask = imgRef.putFile(file);
 
         final LinearLayout rl = (LinearLayout) findViewById(R.id.petImgLayout);

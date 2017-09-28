@@ -2,44 +2,149 @@ package bemypet.com.br.bemypet_v1;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import bemypet.com.br.bemypet_v1.adapters.SwipeListViewAdapter;
 import bemypet.com.br.bemypet_v1.models.FirebaseConnection;
-import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
-import bemypet.com.br.bemypet_v1.utils.Constants;
 import bemypet.com.br.bemypet_v1.utils.Utils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+
+    private GoogleApiClient googleApiClient;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+
+    private Usuario usuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getBundle();
+
+        if(getUsuarioLogado() == null) {
+            usuarioLogado = new Usuario();
+            setUsuarioLogado(usuarioLogado);
+        }
+
+        //LOGIN GOOGLE
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    setUserData(user);
+                }else {
+                    goLoginScreen();
+                }
+            }
+        };
+
+
     }
+
+    private void getBundle() {
+
+        if (Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
+            setUsuarioLogado(Utils.getUsuarioSharedPreferences(getApplicationContext()));
+        }
+
+    }
+
+    private void setUserData(FirebaseUser user) {
+
+        getUsuarioLogado().email = user.getEmail();
+        getUsuarioLogado().nome = user.getDisplayName();
+        getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
+//        getUsuarioLogado().id = user.getUid();
+
+        System.out.println(user.getEmail());
+        System.out.println(user.getDisplayName());
+
+
+        salvarUsuario();
+
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(firebaseAuthListener);
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
 
     public void iniciar(View v) {
 
-        buscarUsuarios();
+        Intent intent = new Intent(MainActivity.this, InicialActivity.class);
+        startActivity(intent);
+        MainActivity.this.finish();
+
+//        buscarUsuarios();
+
+
 //        Intent intent = new Intent(this, EscolhaActivity.class);
 
         //Intent intent = new Intent(this, CadastroPetActivity.class);
@@ -51,50 +156,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    private void salvarUsuario(Usuario entidade) {
-//        final Usuario usuario = entidade;
-//
-//        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
-//        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
-//
-//        usuario.token = refreshedToken;
-//
-//        FirebaseConnection.getConnection();
-//        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
-//
-//        connectedReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                boolean connected = snapshot.getValue(Boolean.class);
-//                if (connected) {
-//                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(usuario.id)).setValue(usuario);
-//
-//                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-//                    geoFire.setLocation(usuario.id, new GeoLocation(usuario.localizacao.lat, usuario.localizacao.lon), new GeoFire.CompletionListener() {
-//                        @Override
-//                        public void onComplete(String key, DatabaseError error) {
-//                            if (error != null) {
-//                                System.err.println("There was an error saving the location to GeoFire: " + error);
-//                            } else {
-//                                System.out.println("Location saved on server successfully!");
-//
-//                            }
-//                        }
-//                    });
-//
-//
-//                } else {
-//                    //logar erro
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                //Log.i("Cancel", "Listener was cancelled");
-//            }
-//        });
-//
-//    }
+
+    private void salvarUsuario() {
+
+        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
+
+        getUsuarioLogado().token = refreshedToken;
+
+        System.out.println(getUsuarioLogado().toString());
+        FirebaseConnection.getConnection();
+        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+
+                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(getUsuarioLogado().id)).setValue(getUsuarioLogado());
+                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuarioLogado());
+
+
+                } else {
+                    //logar erro
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Log.i("Cancel", "Listener was cancelled");
+            }
+        });
+
+    }
 
     /**
      * Coloquei este metodo para buscar um usuario no banco e salvar ele no app, como se estivesse logado
@@ -149,7 +244,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-//    private void buscarUsuarios() {
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(firebaseAuthListener != null){
+            firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+        }
+    }
+
+    //    private void buscarUsuarios() {
 //
 //        FirebaseDatabase.getInstance().getReference().child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
@@ -172,5 +281,11 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
 
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+    }
 }

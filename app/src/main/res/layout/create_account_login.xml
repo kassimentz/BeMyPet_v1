@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgMain"
+    android:padding="10dp">
+
+    <TextView
+        style="@style/FontButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login BeMyPet"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textAllCaps="true"/>
+
+    <LinearLayout
+        android:id="@+id/layouCadastroEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:textAlignment="center"
+        android:layout_gravity="center">
+
+        <LinearLayout style="@style/layoutLinha">
+            <EditText
+                android:id="@+id/edtEmailLogin"
+                style="@style/inputFormulario"
+                android:hint="@string/email_placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/layoutLinha">
+            <EditText
+                android:id="@+id/edtSenhaLogin"
+                style="@style/inputFormulario"
+                android:inputType="textPassword"
+                android:hint="@string/senha_placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/layoutLinha"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:width="120dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="login"
+                android:background="@drawable/button_background"
+                style="@style/FontButton"
+                android:text="CANCELAR"/>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_margin="10dp"
+                android:width="120dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="login"
+                android:background="@drawable/button_background"
+                style="@style/FontButton"
+                android:text="LOGIN"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

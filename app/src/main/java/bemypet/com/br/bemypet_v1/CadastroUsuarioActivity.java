@@ -116,7 +116,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         adapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_spinner_item, ufListagem);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_style);
         spinnerUf.setAdapter(adapter);
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
@@ -513,68 +513,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
     }
 
-    //TODO ESTA FUNCAO DEVE SER USADA NO LOGIN, PARA SALVAR O USUARIO PELA PRIMEIRA VEZ, COM O TOKKEN E COM O LAT LONG NO GEOFIRE
-//    private void salvarUsuario(Usuario entidade) {
-//        final Usuario usuario = entidade;
-//
-//        //LINHAS ADICIONADAS PARA SALVAR O TOKEN QUE SERA UTILIZADO PARA O PUSH NOTIFICATION
-//        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//        Log.d("FirebaseInstanceId", "Refreshed token: " + refreshedToken);
-//
-//        usuario.token = refreshedToken;
-//
-//        FirebaseConnection.getConnection();
-//        DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
-//
-//        connectedReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                boolean connected = snapshot.getValue(Boolean.class);
-//                if (connected) {
-//                    FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(usuario.id)).setValue(usuario);
-//
-//                    GeoFire geoFire = new GeoFire(FirebaseConnection.getDatabase().child("geofire"));
-//                    geoFire.setLocation(usuario.id, new GeoLocation(usuario.localizacao.lat, usuario.localizacao.lon), new GeoFire.CompletionListener() {
-//                        @Override
-//                        public void onComplete(String key, DatabaseError error) {
-//                            if (error != null) {
-//                                System.err.println("There was an error saving the location to GeoFire: " + error);
-//                            } else {
-//                                System.out.println("Location saved on server successfully!");
-//
-//                                if(origem == null){
-//
-//                                    Intent intent = new Intent(CadastroUsuarioActivity.this, CadastroAdocaoActivity.class);
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putSerializable("pet", new Gson().toJson(getPet()));
-//                                    intent.putExtras(bundle);
-//                                    startActivity(intent);
-//                                    finish();
-//
-//                                }else{
-//
-//                                    Intent intent = new Intent(CadastroUsuarioActivity.this, PerfilUsuarioActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-//
-//                                }
-//
-//                            }
-//                        }
-//                    });
-//
-//
-//                } else {
-//                    //logar erro
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                //Log.i("Cancel", "Listener was cancelled");
-//            }
-//        });
-//
-//    }
 
     public View buscaFotoPerfil(View v) {
 
