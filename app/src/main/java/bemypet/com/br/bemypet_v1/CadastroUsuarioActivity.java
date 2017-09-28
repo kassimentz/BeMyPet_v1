@@ -16,12 +16,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -114,9 +116,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         ufListagem = new ArrayList<String>(Arrays.asList(ufString));
 
-        adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, ufListagem);
-        adapter.setDropDownViewResource(R.layout.spinner_style);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, ufListagem);
         spinnerUf.setAdapter(adapter);
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);

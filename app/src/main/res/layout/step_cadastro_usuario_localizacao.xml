@@ -106,6 +106,7 @@
 
             <Spinner
                 style="@style/spinnerFormulario"
+                android:layout_height="45dp"
                 android:id="@+id/spinnerUf"
                 android:layout_width="match_parent" />
 
