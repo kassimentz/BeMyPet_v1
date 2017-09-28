@@ -251,7 +251,9 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
 
         if (id == R.id.action_novo_pet) {
             Intent intent;
-            if(!getUsuarioLogado().getLogradouro().isEmpty()) {
+            System.out.println(getUsuarioLogado().getLogradouro().toString() + " logradouro");
+            System.out.println(getUsuarioLogado().getLogradouro().toString().length());
+            if(getUsuarioLogado().getLogradouro().toString().length() > 1) {
                 intent = new Intent(getApplicationContext(), CadastroPetActivity.class);
             } else {
                 Utils.showToastMessage(getApplicationContext(), "Para cadastrar um pet, primeiro complete seus dados: ");
