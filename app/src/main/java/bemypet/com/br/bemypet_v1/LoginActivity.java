@@ -21,6 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -36,12 +41,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
     private SignInButton btnLoginGoogle;
-
     private static final int SIGN_IN_CODE_GOOGLE = 777;
+
+    private LoginButton btnLoginFacebook;
+    private CallbackManager callbackManager;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
@@ -105,12 +115,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         };
 
+        //LOGIN FACEBOOK
+        callbackManager = CallbackManager.Factory.create();
+        btnLoginFacebook = (LoginButton) findViewById(R.id.btnLoginFacebook);
+        btnLoginFacebook.setReadPermissions(Arrays.asList("email"));
+        btnLoginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                goMainScreen();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         progress_bar_login = (ProgressBar) findViewById(R.id.progress_bar_login);
         form_login = (LinearLayout) findViewById(R.id.form_login);
         layouCadastroEmail = (LinearLayout) findViewById(R.id.layouCadastroEmail);
 
         criarLoginApp = (TextView) findViewById(R.id.criarLoginApp);
         criarLoginApp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
     }
 
     @Override
@@ -129,6 +162,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //LOGIN FACEBOOK
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         //LOGIN GOOGLE
         if(requestCode == SIGN_IN_CODE_GOOGLE){

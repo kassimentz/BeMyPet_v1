@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -490,6 +491,9 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
     private void logOut(){
         firebaseAuth.signOut();
 
+        //facebook
+        LoginManager.getInstance().logOut();
+
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
@@ -502,6 +506,9 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
                 }
             }
         });
+
+        drawer.closeDrawers();
+        goLoginScreen();
     }
 
     private void goLoginScreen() {
