@@ -104,6 +104,7 @@
     <string name="temperamentoComCuidado">Com Cuidado</string>
     <string name="temperamentoConviveBem">Convive Bem</string>
     <string name="temperamentoMuitoDocil">Muito Dócil</string>
+    <string name="naoSeiDataNascimento">Não sei informar a data de nascimento</string>
 
     <string name="especieTitulo">Espécie</string>
     <string name="sexoTitulo">Sexo</string>

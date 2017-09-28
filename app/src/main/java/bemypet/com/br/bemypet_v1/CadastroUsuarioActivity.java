@@ -70,8 +70,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     ArrayAdapter<String> adapter;
     private Spinner spinnerUf;
     private LinearLayout dadosPessoaisStep, localizacaoStep, contatoStep;
-    private EditText edtNomeUsuario, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
-    private EditText edtDataNascimento, edtUrlFoto;
+    private EditText edtNomeUsuario, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail, edtUrlFoto;
+    private TextView edtDataNascimento;
     private ImageView user_profile_photo;
     List<String> ufListagem;
 
@@ -123,7 +123,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
 
-        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        edtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
         edtDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,7 +294,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 }
 
                 //validando data de nascimento
-                edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+                edtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
                 if (getUsuario() != null && getUsuario().dataNascimento != null) {
                     edtDataNascimento.setText(getUsuario().dataNascimento);

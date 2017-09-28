@@ -226,7 +226,7 @@
     <style name="inputFormularioPet" parent="@android:style/TextAppearance.DeviceDefault.WindowTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:textColor">#000</item>
+        <item name="android:textColor">#6E3632</item>
         <item name="android:textColorHint">#b4b4b4</item>
         <item name="android:background">@drawable/input_rounded_corners</item>
         <item name="android:typeface">normal</item>
