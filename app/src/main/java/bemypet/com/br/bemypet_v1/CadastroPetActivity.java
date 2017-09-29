@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.support.v4.app.ActivityCompat;
@@ -207,10 +209,27 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         spinnerRacas = (Spinner) findViewById(R.id.spinnerRacas);
         adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, racas);
         spinnerRacas.setAdapter(adapter);
+        spinnerRacas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                edtDataNascimento.requestFocus();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         txtNaoSei = (TextView) findViewById(R.id.txtNaoSei);
         edNomePet = (EditText) findViewById(R.id.edNomePet);
+        edNomePet.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                radioGroupSexo.requestFocus();
+                return false;
+            }
+        });
         edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
 
         edtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
@@ -242,6 +261,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
                         String a = day+"/"+month+"/"+year;
                         edtDataNascimento.setText(""+a);
+                        edtPesoPet.requestFocus();
                     }
                 };
 

@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -120,6 +121,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         spinnerUf.setAdapter(adapter);
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+        edtNomeUsuario.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtDataNascimento.requestFocus();
+                return false;
+            }
+        });
         edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
 
@@ -152,6 +160,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
                         String a = day+"/"+month+"/"+year;
                         edtDataNascimento.setText(""+a);
+                        edtCpf.requestFocus();
                     }
                 };
 
@@ -167,28 +176,61 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         });
 
         edtCpf = (EditText) findViewById(R.id.edtCpf);
+        edtCpf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtCpf.requestFocus();
+            }
+        });
         formatCpf = new MaskedFormatter("###.###.###-##");
         edtCpf.addTextChangedListener(new MaskedWatcher(formatCpf, edtCpf));
 
-        edtCpf.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    Toast.makeText(getApplicationContext(), "unfocus", 2000).show();
-            }
-        });
-
 
         edtCep = (EditText) findViewById(R.id.edtCep);
+        edtCep.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtEndereco.requestFocus();
+                return false;
+            }
+        });
         formatCep = new MaskedFormatter("#####-###");
         edtCep.addTextChangedListener(new MaskedWatcher(formatCep, edtCep));
 
 
         edtEndereco = (EditText) findViewById(R.id.edtEndereco);
+        edtEndereco.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtNumero.requestFocus();
+                return false;
+            }
+        });
         edtNumero = (EditText) findViewById(R.id.edtNumero);
+        edtNumero.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtComplemento.requestFocus();
+                return false;
+            }
+        });
         edtComplemento = (EditText) findViewById(R.id.edtComplemento);
         edtCidade = (EditText) findViewById(R.id.edtCidade);
+        edtCidade.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                spinnerUf.requestFocus();
+                return false;
+            }
+        });
         edtTelefone = (EditText) findViewById(R.id.edtTelefone);
+        edtTelefone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtEmail.requestFocus();
+                return false;
+            }
+        });
         formatTelefone = new MaskedFormatter("(##)#####-####");
         edtTelefone.addTextChangedListener(new MaskedWatcher(formatTelefone, edtTelefone));
         edtEmail = (EditText) findViewById(R.id.edtEmail);
