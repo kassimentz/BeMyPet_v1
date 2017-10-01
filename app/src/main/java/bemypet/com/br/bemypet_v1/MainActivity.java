@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     setUserData(user);
                 }
                 //LOGIN FACEBOOK
-                else if(AccessToken.getCurrentAccessToken() == null){
+//                else if(AccessToken.getCurrentAccessToken() == null){
+//                    goLoginScreen();
+//                }
+                else {
                     goLoginScreen();
                 }
-//                else {
-////                    goLoginScreen();
-//                }
             }
         };
 

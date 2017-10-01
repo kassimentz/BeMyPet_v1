@@ -116,25 +116,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         };
 
         //LOGIN FACEBOOK
-        callbackManager = CallbackManager.Factory.create();
-        btnLoginFacebook = (LoginButton) findViewById(R.id.btnLoginFacebook);
-        btnLoginFacebook.setReadPermissions(Arrays.asList("email"));
-        btnLoginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                goMainScreen();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        callbackManager = CallbackManager.Factory.create();
+//        btnLoginFacebook = (LoginButton) findViewById(R.id.btnLoginFacebook);
+//        btnLoginFacebook.setReadPermissions(Arrays.asList("public_profile","email"));
+//        btnLoginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                goMainScreen();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         progress_bar_login = (ProgressBar) findViewById(R.id.progress_bar_login);
@@ -159,12 +159,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //LOGIN FACEBOOK
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         //LOGIN GOOGLE
         if(requestCode == SIGN_IN_CODE_GOOGLE){
