@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         //LOGIN GOOGLE
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 if(user != null){
                     setUserData(user);
                 }
-                //LOGIN FACEBOOK
-//                else if(AccessToken.getCurrentAccessToken() == null){
-//                    goLoginScreen();
-//                }
                 else {
                     goLoginScreen();
                 }
@@ -95,12 +91,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void setUserData(FirebaseUser user) {
 
         getUsuarioLogado().email = user.getEmail();
-        getUsuarioLogado().nome = user.getDisplayName();
-        getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
+
+        if (user.getProviderData().equals("google")){
+            getUsuarioLogado().nome = user.getDisplayName();
+            System.out.println(user.getDisplayName());
+            getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
+        }
+
 //        getUsuarioLogado().id = user.getUid();
 
         System.out.println(user.getEmail());
-        System.out.println(user.getDisplayName());
 
 
         salvarUsuario();
