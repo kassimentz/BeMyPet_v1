@@ -75,7 +75,7 @@
             android:text="@string/dataNascimento"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
-        <EditText
+        <TextView
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormulario"
             android:hint="@string/data_placeholder"

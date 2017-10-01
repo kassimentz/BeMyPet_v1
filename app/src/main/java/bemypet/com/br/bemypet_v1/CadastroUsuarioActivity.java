@@ -14,14 +14,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -68,8 +71,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
     ArrayAdapter<String> adapter;
     private Spinner spinnerUf;
     private LinearLayout dadosPessoaisStep, localizacaoStep, contatoStep;
-    private EditText edtNomeUsuario, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail;
-    private EditText edtDataNascimento, edtUrlFoto;
+    private EditText edtNomeUsuario, edtCpf, edtCep, edtEndereco, edtNumero, edtComplemento, edtCidade, edtTelefone, edtEmail, edtUrlFoto;
+    private TextView edtDataNascimento;
     private ImageView user_profile_photo;
     List<String> ufListagem;
 
@@ -114,16 +117,21 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
         ufListagem = new ArrayList<String>(Arrays.asList(ufString));
 
-        adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, ufListagem);
-        adapter.setDropDownViewResource(R.layout.spinner_style);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, ufListagem);
         spinnerUf.setAdapter(adapter);
 
         edtNomeUsuario = (EditText) findViewById(R.id.edtNomeUsuario);
+        edtNomeUsuario.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtDataNascimento.requestFocus();
+                return false;
+            }
+        });
         edtUrlFoto = (EditText) findViewById(R.id.edtUrlFoto);
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
 
-        edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+        edtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
         edtDataNascimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +160,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
 
                         String a = day+"/"+month+"/"+year;
                         edtDataNascimento.setText(""+a);
+                        edtCpf.requestFocus();
                     }
                 };
 
@@ -167,28 +176,61 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         });
 
         edtCpf = (EditText) findViewById(R.id.edtCpf);
+        edtCpf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtCpf.requestFocus();
+            }
+        });
         formatCpf = new MaskedFormatter("###.###.###-##");
         edtCpf.addTextChangedListener(new MaskedWatcher(formatCpf, edtCpf));
 
-        edtCpf.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    Toast.makeText(getApplicationContext(), "unfocus", 2000).show();
-            }
-        });
-
 
         edtCep = (EditText) findViewById(R.id.edtCep);
+        edtCep.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtEndereco.requestFocus();
+                return false;
+            }
+        });
         formatCep = new MaskedFormatter("#####-###");
         edtCep.addTextChangedListener(new MaskedWatcher(formatCep, edtCep));
 
 
         edtEndereco = (EditText) findViewById(R.id.edtEndereco);
+        edtEndereco.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtNumero.requestFocus();
+                return false;
+            }
+        });
         edtNumero = (EditText) findViewById(R.id.edtNumero);
+        edtNumero.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtComplemento.requestFocus();
+                return false;
+            }
+        });
         edtComplemento = (EditText) findViewById(R.id.edtComplemento);
         edtCidade = (EditText) findViewById(R.id.edtCidade);
+        edtCidade.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                spinnerUf.requestFocus();
+                return false;
+            }
+        });
         edtTelefone = (EditText) findViewById(R.id.edtTelefone);
+        edtTelefone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                edtEmail.requestFocus();
+                return false;
+            }
+        });
         formatTelefone = new MaskedFormatter("(##)#####-####");
         edtTelefone.addTextChangedListener(new MaskedWatcher(formatTelefone, edtTelefone));
         edtEmail = (EditText) findViewById(R.id.edtEmail);
@@ -294,7 +336,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 }
 
                 //validando data de nascimento
-                edtDataNascimento = (EditText) findViewById(R.id.edtDataNascimento);
+                edtDataNascimento = (TextView) findViewById(R.id.edtDataNascimento);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtDataNascimento, 10, "Preencha a data de nascimento corretamente");
                 if (getUsuario() != null && getUsuario().dataNascimento != null) {
                     edtDataNascimento.setText(getUsuario().dataNascimento);

@@ -43,6 +43,31 @@ public class FormUtils {
         });
     }
 
+    public static void preencherValidarCampos(final VerticalStepperFormLayout verticalStepperForm, TextView edtText, final int length, final String message) {
+
+        edtText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkString(verticalStepperForm, s.toString(), length, message);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        edtText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(checkString(verticalStepperForm, v.getText().toString(), length, message)) {
+                    verticalStepperForm.goToNextStep();
+                }
+                return false;
+            }
+        });
+    }
+
 
     private static boolean checkString(final VerticalStepperFormLayout verticalStepperForm, String valor, int length, String message) {
         boolean checkOk = false;
