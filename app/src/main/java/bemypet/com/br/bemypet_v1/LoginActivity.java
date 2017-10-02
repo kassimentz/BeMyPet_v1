@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -36,11 +37,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
     private SignInButton btnLoginGoogle;
-
     private static final int SIGN_IN_CODE_GOOGLE = 777;
 
     private FirebaseAuth firebaseAuth;
@@ -52,6 +55,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LinearLayout layouCadastroEmail;
 
     private TextView criarLoginApp;
+
+    private static final String TAG = "EmailPassword";
+
 
 
     @Override
@@ -93,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
 
 
+        // [START initialize_auth]
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener(){
             @Override
@@ -105,18 +112,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         };
 
+
         progress_bar_login = (ProgressBar) findViewById(R.id.progress_bar_login);
         form_login = (LinearLayout) findViewById(R.id.form_login);
         layouCadastroEmail = (LinearLayout) findViewById(R.id.layouCadastroEmail);
 
         criarLoginApp = (TextView) findViewById(R.id.criarLoginApp);
         criarLoginApp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(firebaseAuthListener);
+
     }
 
     @Override
@@ -124,6 +134,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         //LOGIN GOOGLE
     }
+
 
 
     @Override
@@ -165,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-    private void goMainScreen() {
+    private void    goMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -202,13 +213,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View v) {
                 if(email.getText().toString().trim().length() > 0 && senha.getText().toString().trim().length() > 0) {
                     // Validate Your login credential here than display message
-                    Toast.makeText(LoginActivity.this, "Login Sucessfull, "+email.getText().toString(), Toast.LENGTH_LONG).show();
+                    signIn( email.getText().toString().trim() , senha.getText().toString().trim() );
+
+//                    Toast.makeText(LoginActivity.this, "Login Sucessfull, "+email.getText().toString(), Toast.LENGTH_LONG).show();
 
                     // Redirect to dashboard / home screen.
                     login.dismiss();
                 }
                 else {
-                    Toast.makeText(LoginActivity.this, "Please enter Username and Password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Por favor, informe email e senha", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -223,4 +236,66 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login.show();
     }
 
+
+    private void signIn(final String email, final String password) {
+        Log.d(TAG, "signIn:" + email);
+
+
+        // [START sign_in_with_email]
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            goMainScreen();
+                        } else {
+                            createAccount(email, password);
+
+                        }
+
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END sign_in_with_email]
+    }
+
+
+    private void createAccount(String email, String password) {
+        Log.d(TAG, "createAccount:" + email);
+//        if (!validateForm()) {
+//            return;
+//        }
+
+        progress_bar_login.setVisibility(View.VISIBLE);
+        form_login.setVisibility(View.GONE);
+
+        // [START create_user_with_email]
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            goMainScreen();
+//                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(getApplicationContext(), R.string.mensagem_erro_login, Toast.LENGTH_SHORT).show();
+//                            updateUI(null);
+                        }
+
+                        // [START_EXCLUDE]
+                        progress_bar_login.setVisibility(View.GONE);
+                        form_login.setVisibility(View.VISIBLE);
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END create_user_with_email]
+    }
 }

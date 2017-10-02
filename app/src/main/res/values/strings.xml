@@ -383,6 +383,10 @@
     </string-array>
 
     <string name="facebook_app_id">1537764562949663</string>
+    <!--<string name="facebook_app_id">1926837224307521</string>-->
+    <!--<string name="fb_login_protocol_scheme">fb1926837224307521</string>-->
+
+
     <string name="polAdocao1">Ao realizar uma adoção ou publicar um anúncio de um pet para adoção no aplicativo BeMyPet, você estará responsabilizando-se sobre todas as informações fornecidas, atestando a veracidade das mesmas.</string>
     <string name="polAdocao2">Você se compromete a:</string>
     <string name="polAdocao3">- Cuidar do pet e mantê-lo em condições ótimas de espaço, tempo, alimentação, exercício.</string>
