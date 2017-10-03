@@ -211,18 +211,36 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(email.getText().toString().trim().length() > 0 && senha.getText().toString().trim().length() > 0) {
-                    // Validate Your login credential here than display message
-                    signIn( email.getText().toString().trim() , senha.getText().toString().trim() );
+                String compare = "gmail.";
+                if(!email.getText().toString().toUpperCase().contains(compare.toUpperCase())) {
+                    if (email.getText().toString().trim().length() > 0 && senha.getText().toString().trim().length() > 0) {
+                        // Validate Your login credential here than display message
+                        signIn(email.getText().toString().trim(), senha.getText().toString().trim());
 
 //                    Toast.makeText(LoginActivity.this, "Login Sucessfull, "+email.getText().toString(), Toast.LENGTH_LONG).show();
 
-                    // Redirect to dashboard / home screen.
-                    login.dismiss();
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, "Por favor, informe email e senha", Toast.LENGTH_LONG).show();
+                        // Redirect to dashboard / home screen.
+                        login.dismiss();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Por favor, informe email e senha", Toast.LENGTH_LONG).show();
 
+                    }
+                } else {
+                    AlertDialog.Builder dialogAprovado = new AlertDialog.Builder(LoginActivity.this);
+                    dialogAprovado.setTitle("Login com Gmail");
+                    dialogAprovado
+                            .setMessage("Para realizar login com gmail, você deve utilizar Fazer Login com Google")
+                            .setCancelable(false)
+                            .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int id) {
+                                    login.dismiss();
+
+                                }
+                            });
+
+                    AlertDialog alert = dialogAprovado.create();
+                    alert.show();
                 }
             }
         });
