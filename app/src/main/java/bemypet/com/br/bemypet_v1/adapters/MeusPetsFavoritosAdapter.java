@@ -82,8 +82,15 @@ public class MeusPetsFavoritosAdapter extends BaseAdapter {
             dadosPet.append(pets.get(i).especie);
             dadosPet.append(" (" + pets.get(i).raca + "), ");
             dadosPet.append(pets.get(i).sexo + ", ");
-            dadosPet.append(pets.get(i).idadeAproximada);
+            dadosPet.append(pets.get(i).idadeAproximada+ ", ");
+            if(pets.get(i).cadastroAtivo) {
+                dadosPet.append("pet ativo ");
+            } else {
+                dadosPet.append("pet inativo ");
+            }
+
             holder.txtDadosPet.setText(dadosPet.toString());
+
         }
 
         return convertView;
