@@ -50,6 +50,8 @@
     <string name="nav_sair">LogOut</string>
 
     <string name="denunciar">Sim, Denunciar!</string>
+    <string name="desativar">Sim, Desativar!</string>
+    <string name="ativar">Sim, Ativar!</string>
     <string name="cancelar">Cancelar</string>
 
 

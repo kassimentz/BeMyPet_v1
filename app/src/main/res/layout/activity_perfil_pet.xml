@@ -69,6 +69,17 @@
                     android:src="@drawable/fav2_v"
                     android:onClick="favoritarPet"/>
 
+                <ImageView
+                    android:id="@+id/img_desativar_pet"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="35dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="-16dp"
+                    android:src="@drawable/trash"
+                    android:onClick="ativarDesativarPet"
+                    android:visibility="invisible"/>
+
 
                 <TextView
                     android:id="@+id/user_profile_name"
@@ -91,6 +102,18 @@
                     android:layout_marginTop="-16dp"
                     android:src="@drawable/edit"
                     android:onClick="editarPerfilPet"/>
+
+                <ImageView
+                    android:id="@+id/btnDenunciarPet"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:padding="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="-16dp"
+                    android:src="@drawable/report"
+                    android:visibility="invisible"
+                    android:onClick="denunciarPet"/>
 
             </RelativeLayout>
 

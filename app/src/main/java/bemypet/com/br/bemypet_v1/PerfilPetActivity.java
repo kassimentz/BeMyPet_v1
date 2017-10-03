@@ -1,5 +1,7 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -52,7 +54,7 @@ public class PerfilPetActivity extends AppCompatActivity {
 
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
             pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet, txtOutrasInformacoes;
-    private ImageView header_cover_image, user_profile_photo, imgFavoritarPet, btnEditarPet;
+    private ImageView header_cover_image, user_profile_photo, imgFavoritarPet, btnEditarPet, img_desativar_pet, btnDenunciarPet;
     private Button buttonPerfil;
 
     private Usuario usuarioLogado;
@@ -155,6 +157,8 @@ public class PerfilPetActivity extends AppCompatActivity {
         user_profile_name = (TextView) findViewById(R.id.user_profile_name);
         txtOutrasInformacoes = (TextView) findViewById(R.id.txtOutrasInformacoes);
         imgFavoritarPet = (ImageView) findViewById(R.id.imgFavoritarPet);
+        img_desativar_pet = (ImageView) findViewById(R.id.img_desativar_pet);
+        btnDenunciarPet = (ImageView) findViewById(R.id.btnDenunciarPet);
         btnEditarPet = (ImageView) findViewById(R.id.btnEditarPet);
         especiePerfilPet = (TextView) findViewById(R.id.especiePerfilPet);
         sexoPerfilPet = (TextView) findViewById(R.id.sexoPerfilPet);
@@ -196,8 +200,11 @@ public class PerfilPetActivity extends AppCompatActivity {
                 if(getPet().atualDonoID.equalsIgnoreCase(getUsuarioLogado().id)) {
                     setEsconderBotaoAdotar(Boolean.TRUE);
                     setEsconderBotaoEditar(Boolean.FALSE);
+                    btnDenunciarPet.setVisibility(View.INVISIBLE);
+
                 } else {
                     setEsconderBotaoEditar(Boolean.TRUE);
+                    btnDenunciarPet.setVisibility(View.VISIBLE);
                 }
                 if(getUsuarioLogado().petsFavoritos.size() > 0) {
                     for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
@@ -235,10 +242,21 @@ public class PerfilPetActivity extends AppCompatActivity {
             buttonPerfil.setVisibility(View.VISIBLE);
         }
 
+        if(getPet().cadastroAtivo) {
+            img_desativar_pet.setImageResource(R.drawable.trash);
+
+        } else {
+            img_desativar_pet.setImageResource(R.drawable.refresh);
+        }
+
         if(getEsconderBotaoEditar()) {
             btnEditarPet.setVisibility(View.INVISIBLE);
+            img_desativar_pet.setVisibility(View.INVISIBLE);
+            imgFavoritarPet.setVisibility(View.VISIBLE);
         } else {
             btnEditarPet.setVisibility(View.VISIBLE);
+            img_desativar_pet.setVisibility(View.VISIBLE);
+            imgFavoritarPet.setVisibility(View.INVISIBLE);
         }
 
         if(getPet().imagens.size() > 0) {
@@ -405,7 +423,7 @@ public class PerfilPetActivity extends AppCompatActivity {
             shareIntent.setPackage(app);
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, getPet().nome+ " está a procura de um novo lar! Baixe o BeMyPet e ajude-nos a encontrar um lar para nosso amiguinhos! https://play.google.com/store/apps/details?id=" +getPackageName());
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getPet().nome+ " está a procura de um novo lar! Baixe o BeMyPet e ajude-nos a encontrar um lar para nossos amiguinhos! https://play.google.com/store/apps/details?id=" +getPackageName());
 
 
             boolean installed = checkAppInstall(app);
@@ -422,6 +440,95 @@ public class PerfilPetActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void ativarDesativarPet(View v){
+        if(getPet().cadastroAtivo) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PerfilPetActivity.this);
+            builder.setTitle("Inativar Pet");
+            builder.setMessage("Você tem certeza que deseja inativar o pet "+getPet().nome+" ? Ele permanecerá na sua lista de pets e você poderá reativá-lo");
+            builder.setPositiveButton(R.string.desativar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                    dialog.dismiss();
+                    getPet().cadastroAtivo = Boolean.FALSE;
+                    final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
+                    myRef.child(getPet().id).child("cadastroAtivo").setValue(getPet().cadastroAtivo);
+                    img_desativar_pet.setImageResource(R.drawable.refresh);
+                }
+            });
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                    dialog.cancel();
+                }
+            });
+
+            // Create the AlertDialog
+            AlertDialog dialog = builder.create();
+            if(!dialog.isShowing()) {
+                dialog.show();
+            }
+
+        } else {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(PerfilPetActivity.this);
+            builder.setTitle("Inativar Pet");
+            builder.setMessage("Você tem certeza que deseja ativar o pet "+getPet().nome+" ? ");
+            builder.setPositiveButton(R.string.ativar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                    dialog.dismiss();
+                    getPet().cadastroAtivo = Boolean.TRUE;
+                    final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("pets");
+                    myRef.child(getPet().id).child("cadastroAtivo").setValue(getPet().cadastroAtivo);
+                    img_desativar_pet.setImageResource(R.drawable.trash);
+                }
+            });
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                    dialog.cancel();
+                }
+            });
+
+            // Create the AlertDialog
+            AlertDialog dialog = builder.create();
+            if(!dialog.isShowing()) {
+                dialog.show();
+            }
+
+        }
+
+    }
+
+    public void denunciarPet(View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(PerfilPetActivity.this);
+        builder.setTitle("Denunciar Usuário");
+        builder.setMessage("Você tem certeza que deseja denunciar este anúncio? O usuário "+getPet().doador.nome+" será denunciado ? Todas as informações fornecidas serão de sua responsabilidade.");
+        builder.setPositiveButton(R.string.denunciar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                dialog.dismiss();
+                Intent intent = new Intent(PerfilPetActivity.this, DenunciarUsuarioActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("usuarioDenunciado", new Gson().toJson(getPet().doador));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+                dialog.cancel();
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        if(!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     private boolean checkAppInstall(String uri) {

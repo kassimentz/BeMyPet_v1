@@ -1,5 +1,6 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -371,6 +373,9 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
         if(getUsuarioLogado() == null) {
             updateUsuario();
         } else {
+
+            verificaDenuncias();
+
             txtNomeUsuario.setText(getUsuarioLogado().nome);
             txtTipoUsuario.setText(getUsuarioLogado().email);
 
@@ -379,9 +384,34 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
                 Glide.with(this).load(getUsuarioLogado().imagens.get(getUsuarioLogado().imagens.size() - 1)).apply(RequestOptions.circleCropTransform()).into(imgProfile);
             }
 
+
         }
         // showing dot next to notifications label
         //navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
+    }
+
+    private void verificaDenuncias() {
+
+
+        if(getUsuarioLogado().denuncias != null && getUsuarioLogado().denuncias.size() > 10) {
+            AlertDialog.Builder dialogAprovado = new AlertDialog.Builder(getApplicationContext());
+            dialogAprovado.setTitle("Número máximo de denúncias atingido!");
+            dialogAprovado
+                    .setMessage("Você possui mais de 10 denúncias no aplicativo. Isso significa que você está impedido temporariamente de utilizar o aplicativo. Entre em contato com os administradores.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+
+            AlertDialog alert = dialogAprovado.create();
+            alert.show();
+
+        }
+
+
     }
 
     private Fragment getHomeFragment() {

@@ -74,10 +74,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         };
 
-
-
-
-
     }
 
     private void getBundle() {
@@ -97,11 +93,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             System.out.println(user.getDisplayName());
             getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
         }
-
-//        getUsuarioLogado().id = user.getUid();
-
-        System.out.println(user.getEmail());
-
 
         salvarUsuario();
 
