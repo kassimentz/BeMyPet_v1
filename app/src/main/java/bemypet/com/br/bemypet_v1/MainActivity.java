@@ -15,6 +15,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,10 +89,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         getUsuarioLogado().email = user.getEmail();
 
-        if (user.getProviderData().equals("google")){
-            getUsuarioLogado().nome = user.getDisplayName();
-            System.out.println(user.getDisplayName());
-            getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
+        for (UserInfo profile : user.getProviderData()) {
+            Log.d("PROV", "Provider: " + profile.getProviderId());
+
+            if (profile.getProviderId().equals("google.com")) {
+                getUsuarioLogado().nome = user.getDisplayName();
+                getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
+            }
         }
 
         salvarUsuario();
@@ -154,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 if (connected) {
 
                     FirebaseConnection.getDatabase().child("usuarios").child(String.valueOf(getUsuarioLogado().id)).setValue(getUsuarioLogado());
+                    //salva dados na memério quando faz login
                     Utils.salvarUsuarioSharedPreferences(getApplicationContext(), getUsuarioLogado());
 
 

@@ -522,13 +522,16 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
         firebaseAuth.signOut();
 
         //facebook
-        LoginManager.getInstance().logOut();
+//        LoginManager.getInstance().logOut();
 
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
                 if(status.isSuccess()){
                     drawer.closeDrawers();
+
+                    //limpa dados da memória quando efetua o logout
+                    Utils.salvarUsuarioSharedPreferences(getApplicationContext(), new Usuario());
                     goLoginScreen();
                 }else{
                     drawer.closeDrawers();
@@ -551,4 +554,6 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
 }
