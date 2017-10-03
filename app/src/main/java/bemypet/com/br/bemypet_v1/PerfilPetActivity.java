@@ -195,41 +195,36 @@ public class PerfilPetActivity extends AppCompatActivity {
 
         Usuario usuarioTmp = Utils.getUsuarioSharedPreferences(getApplicationContext());
         if(usuarioTmp != null) {
-            if (!usuarioTmp.getLogradouro().isEmpty()) {
-                setUsuarioLogado(usuarioTmp);
-                if(getPet().atualDonoID.equalsIgnoreCase(getUsuarioLogado().id)) {
-                    setEsconderBotaoAdotar(Boolean.TRUE);
-                    setEsconderBotaoEditar(Boolean.FALSE);
-                    btnDenunciarPet.setVisibility(View.INVISIBLE);
-
-                } else {
-                    setEsconderBotaoEditar(Boolean.TRUE);
-                    btnDenunciarPet.setVisibility(View.VISIBLE);
-                }
-                if(getUsuarioLogado().petsFavoritos.size() > 0) {
-                    for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
-                        if(petTmp.id.equalsIgnoreCase(getPet().id)) {
-                            imgFavoritarPet.setImageResource(R.drawable.fav1);
-                            petFavoritado = Boolean.TRUE;
-                            break;
-                        } else {
-                            imgFavoritarPet.setImageResource(R.drawable.fav2_v);
-                            petFavoritado = Boolean.FALSE;
-                        }
-                    }
-                } else {
-                    petFavoritado = Boolean.FALSE;
-                }
+            setUsuarioLogado(usuarioTmp);
+            if(getPet().atualDonoID.equalsIgnoreCase(getUsuarioLogado().id)) {
+                setEsconderBotaoAdotar(Boolean.TRUE);
+                setEsconderBotaoEditar(Boolean.FALSE);
+                btnDenunciarPet.setVisibility(View.INVISIBLE);
+                img_desativar_pet.setVisibility(View.VISIBLE);
+                imgFavoritarPet.setVisibility(View.INVISIBLE);
 
             } else {
-                Utils.showToastMessage(getApplicationContext(), "Para favoritar um pet, primeiro complete seus dados: ");
-                Intent intent = new Intent(getApplicationContext(), CadastroUsuarioActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("origem", "favoritarPet");
-                bundle.putSerializable("pet", new Gson().toJson(getPet()));
-                intent.putExtras(bundle);
-                startActivity(intent);
+                setEsconderBotaoEditar(Boolean.TRUE);
+                btnDenunciarPet.setVisibility(View.VISIBLE);
+                img_desativar_pet.setVisibility(View.INVISIBLE);
+                imgFavoritarPet.setVisibility(View.VISIBLE);
             }
+            if(getUsuarioLogado().petsFavoritos.size() > 0) {
+                for (Pet petTmp : getUsuarioLogado().petsFavoritos) {
+                    if(petTmp.id.equalsIgnoreCase(getPet().id)) {
+                        imgFavoritarPet.setImageResource(R.drawable.fav1);
+                        petFavoritado = Boolean.TRUE;
+                        break;
+                    } else {
+                        imgFavoritarPet.setImageResource(R.drawable.fav2_v);
+                        petFavoritado = Boolean.FALSE;
+                    }
+                }
+            } else {
+                petFavoritado = Boolean.FALSE;
+            }
+
+
         }
 
     }
@@ -241,12 +236,14 @@ public class PerfilPetActivity extends AppCompatActivity {
         } else {
             buttonPerfil.setVisibility(View.VISIBLE);
         }
+        System.out.println(getUsuarioLogado());
+        if(getUsuarioLogado().id.equalsIgnoreCase(getPet().atualDonoID)) {
+            if (getPet().cadastroAtivo) {
+                img_desativar_pet.setImageResource(R.drawable.trash);
 
-        if(getPet().cadastroAtivo) {
-            img_desativar_pet.setImageResource(R.drawable.trash);
-
-        } else {
-            img_desativar_pet.setImageResource(R.drawable.refresh);
+            } else {
+                img_desativar_pet.setImageResource(R.drawable.refresh);
+            }
         }
 
         if(getEsconderBotaoEditar()) {
@@ -341,6 +338,15 @@ public class PerfilPetActivity extends AppCompatActivity {
     }
 
     public void favoritarPet(View v) {
+        if(getUsuarioLogado().getLogradouro().length() < 3) {
+            Utils.showToastMessage(getApplicationContext(), "Para favoritar um pet, primeiro complete seus dados: ");
+            Intent intent = new Intent(getApplicationContext(), CadastroUsuarioActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("origem", "favoritarPet");
+            bundle.putSerializable("pet", new Gson().toJson(getPet()));
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
         System.out.println("favoritarPet");
         if(petFavoritado == Boolean.FALSE) {
             System.out.println("favoritarPet pet favoritado false");
