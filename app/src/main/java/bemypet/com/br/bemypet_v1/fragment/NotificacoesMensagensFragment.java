@@ -247,10 +247,11 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Notificacoes notificacao = null;
+                notificacoesList = new ArrayList<Notificacoes>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     notificacao = postSnapshot.getValue(Notificacoes.class);
 
-                    if(notificacao.destinatarioId.equalsIgnoreCase(getUsuarioLogado().id)) {
+                    if(notificacao.destinatarioId.equalsIgnoreCase("4e0ca567-0c73-4657-b44c-60a96f4c5e07")) {
                         if(!notificacao.statusNotificacao.equalsIgnoreCase(Constants.STATUS_NOTIFICACAO_RESPONDIDA)) {
                             notificacoesList.add(notificacao);
                         }
@@ -259,7 +260,7 @@ public class NotificacoesMensagensFragment extends Fragment implements SearchVie
                     //notificacoesAdapter = new NotificacoesAdapter(NotificacoesMensagensFragment.this.getActivity(), notificacoesList);
                     mAdapter = new SwipeListViewAdapter(getContext(), notificacoesList);
                     mListView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    //mAdapter.notifyDataSetChanged();
 
 
 
