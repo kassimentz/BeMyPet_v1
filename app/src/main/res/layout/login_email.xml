@@ -9,14 +9,14 @@
         style="@style/FontButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastro Login BeMyPet"
+        android:text="Login BeMyPet"
         android:layout_margin="10dp"
         android:gravity="center"
         android:layout_gravity="center"
         android:textAllCaps="true"/>
 
     <LinearLayout
-        android:id="@+id/layouCadastroEmail"
+        android:id="@+id/layouLoginCadastroEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -25,21 +25,14 @@
 
         <LinearLayout style="@style/layoutLinha">
             <EditText
-                android:id="@+id/edtNomeCadastro"
-                style="@style/inputFormulario"
-                android:hint="@string/nome_placeholder"/>
-        </LinearLayout>
-
-        <LinearLayout style="@style/layoutLinha">
-            <EditText
-                android:id="@+id/edtEmailCadastro"
+                android:id="@+id/edtEmailLogin"
                 style="@style/inputFormulario"
                 android:hint="@string/email_placeholder"/>
         </LinearLayout>
 
         <LinearLayout style="@style/layoutLinha">
             <EditText
-                android:id="@+id/edtSenhaCadastro"
+                android:id="@+id/edtSenhaLogin"
                 style="@style/inputFormulario"
                 android:inputType="textPassword"
                 android:hint="@string/senha_placeholder"/>
@@ -55,20 +48,22 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
+                android:onClick="login"
                 android:background="@drawable/button_background"
                 style="@style/FontButton"
                 android:text="CANCELAR"/>
 
             <Button
-                android:id="@+id/btnCadastrar"
+                android:id="@+id/btnLogin"
                 android:layout_margin="10dp"
                 android:width="120dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
+                android:onClick="login"
                 android:background="@drawable/button_background"
                 style="@style/FontButton"
-                android:text="CADASTRAR"/>
+                android:text="LOGIN"/>
         </LinearLayout>
 
 

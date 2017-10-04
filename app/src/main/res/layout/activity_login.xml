@@ -70,13 +70,21 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/criarLoginApp"
+                android:id="@+id/loginEmailApp"
+                style="@style/labelPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/LoginEmail"
+                android:onClick="mostraCamposEmail"/>
+            <TextView
+                android:id="@+id/criarLoginEmailApp"
                 style="@style/labelPerfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:text="@string/cadastroEmail"
-                android:onClick="mostraCampos"/>
+                android:onClick="mostraCamposCriaLogin"/>
 
         </LinearLayout>
 

@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private Boolean novoCadastro = true;
 
+    private String nomeNovoUsuarioEmail = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void getBundle() {
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras != null) {
+                if (extras.containsKey("nomeNovoUsuarioEmail")) {
+                    nomeNovoUsuarioEmail = extras.getString("nomeNovoUsuarioEmail");
+                }
+            }
+        }
+
         if (Utils.getUsuarioSharedPreferences(getApplicationContext()) != null) {
             setUsuarioLogado(Utils.getUsuarioSharedPreferences(getApplicationContext()));
         }
@@ -99,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             if (profile.getProviderId().equals("google.com")) {
                 getUsuarioLogado().nome = user.getDisplayName();
                 getUsuarioLogado().imagens.add(user.getPhotoUrl().toString());
+
+            }else if(profile.getProviderId().equals("password")){
+                if(nomeNovoUsuarioEmail.length() > 0){
+                    getUsuarioLogado().nome = nomeNovoUsuarioEmail;
+                }
             }
         }
 
