@@ -52,12 +52,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ProgressBar progress_bar_login;
     private LinearLayout form_login;
 
-    private LinearLayout layouCadastroEmail;
+    private LinearLayout layouCadastroEmail, layouLoginCadastroEmail;
 
-    private TextView criarLoginApp;
+    private TextView loginEmailApp;
+    private TextView criarLoginEmailApp;
 
     private static final String TAG = "EmailPassword";
 
+    private String nomeNovoUsuarioEmail = "";
 
 
     @Override
@@ -115,10 +117,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         progress_bar_login = (ProgressBar) findViewById(R.id.progress_bar_login);
         form_login = (LinearLayout) findViewById(R.id.form_login);
+        layouLoginCadastroEmail = (LinearLayout) findViewById(R.id.layouLoginCadastroEmail);
         layouCadastroEmail = (LinearLayout) findViewById(R.id.layouCadastroEmail);
 
-        criarLoginApp = (TextView) findViewById(R.id.criarLoginApp);
-        criarLoginApp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        loginEmailApp = (TextView) findViewById(R.id.loginEmailApp);
+        loginEmailApp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        criarLoginEmailApp = (TextView) findViewById(R.id.criarLoginEmailApp);
+        criarLoginEmailApp.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
     }
 
@@ -178,6 +184,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void goMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("nomeNovoUsuarioEmail", nomeNovoUsuarioEmail);
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -190,7 +199,73 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    public void mostraCampos(View v) {
+    public void mostraCamposCriaLogin(View v){
+        showCriaLoginDialog();
+    }
+
+    private void showCriaLoginDialog(){
+
+        final Dialog cadastro = new Dialog(this);
+
+        cadastro.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        cadastro.setContentView(R.layout.create_account_login);
+        final EditText nome = (EditText) cadastro.findViewById(R.id.edtNomeCadastro);
+        final EditText email = (EditText) cadastro.findViewById(R.id.edtEmailCadastro);
+        final EditText senha = (EditText) cadastro.findViewById(R.id.edtSenhaCadastro);
+
+        cadastro.setTitle("Login em BeMyPet");
+
+        Button btnCadastrar = (Button) cadastro.findViewById(R.id.btnCadastrar);
+        Button btnCancel = (Button) cadastro.findViewById(R.id.btnCancel);
+
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String compare = "gmail.";
+                if(!email.getText().toString().toUpperCase().contains(compare.toUpperCase())) {
+                    if (email.getText().toString().trim().length() > 0 && senha.getText().toString().trim().length() > 0 && nome.getText().toString().trim().length() > 0) {
+                        // Validate Your login credential here than display message
+                        createAccount(email.getText().toString().trim(), senha.getText().toString().trim(), nome.getText().toString().trim());
+
+//                    Toast.makeText(LoginActivity.this, "Login Sucessfull, "+email.getText().toString(), Toast.LENGTH_LONG).show();
+
+                        // Redirect to dashboard / home screen.
+                        cadastro.dismiss();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Por favor, informe email e senha", Toast.LENGTH_LONG).show();
+
+                    }
+                } else {
+                    AlertDialog.Builder dialogAprovado = new AlertDialog.Builder(LoginActivity.this);
+                    dialogAprovado.setTitle("Login com Gmail");
+                    dialogAprovado
+                            .setMessage("Para realizar cadastro com gmail, você deve utilizar Fazer Login com Google")
+                            .setCancelable(false)
+                            .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int id) {
+                                    cadastro.dismiss();
+
+                                }
+                            });
+
+                    AlertDialog alert = dialogAprovado.create();
+                    alert.show();
+                }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cadastro.dismiss();
+            }
+        });
+
+        cadastro.show();
+    }
+
+
+    public void mostraCamposEmail(View v) {
         showLoginDialog();
     }
 
@@ -199,7 +274,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         final Dialog login = new Dialog(this);
 
         login.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        login.setContentView(R.layout.create_account_login);
+        login.setContentView(R.layout.login_email);
         final EditText email = (EditText) login.findViewById(R.id.edtEmailLogin);
         final EditText senha = (EditText) login.findViewById(R.id.edtSenhaLogin);
 
@@ -270,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             goMainScreen();
                         } else {
-                            createAccount(email, password);
+                            Toast.makeText(LoginActivity.this, R.string.mensagem_erro_login, Toast.LENGTH_LONG).show();
 
                         }
 
@@ -281,7 +356,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password, final String nome) {
         Log.d(TAG, "createAccount:" + email);
 //        if (!validateForm()) {
 //            return;
@@ -299,6 +374,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            nomeNovoUsuarioEmail = nome;
                             goMainScreen();
 //                            updateUI(user);
                         } else {

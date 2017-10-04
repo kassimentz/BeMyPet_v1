@@ -404,6 +404,7 @@
     <string name="mensagem_erro_logout">Não foi possível sair.</string>
     <string name="mensagem_erro_login">Não foi possível efetuar login.</string>
     <string name="cadastroEmail"><u>Criar um login no App</u></string>
+    <string name="LoginEmail"><u>Login com E-mail</u></string>
     <string name="jaTeveOutroPet">Já teve outro pet?</string>
     <string name="txtTipoPet">Que tipos?</string>
     <string name="txtOQueAconteu">O que aconteceu?</string>
