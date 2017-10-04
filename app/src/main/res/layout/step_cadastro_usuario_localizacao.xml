@@ -21,6 +21,7 @@
             android:id="@+id/edtCep"
             style="@style/inputFormulario"
             android:hint="@string/cep_placeholder"
+            android:inputType="number"
             />
     </LinearLayout>
 

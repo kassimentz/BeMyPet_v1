@@ -308,7 +308,7 @@
     <string name="senha_placeholder">Informe sua senha</string>
 
     <string name="txtTeveOutroPet">VOCÊ JÁ TEVE OUTRO(S) PET(S) ANTES?</string>
-    <string name="txtQuantosPets">QUANTOS</string>
+    <string name="txtQuantosPets">Quantos?</string>
     <string name="txtTipoPestsTeve">QUE TIPO(S) DE PET(S)?</string>
     <string name="txtOQueAconteuPest">O QUE ACONTECEU COM ELES?</string>
     <string name="morteIdadeAvancada">Morte por idade avançada</string>
@@ -321,7 +321,7 @@
     <string name="txtCasaPatio">CASA - POSSUI PATIO?</string>
     <string name="txtCuidadoPestes">TOMA CUIDADOS CONTRA PESTES?</string>
     <string name="txtGradeProtecao">TEM TELAS/GRADES DE PROTEÇÃO?</string>
-    <string name="inforAdicional">INFORMAÇÕES ADICIONAIS</string>
+    <string name="inforAdicional">Informações Adicionais</string>
     <string name="petInfoAdicional">HISTÓRICO E INFORMAÇÕES ADICIONAIS</string>
 
     <string name="txt_confirmar_solicitacao_adocao_p1">A adoção desse pet significará muito para ele.
@@ -404,6 +404,15 @@
     <string name="mensagem_erro_logout">Não foi possível sair.</string>
     <string name="mensagem_erro_login">Não foi possível efetuar login.</string>
     <string name="cadastroEmail"><u>Criar um login no App</u></string>
+    <string name="jaTeveOutroPet">Já teve outro pet?</string>
+    <string name="txtTipoPet">Que tipos?</string>
+    <string name="txtOQueAconteu">O que aconteceu?</string>
+    <string name="temPets">Tem Pets?</string>
+    <string name="txtMoradia">Moradia?</string>
+    <string name="patio">Tem Pátio?</string>
+    <string name="txtPestes">Cuidado contra Pestes?</string>
+    <string name="txtTelas">Telas nas Janelas?</string>
+    <string name="txtInfo">Outras Informações</string>
 
 
 </resources>

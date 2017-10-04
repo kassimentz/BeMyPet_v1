@@ -99,7 +99,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -128,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -140,8 +139,8 @@
 
                     <ImageView
                         android:id="@+id/imgPet"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:padding="2dp"
                         android:scaleType="centerCrop"
                         android:cropToPadding="true"
@@ -189,7 +188,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -201,8 +201,8 @@
 
                     <ImageView
                         android:id="@+id/imgAdotante"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:background="@drawable/bg_circle"
                         android:cropToPadding="true"
                         android:padding="2dp"
@@ -243,6 +243,195 @@
 
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/jaTeveOutroPet" />
+
+                        <TextView
+                            android:id="@+id/txtJaTeveOutroPet"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtQuantosPets" />
+
+                        <TextView
+                            android:id="@+id/txtQuantosPetsTeve"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtTipoPet" />
+
+                        <TextView
+                            android:id="@+id/txtTiposPetsTeve"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtOQueAconteu" />
+
+                        <TextView
+                            android:id="@+id/txtOqueConteceuPet"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/temPets" />
+
+                        <TextView
+                            android:id="@+id/txtTemPetsAgora"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtQuantosPets" />
+
+                        <TextView
+                            android:id="@+id/txtQuantosPetsAgora"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtTipoPet" />
+
+                        <TextView
+                            android:id="@+id/txtTipoPetTem"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtMoradia" />
+
+                        <TextView
+                            android:id="@+id/txtMoradia"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/patio" />
+
+                        <TextView
+                            android:id="@+id/txtPatio"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtPestes" />
+
+                        <TextView
+                            android:id="@+id/txtPestes"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtTelas" />
+
+                        <TextView
+                            android:id="@+id/txtTelas"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/textoAdocao"
+                            android:text="@string/txtInfo" />
+
+                        <TextView
+                            android:id="@+id/txtInfo"
+                            style="@style/textoPerfil"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

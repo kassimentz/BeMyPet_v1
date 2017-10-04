@@ -38,7 +38,9 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
     private Notificacoes notificacao;
     private Pet pet;
     private Usuario adotante;
-    private TextView txtNomePet, txtIdadePet, txtNomeAdotante, txtCidadeAdotante;
+    private TextView txtNomePet, txtIdadePet, txtNomeAdotante, txtCidadeAdotante, txtInfo,txtTelas,
+            txtPestes,txtPatio,txtMoradia,txtTipoPetTem,txtQuantosPetsAgora,txtTemPetsAgora,
+            txtOqueConteceuPet,txtTiposPetsTeve,txtQuantosPetsTeve,txtJaTeveOutroPet;
     private ImageView imgPet, imgAdotante;
 
     @Override
@@ -91,6 +93,90 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
         if(getAdotante().cidade != null) {
             txtCidadeAdotante.setText(getAdotante().cidade);
+        }
+
+
+        if(getAdocao().jaTeveOutrosPets != null) {
+            if(getAdocao().jaTeveOutrosPets) {
+                txtJaTeveOutroPet.setText("Sim");
+            } else {
+                txtJaTeveOutroPet.setText("Não");
+            }
+        }
+
+        if(getAdocao().quantosPetsTeve != null) {
+            txtQuantosPetsTeve.setText(String.valueOf(getAdocao().quantosPetsTeve));
+        }
+
+        if(getAdocao().tiposPetsTeve != null) {
+            StringBuilder tiposPetsTeve = new StringBuilder();
+            for (String tipo : getAdocao().tiposPetsTeve) {
+                tiposPetsTeve.append(tipo+", ");
+            }
+            tiposPetsTeve.deleteCharAt(tiposPetsTeve.length() - 2);
+            txtTiposPetsTeve.setText(tiposPetsTeve.toString());
+        }
+
+        if(getAdocao().oQueAconteceuComEles != null) {
+            StringBuilder oQueAconteceu = new StringBuilder();
+            for (String fato : getAdocao().oQueAconteceuComEles) {
+                oQueAconteceu.append(fato+", ");
+            }
+            oQueAconteceu.deleteCharAt(oQueAconteceu.length() - 2);
+            txtOqueConteceuPet.setText(oQueAconteceu.toString());
+        }
+
+        if(getAdocao().temPetAtualmente != null) {
+            if(getAdocao().temPetAtualmente) {
+                txtTemPetsAgora.setText("Sim");
+            } else {
+                txtTemPetsAgora.setText("Não");
+            }
+        }
+
+        if(getAdocao().quantosPetsTem != null) {
+            txtQuantosPetsAgora.setText(String.valueOf(getAdocao().quantosPetsTem));
+        }
+
+        if(getAdocao().tiposPetsTem != null) {
+            StringBuilder tiposPetsTem = new StringBuilder();
+            for (String tipoTem : getAdocao().tiposPetsTem) {
+                tiposPetsTem.append(tipoTem+", ");
+            }
+            tiposPetsTem.deleteCharAt(tiposPetsTem.length() - 2);
+            txtTipoPetTem.setText(tiposPetsTem.toString());
+        }
+
+        if(getAdocao().tipoMoradia != null) {
+            txtMoradia.setText(getAdocao().tipoMoradia);
+        }
+
+        if(getAdocao().possuiPatio != null) {
+            if(getAdocao().possuiPatio) {
+                txtPatio.setText("Sim");
+            } else {
+                txtPatio.setText("Não");
+            }
+        }
+
+        if(getAdocao().temCuidadoContraPestes != null) {
+            if(getAdocao().temCuidadoContraPestes) {
+                txtPestes.setText("Sim");
+            } else {
+                txtPestes.setText("Não");
+            }
+        }
+
+        if(getAdocao().possuiTelasProtecao != null) {
+            if(getAdocao().possuiTelasProtecao) {
+                txtTelas.setText("Sim");
+            } else {
+                txtTelas.setText("Não");
+            }
+        }
+
+        if(getAdocao().informacoesAdicionais != null) {
+            txtInfo.setText(getAdocao().informacoesAdicionais);
         }
 
     }
@@ -292,6 +378,21 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
         txtIdadePet = (TextView) findViewById(R.id.txtIdadePet);
         txtNomeAdotante = (TextView) findViewById(R.id.txtNomeAdotante);
         txtCidadeAdotante = (TextView) findViewById(R.id.txtCidadeAdotante);
+
+        txtInfo = (TextView) findViewById(R.id.txtInfo);
+        txtTelas = (TextView) findViewById(R.id.txtTelas);
+        txtPestes = (TextView) findViewById(R.id.txtPestes);
+        txtPatio = (TextView) findViewById(R.id.txtPatio);
+        txtMoradia = (TextView) findViewById(R.id.txtMoradia);
+        txtTipoPetTem = (TextView) findViewById(R.id.txtTipoPetTem);
+        txtQuantosPetsAgora = (TextView) findViewById(R.id.txtQuantosPetsAgora);
+        txtTemPetsAgora = (TextView) findViewById(R.id.txtTemPetsAgora);
+        txtOqueConteceuPet = (TextView) findViewById(R.id.txtOqueConteceuPet);
+        txtTiposPetsTeve = (TextView) findViewById(R.id.txtTiposPetsTeve);
+        txtQuantosPetsTeve = (TextView) findViewById(R.id.txtQuantosPetsTeve);
+        txtJaTeveOutroPet = (TextView) findViewById(R.id.txtJaTeveOutroPet);
+
+
         imgAdotante = (ImageView) findViewById(R.id.imgAdotante);
         imgPet = (ImageView) findViewById(R.id.imgPet);
     }
