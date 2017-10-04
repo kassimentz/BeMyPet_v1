@@ -221,16 +221,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String compare = "gmail.";
                 if(!email.getText().toString().toUpperCase().contains(compare.toUpperCase())) {
                     if (email.getText().toString().trim().length() > 0 && senha.getText().toString().trim().length() > 0 && nome.getText().toString().trim().length() > 0) {
-                        // Validate Your login credential here than display message
-                        createAccount(email.getText().toString().trim(), senha.getText().toString().trim(), nome.getText().toString().trim());
+                        if(senha.getText().toString().trim().length() < 6){
+                            Toast.makeText(LoginActivity.this, "Por favor, informe senha com 6 ou mais digitos", Toast.LENGTH_LONG).show();
+                        }else{
+                            // Validate Your login credential here than display message
+                            createAccount(email.getText().toString().trim(), senha.getText().toString().trim(), nome.getText().toString().trim());
 
 //                    Toast.makeText(LoginActivity.this, "Login Sucessfull, "+email.getText().toString(), Toast.LENGTH_LONG).show();
 
-                        // Redirect to dashboard / home screen.
-                        cadastro.dismiss();
+                            // Redirect to dashboard / home screen.
+                            cadastro.dismiss();
+
+                        }
                     } else {
                         Toast.makeText(LoginActivity.this, "Por favor, informe email e senha", Toast.LENGTH_LONG).show();
 
