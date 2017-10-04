@@ -37,7 +37,7 @@ public class Usuario {
 
 
     public Usuario() {
-        this.id = UUID.randomUUID().toString();
+        this.id = "";
         this.senha = "";
         this.nome = "";
         this.imagens = new ArrayList<>();
@@ -61,12 +61,12 @@ public class Usuario {
     }
 
 
-    public Usuario(String nome, String senha, List<String> imagens, String dataNascimento, String cpf,
+    public Usuario(String id, String nome, String senha, List<String> imagens, String dataNascimento, String cpf,
                       PontoGeo localizacao, Integer cep, String endereco, Integer numero,
                       String complemento, String bairro, String cidade, String estado,
                       String telefone, String email, List<Pet> meusPets, List<Pet> petsFavoritos,
                       List<Denuncias> denuncias, List<Notificacoes> notificacoes, String token) {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.nome = nome;
         this.senha = senha;
         this.imagens = imagens;
