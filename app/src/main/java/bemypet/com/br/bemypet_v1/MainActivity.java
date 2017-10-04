@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private Usuario usuarioLogado;
 
+    private Boolean novoCadastro = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void setUserData(FirebaseUser user) {
 
         getUsuarioLogado().email = user.getEmail();
+        getUsuarioLogado().id = user.getUid();
+        Log.d("PROV", "ID: " + user.getUid());
 
         for (UserInfo profile : user.getProviderData()) {
             Log.d("PROV", "Provider: " + profile.getProviderId());
@@ -98,7 +102,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         }
 
-        salvarUsuario();
+        buscarUsuarios();
+
 
     }
 
@@ -187,10 +192,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 Usuario usuario = null;
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     usuario = postSnapshot.getValue(Usuario.class);
-                    System.out.println(usuario);
+                    System.out.println("usuario "+usuario.id);
+                    System.out.println(getUsuarioLogado().id);
                     //ff0c5d8e-558e-4c45-8a34-ef34dc8a3dc1
                     //b96b7698-aede-48df-9ffe-89704646768a
-                    if(usuario.id.equalsIgnoreCase("ff0c5d8e-558e-4c45-8a34-ef34dc8a3dc1")) {
+                    if(usuario.id.equalsIgnoreCase(getUsuarioLogado().id)) {
 
                         //TODO Esta verificacao terá de ser realizada no login do usuario.
                         if(usuario.denuncias != null && usuario.denuncias.size() > 10) {
@@ -210,20 +216,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             alert.show();
                         } else {
                             Utils.salvarUsuarioSharedPreferences(getApplicationContext(), usuario);
-                            Intent intent = new Intent(MainActivity.this, InicialActivity.class);
-                            startActivity(intent);
-                            MainActivity.this.finish();
+                            novoCadastro = false;
+
                         }
 
                     }
 
 
                 }
+
+                if(novoCadastro){
+
+                    //se ainda não existe salva dados no firebase
+                    salvarUsuario();
+
+                }else {
+
+                    Intent intent = new Intent(MainActivity.this, InicialActivity.class);
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+
 
 
     }
