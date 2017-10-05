@@ -424,12 +424,14 @@ public class PerfilPetActivity extends AppCompatActivity {
 
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
-            shareIntent.setType("*/*");
+            //Target whatsapp:
             shareIntent.setPackage(app);
-            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            //Add text and then Image URI
+            shareIntent.putExtra(Intent.EXTRA_TEXT, title);
             shareIntent.putExtra(Intent.EXTRA_TEXT, getPet().nome+ " está a procura de um novo lar! Baixe o BeMyPet e ajude-nos a encontrar um lar para nossos amiguinhos! https://play.google.com/store/apps/details?id=" +getPackageName());
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            shareIntent.setType("image/jpeg");
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
 
             boolean installed = checkAppInstall(app);

@@ -76,13 +76,14 @@ public class SwipeListViewAdapter extends BaseSwipeAdapter {
             @Override
             public void onClick(View view) {
                 System.out.println(notificacoes.get(position).toString());
-                notificacoes.remove(notificacoes.get(position));
+
                 final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("notificacoes");
 
 
                 myRef.child(notificacoes.get(position).id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
+                            notificacoes.remove(notificacoes.get(position));
                             if (swipeLayout.getOpenStatus() == SwipeLayout.Status.Open) {
                                 //DO WHAT YOU WANT
 

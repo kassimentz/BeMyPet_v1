@@ -283,10 +283,15 @@ public class FiltrosActivity extends AppCompatActivity {
                 spinnerRaca.setSelection(filtrosSalvos.especies);
 
                 //setando a idade
-                rangeIdade.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.idadeInicial), Integer.valueOf(filtrosSalvos.idadeFinal));
-
+                if(filtrosSalvos.idadeFinal != null && filtrosSalvos.idadeFinal.length() > 0
+                        && filtrosSalvos.idadeInicial != null && filtrosSalvos.idadeInicial.length() > 0) {
+                    rangeIdade.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.idadeInicial), Integer.valueOf(filtrosSalvos.idadeFinal));
+                }
                 //setando o peso
-                rangePeso.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.pesoInicial), Integer.valueOf(filtrosSalvos.pesoFinal));
+                if(filtrosSalvos.pesoInicial != null && filtrosSalvos.pesoInicial.length() > 0
+                        && filtrosSalvos.pesoFinal != null && filtrosSalvos.pesoFinal.length() > 0) {
+                    rangePeso.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.pesoInicial), Integer.valueOf(filtrosSalvos.pesoFinal));
+                }
 
                 //setando castrado
                 if(filtrosSalvos.castrado.equalsIgnoreCase("Sim")) {
