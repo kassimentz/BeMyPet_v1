@@ -178,9 +178,10 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
                     .setPositiveButton("OK",new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int id) {
+                            ConfirmarSolicitacaoAdocao.this.finish();
                             Intent intent = new Intent(getApplication(), InicialActivity.class);
                             startActivity(intent);
-                            ConfirmarSolicitacaoAdocao.this.finish();
+
                         }
                     });
 
