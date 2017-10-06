@@ -356,10 +356,13 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Pet pet = null;
-                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             pet = postSnapshot.getValue(Pet.class);
+                            if(pet == null) {
+                                Utils.showToastMessage(getContext(), "Nenhum pet corresponde aos filtros");
+                            } else
                             //somente testar os filtros se o pet estiver disponivel para adocao = cadastro ativo
-                            if(pet.cadastroAtivo && pet.status.equalsIgnoreCase(Constants.STATUS_PET_DISPONIVEL)) {
+                            if (pet.cadastroAtivo && pet.status.equalsIgnoreCase(Constants.STATUS_PET_DISPONIVEL)) {
                                 //realizar os filtros no pet
                                 Pet petFiltrado = filtrarPet(pet, filtro);
                                 if (petFiltrado != null) {
@@ -370,6 +373,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
 
                             }
                         }
+
                     }
 
                     @Override
@@ -401,6 +405,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             }
         });
 
+
         setZoomIn();
 
     }
@@ -415,15 +420,14 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     private Pet filtrarPet(Pet pet, Filtros filtro) {
         Boolean petValido = Boolean.FALSE;
 
-
-        if(filtro.especies.contains(pet.especie)) {
+        if(filtro.especies.contains(pet.especie) || filtro.especies.isEmpty()) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
             return null;
         }
 
-        if(pet.sexo.equalsIgnoreCase(filtro.sexo) || filtro.sexo.equalsIgnoreCase("TODOS")) {
+        if(pet.sexo.equalsIgnoreCase(filtro.sexo) || filtro.sexo.equalsIgnoreCase("TODOS") || filtro.sexo.equalsIgnoreCase("NENHUM")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
@@ -437,7 +441,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             return null;
         }
 
-        if(pet.idadeAproximada != null) {
+        if(pet.idadeAproximada != null && pet.idadeAproximada.length() > 0
+                && filtro.idadeInicial != null && filtro.idadeInicial.length() > 0) {
             if (Integer.valueOf(pet.idadeAproximada) >= Integer.valueOf(filtro.idadeInicial) &&
                     Integer.valueOf(pet.idadeAproximada) <= Integer.valueOf(filtro.idadeFinal)) {
                 petValido = Boolean.TRUE;
@@ -449,7 +454,9 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.TRUE;
         }
 
-        if(pet.pesoAproximado != null) {
+        if(pet.pesoAproximado != null && pet.pesoAproximado > 0
+                && filtro.pesoInicial != null && filtro.pesoInicial.length() >0
+                && filtro.pesoFinal != null && filtro.pesoFinal.length() > 0) {
             if (pet.pesoAproximado >= Integer.valueOf(filtro.pesoInicial) &&
                     pet.pesoAproximado <= Integer.valueOf(filtro.pesoFinal)) {
                 petValido = Boolean.TRUE;
@@ -461,14 +468,14 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.TRUE;
         }
 
-        if(pet.castrado.equalsIgnoreCase(filtro.castrado) || filtro.castrado.equalsIgnoreCase("TODOS")) {
+        if(pet.castrado.equalsIgnoreCase(filtro.castrado) || filtro.castrado.equalsIgnoreCase("TODOS") || filtro.castrado.equalsIgnoreCase("NENHUM")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
             return null;
         }
 
-        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado) || filtro.vermifugado.equalsIgnoreCase("TODOS")) {
+        if(pet.vermifugado.equalsIgnoreCase(filtro.vermifugado) || filtro.vermifugado.equalsIgnoreCase("TODOS") || filtro.vermifugado.equalsIgnoreCase("NENHUM")) {
             petValido = Boolean.TRUE;
         } else {
             petValido = Boolean.FALSE;
@@ -506,6 +513,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         if(petValido) {
             return pet;
         } else {
+            Utils.showToastMessage(getContext(), "Nenhum pet corresponde aos filtros");
             return null;
         }
     }
@@ -569,4 +577,5 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     public void setPonto(PontoGeo ponto) {
         this.ponto = ponto;
     }
+
 }

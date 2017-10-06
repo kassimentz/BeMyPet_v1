@@ -323,6 +323,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
 
     private void salvarNotificacao(Notificacoes data) {
         final Notificacoes not = data;
+        NotificacoesService.sendNotification(not.adocao.adotante.token, not.titulo, not, getApplicationContext());
         FirebaseConnection.getConnection();
         DatabaseReference connectedReference = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedReference.addValueEventListener(new ValueEventListener() {
@@ -332,7 +333,7 @@ public class VisualizarSolicitacaoAdocaoActivity extends AppCompatActivity {
                 if (connected) {
                     FirebaseConnection.getDatabase().child("notificacoes").child(String.valueOf(not.id)).setValue(not);
                     System.out.println("notiifcacao salva "+ not.id);
-                    NotificacoesService.sendNotification(not.adocao.adotante.token, not.titulo, not, getApplicationContext());
+
 
                 } else {
                     //logar erro

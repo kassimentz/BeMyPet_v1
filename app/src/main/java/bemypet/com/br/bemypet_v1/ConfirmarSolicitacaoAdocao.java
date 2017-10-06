@@ -159,13 +159,14 @@ public class ConfirmarSolicitacaoAdocao extends AppCompatActivity {
         notificacao.denuncia = null;
 
 
+        NotificacoesService.sendNotification(getPet().doador.token, notificacao.titulo, notificacao, this);
         //salvar notificacao no firebase
         salvarNotificacao(notificacao);
         getPet().status = Constants.STATUS_PET_EM_PROCESSO_DE_ADOCAO;
         //atualizar o status do pet no banco para "em adocao", para que nao apareca nas buscas
         updateStatusPet();
 
-        NotificacoesService.sendNotification(getUsuario().token, notificacao.titulo, notificacao, this);
+
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 

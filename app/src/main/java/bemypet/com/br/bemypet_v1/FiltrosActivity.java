@@ -270,6 +270,9 @@ public class FiltrosActivity extends AppCompatActivity {
                 if(filtrosSalvos.sexo.equalsIgnoreCase("TODOS")) {
                     chkSexoFemea.setChecked(Boolean.TRUE);
                     chkSexoMacho.setChecked(Boolean.TRUE);
+                } else if(filtrosSalvos.sexo.equalsIgnoreCase("NENHUM")) {
+                    chkSexoFemea.setChecked(Boolean.FALSE);
+                    chkSexoMacho.setChecked(Boolean.FALSE);
                 } else if(filtrosSalvos.sexo.equalsIgnoreCase(chkSexoFemea.getText().toString())) {
                     chkSexoMacho.setChecked(Boolean.FALSE);
                     chkSexoFemea.setChecked(Boolean.TRUE);
@@ -297,14 +300,15 @@ public class FiltrosActivity extends AppCompatActivity {
                 if(filtrosSalvos.castrado.equalsIgnoreCase("Sim")) {
                     chkCastradoSim.setChecked(Boolean.TRUE);
                     chkCastradoNao.setChecked(Boolean.FALSE);
-                } else {
+                } else if(filtrosSalvos.castrado.equalsIgnoreCase("Não")){
                     chkCastradoSim.setChecked(Boolean.FALSE);
                     chkCastradoNao.setChecked(Boolean.TRUE);
-                }
-
-                if(filtrosSalvos.castrado.equalsIgnoreCase("TODOS")) {
+                } else if(filtrosSalvos.castrado.equalsIgnoreCase("TODOS")) {
                     chkCastradoSim.setChecked(Boolean.TRUE);
                     chkCastradoNao.setChecked(Boolean.TRUE);
+                } else {
+                    chkCastradoSim.setChecked(Boolean.FALSE);
+                    chkCastradoNao.setChecked(Boolean.FALSE);
                 }
 
                 //setando vermifugado
@@ -312,14 +316,15 @@ public class FiltrosActivity extends AppCompatActivity {
                 if(filtrosSalvos.vermifugado.equalsIgnoreCase("Sim")) {
                     chkVermifugadoSim.setChecked(Boolean.TRUE);
                     chkVermifugadoNao.setChecked(Boolean.FALSE);
-                } else {
+                } else if(filtrosSalvos.vermifugado.equalsIgnoreCase("Não")) {
                     chkVermifugadoSim.setChecked(Boolean.FALSE);
                     chkVermifugadoNao.setChecked(Boolean.TRUE);
-                }
-
-                if(filtrosSalvos.vermifugado.equalsIgnoreCase("TODOS")) {
+                } else if(filtrosSalvos.vermifugado.equalsIgnoreCase("TODOS")) {
                     chkVermifugadoNao.setChecked(Boolean.TRUE);
                     chkVermifugadoSim.setChecked(Boolean.TRUE);
+                } else {
+                    chkVermifugadoSim.setChecked(Boolean.FALSE);
+                    chkVermifugadoNao.setChecked(Boolean.FALSE);
                 }
 
 
@@ -410,8 +415,10 @@ public class FiltrosActivity extends AppCompatActivity {
 
         //pegar o valor do sexo selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
-        if((chkSexoFemea.isChecked() && chkSexoMacho.isChecked()) || (!chkSexoFemea.isChecked() && !chkSexoMacho.isChecked()) ){
+        if((chkSexoFemea.isChecked() && chkSexoMacho.isChecked())){
             filtros.sexo = "TODOS";
+        } else if(!chkSexoFemea.isChecked() && !chkSexoMacho.isChecked()) {
+            filtros.sexo = "NENHUM";
         } else if(chkSexoMacho.isChecked()){
             filtros.sexo = chkSexoMacho.getText().toString();
         } else if(chkSexoFemea.isChecked()) {
@@ -431,9 +438,11 @@ public class FiltrosActivity extends AppCompatActivity {
 
         //pegar o valor de castrado selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
-        if((chkCastradoSim.isChecked() && chkCastradoNao.isChecked()) || (!chkCastradoSim.isChecked() && !chkCastradoNao.isChecked()) ){
+        if((chkCastradoSim.isChecked() && chkCastradoNao.isChecked()) ){
             filtros.castrado = "TODOS";
-        } else if(chkCastradoNao.isChecked()){
+        } else if (!chkCastradoSim.isChecked() && !chkCastradoNao.isChecked()) {
+            filtros.castrado = "NENHUM";
+        }else if(chkCastradoNao.isChecked()){
             filtros.castrado = chkCastradoNao.getText().toString();
         } else if(chkCastradoSim.isChecked()) {
             filtros.castrado = chkCastradoSim.getText().toString();
@@ -442,8 +451,10 @@ public class FiltrosActivity extends AppCompatActivity {
 
         //pegar o valor de vermifugado selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
-        if((chkVermifugadoSim.isChecked() && chkVermifugadoNao.isChecked()) || (!chkVermifugadoSim.isChecked() && !chkVermifugadoNao.isChecked()) ){
+        if((chkVermifugadoSim.isChecked() && chkVermifugadoNao.isChecked()) ){
             filtros.vermifugado = "TODOS";
+        } else if(!chkVermifugadoSim.isChecked() && !chkVermifugadoNao.isChecked()) {
+            filtros.vermifugado = "NENHUM";
         } else if(chkVermifugadoNao.isChecked()){
             filtros.vermifugado = chkVermifugadoNao.getText().toString();
         } else if(chkVermifugadoSim.isChecked()) {
