@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import bemypet.com.br.bemypet_v1.pojo.Denuncias;
 import bemypet.com.br.bemypet_v1.pojo.Notificacoes;
@@ -445,5 +446,18 @@ public class Utils {
         }
 
         return yearDifference;
+    }
+
+    public static PontoGeo geraLocalizacaoPet(Context applicationContext, String logradouro) {
+        LatLng latlong = getLocationFromAddress(applicationContext, logradouro);
+        String lat = String.valueOf(latlong.latitude);
+        String lon = String.valueOf(latlong.longitude);
+
+        Random randomGenerator = new Random();
+        String newLat = lat.substring(0, lat.length() -3)+ String.valueOf( randomGenerator.nextInt(999));
+        String newLong = lon.substring(0, lon.length() -3)+ String.valueOf( randomGenerator.nextInt(999));
+
+        PontoGeo ponto = new PontoGeo(Double.parseDouble(newLat), Double.parseDouble(newLong));
+        return ponto;
     }
 }

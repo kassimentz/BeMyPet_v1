@@ -688,9 +688,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
 
         if(!getDoador().getLogradouro().isEmpty()) {
-            LatLng latlong = Utils.getLocationFromAddress(getApplicationContext(), getDoador().getLogradouro());
-            PontoGeo pontoGeo = new PontoGeo(latlong.latitude, latlong.longitude);
-            getPet().localizacao = pontoGeo;
+//            LatLng latlong = Utils.getLocationFromAddress(getApplicationContext(), getDoador().getLogradouro());
+//            PontoGeo pontoGeo = new PontoGeo(latlong.latitude, latlong.longitude);
+
+            getPet().localizacao = Utils.geraLocalizacaoPet(getApplicationContext(), getDoador().getLogradouro());
         }
 
 
