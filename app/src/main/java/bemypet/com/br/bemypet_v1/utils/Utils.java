@@ -454,8 +454,8 @@ public class Utils {
         String lon = String.valueOf(latlong.longitude);
 
         Random randomGenerator = new Random();
-        String newLat = lat.substring(0, lat.length() -3)+ String.valueOf( randomGenerator.nextInt(999));
-        String newLong = lon.substring(0, lon.length() -3)+ String.valueOf( randomGenerator.nextInt(999));
+        String newLat = lat.substring(0, 10)+ String.valueOf( randomGenerator.nextInt(999));
+        String newLong = lon.substring(0, 10)+ String.valueOf( randomGenerator.nextInt(999));
 
         PontoGeo ponto = new PontoGeo(Double.parseDouble(newLat), Double.parseDouble(newLong));
         return ponto;
