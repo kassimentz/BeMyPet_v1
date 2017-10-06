@@ -491,7 +491,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                     }
                 });
 
-                FormUtils.preencherValidarCampos(verticalStepperForm, edNomePet, 5, "O campo nome é obrigatório");
+                FormUtils.preencherValidarCampos(verticalStepperForm, edNomePet, 2, "O campo nome é obrigatório");
                 if (getPet()!= null && getPet().nome != null) {
                     edNomePet.setText(getPet().nome);
                 } else {

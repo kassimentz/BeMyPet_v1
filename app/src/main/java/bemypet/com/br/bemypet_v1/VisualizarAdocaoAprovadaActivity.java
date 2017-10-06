@@ -42,7 +42,7 @@ import retrofit2.Response;
 public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private TextView txtAdocaoAprovada, txtTelefoneDoador, txtEmailDoador;
+    private TextView txtAdocaoAprovada, txtTelefoneDoador, txtEmailDoador, txtEnderecoDoador;
     private Notificacoes notificacao;
     private Adocao adocao;
     private Usuario doador;
@@ -80,6 +80,7 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
         txtAdocaoAprovada = (TextView) findViewById(R.id.txtAdocaoAprovada);
         txtTelefoneDoador = (TextView) findViewById(R.id.txtTelefoneDoador);
         txtEmailDoador = (TextView) findViewById(R.id.txtEmailDoador);
+        txtEnderecoDoador = (TextView) findViewById(R.id.txtEnderecoDoador);
     }
 
     private void getBundle() {
@@ -116,6 +117,10 @@ public class VisualizarAdocaoAprovadaActivity extends AppCompatActivity implemen
 
         if(getDoador().email != null) {
             txtEmailDoador.setText(getDoador().email);
+        }
+
+        if(getDoador().getLogradouro() != null && getDoador().getLogradouro().length() > 0){
+            txtEnderecoDoador.setText(getDoador().getLogradouro());
         }
     }
 

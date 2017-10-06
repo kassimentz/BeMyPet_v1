@@ -132,6 +132,23 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <LinearLayout style="@style/layoutLinha"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+
+                    <LinearLayout style="@style/colunasTituloFormulario">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:text="@string/endereco"/>
+                    </LinearLayout>
+                    <LinearLayout style="@style/colunasFormularioSpinner">
+                        <TextView
+                            style="@style/textoFormulario"
+                            android:textColor="@color/OrangeApp"
+                            android:id="@+id/txtEnderecoDoador"/>
+                    </LinearLayout>
+                </LinearLayout>
+
 
             </LinearLayout>
 
