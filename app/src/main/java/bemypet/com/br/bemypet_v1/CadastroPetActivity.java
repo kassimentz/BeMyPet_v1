@@ -576,16 +576,16 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         try{
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
                 Uri selectedImage = data.getData();
-                System.out.println("URI: "+ selectedImage);
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String picturePath = cursor.getString(columnIndex);
-                cursor.close();
-                System.out.println(picturePath);
-                storeImageToFirebase(picturePath);
+//                System.out.println("URI: "+ selectedImage);
+//                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//
+//                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+//                cursor.moveToFirst();
+//                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                String picturePath = cursor.getString(columnIndex);
+//                cursor.close();
+//                System.out.println(picturePath);
+                storeImageToFirebase(selectedImage);
             }
         }
         catch(Exception e) {
@@ -593,9 +593,9 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         }
     }
 
-    private void storeImageToFirebase(final String imgPath) {
+    private void storeImageToFirebase(final Uri file) {
 
-        final Uri file = Uri.fromFile(new File(imgPath));
+//        final Uri file = Uri.fromFile(new File(imgPath));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
