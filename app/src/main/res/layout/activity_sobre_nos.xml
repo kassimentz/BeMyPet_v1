@@ -153,6 +153,7 @@
             <LinearLayout style="@style/layoutLinha"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:orientation="vertical"
                 android:layout_marginBottom="10dp">
 
                 <TextView
@@ -162,6 +163,25 @@
                     android:textColor="@color/textoCheckbox"
                     android:textAlignment="center"
                     android:text="@string/sobre" />
+
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/layoutLinha"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/txtVersao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textoParagrafo"
+                    android:textColor="@color/textoCheckbox"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Versão: " />
 
             </LinearLayout>
 
