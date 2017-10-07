@@ -1,16 +1,24 @@
 package bemypet.com.br.bemypet_v1;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -31,8 +39,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
     private MultiSpinner spinnerRaca;
     private SeekBar seekBarRaioBusca;
-    private RangeBar rangeIdade, rangePeso;
-    private TextView txtSeekBarIdadeValue, txtSeekBarPesoValue, txtSeekBarRaioBuscaValue;
+    private TextView txtSeekBarPesoValue, txtSeekBarRaioBuscaValue;
     private CheckBox chkEspecieCao, chkEspecieGato, chkEspecieOutros, chkSexoMacho,
             chkSexoFemea, chkCastradoSim, chkCastradoNao, chkVermifugadoSim,
             chkVermifugadoNao, chkSociavelPessoas, chkSociavelCaes, chkSociavelGatos,
@@ -41,6 +48,10 @@ public class FiltrosActivity extends AppCompatActivity {
     Integer raioDeBusca = 0;
     String idadeInicial = "", idadeFinal = "", pesoInicial = "", pesoFinal = "";
     Filtros filtros;
+
+    private TextView edtIdadeMinima, edtIdadeMaxima, edtPesoMinimo, edtPesoMaximo;
+    private ImageView showIdadeMinimaDialog, showIdadeMaximaDialog, showPesoMinimoDialog, showPesoMaximoDialog;
+    static Dialog d ;
 
     List<String> racasFiltro = new ArrayList<>();
     List<String> racasCao = new ArrayList<>();
@@ -160,27 +171,43 @@ public class FiltrosActivity extends AppCompatActivity {
         chkVermifugadoSim = (CheckBox) findViewById(R.id.chk_vermifugado_sim);
         chkVermifugadoNao = (CheckBox) findViewById(R.id.chk_vermifugado_nao);
 
-        rangeIdade = (RangeBar) findViewById(R.id.seekBarIdade);
-        txtSeekBarIdadeValue = (TextView) findViewById(R.id.txtSeekBarIdadeValue);
 
-        rangeIdade.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+        edtIdadeMinima = (TextView) findViewById(R.id.edtIdadeMinima);
+        edtIdadeMaxima = (TextView) findViewById(R.id.edtIdadeMaxima);
+
+        edtPesoMinimo = (TextView) findViewById(R.id.edtPesoMinimo);
+        edtPesoMaximo = (TextView) findViewById(R.id.edtPesoMaximo);
+
+        showIdadeMinimaDialog = (ImageView) findViewById(R.id.showIdadeMinimaDialog);
+        showIdadeMinimaDialog.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
-                idadeInicial =  leftPinValue;
-                idadeFinal = rightPinValue;
-                txtSeekBarIdadeValue.setText("Idade Aproximada: de "+ leftPinValue + " até "+ rightPinValue+" anos.");
+            public void onClick(View view) {
+                showDialogIdadeMinima();
             }
         });
 
-        rangePeso = (RangeBar) findViewById(R.id.seekBarPeso);
-        txtSeekBarPesoValue = (TextView) findViewById(R.id.txtSeekBarPesoValue);
-
-        rangePeso.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+        showIdadeMaximaDialog = (ImageView) findViewById(R.id.showIdadeMaximaDialog);
+        showIdadeMaximaDialog.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex,int rightPinIndex, String leftPinValue, String rightPinValue) {
-                pesoInicial = leftPinValue;
-                pesoFinal = rightPinValue;
-                txtSeekBarPesoValue.setText("Peso de "+ leftPinValue + " até "+ rightPinValue+" kg.");
+            public void onClick(View view) {
+                showDialogIdadeMaxima();
+            }
+        });
+
+
+        showPesoMinimoDialog = (ImageView) findViewById(R.id.showPesoMinimoDialog);
+        showPesoMinimoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogPesoMinimo();
+            }
+        });
+
+        showPesoMaximoDialog = (ImageView) findViewById(R.id.showPesoMaximoDialog);
+        showPesoMaximoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogPesoMaximo();
             }
         });
 
@@ -211,6 +238,129 @@ public class FiltrosActivity extends AppCompatActivity {
         chkTemperamentoComCuidado = (CheckBox) findViewById(R.id.chk_temperamento_cuidado);
         chkTemperamentoConviveBem = (CheckBox) findViewById(R.id.chk_temperamento_convive);
         chkTemperamentoMuitoDocil = (CheckBox) findViewById(R.id.chk_temperamento_docil);
+    }
+
+    private void showDialogIdadeMinima() {
+
+        final NumberPicker picker = new NumberPicker(getApplicationContext());
+        picker.setMinValue(1);
+        picker.setMaxValue(100);
+
+        final FrameLayout layout = new FrameLayout(getApplicationContext());
+        layout.addView(picker, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER));
+        layout.setBackgroundResource(R.drawable.backgroun_button_orange);
+
+        new AlertDialog.Builder(FiltrosActivity.this)
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(picker.getValue() < Integer.valueOf(getEdtIdadeMaxima())) {
+                            setEdtIdadeMinima(String.valueOf(picker.getValue()));
+                        } else {
+                            Utils.showToastMessage(getApplicationContext(), "A idade mínima deve ser menor que a máxima");
+                        }
+
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void showDialogIdadeMaxima() {
+
+        final NumberPicker picker = new NumberPicker(getApplicationContext());
+        picker.setMinValue(1);
+        picker.setMaxValue(100);
+
+        final FrameLayout layout = new FrameLayout(getApplicationContext());
+        layout.addView(picker, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER));
+        layout.setBackgroundResource(R.drawable.backgroun_button_orange);
+
+        new AlertDialog.Builder(FiltrosActivity.this)
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do something with picker.getValue()
+                        if(picker.getValue() > Integer.valueOf(getEdtIdadeMinima())) {
+                            setEdtIdadeMaxima(String.valueOf(picker.getValue()));
+                        } else {
+                            Utils.showToastMessage(getApplicationContext(), "A idade máxima deve ser maior que a mínima");
+                        }
+
+
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void showDialogPesoMaximo() {
+
+        final NumberPicker picker = new NumberPicker(getApplicationContext());
+        picker.setMinValue(1);
+        picker.setMaxValue(100);
+
+        final FrameLayout layout = new FrameLayout(getApplicationContext());
+        layout.addView(picker, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER));
+        layout.setBackgroundResource(R.drawable.backgroun_button_orange);
+
+        new AlertDialog.Builder(FiltrosActivity.this)
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        if(picker.getValue() > Integer.valueOf(getEdtPesoMinimo())) {
+                            setEdtPesoMaximo(String.valueOf(picker.getValue()));
+                        } else {
+                            Utils.showToastMessage(getApplicationContext(), "O peso máximo deve ser maior que o mínimo");
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void showDialogPesoMinimo() {
+
+        final NumberPicker picker = new NumberPicker(getApplicationContext());
+        picker.setMinValue(1);
+        picker.setMaxValue(100);
+
+        final FrameLayout layout = new FrameLayout(getApplicationContext());
+        layout.addView(picker, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER));
+        layout.setBackgroundResource(R.drawable.backgroun_button_orange);
+
+        new AlertDialog.Builder(FiltrosActivity.this)
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do something with picker.getValue()
+                        if(picker.getValue() < Integer.valueOf(getEdtPesoMaximo())) {
+                            setEdtPesoMinimo(String.valueOf(picker.getValue()));
+                        } else {
+                            Utils.showToastMessage(getApplicationContext(), "O peso mínimo deve ser menor que o máximo");
+                        }
+
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     @Override
@@ -288,12 +438,14 @@ public class FiltrosActivity extends AppCompatActivity {
                 //setando a idade
                 if(filtrosSalvos.idadeFinal != null && filtrosSalvos.idadeFinal.length() > 0
                         && filtrosSalvos.idadeInicial != null && filtrosSalvos.idadeInicial.length() > 0) {
-                    rangeIdade.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.idadeInicial), Integer.valueOf(filtrosSalvos.idadeFinal));
+                    setEdtIdadeMinima(filtrosSalvos.idadeInicial);
+                    setEdtIdadeMaxima(filtrosSalvos.idadeFinal);
                 }
                 //setando o peso
                 if(filtrosSalvos.pesoInicial != null && filtrosSalvos.pesoInicial.length() > 0
                         && filtrosSalvos.pesoFinal != null && filtrosSalvos.pesoFinal.length() > 0) {
-                    rangePeso.setRangePinsByIndices(Integer.valueOf(filtrosSalvos.pesoInicial), Integer.valueOf(filtrosSalvos.pesoFinal));
+                    setEdtPesoMinimo(filtrosSalvos.pesoInicial);
+                    setEdtPesoMaximo(filtrosSalvos.pesoFinal);
                 }
 
                 //setando castrado
@@ -429,12 +581,12 @@ public class FiltrosActivity extends AppCompatActivity {
         filtros.raca = spinnerRaca.getSelectedStrings();
 
         //pegar o valor de idade selecionado
-        filtros.idadeInicial = idadeInicial;
-        filtros.idadeFinal = idadeFinal;
+        filtros.idadeInicial = getEdtIdadeMinima();
+        filtros.idadeFinal = getEdtIdadeMaxima();
 
         //pegar o valor de peso selecionado
-        filtros.pesoInicial = pesoInicial;
-        filtros.pesoFinal = pesoFinal;
+        filtros.pesoInicial = getEdtPesoMinimo();
+        filtros.pesoFinal = getEdtPesoMaximo();
 
         //pegar o valor de castrado selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS
@@ -505,6 +657,35 @@ public class FiltrosActivity extends AppCompatActivity {
         filtros.raioDeBusca = raioDeBusca;
     }
 
+    public String getEdtIdadeMinima() {
+        return edtIdadeMinima.getText().toString();
+    }
 
+    public void setEdtIdadeMinima(String text) {
+        this.edtIdadeMinima.setText(text);
+    }
 
+    public String getEdtIdadeMaxima() {
+        return edtIdadeMaxima.getText().toString();
+    }
+
+    public void setEdtIdadeMaxima(String text) {
+        this.edtIdadeMaxima.setText(text);
+    }
+
+    public String getEdtPesoMinimo() {
+        return edtPesoMinimo.getText().toString();
+    }
+
+    public void setEdtPesoMinimo(String text) {
+        this.edtPesoMinimo.setText(text);
+    }
+
+    public String getEdtPesoMaximo() {
+        return edtPesoMaximo.getText().toString();
+    }
+
+    public void setEdtPesoMaximo(String text) {
+        this.edtPesoMaximo.setText(text);
+    }
 }

@@ -140,32 +140,46 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:weightSum="3">
-
-                        <com.appyvet.rangebar.RangeBar
-                            xmlns:custom="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/seekBarIdade"
-                            android:layout_width="match_parent"
-                            android:layout_height="72dp"
-                            custom:tickStart="0"
-                            custom:tickInterval="1"
-                            custom:tickEnd="30"
-                            custom:connectingLineColor="@color/YellowText"
-                            custom:connectingLineWeight="2dp"
-                            custom:pinColor="@color/OrangeApp"
-                            custom:selectorColor="@color/OrangeApp"
-                            custom:selectorSize="10dp"
-                            custom:rangeBarColor="@color/OrangeApp"
-                            custom:barWeight="2dp"
-                            custom:tickHeight="0dp"/>
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="4">
 
                         <TextView
-                            android:id="@+id/txtSeekBarIdadeValue"
-                            android:layout_below="@+id/seekBarIdade"
-                            android:text="@string/idadeAproximada"
-                            style="@style/txtSeekBar"/>
+                            android:layout_weight="1"
+                            style="@style/textoOrange"
+                            android:layout_width="50dp"
+                            android:id="@+id/edtIdadeMinima"
+                            android:text="0"
+                            android:gravity="center_horizontal"
+                            android:layout_gravity="center"/>
+
+                        <ImageView
+                            android:id="@+id/showIdadeMinimaDialog"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/dropdown"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_weight="1"
+                            style="@style/textoOrange"
+                            android:layout_width="50dp"
+                            android:gravity="center_horizontal"
+                            android:id="@+id/edtIdadeMaxima"
+                            android:text="100"
+                            android:layout_gravity="center"/>
+
+                        <ImageView
+                            android:id="@+id/showIdadeMaximaDialog"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/dropdown"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+
+
 
                     </LinearLayout>
 
@@ -185,32 +199,46 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:weightSum="3">
-
-                        <com.appyvet.rangebar.RangeBar
-                            xmlns:custom="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/seekBarPeso"
-                            android:layout_width="match_parent"
-                            android:layout_height="72dp"
-                            custom:tickStart="0"
-                            custom:tickInterval="1"
-                            custom:tickEnd="100"
-                            custom:connectingLineColor="@color/YellowText"
-                            custom:connectingLineWeight="2dp"
-                            custom:pinColor="@color/OrangeApp"
-                            custom:selectorColor="@color/OrangeApp"
-                            custom:selectorSize="10dp"
-                            custom:rangeBarColor="@color/OrangeApp"
-                            custom:barWeight="2dp"
-                            custom:tickHeight="0dp"/>
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="4">
 
                         <TextView
-                            android:id="@+id/txtSeekBarPesoValue"
-                            android:layout_below="@+id/seekBarPeso"
-                            android:text="@string/pesoAproximado"
-                            style="@style/txtSeekBar" />
+                            android:layout_weight="1"
+                            style="@style/textoOrange"
+                            android:layout_width="50dp"
+                            android:id="@+id/edtPesoMinimo"
+                            android:text="0"
+                            android:gravity="center_horizontal"
+                            android:layout_gravity="center"/>
+
+                        <ImageView
+                            android:id="@+id/showPesoMinimoDialog"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/dropdown"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_weight="1"
+                            style="@style/textoOrange"
+                            android:layout_width="50dp"
+                            android:gravity="center_horizontal"
+                            android:id="@+id/edtPesoMaximo"
+                            android:text="100"
+                            android:layout_gravity="center"/>
+
+                        <ImageView
+                            android:id="@+id/showPesoMaximoDialog"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/dropdown"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+
+
 
                     </LinearLayout>
 
