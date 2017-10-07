@@ -179,8 +179,6 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"/>
 
-
-
                     </LinearLayout>
 
                 </LinearLayout>
@@ -369,34 +367,37 @@
                     android:background="@color/OrangeApp"
                     android:layout_marginBottom="5dp"/>
 
-                <LinearLayout style="@style/layoutLinha">
+                <LinearLayout style="@style/layoutLinha"
+                    android:orientation="vertical">
 
-                    <LinearLayout style="@style/colunasTituloFormulario">
-
-                        <TextView
-                            style="@style/textoFormulario"
-                            android:textAlignment="center"
-                            android:text="@string/raioDeBuscaTitulo"/>
-
-                    </LinearLayout>
+                    <TextView
+                        style="@style/textoFormulario"
+                        android:textAlignment="center"
+                        android:text="@string/raioDeBuscaTitulo"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:weightSum="3"
-                        android:layout_gravity="center">
-
-                        <SeekBar
-                            android:id="@+id/seekBarRaioBusca"
-                            android:max="100"
-                            style="@style/seekBar"/>
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="4">
 
                         <TextView
-                            android:id="@+id/txtSeekBarRaioBuscaValue"
-                            android:text="@string/raioDeBusca"
-                            android:layout_below="@+id/seekBarRaioBusca"
-                            style="@style/txtSeekBar" />
+                            android:layout_weight="1"
+                            style="@style/textoOrange"
+                            android:layout_width="50dp"
+                            android:id="@+id/edtRaioDeBusca"
+                            android:text="0"
+                            android:gravity="center_horizontal"
+                            android:layout_gravity="center"/>
+
+                        <ImageView
+                            android:id="@+id/showRaioDeBuscaDialog"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/dropdown"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
 
                     </LinearLayout>
 

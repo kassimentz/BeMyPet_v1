@@ -38,19 +38,16 @@ import bemypet.com.br.bemypet_v1.utils.Utils;
 public class FiltrosActivity extends AppCompatActivity {
 
     private MultiSpinner spinnerRaca;
-    private SeekBar seekBarRaioBusca;
-    private TextView txtSeekBarPesoValue, txtSeekBarRaioBuscaValue;
     private CheckBox chkEspecieCao, chkEspecieGato, chkEspecieOutros, chkSexoMacho,
             chkSexoFemea, chkCastradoSim, chkCastradoNao, chkVermifugadoSim,
             chkVermifugadoNao, chkSociavelPessoas, chkSociavelCaes, chkSociavelGatos,
             chkSociavelOutros, chkTemperamentoBravo, chkTemperamentoComCuidado,
             chkTemperamentoConviveBem, chkTemperamentoMuitoDocil;
-    Integer raioDeBusca = 0;
-    String idadeInicial = "", idadeFinal = "", pesoInicial = "", pesoFinal = "";
+
     Filtros filtros;
 
-    private TextView edtIdadeMinima, edtIdadeMaxima, edtPesoMinimo, edtPesoMaximo;
-    private ImageView showIdadeMinimaDialog, showIdadeMaximaDialog, showPesoMinimoDialog, showPesoMaximoDialog;
+    private TextView edtIdadeMinima, edtIdadeMaxima, edtPesoMinimo, edtPesoMaximo, edtRaioDeBusca;
+    private ImageView showIdadeMinimaDialog, showIdadeMaximaDialog, showPesoMinimoDialog, showPesoMaximoDialog, showRaioDeBuscaDialog;
     static Dialog d ;
 
     List<String> racasFiltro = new ArrayList<>();
@@ -178,6 +175,8 @@ public class FiltrosActivity extends AppCompatActivity {
         edtPesoMinimo = (TextView) findViewById(R.id.edtPesoMinimo);
         edtPesoMaximo = (TextView) findViewById(R.id.edtPesoMaximo);
 
+        edtRaioDeBusca = (TextView) findViewById(R.id.edtRaioDeBusca);
+
         showIdadeMinimaDialog = (ImageView) findViewById(R.id.showIdadeMinimaDialog);
         showIdadeMinimaDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +192,6 @@ public class FiltrosActivity extends AppCompatActivity {
                 showDialogIdadeMaxima();
             }
         });
-
 
         showPesoMinimoDialog = (ImageView) findViewById(R.id.showPesoMinimoDialog);
         showPesoMinimoDialog.setOnClickListener(new View.OnClickListener() {
@@ -211,21 +209,11 @@ public class FiltrosActivity extends AppCompatActivity {
             }
         });
 
-        seekBarRaioBusca = (SeekBar) findViewById(R.id.seekBarRaioBusca);
-        txtSeekBarRaioBuscaValue = (TextView) findViewById(R.id.txtSeekBarRaioBuscaValue);
-
-        seekBarRaioBusca.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        showRaioDeBuscaDialog = (ImageView) findViewById(R.id.showRaioDeBuscaDialog);
+        showRaioDeBuscaDialog.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                raioDeBusca = progresValue;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                txtSeekBarRaioBuscaValue.setText("Raio de Busca: "+String.valueOf(raioDeBusca)+ " km.");
+            public void onClick(View view) {
+                showDialogRaio();
             }
         });
 
@@ -357,6 +345,31 @@ public class FiltrosActivity extends AppCompatActivity {
                             Utils.showToastMessage(getApplicationContext(), "O peso mínimo deve ser menor que o máximo");
                         }
 
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void showDialogRaio() {
+
+        final NumberPicker picker = new NumberPicker(getApplicationContext());
+        picker.setMinValue(0);
+        picker.setMaxValue(300);
+
+        final FrameLayout layout = new FrameLayout(getApplicationContext());
+        layout.addView(picker, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER));
+        layout.setBackgroundResource(R.drawable.backgroun_button_orange);
+
+        new AlertDialog.Builder(FiltrosActivity.this)
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        setEdtRaioDeBusca(String.valueOf(picker.getValue()));
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -513,8 +526,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
             //setando o raio de busca
             if (filtrosSalvos.raioDeBusca != null) {
-                seekBarRaioBusca.setProgress(Integer.valueOf(filtrosSalvos.raioDeBusca));
-                txtSeekBarRaioBuscaValue.setText("Raio de Busca: " + String.valueOf(filtrosSalvos.raioDeBusca) + " km.");
+                edtRaioDeBusca.setText(String.valueOf(filtrosSalvos.raioDeBusca));
             }
 
 
@@ -654,7 +666,7 @@ public class FiltrosActivity extends AppCompatActivity {
         filtros.temperamento = temperamento;
 
         //pegar o valor de raio de busca selecionado
-        filtros.raioDeBusca = raioDeBusca;
+        filtros.raioDeBusca = Integer.valueOf(getEdtRaioDeBusca());
     }
 
     public String getEdtIdadeMinima() {
@@ -687,5 +699,13 @@ public class FiltrosActivity extends AppCompatActivity {
 
     public void setEdtPesoMaximo(String text) {
         this.edtPesoMaximo.setText(text);
+    }
+
+    public String getEdtRaioDeBusca() {
+        return edtRaioDeBusca.getText().toString();
+    }
+
+    public void setEdtRaioDeBusca(String text) {
+        this.edtRaioDeBusca.setText(text);
     }
 }
