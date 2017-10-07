@@ -345,6 +345,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             edtPesoPet.setText(String.valueOf(getPet().pesoAproximado));
         }
 
+        if(getPet().dataNascimento != null && !getPet().dataNascimento.equalsIgnoreCase("00/00/0000")) {
+            edtDataNascimento.setText(getPet().dataNascimento);
+        }
+
         if(getPet().informacoesAdicionais != null) {
             edtInfoAdionais.setText(getPet().informacoesAdicionais);
         }
@@ -575,8 +579,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                 System.out.println("URI: "+ selectedImage);
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);
@@ -592,7 +595,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
 
     private void storeImageToFirebase(final String imgPath) {
 
-        Uri file = Uri.fromFile(new File(imgPath));
+        final Uri file = Uri.fromFile(new File(imgPath));
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
@@ -625,12 +628,22 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
                     imagLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            System.out.println("clicou");
                             if(getPet().imagens.contains(url)) {
+                                System.out.println(getPet().imagens.toArray().toString());
+                                System.out.println(url);
+                                System.out.println("encontrou");
                                 getPet().imagens.remove(url);
+                                rl.removeView(imagLayout);
+                            }
+
+                            if(getPet().imagens.size() == 0) {
+                                edtUrlFoto.setText("");
                             }
 
                         }
                     });
+
                     edtUrlFoto.setText("tem foto");
                     
                 } else {

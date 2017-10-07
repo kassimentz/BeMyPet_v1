@@ -274,7 +274,8 @@ public class PerfilPetActivity extends AppCompatActivity {
         if(getPet().raca != null) {
             racaPerfilPet.setText(getPet().raca);
         }
-        if(getPet().dataNascimento != null && getPet().dataNascimento.equalsIgnoreCase("00/00/00")) {
+        System.out.println(getPet().dataNascimento);
+        if(getPet().dataNascimento == null && getPet().dataNascimento.equalsIgnoreCase("00/00/0000")) {
             idadePerfilPet.setText("Não Informada");
         } else if(getPet().idadeAproximada != null) {
             idadePerfilPet.setText(getPet().idadeAproximada);

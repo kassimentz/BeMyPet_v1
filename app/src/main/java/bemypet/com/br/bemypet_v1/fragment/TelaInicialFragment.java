@@ -269,7 +269,8 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        options.position(new LatLng((bkpPet.localizacao.lat), bkpPet.localizacao.lon));
+//                        System.out.println(bkpPet.nome+" - "+bkpPet.localizacao.lat+ " : "+ bkpPet.localizacao.lon);
+                        options.position(new LatLng(bkpPet.localizacao.lat, bkpPet.localizacao.lon));
                         options.title(bkpPet.nome);
                         Bitmap smallMarker = Bitmap.createScaledBitmap(resource, 70, 70, false);
                         options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
@@ -508,6 +509,7 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
         } else {
             petValido = Boolean.TRUE;
         }
+
 
 
         if(petValido) {

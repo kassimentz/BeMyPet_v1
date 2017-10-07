@@ -19,7 +19,6 @@
         android:layout_height="20dp"
         android:elevation="5dp"
         android:src="@drawable/delete_photo"
-        android:onClick="excluirFoto"
         android:layout_toRightOf="@+id/user_profile_photo"
         android:layout_marginLeft="-20dp"/>
 
