@@ -340,7 +340,7 @@
     <string name="txtDenuncia2">Por favor, verifique os motivos relacionados acima para que uma nova denúncia não aconteça.</string>
     <string name="title_activity_visualizar_adocao_aprovada">Map</string>
     <string name="txtAdocaoAprovada">A adoção de Teste foi aprovada! Converse com Doador Nome e combine para buscá-lo!</string>
-    <string name="txtCadastroAdocao">Responda as perguntas seguintes com honestidade. Isso lhe ajudará a adotar um companhetiro mais rapidamento!</string>
+    <string name="txtCadastroAdocao">Responda as perguntas abaixo com honestidade. Isso lhe ajudará a adotar um companheiro mais rapidamente!</string>
     <string name="txtCadastroAdocaoEspecificaoAcontecimento">Especifique o que, de maneira geral, aconteceu com eles. Use quantas opções forem necessárias.</string>
     <string name="txtCadastroAdocaoCuidadoPestes">Os cuidados contra pestes incluem controle de pulgas, carrapatos, entrada de animais de rua, plantas venenosas e quaisquer elementos que podem oferecer perigo ao pet.</string>
     <string name="txtCadastroAdocaoInfoPreenchimento">Preencha com qualquer informação que julgue necessária. Desde informações sobre condições da sua casa ou apartamento, presença de crianças pequenas ou idosos, qual seu propósito para adotar um novo companheiro, entre outras.</string>

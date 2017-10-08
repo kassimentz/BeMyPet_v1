@@ -264,7 +264,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
         //preencher somente os dados que nao sao obrigatorios
 
         if (String.valueOf(getUsuario().cep) != null) {
-            edtCep.setText(String.valueOf(getUsuario().cep));
+            if(getUsuario().cep != 0){
+                edtCep.setText(String.valueOf(getUsuario().cep));
+            }else{
+                edtCep.setText("");
+            }
         }
 
         if (getUsuario().complemento != null) {
@@ -387,7 +391,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity implements Vertic
                 edtNumero = (EditText) findViewById(R.id.edtNumero);
                 FormUtils.preencherValidarCampos(verticalStepperForm, edtNumero, 1, "Preencha o número corretamente");
                 if (getUsuario() != null && getUsuario().numero != null) {
-                    edtNumero.setText(String.valueOf(getUsuario().numero));
+                    if(getUsuario().numero != 0){
+                        edtNumero.setText(String.valueOf(getUsuario().numero));
+                    }else{
+                        edtNumero.setText("");
+                    }
                 } else {
                     edtNumero.setText("");
                 }
