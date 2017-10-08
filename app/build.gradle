@@ -7,9 +7,9 @@ android {
         applicationId "bemypet.com.br.bemypet_v1"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 13
+        versionCode 14
 
-        versionName "1.0.6"
+        versionName "1.0.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -52,6 +52,8 @@ dependencies {
     compile 'com.vicmikhailau:MaskedEditText:2.0.3'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
     compile 'com.google.android.gms:play-services-auth:10.2.6'
+
+    compile 'agency.tango.android:material-intro-screen:0.0.5'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 }

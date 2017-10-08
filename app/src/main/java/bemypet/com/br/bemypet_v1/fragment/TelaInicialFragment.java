@@ -192,9 +192,9 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
     public void onMapReady(GoogleMap googleMap) {
         setMap(googleMap);
         gps = new GPSTrackerService(getContext());
-        if(!gps.canGetLocation()) {
-            gps.showSettingsAlert();
-        }
+//        if(!gps.canGetLocation()) {
+//            gps.showSettingsAlert();
+//        }
         exibirMapa();
     }
 
