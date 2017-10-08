@@ -422,6 +422,12 @@
     <string name="nomeDoador">Nome do Doador</string>
     <string name="telefoneDoador">Fone do Doador</string>
     <string name="emailDoador">Email Doador</string>
+    <string name="textoDoacao">Disponibilize seu pet para adoção. Assim que alguém demonstrar interesse por ele, você receberá uma notificação e poderá avaliar os dados fornecidos pelo adotante, aprovando ou reprovando a adoção.</string>
+    <string name="tituloDoacao">Doação</string>
+    <string name="login">Faça o login com sua conta do Google ou registre um email de sua preferência.</string>
+    <string name="tituloAdocao">Adotar</string>
+    <string name="textoAdocao">Procure por um pet no mapa ou utilize o filtro. Ao solicitar a adoção, o dono do pet avaliará e aprovará ou não a adocão. Você receberá uma notificação do resultado da adoção.</string>
+    <string name="intro">Esteja você procurando por um novo amigo ou querendo doar um pet, fique à vontade! Você poderá adotar ou disponibulizar pets para adoção com o mesmo usuário. Utilizaremos sua localização para listar os pets mais próximos ou cadastrá-los no mapa</string>
 
 
 </resources>
