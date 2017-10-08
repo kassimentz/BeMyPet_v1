@@ -213,7 +213,20 @@
 
                     </LinearLayout>
 
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/porteTitulo" />
+
+                        <TextView
+                            android:id="@+id/portePerfilPet"
+                            style="@style/textoPerfil" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
+
 
                 <!--campos para castrado e vermifugado-->
                 <LinearLayout style="@style/layoutLinha">
@@ -272,6 +285,35 @@
                             android:id="@+id/temperamentoPerfilPet"
                             style="@style/textoPerfil"
                             android:text="@string/temperamentoMuitoDocil" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--campos para nome do doador e telefone -->
+                <LinearLayout style="@style/layoutLinha">
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/nomeDoador" />
+
+                        <TextView
+                            android:id="@+id/nomeDoador"
+                            style="@style/textoPerfil" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/colunaComCheckbox">
+
+                        <TextView
+                            style="@style/labelPerfil"
+                            android:text="@string/emailDoador" />
+
+                        <TextView
+                            android:id="@+id/emailDoador"
+                            style="@style/textoPerfil" />
 
                     </LinearLayout>
                 </LinearLayout>

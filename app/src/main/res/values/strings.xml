@@ -414,6 +414,14 @@
     <string name="txtPestes">Cuidado contra Pestes?</string>
     <string name="txtTelas">Telas nas Janelas?</string>
     <string name="txtInfo">Outras Informações</string>
+    <string name="porteTitulo">Porte</string>
+    <string name="PP">PP</string>
+    <string name="P">P</string>
+    <string name="M">M</string>
+    <string name="G">G</string>
+    <string name="nomeDoador">Nome do Doador</string>
+    <string name="telefoneDoador">Fone do Doador</string>
+    <string name="emailDoador">Email Doador</string>
 
 
 </resources>

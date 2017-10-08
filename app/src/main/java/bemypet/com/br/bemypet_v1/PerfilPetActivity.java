@@ -15,12 +15,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -36,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import bemypet.com.br.bemypet_v1.adapters.CustomGridMesmaNinhadaBaseAdapter;
 import bemypet.com.br.bemypet_v1.pojo.Pet;
 import bemypet.com.br.bemypet_v1.pojo.Usuario;
 import bemypet.com.br.bemypet_v1.utils.Constants;
@@ -53,7 +50,8 @@ public class PerfilPetActivity extends AppCompatActivity {
     List<String> images = new ArrayList<>();
 
     private TextView user_profile_name, especiePerfilPet, sexoPerfilPet, racaPerfilPet, idadePerfilPet,
-            pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet, temperamentoPerfilPet, txtOutrasInformacoes;
+            pesoPerfilPet, castradoPerfilPet, vermifugadoPerfilPet, sociavelPerfilPet,
+            temperamentoPerfilPet, txtOutrasInformacoes, portePerfilPet, nomeDoador, emailDoador;
     private ImageView header_cover_image, user_profile_photo, imgFavoritarPet, btnEditarPet, img_desativar_pet, btnDenunciarPet;
     private Button buttonPerfil;
 
@@ -156,6 +154,9 @@ public class PerfilPetActivity extends AppCompatActivity {
         user_profile_photo = (ImageView) findViewById(R.id.user_profile_photo);
         user_profile_name = (TextView) findViewById(R.id.user_profile_name);
         txtOutrasInformacoes = (TextView) findViewById(R.id.txtOutrasInformacoes);
+        portePerfilPet = (TextView) findViewById(R.id.portePerfilPet);
+        nomeDoador = (TextView) findViewById(R.id.nomeDoador);
+        emailDoador = (TextView) findViewById(R.id.emailDoador);
         imgFavoritarPet = (ImageView) findViewById(R.id.imgFavoritarPet);
         img_desativar_pet = (ImageView) findViewById(R.id.img_desativar_pet);
         btnDenunciarPet = (ImageView) findViewById(R.id.btnDenunciarPet);
@@ -317,6 +318,18 @@ public class PerfilPetActivity extends AppCompatActivity {
 
         if(getPet().informacoesAdicionais != null) {
             txtOutrasInformacoes.setText(getPet().informacoesAdicionais);
+        }
+
+        if(getPet().porte != null) {
+            portePerfilPet.setText(getPet().porte);
+        }
+
+        if(getPet().doador.nome != null) {
+            nomeDoador.setText(getPet().doador.nome);
+        }
+
+        if(getPet().doador.email != null) {
+            emailDoador.setText(getPet().doador.email);
         }
     }
 

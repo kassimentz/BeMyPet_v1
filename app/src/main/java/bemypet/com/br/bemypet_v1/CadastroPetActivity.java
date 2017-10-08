@@ -83,11 +83,11 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     private LinearLayout dadosPetStep;
     private EditText edNomePet, edtPesoPet, edtInfoAdionais, edtUrlFoto;
     private RadioGroup radioGroupEspecie, radioGroupSexo, radioGroupCastrado, radioGroupVermifugado,
-            radioGroupTemperamento;
+            radioGroupTemperamento, radioGroupPorte;
     private RadioButton radioCao, radioGato, radioOutros, radioMacho, radioFemea, radioNaoSei,
             radioCastradoSim, radioCastradoNao, radioVermifugadoSim, radioVermifugadoNao,
             radioTemperamentoBravo, radioTemperamentoComCuidado, radioTemperamentoConviveBem,
-            radioTemperamentoMuitoDocil;
+            radioTemperamentoMuitoDocil, radioP, radioPP, radioM, radioG;
     private Spinner spinnerRacas;
     private ImageView imgReduzirPeso, imgAumentarPeso;
     private CheckBox chk_primeira_dose, chk_segunda_dose, chk_sociavel_pessoas, chk_sociavel_caes,
@@ -292,9 +292,16 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         radioGroupCastrado = (RadioGroup) findViewById(R.id.radioGroupCastrado);
         radioGroupVermifugado = (RadioGroup) findViewById(R.id.radioGroupVermifugado);
         radioGroupTemperamento = (RadioGroup) findViewById(R.id.radioGroupTemperamento);
+
         radioCao = (RadioButton) findViewById(R.id.radioCao);
         radioGato = (RadioButton) findViewById(R.id.radioGato);
         radioOutros = (RadioButton) findViewById(R.id.radioOutros);
+
+        radioGroupPorte = (RadioGroup) findViewById(R.id.radioGroupPorte);
+        radioPP = (RadioButton) findViewById(R.id.radioPP);
+        radioP = (RadioButton) findViewById(R.id.radioP);
+        radioM = (RadioButton) findViewById(R.id.radioM);
+        radioG = (RadioButton) findViewById(R.id.radioG);
 
         radioGroupEspecie.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -380,6 +387,15 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
             for (int i = 0; i < radioGroupSexo.getChildCount(); i++) {
                 RadioButton child = (RadioButton) radioGroupSexo.getChildAt(i);
                 if(child.getText().toString().equalsIgnoreCase(getPet().sexo)) {
+                    child.setChecked(true);
+                }
+            }
+        }
+
+        if(getPet().porte != null) {
+            for (int i = 0; i < radioGroupPorte.getChildCount(); i++) {
+                RadioButton child = (RadioButton) radioGroupPorte.getChildAt(i);
+                if(child.getText().toString().equalsIgnoreCase(getPet().porte)) {
                     child.setChecked(true);
                 }
             }
@@ -735,6 +751,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         int sexoSelecionado = radioGroupSexo.getCheckedRadioButtonId();
         RadioButton sexo = (RadioButton) findViewById(sexoSelecionado);
         getPet().sexo = sexo.getText().toString();
+
+        int porteSelecionado = radioGroupPorte.getCheckedRadioButtonId();
+        RadioButton porte = (RadioButton) findViewById(porteSelecionado);
+        getPet().porte = porte.getText().toString();
 
         //pegar os valores de sociavel selecionados
 

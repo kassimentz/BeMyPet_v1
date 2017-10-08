@@ -205,5 +205,48 @@
             android:src="@drawable/add_photo"/>
     </LinearLayout>
 
+    <!--porte-->
+    <LinearLayout style="@style/layoutLinha">
+        <TextView
+            style="@style/textoFormulario"
+            android:text="@string/porteTitulo"/>
+    </LinearLayout>
+    <LinearLayout style="@style/layoutLinha">
+
+        <RadioGroup
+            android:id="@+id/radioGroupPorte"
+            style="@style/radioGroupFormulario"
+            android:layout_weight="4"
+            android:weightSum="4">
+
+            <RadioButton
+                android:id="@+id/radioPP"
+                android:text="@string/PP"
+                android:checked="true"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioP"
+                android:text="@string/P"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioM"
+                android:text="@string/M"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioG"
+                android:text="@string/G"
+                style="@style/radioButtonFormulario"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
 
 </LinearLayout>

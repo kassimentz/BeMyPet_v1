@@ -28,6 +28,7 @@ public class Filtros {
     public List<String> sociavel = new ArrayList<>();
     public List<String> temperamento = new ArrayList<>();
     public Integer raioDeBusca;
+    public String porte;
 
     public Filtros() {
     }
@@ -48,6 +49,7 @@ public class Filtros {
                 ", sociavel=" + sociavel +
                 ", temperamento=" + temperamento +
                 ", raioDeBusca=" + raioDeBusca +
+                ", porte=" + porte +
                 '}';
     }
 
@@ -65,6 +67,7 @@ public class Filtros {
         result.put("sociavel", sociavel);
         result.put("temperamento", temperamento);
         result.put("raioDeBusca", raioDeBusca);
+        result.put("porte", porte);
 
         return result;
     }
