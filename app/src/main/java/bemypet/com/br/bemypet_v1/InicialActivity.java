@@ -309,14 +309,14 @@ public class InicialActivity extends AppCompatActivity implements GoogleApiClien
 //                        navItemIndex = 3;
 //                        CURRENT_TAG = TAG_CONFIGURACOES;
 //                        break;
-                    case R.id.nav_ajuda:
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("origem", "inicial");
-                        Intent intent = new Intent(InicialActivity.this, EscolhaActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        drawer.closeDrawers();
-                        return true;
+//                    case R.id.nav_ajuda:
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable("origem", "inicial");
+//                        Intent intent = new Intent(InicialActivity.this, EscolhaActivity.class);
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+//                        drawer.closeDrawers();
+//                        return true;
                     case R.id.nav_sobre:
                         startActivity(new Intent(InicialActivity.this, SobreNosActivity.class));
                         drawer.closeDrawers();
