@@ -143,11 +143,12 @@
             android:text="@string/dataNascimento"/>
     </LinearLayout>
     <LinearLayout style="@style/layoutLinha">
+
         <TextView
             android:id="@+id/edtDataNascimento"
             style="@style/inputFormularioPet"
             android:drawableRight="@drawable/calendar"
-            android:hint="@string/data_placeholder"/>
+            android:hint="@string/data_placeholder" />
     </LinearLayout>
 
     <LinearLayout style="@style/layoutLinha">

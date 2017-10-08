@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -42,7 +43,9 @@ public class FiltrosActivity extends AppCompatActivity {
             chkSexoFemea, chkCastradoSim, chkCastradoNao, chkVermifugadoSim,
             chkVermifugadoNao, chkSociavelPessoas, chkSociavelCaes, chkSociavelGatos,
             chkSociavelOutros, chkTemperamentoBravo, chkTemperamentoComCuidado,
-            chkTemperamentoConviveBem, chkTemperamentoMuitoDocil;
+            chkTemperamentoConviveBem, chkTemperamentoMuitoDocil, chkPortePP,
+            chkPorteP, chkPorteM, chkPorteG;
+
 
     Filtros filtros;
 
@@ -168,6 +171,10 @@ public class FiltrosActivity extends AppCompatActivity {
         chkVermifugadoSim = (CheckBox) findViewById(R.id.chk_vermifugado_sim);
         chkVermifugadoNao = (CheckBox) findViewById(R.id.chk_vermifugado_nao);
 
+        chkPorteG = (CheckBox) findViewById(R.id.chkPorteG);
+        chkPorteM = (CheckBox) findViewById(R.id.chkPorteM);
+        chkPorteP = (CheckBox) findViewById(R.id.chkPorteP);
+        chkPortePP = (CheckBox) findViewById(R.id.chkPortePP);
 
         edtIdadeMinima = (TextView) findViewById(R.id.edtIdadeMinima);
         edtIdadeMaxima = (TextView) findViewById(R.id.edtIdadeMaxima);
@@ -461,6 +468,28 @@ public class FiltrosActivity extends AppCompatActivity {
                     setEdtPesoMaximo(filtrosSalvos.pesoFinal);
                 }
 
+                //setando o porte
+                if(filtrosSalvos.porte != null) {
+
+                    chkPortePP.setChecked(Boolean.FALSE);
+                    chkPorteP.setChecked(Boolean.FALSE);
+                    chkPorteM.setChecked(Boolean.FALSE);
+                    chkPorteG.setChecked(Boolean.FALSE);
+
+                    if(filtrosSalvos.porte.equalsIgnoreCase("PP"))
+                        chkPortePP.setChecked(Boolean.TRUE);
+
+                    if(filtrosSalvos.porte.equalsIgnoreCase("P"))
+                        chkPorteP.setChecked(Boolean.TRUE);
+
+                    if(filtrosSalvos.porte.equalsIgnoreCase("M"))
+                        chkPorteM.setChecked(Boolean.TRUE);
+
+                    if(filtrosSalvos.porte.equalsIgnoreCase("G"))
+                        chkPorteG.setChecked(Boolean.TRUE);
+
+                }
+
                 //setando castrado
                 if(filtrosSalvos.castrado.equalsIgnoreCase("Sim")) {
                     chkCastradoSim.setChecked(Boolean.TRUE);
@@ -599,6 +628,22 @@ public class FiltrosActivity extends AppCompatActivity {
         //pegar o valor de peso selecionado
         filtros.pesoInicial = getEdtPesoMinimo();
         filtros.pesoFinal = getEdtPesoMaximo();
+
+        //pegar o porte
+        StringBuilder porte = new StringBuilder();
+        if(chkPortePP.isChecked())
+            porte.append(chkPortePP.getText().toString()+",");
+
+        if(chkPorteP.isChecked())
+            porte.append(chkPorteP.getText().toString()+",");
+
+        if(chkPorteM.isChecked())
+            porte.append(chkPorteM.getText().toString()+",");
+
+        if(chkPorteG.isChecked())
+            porte.append(chkPorteG.getText().toString());
+
+        filtros.porte = porte.toString();
 
         //pegar o valor de castrado selecionado
         //se ambos ou nenhum estiverem marcado, salva como TODOS

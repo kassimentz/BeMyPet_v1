@@ -510,6 +510,28 @@ public class TelaInicialFragment extends Fragment implements OnMapReadyCallback{
             petValido = Boolean.TRUE;
         }
 
+        if(pet.porte != null) {
+            Boolean encontrou = Boolean.FALSE;
+            if(filtro.porte.contains(",")) {
+                String[] portes = filtro.porte.split(",");
+                for(int i = 0; i < portes.length; i++) {
+                    if(pet.porte.equalsIgnoreCase(portes[i])) {
+                        encontrou = Boolean.TRUE;
+                    }
+                }
+
+                if(encontrou) {
+                    petValido = Boolean.TRUE;
+                } else{
+                    petValido = Boolean.FALSE;
+                }
+
+            } else {
+                petValido = Boolean.TRUE;
+            }
+        } else {
+            petValido = Boolean.TRUE;
+        }
 
 
         if(petValido) {
