@@ -9,6 +9,11 @@
     <color name="OrangeApp">#f15922</color>
     <color name="GreenButton">#88cc00</color>
 
+    <color name="primaryColor">#f15922</color>
+    <color name="primaryLightColor">#ff8b50</color>
+    <color name="primaryDarkColor">#b72400</color>
+    <color name="primaryTextColor">#000000</color>
+
     <color name="dark_gray_press">#ff7e8a97</color>
     <color name="red">#FF3B00</color>
     <color name="red_press">#990000</color>
@@ -35,7 +40,7 @@
     <color name="colorPrimaryN">#d32f2f</color>
     <color name="colorPrimaryDarkN">#c72c2c</color>
     <color name="colorAccentN">#FFFFFF</color>
-    <color name="YellowToolbar">#ffb432</color>
+    <color name="YellowToolbar">#b72400</color>
     <color name="YellowText">#ffcc32</color>
 
     <color name="textoCheckbox">#6E3632</color>
