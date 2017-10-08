@@ -24,21 +24,30 @@ public class NovaIntroActivity extends MaterialIntroActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         verifyIntroActivity();
+
+//        addSlide(new SlideFragmentBuilder()
+//                        .backgroundColor(R.color.orangeBorder)
+//                        .buttonsColor(R.color.textoCheckbox)
+//                        .neededPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+//                        .image(R.drawable.logo_simb)
+//                        .description()
+//                        .build(),
+//                new MessageButtonBehaviour(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        showMessage(getResources().getString(R.string.slide_1_button_message));
+//                    }
+//                }, getResources().getString(R.string.slide_1_button_label)));
 
         addSlide(new SlideFragmentBuilder()
                         .backgroundColor(R.color.orangeBorder)
                         .buttonsColor(R.color.textoCheckbox)
-                        .neededPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-                        .image(R.drawable.logo_simb)
                         .description(getResources().getString(R.string.intro))
-                        .build(),
-                new MessageButtonBehaviour(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMessage("Localização permitida com sucesso.");
-                    }
-                }, "Permitir GPS"));
+                        .image(R.drawable.logo_simb)
+                        .neededPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+                        .build());
 
 
         addSlide(new SlideFragmentBuilder()
