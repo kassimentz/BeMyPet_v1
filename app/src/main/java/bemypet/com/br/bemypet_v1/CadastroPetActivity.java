@@ -1,7 +1,9 @@
 package bemypet.com.br.bemypet_v1;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,10 +11,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -95,6 +99,8 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
     List<String> racasOutros = new ArrayList<>();
     List<String> racas = new ArrayList<>();
     List<String> imagens = new ArrayList<>();
+
+    List<String> sociavel = new ArrayList<>();
 
     ArrayAdapter<String> adapter;
 
@@ -334,6 +340,14 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         chk_sociavel_caes = (CheckBox) findViewById(R.id.chk_sociavel_caes);
         chk_sociavel_gatos = (CheckBox) findViewById(R.id.chk_sociavel_gatos);
         chk_sociavel_outros = (CheckBox) findViewById(R.id.chk_sociavel_outros);
+        chk_sociavel_outros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(chk_sociavel_outros.isChecked()) {
+                    showDialogSociavelOutros();
+                }
+            }
+        });
         chk_nao_sei_nascimento = (CheckBox) findViewById(R.id.chk_nao_sei_nascimento);
 
         txtNaoSei.setText(Html.fromHtml(getString(R.string.txtNaoSei)));
@@ -723,7 +737,7 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         getPet().sexo = sexo.getText().toString();
 
         //pegar os valores de sociavel selecionados
-        List<String> sociavel = new ArrayList<>();
+
         if(chk_sociavel_gatos.isChecked()){
             sociavel.add(chk_sociavel_gatos.getText().toString());
         }
@@ -731,10 +745,10 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         if(chk_sociavel_pessoas.isChecked()){
             sociavel.add(chk_sociavel_pessoas.getText().toString());
         }
-
-        if(chk_sociavel_outros.isChecked()){
-            sociavel.add(chk_sociavel_outros.getText().toString());
-        }
+//
+//        if(chk_sociavel_outros.isChecked()){
+//            sociavel.add(chk_sociavel_outros.getText().toString());
+//        }
 
         if(chk_sociavel_caes.isChecked()){
             sociavel.add(chk_sociavel_caes.getText().toString());
@@ -873,5 +887,58 @@ public class CadastroPetActivity extends AppCompatActivity implements VerticalSt
         intent.putExtras(bundle);
         startActivityForResult(intent, 1);
         CadastroPetActivity.this.finish();
+    }
+
+    private void showDialogSociavelOutros() {
+
+        final TextView txtSociavel = new TextView(getApplicationContext());
+        final EditText edtSociavel = new EditText(getApplicationContext());
+        edtSociavel.setPadding(10, 10, 10, 10);
+
+        txtSociavel.setText("Informe o conteúdo, separado por vírgula. ");
+        txtSociavel.setPadding(10, 10, 10, 10);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        final LinearLayout layout = new LinearLayout(getApplicationContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        txtSociavel.setLayoutParams(params);
+        layout.addView(txtSociavel);
+
+        edtSociavel.setLayoutParams(params);
+        layout.addView(edtSociavel);
+        layout.setBackgroundResource(R.drawable.backgroun_button_orange);
+
+        new AlertDialog.Builder(CadastroPetActivity.this)
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String valueSociavel = edtSociavel.getText().toString();
+                        if(valueSociavel.contains(",")) {
+                            String[] valores = valueSociavel.split(",");
+                            for(int k = 0; k < valores.length; k++) {
+                                String val = valores[k].replaceAll(" ","");
+                                sociavel.add(val);
+                                System.out.println(val);
+                            }
+                        }else {
+                            System.out.println(edtSociavel.getText().toString());
+                            sociavel.add(edtSociavel.getText().toString());
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(chk_sociavel_outros.isChecked()) {
+                            chk_sociavel_outros.setChecked(Boolean.FALSE);
+                        }
+                    }
+                })
+                .show();
     }
 }
